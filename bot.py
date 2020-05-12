@@ -64,7 +64,7 @@ async def status(ctx, type : str,*, other="https://twitch.tv/saiencevanadium/"):
 		elif(type.lower() == "watching"):
 			await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=other))
 	else:
-		await ctx.send("Sorry you are not the owner of the bot and can not run $status command")
+		await ctx.send(msgReturn("notOwner"))
 @bot.command()
 async def getnotes(ctx):
 	"""Dms you your last 5 notes"""
