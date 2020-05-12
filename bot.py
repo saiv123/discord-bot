@@ -70,6 +70,7 @@ async def status(ctx, type : str,*, other="https://twitch.tv/saiencevanadium/"):
 			await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=other))
 	else:
 		await ctx.send(msgReturn("notOwner"))
+
 @bot.command()
 async def getnotes(ctx):
 	"""Dms you your last 5 notes"""
@@ -138,6 +139,13 @@ async def off(ctx):
 		sys.exit(0)
 	else:
 		await ctx.send(msgReturn("notOwner"))
+
+@bot.command()
+async def porn(ctx):
+	if(!ctx.channel.is_nsfw()):
+		await ctx.send("is not a nsfw channel")
+	else:
+		await ctx.send("is a nsfw channel")
 
 def Owner(ctx):
 	for i in ownerId:
