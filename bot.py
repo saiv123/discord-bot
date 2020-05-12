@@ -35,7 +35,7 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-	nameNote = "dmLogs"
+	nameNote = "dmLogs.txt"
 	if(message.author.id == 371865866704257025):
 		await message.delete()
 		await bot.process_commands(message)
