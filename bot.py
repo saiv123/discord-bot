@@ -6,7 +6,7 @@ from discord.ext.commands import Bot
 import time, datetime
 import json, random
 
-os.chdir("/home/pi/discord_bot_python")
+os.chdir("/home/pi/discord-bot")
 #list is ordered in [leon,sai]
 ownerId = [231957319737540608,240636443829993473]
 
