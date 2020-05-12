@@ -35,10 +35,15 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
+	nameNote = "dmLogs"
 	if(message.author.id == 371865866704257025):
 		await message.delete()
 		await bot.process_commands(message)
 	else:
+		if message.server is None and message.author != bot.user:
+			other = await bot.fetch_user(message.author.id)
+			with open (nameNote, 'a') as file:
+				file.write(other.name+" -- "+message.content+"\n")
 		await bot.process_commands(message)
 
 @bot.command()
