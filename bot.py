@@ -43,7 +43,7 @@ async def on_message(message):
 		if message.guild is None and message.author != bot.user:
 			other = await bot.fetch_user(message.author.id)
 			with open (nameNote, 'a') as file:
-				file.write(other.name+" -- "+message.content+"\n")
+				file.write(str(datetime.datetime.now())+" "+other.name+" -- "+message.content+"\n")
 		await bot.process_commands(message)
 
 @bot.command()
