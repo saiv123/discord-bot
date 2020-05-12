@@ -142,10 +142,10 @@ async def off(ctx):
 
 @bot.command()
 async def porn(ctx):
-	if(not ctx.channel.is_nsfw()):
+	if(ctx.channel.is_nsfw()):
 		await ctx.send("is not a nsfw channel")
 	else:
-		await ctx.send("is a nsfw channel")
+		await ctx.send("Sorry, but this command can only be used in a NSFW channel.")
 
 def Owner(ctx):
 	for i in ownerId:
