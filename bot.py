@@ -6,6 +6,8 @@ from discord.ext.commands import Bot
 import time, datetime
 import json, random
 
+import quotes
+
 os.chdir("/home/pi/discord-bot")
 #list is ordered in [leon,sai]
 ownerId = [231957319737540608,240636443829993473]
@@ -49,7 +51,7 @@ async def on_message(message):
 @bot.command()
 async def sendDM(ctx, id : int,*, msg : str):
 	"""dms person with id"""
-	if(Owner(ctx)):
+	if(isOwner(ctx)):
 		user = bot.get_user(id)
 		channel = await user.create_dm()
 		await channel.send(msg)
@@ -59,7 +61,7 @@ async def sendDM(ctx, id : int,*, msg : str):
 @bot.command()
 async def status(ctx, type : str,*, other="https://twitch.tv/saiencevanadium/"):
 	"""sets the status for the bot"""
-	if(Owner(ctx)):
+	if(isOwner(ctx)):
 		if(type.lower() == "stream"):
 			await bot.change_presence(activity=discord.Streaming(name="Watching my creator", url=other))
 		elif(type.lower() == "help"):
@@ -100,7 +102,7 @@ async def deletenotes(ctx):
 	nameNote = ('MyPorn/'+str(ctx.author.id)+'.txt')
 	command = 'sudo rm -r '+nameNote
 	os.system(command)
-	await ctx.send("Your Personal Notes have been Distroyed")
+	await ctx.send("Your Personal Notes have been Destroyed")
 
 @bot.command()
 async def notes(ctx,*,notes):
@@ -133,7 +135,7 @@ async def quote(ctx):
 @bot.command()
 async def off(ctx):
 	"""This does ThInGs dont touch"""
-	if(Owner(ctx)):
+	if(isOwner(ctx)):
 		await ctx.send(msgReturn("offMsg"))
 		await bot.logout()
 		sys.exit(0)
@@ -147,7 +149,7 @@ async def porn(ctx):
 	else:
 		await ctx.send("Sorry, but this command can only be used in a NSFW channel.")
 
-def Owner(ctx):
+def isOwner(ctx):
 	for i in ownerId:
 		if(ctx.author.id == i):
 			return True
