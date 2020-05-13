@@ -12,7 +12,10 @@ os.chdir("/home/pi/discord-bot")
 #list is ordered in [leon,sai]
 ownerId = [231957319737540608,240636443829993473]
 
-TOKEN = 'MzE0NTc4Mzg3MDMxMTYyODgy.XpEIew.Z6DlNxEMMKK4F4b8qRhjD0cpvnw'
+f = open("token.txt",'r')
+TOKEN = f.read()
+del f
+
 client = wolframalpha.Client("XLQWQ2-A2HU3H9Y7V")
 
 description = "Its a Sick use less bot"
