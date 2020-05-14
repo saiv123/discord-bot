@@ -40,7 +40,7 @@ def getFileName(filePath):
                 filePath = filePath[filePath.rfind('/')+1:]
         if '\\' in filePath:
                 filePath = filePath[filePath.rfind('\\')+1:]
-        return filePath
+        return filePath.replace('_',' ').replace('urls','').replace('url','')
 
 def getRandom():
         filePath = random.choice(getFileList(prawnPath))

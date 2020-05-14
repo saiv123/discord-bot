@@ -12,6 +12,7 @@ import random
 
 # external libraies
 import quotes
+import prawn
 
 os.chdir("/home/pi/discord-bot")
 
