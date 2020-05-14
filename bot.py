@@ -36,10 +36,11 @@ def isOwner(ctx):
     return False
 
 def msgReturn(type):
-    data = json.load(open("msg.json"))
+    f= open("msg.json")
+    data = json.load(f)
     typeM = data[type]
     msgData = random.choice(typeM)
-    del data, typeM
+    del data, typeM, f
     return msgData
 
 
