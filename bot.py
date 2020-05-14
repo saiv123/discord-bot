@@ -166,7 +166,7 @@ async def quote(ctx):
 @bot.command()
 async def off(ctx):
     """This does ThInGs dont touch"""
-    if(isOwner(ctx)):
+    if(isOwner(ctx)):   
         await ctx.send(msgReturn("offMsg"))
         await bot.logout()
         sys.exit(0)
