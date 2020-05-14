@@ -40,7 +40,11 @@ def getFileName(filePath):
                 filePath = filePath[filePath.rfind('/')+1:]
         if '\\' in filePath:
                 filePath = filePath[filePath.rfind('\\')+1:]
-        return filePath
+        return filePath.replace('_',' ').replace('urls','').replace('url','')
+
+def getRandom():
+        filePath = random.choice(getFileList(prawnPath))
+        return getRandomLineFromFile(prawnPath + filePath)
 
 def getRandomLineFromQuery(query):
         closest = getClosestFromList(getFileList(prawnPath),query)
@@ -57,4 +61,4 @@ def getRandomLineFromQuery(query):
                 modifier = 'Using category ```'+getFileName(closest)+'```\n'
         
         # Threshold is met, return random line from file
-        return modifier + getRandomLineFromFile(prawnPath + closest)
+        return modifier, getRandomLineFromFile(prawnPath + closest)
