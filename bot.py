@@ -176,10 +176,13 @@ async def off(ctx):
 
 @bot.command()
 async def porn(ctx):
-    if(ctx.channel.is_nsfw()):
-        await ctx.send("is a nsfw channel")
+    if(message.guild is None and message.author != bot.user):
+        if(ctx.channel.is_nsfw()):
+            await ctx.send("is a nsfw channel")
+        else:
+            await ctx.send("Sorry, but this command can only be used in a NSFW channel.")
     else:
-        await ctx.send("Sorry, but this command can only be used in a NSFW channel.")
+        await ctx.send("You Dumb stupid you are not allowed to use this command in dms")
 
 
 bot.run(TOKEN)
