@@ -39,7 +39,7 @@ def msgReturn(type):
     data = json.load(open("msg.json"))
     typeM = data[type]
     msgData = random.choice(typeM)
-    del data, typeM, f
+    del data, typeM
     return msgData
 
 
@@ -166,7 +166,7 @@ async def quote(ctx):
 @bot.command()
 async def off(ctx):
     """This does ThInGs dont touch"""
-    if(isOwner(ctx)):   
+    if(isOwner(ctx)):
         await ctx.send(msgReturn("offMsg"))
         await bot.logout()
         sys.exit(0)
