@@ -182,8 +182,10 @@ async def porn(ctx):
     else:
         if(ctx.channel.is_nsfw()):
             pu = prawn.getRandom()
+            print(pu)
             em = discord.Embed()
             em.set_image(url = pu)
+            await ctx.send(em = em)
         else:
             await ctx.send("Sorry, but this command can only be used in a NSFW channel.")
 
