@@ -64,6 +64,8 @@ async def on_message(message):
         with open(nameNote, 'a') as file:
             file.write(str(datetime.datetime.now()) + " " + other.name + " -- " + message.content + "\n")
         await bot.process_commands(message)
+    else:
+        await bot.process_commands(message)
 
 
 
