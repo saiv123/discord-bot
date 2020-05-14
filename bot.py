@@ -185,7 +185,7 @@ async def porn(ctx):
             print(pu)
             em = discord.Embed()
             em.set_image(url = pu)
-            await ctx.send(em = em)
+            await ctx.send(embed = em)
         else:
             await ctx.send("Sorry, but this command can only be used in a NSFW channel.")
 
