@@ -82,6 +82,7 @@ async def on_message(message):
 @bot.command(pass_context=True)
 async def help(ctx):
     author = ctx.message.author
+    channel = await author.create_dm()
 
     embed = discord.Embed(
         colur=discord.Colour.green()
@@ -106,7 +107,7 @@ async def help(ctx):
         name='$DefInte', value='finds the intergral $DefInte a b f(x)', inline=False)
     embed.add_field(name='$DefInte', value='finds the intergral $DefInte a b f(x)', inline=False)
 
-    await bot.send_message(author, embed=embed)
+    await channel.send(embed=embed)
 
 
 @bot.command()
