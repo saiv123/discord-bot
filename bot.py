@@ -30,6 +30,9 @@ description = "Its a Sick use less bot"
 bot = commands.Bot(command_prefix='$', description=description)
 ts = time.time()
 
+def randomColor():
+    return ""
+
 def isOwner(ctx):
     for i in ownerId:
         if(ctx.author.id == i):
