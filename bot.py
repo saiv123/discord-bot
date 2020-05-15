@@ -85,7 +85,7 @@ async def help(ctx):
     channel = await author.create_dm()
 
     embed = discord.Embed(
-        colur=discord.Colour.green()
+        colour=discord.Colour.green()
     )
 
     embed.set_author(name='Help')
