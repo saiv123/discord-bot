@@ -104,8 +104,9 @@ async def help(ctx):
         name='$nsfw', value='will give you a random nsfw image\nyou can choose a category from $nsfw category\nfrom the list you have to spell out the category excatly how it is sent to you as $nsfw [category]', inline=False)
     embed.add_field(
         name='$DefInte', value='finds the intergral $DefInte a b f(x)', inline=False)
-    embed.add_field(
-        name='$DefInte', value='finds the intergral $DefInte a b f(x)', inline=False)
+    embed.add_field(name='$DefInte', value='finds the intergral $DefInte a b f(x)', inline=False)
+
+    await bot.send_message(author, embed=embed)
 
 
 @bot.command()
