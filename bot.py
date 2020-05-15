@@ -193,7 +193,7 @@ async def nsfw(ctx, *args):
                     await ctx.send(embed = em)
             else:
                 pu = ('Error','https://www.prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg')
-                if len(str(query)) <= 5:
+                if len(str(query)) <= 2:
                     pu = prawn.getRandom()
                 else:
                     pu = prawn.getRandomLineFromQuery(query)
