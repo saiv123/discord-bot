@@ -187,8 +187,8 @@ async def nsfw(ctx):
         if(ctx.channel.is_nsfw()):
             pu = prawn.getRandom()
             print(pu)
-            em = discord.Embed()
-            em.set_image(url = pu)
+            em = discord.Embed(description=pi[0],color=random.randrange(10000,16777215,1)) #16777... is just FFFFFF in base10
+            em.set_image(url = pu[1])
             await ctx.send(embed = em)
         else:
             await ctx.send("Sorry, but this command can only be used in a NSFW channel.")
