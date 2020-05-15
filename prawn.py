@@ -62,3 +62,17 @@ def getRandomLineFromQuery(query):
         
         # Threshold is met, return random line from file
         return modifier, getRandomLineFromFile(prawnPath + closest)
+
+def getCategoryMessages():
+        messageList = []
+        fileList = map(getFileName, getFileList(prawnPath))
+        
+        i = 0
+        subList = []
+        while i < len(fileList):
+                subList.append(fileList[i])
+                if i % 10:
+                        messageList.append(', '.join(subList))
+                        subList.clear()
+        messageList.append(', '.join(subList))
+        return messageList
