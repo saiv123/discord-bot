@@ -30,14 +30,20 @@ description = "Its a Sick use less bot"
 bot = commands.Bot(command_prefix='$', description=description)
 ts = time.time()
 
+# deleting help comand
+bot.remove_command('help')
+
+
 def randomColor():
     return ""
+
 
 def isOwner(ctx):
     for i in ownerId:
         if(ctx.author.id == i):
             return True
     return False
+
 
 def msgReturn(type):
     data = json.load(open("msg.json"))
@@ -66,11 +72,40 @@ async def on_message(message):
     elif message.guild is None and message.author != bot.user:
         other = await bot.fetch_user(message.author.id)
         with open(nameNote, 'a') as file:
-            file.write(str(datetime.datetime.now()) + " " + other.name + " -- " + message.content + "\n")
+            file.write(str(datetime.datetime.now()) + " " +
+                       other.name + " -- " + message.content + "\n")
         await bot.process_commands(message)
     else:
         await bot.process_commands(message)
 
+
+@bot.command(pass_context=True)
+async def help(ctx):
+    author = ctx.message.author
+
+    embed = discord.Embed(
+        colur=discord.Colour.green()
+    )
+
+    embed.set_author(name='Help')
+    embed.add_field(
+        name='$notes', vlaue='You can add notes to your notes file', inline=False)
+    embed.add_field(name='$deletenotes',
+                    vlaue='Deletes ALL your notes', inline=False)
+    embed.add_field(name='$getnotes',
+                    vlaue='Dms you your last 5 notes', inline=False)
+    embed.add_field(
+        name='$uptime', vlaue='The time the bot has been up in HH:MM:SS', inline=False)
+    embed.add_field(
+        name='$DefInte', vlaue='Finds the intergral $DefInte a b f(x)', inline=False)
+    embed.add_field(
+        name='$quote', vlaue='Give you heart warming quotes', inline=False)
+    embed.add_field(
+        name='$nsfw', vlaue='will give you a random nsfw image\nyou can choose a category from $nsfw category\nfrom the list you have to spell out the category excatly how it is sent to you as $nsfw [category]', inline=False)
+    embed.add_field(
+        name='$DefInte', vlaue='finds the intergral $DefInte a b f(x)', inline=False)
+    embed.add_field(
+        name='$DefInte', vlaue='finds the intergral $DefInte a b f(x)', inline=False)
 
 
 @bot.command()
@@ -187,20 +222,22 @@ async def nsfw(ctx, *args):
         if(ctx.channel.is_nsfw()):
             query = ' '.join(args)
             if 'category' in query.lower() or 'categories' in query.lower():
-                color = random.randrange(10000,16777215,1)
+                color = random.randrange(10000, 16777215, 1)
                 for message in prawn.getCategoryMessages():
-                    em = discord.Embed(description=message,color=color)
-                    await ctx.send(embed = em)
+                    em = discord.Embed(description=message, color=color)
+                    await ctx.send(embed=em)
             else:
-                pu = ('Error','https://www.prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg')
+                pu = (
+                    'Error', 'https://www.prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg')
                 if len(str(query)) <= 2:
                     pu = prawn.getRandom()
                 else:
                     pu = prawn.getRandomLineFromQuery(query)
                 print(pu)
-                em = discord.Embed(description=pu[0],color=random.randrange(10000,16777215,1)) #16777... is just FFFFFF in base10
-                em.set_image(url = pu[1])
-                await ctx.send(embed = em)
+                em = discord.Embed(description=pu[0], color=random.randrange(
+                    10000, 16777215, 1))  # 16777... is just FFFFFF in base10
+                em.set_image(url=pu[1])
+                await ctx.send(embed=em)
         else:
             await ctx.send("Sorry, but this command can only be used in a NSFW channel.")
 
