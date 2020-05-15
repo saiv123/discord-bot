@@ -71,8 +71,9 @@ def getCategoryMessages():
         subList = []
         while i < len(fileList):
                 subList.append(fileList[i])
-                if i % 10:
+                if i % 10 == 0:
                         messageList.append(', '.join(map(getFileName, subList)))
                         subList.clear()
+                i++
         messageList.append(', '.join(subList))
         return messageList
