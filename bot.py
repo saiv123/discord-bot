@@ -186,15 +186,21 @@ async def nsfw(ctx, *args):
     else:
         if(ctx.channel.is_nsfw()):
             query = ' '.join(args)
-            pu = ('Error','https://www.prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg')
-            if len(str(query)) <= 5:
-                pu = prawn.getRandom()
+            if 'category' in query.lower() or 'categories' in query.lower():
+                color = random.randrange(10000,16777215,1)
+                for message in prawn.getCategoryMessages():
+                    em = discord.Embed(description=message,color=color)
+                    await ctx.send(embed = em)
             else:
-                pu = prawn.getRandomLineFromQuery(query)
-            print(pu)
-            em = discord.Embed(description=pu[0],color=random.randrange(10000,16777215,1)) #16777... is just FFFFFF in base10
-            em.set_image(url = pu[1])
-            await ctx.send(embed = em)
+                pu = ('Error','https://www.prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg')
+                if len(str(query)) <= 5:
+                    pu = prawn.getRandom()
+                else:
+                    pu = prawn.getRandomLineFromQuery(query)
+                print(pu)
+                em = discord.Embed(description=pu[0],color=random.randrange(10000,16777215,1)) #16777... is just FFFFFF in base10
+                em.set_image(url = pu[1])
+                await ctx.send(embed = em)
         else:
             await ctx.send("Sorry, but this command can only be used in a NSFW channel.")
 

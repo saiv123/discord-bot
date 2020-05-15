@@ -54,7 +54,7 @@ def getRandomLineFromQuery(query):
         dist = distance(getFileName(closest).lower(), query.lower())
         if dist > (len(closest)-3)*0.4: # Can be 40% wrong
                 categories = ', '.join(map(getFileName, getFileList(prawnPath)))
-                return 'Error, category not found.\nOptions are:\n```'+categories+'```\nDid you mean '+getFileName(closest)+'?', ''
+                return 'Error, category not found.\nYou should use the argument \'category\' to list categories. \nDid you mean '+getFileName(closest)+'?', ''
         
         # If 20% wrong, hassle them
         if dist > (len(closest)-3)*0.2: # Can be 40% wrong
