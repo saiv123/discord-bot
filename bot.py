@@ -101,11 +101,7 @@ async def help(ctx):
         name='$DefInte', value='Finds the intergral $DefInte a b f(x)', inline=False)
     embed.add_field(
         name='$quote', value='Give you heart warming quotes', inline=False)
-    embed.add_field(
-        name='$nsfw', value='will give you a random nsfw image\nyou can choose a category from $nsfw category\nfrom the list you have to spell out the category excatly how it is sent to you as $nsfw [category]', inline=False)
-    embed.add_field(
-        name='$DefInte', value='finds the intergral $DefInte a b f(x)', inline=False)
-    embed.add_field(name='$DefInte', value='finds the intergral $DefInte a b f(x)', inline=False)
+    embed.add_field(name='$nsfw', value='will give you a random nsfw image\nyou can choose a category from $nsfw category\nfrom the list you have to spell out the category excatly how it is sent to you as $nsfw [category]', inline=False)
 
     await channel.send(embed=embed)
 
