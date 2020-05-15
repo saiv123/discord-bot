@@ -179,15 +179,20 @@ async def off(ctx):
 
 
 @bot.command()
-async def nsfw(ctx):
-    """This command does what you think it does NSFW"""
+async def nsfw(ctx, *args):
+    """This command does what you think it does. NSFW"""
     if(ctx.guild is None and message.author != bot.user):
         await ctx.send("You Dumb stupid you are not allowed to use this command in dms")
     else:
         if(ctx.channel.is_nsfw()):
-            pu = prawn.getRandom()
+            query = ' '.join(args)
+            pu = ('Error','https://www.prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg')
+            if len(str(query)) <= 5:
+                pu = prawn.getRandom()
+            else:
+                pu = prawn.getRandomLineFromQuery(query)
             print(pu)
-            em = discord.Embed(description=pi[0],color=random.randrange(10000,16777215,1)) #16777... is just FFFFFF in base10
+            em = discord.Embed(description=pu[0],color=random.randrange(10000,16777215,1)) #16777... is just FFFFFF in base10
             em.set_image(url = pu[1])
             await ctx.send(embed = em)
         else:
