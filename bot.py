@@ -89,23 +89,23 @@ async def help(ctx):
 
     embed.set_author(name='Help')
     embed.add_field(
-        name='$notes', vlaue='You can add notes to your notes file', inline=False)
+        name='$notes', value='You can add notes to your notes file', inline=False)
     embed.add_field(name='$deletenotes',
-                    vlaue='Deletes ALL your notes', inline=False)
+                    value='Deletes ALL your notes', inline=False)
     embed.add_field(name='$getnotes',
-                    vlaue='Dms you your last 5 notes', inline=False)
+                    value='Dms you your last 5 notes', inline=False)
     embed.add_field(
-        name='$uptime', vlaue='The time the bot has been up in HH:MM:SS', inline=False)
+        name='$uptime', value='The time the bot has been up in HH:MM:SS', inline=False)
     embed.add_field(
-        name='$DefInte', vlaue='Finds the intergral $DefInte a b f(x)', inline=False)
+        name='$DefInte', value='Finds the intergral $DefInte a b f(x)', inline=False)
     embed.add_field(
-        name='$quote', vlaue='Give you heart warming quotes', inline=False)
+        name='$quote', value='Give you heart warming quotes', inline=False)
     embed.add_field(
-        name='$nsfw', vlaue='will give you a random nsfw image\nyou can choose a category from $nsfw category\nfrom the list you have to spell out the category excatly how it is sent to you as $nsfw [category]', inline=False)
+        name='$nsfw', value='will give you a random nsfw image\nyou can choose a category from $nsfw category\nfrom the list you have to spell out the category excatly how it is sent to you as $nsfw [category]', inline=False)
     embed.add_field(
-        name='$DefInte', vlaue='finds the intergral $DefInte a b f(x)', inline=False)
+        name='$DefInte', value='finds the intergral $DefInte a b f(x)', inline=False)
     embed.add_field(
-        name='$DefInte', vlaue='finds the intergral $DefInte a b f(x)', inline=False)
+        name='$DefInte', value='finds the intergral $DefInte a b f(x)', inline=False)
 
 
 @bot.command()
