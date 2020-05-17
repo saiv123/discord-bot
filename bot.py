@@ -1,3 +1,4 @@
+#all of the py libraires used
 import sys
 import os
 import asyncio
@@ -14,18 +15,22 @@ import random
 import quotes
 import prawn
 
+#dir for the bots location
 os.chdir("/home/pi/discord-bot")
 
 # list is ordered in [leon,sai]
 ownerId = [231957319737540608, 240636443829993473]
 
+#gets the bots personal token to boot
 f = open("token.txt", 'r')
 TOKEN = f.read()
 f.close()
 del f
 
+#for the math stuff
 client = wolframalpha.Client("XLQWQ2-A2HU3H9Y7V")
 
+#setting up the bot, with its discritpion etc.
 description = "Its a Sick use less bot"
 bot = commands.Bot(command_prefix='$', description=description)
 ts = time.time()
@@ -33,18 +38,14 @@ ts = time.time()
 # deleting help comand
 bot.remove_command('help')
 
-
-def randomColor():
-    return ""
-
-
+#used as a check for some command so only the people that are allowed to use it can use it
 def isOwner(ctx):
     for i in ownerId:
         if(ctx.author.id == i):
             return True
     return False
 
-
+#gets a message from the dictionary with the type inputed
 def msgReturn(type):
     data = json.load(open("msg.json"))
     typeM = data[type]
@@ -52,7 +53,7 @@ def msgReturn(type):
     del data, typeM
     return msgData
 
-
+#starting the bot
 @bot.event
 async def on_ready():
     print('loged in as')
@@ -62,7 +63,7 @@ async def on_ready():
     print('current time - ' + str(ts))
     print('-------')
 
-
+#for every message it does these checks
 @bot.event
 async def on_message(message):
     nameNote = "dmLogs.txt"
@@ -78,7 +79,7 @@ async def on_message(message):
     else:
         await bot.process_commands(message)
 
-
+#our curtom help command
 @bot.command(pass_context=True)
 async def help(ctx):
     author = ctx.message.author
@@ -105,7 +106,7 @@ async def help(ctx):
 
     await channel.send(embed=embed)
 
-
+#this allows the admins of the bot to send a message to ANY discord user
 @bot.command()
 async def sendDM(ctx, id: int, *, msg: str):
     """dms person with id"""
@@ -116,7 +117,7 @@ async def sendDM(ctx, id: int, *, msg: str):
     else:
         await ctx.send("An error as occurred, please do not contact me about it.")
 
-
+#this allows the bot admins to change the status from the $help to something else
 @bot.command()
 async def status(ctx, type: str, *, other="https://twitch.tv/saiencevanadium/"):
     """sets the status for the bot"""
@@ -132,7 +133,7 @@ async def status(ctx, type: str, *, other="https://twitch.tv/saiencevanadium/"):
     else:
         await ctx.send(msgReturn("notOwner"))
 
-
+#for the user to see their notes
 @bot.command()
 async def getnotes(ctx):
     """Dms you your last 5 notes"""
@@ -156,7 +157,7 @@ async def getnotes(ctx):
         channel = await ctx.author.create_dm()
         await channel.send("You do not have any notes")
 
-
+#removes the personal files
 @bot.command()
 async def deletenotes(ctx):
     """Deletes ALL your notes"""
@@ -165,7 +166,7 @@ async def deletenotes(ctx):
     os.system(command)
     await ctx.send("Your Personal Notes have been Destroyed")
 
-
+#logic for saving their notes
 @bot.command()
 async def notes(ctx, *, notes):
     """You can add notes to your notes file"""
@@ -177,14 +178,14 @@ async def notes(ctx, *, notes):
     await ctx.send(user + "Your Note is recorded and locked up.")
     del nameNote
 
-
+#return the time the bot has been running
 @bot.command()
 async def uptime(ctx):
     """Gives current up time"""
     tso = time.time()
     await ctx.send(time.strftime("%H:%M:%S", time.gmtime(tso - ts)))
 
-
+#return the answers to deffenet integrals
 @bot.command()
 async def DefInte(ctx, a: int, b: int, func: str):
     """finds the intergral $DefInte a b f(x)"""
@@ -192,14 +193,14 @@ async def DefInte(ctx, a: int, b: int, func: str):
                        str(a) + ' to ' + str(b))
     await ctx.send(next(res.results).text)
 
-
+#sends a warming quote
 @bot.command()
 async def quote(ctx):
     """Give you heart warming quotes"""
     # await ctx.send(msgReturn("quotes")+" :heart:")
     await ctx.send(quotes.formatQuote(text=quotes.getQuoteJSON()[0] + " :heart:"))
 
-
+#for the admins to turn off the bot
 @bot.command()
 async def off(ctx):
     """This does ThInGs dont touch"""
@@ -210,11 +211,13 @@ async def off(ctx):
     else:
         await ctx.send(msgReturn("notOwner"))
 
+#gets the tempreture of the host pi
 @bot.command()
 async def temp(ctx):
     temp = os.popen("vcgencmd measure_temp").readline()
     await ctx.send(temp.replace("temp=",""))
 
+#for getting nsfw images from the library
 @bot.command()
 async def nsfw(ctx, *args):
     """This command does what you think it does. NSFW"""
@@ -243,4 +246,5 @@ async def nsfw(ctx, *args):
         else:
             await ctx.send("Sorry, but this command can only be used in a NSFW channel.")
 
+#runs the bot after all the methods have been loaded to memory
 bot.run(TOKEN)
