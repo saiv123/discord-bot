@@ -210,6 +210,10 @@ async def off(ctx):
     else:
         await ctx.send(msgReturn("notOwner"))
 
+@bot.command()
+async def temp():
+    temp = os.popen("vcgencmd measure_temp").readline()
+    await ctx.send(temp.replace("temp=",""))
 
 @bot.command()
 async def nsfw(ctx, *args):
