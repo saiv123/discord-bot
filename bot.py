@@ -211,7 +211,7 @@ async def off(ctx):
         await ctx.send(msgReturn("notOwner"))
 
 @bot.command()
-async def temp():
+async def temp(ctx):
     temp = os.popen("vcgencmd measure_temp").readline()
     await ctx.send(temp.replace("temp=",""))
 
