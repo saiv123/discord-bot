@@ -1,19 +1,14 @@
 #all of the py libraires used
-import sys
-import os
-import asyncio
-import discord
+import sys, os
+import asyncio, discord
 import wolframalpha
 from discord.ext import commands, tasks
 from discord.ext.commands import Bot
-import time
-import datetime
-import json
-import random
+import time, datetime
+import json, random
 
 # external libraies
-import quotes
-import prawn
+import quotes, prawn
 
 #dir for the bots location
 os.chdir("/home/pi/discord-bot")
@@ -31,11 +26,10 @@ del f
 client = wolframalpha.Client("XLQWQ2-A2HU3H9Y7V")
 
 #setting up the bot, with its discritpion etc.
-description = "Its a Sick use less bot"
-bot = commands.Bot(command_prefix='$', description=description)
+bot = commands.Bot(command_prefix='$', description="Its a Sick use less bot")
 ts = time.time()
 
-# deleting help comand
+# deleting default help comand
 bot.remove_command('help')
 
 #used as a check for some command so only the people that are allowed to use it can use it
@@ -67,10 +61,10 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     nameNote = "dmLogs.txt"
-    if(message.author.id == 371865866704257025):
+    if(message.author.id == 371865866704257025): #for removing bobcat from servers
         await message.delete()
         await bot.process_commands(message)
-    elif message.guild is None and message.author != bot.user:
+    elif message.guild is None and message.author != bot.user: #checks if theres a dm to the bot, and logs it
         other = await bot.fetch_user(message.author.id)
         with open(nameNote, 'a') as file:
             file.write(str(datetime.datetime.now()) + " " +
@@ -82,9 +76,11 @@ async def on_message(message):
 #our curtom help command
 @bot.command(pass_context=True)
 async def help(ctx):
+    #creats a channel onject to dm the user the help command
     author = ctx.message.author
     channel = await author.create_dm()
 
+    #seting up an embed
     embed = discord.Embed(
         colour=discord.Colour.green()
     )
@@ -102,14 +98,13 @@ async def help(ctx):
         name='$DefInte', value='Finds the intergral $DefInte a b f(x)', inline=False)
     embed.add_field(
         name='$quote', value='Give you heart warming quotes', inline=False)
-    embed.add_field(name='$nsfw', value='will give you a random nsfw image\nyou can choose a category from $nsfw category\nfrom the list you have to spell out the category excatly how it is sent to you as $nsfw [category]', inline=False)
+    embed.add_field(name='$nsfw', value='will give you a random nsfw image\nyou can choose a category from $nsfw category\nfrom the list you have to spell out the category excatly how it is sent to you as\n$nsfw [category]', inline=False)
 
     await channel.send(embed=embed)
 
 #this allows the admins of the bot to send a message to ANY discord user
 @bot.command()
 async def sendDM(ctx, id: int, *, msg: str):
-    """dms person with id"""
     if(isOwner(ctx)):
         user = bot.get_user(id)
         channel = await user.create_dm()
@@ -120,7 +115,6 @@ async def sendDM(ctx, id: int, *, msg: str):
 #this allows the bot admins to change the status from the $help to something else
 @bot.command()
 async def status(ctx, type: str, *, other="https://twitch.tv/saiencevanadium/"):
-    """sets the status for the bot"""
     if(isOwner(ctx)):
         if(type.lower() == "stream"):
             await bot.change_presence(activity=discord.Streaming(name="Watching my creator", url=other))
@@ -136,7 +130,6 @@ async def status(ctx, type: str, *, other="https://twitch.tv/saiencevanadium/"):
 #for the user to see their notes
 @bot.command()
 async def getnotes(ctx):
-    """Dms you your last 5 notes"""
     try:
         notes = ""
         nameNote = ("MyPorn/" + str(ctx.author.id) + ".txt")
@@ -160,7 +153,6 @@ async def getnotes(ctx):
 #removes the personal files
 @bot.command()
 async def deletenotes(ctx):
-    """Deletes ALL your notes"""
     nameNote = ('MyPorn/' + str(ctx.author.id) + '.txt')
     command = 'sudo rm -r ' + nameNote
     os.system(command)
@@ -169,7 +161,6 @@ async def deletenotes(ctx):
 #logic for saving their notes
 @bot.command()
 async def notes(ctx, *, notes):
-    """You can add notes to your notes file"""
     nameNote = ("MyPorn/" + str(ctx.author.id) + ".txt")
     await ctx.message.delete()
     user = ("<@" + str(ctx.message.author.id) + "> ")
@@ -181,14 +172,12 @@ async def notes(ctx, *, notes):
 #return the time the bot has been running
 @bot.command()
 async def uptime(ctx):
-    """Gives current up time"""
     tso = time.time()
     await ctx.send(time.strftime("%H:%M:%S", time.gmtime(tso - ts)))
 
 #return the answers to deffenet integrals
 @bot.command()
 async def DefInte(ctx, a: int, b: int, func: str):
-    """finds the intergral $DefInte a b f(x)"""
     res = client.query('integrate ' + func + ' from ' +
                        str(a) + ' to ' + str(b))
     await ctx.send(next(res.results).text)
@@ -196,14 +185,11 @@ async def DefInte(ctx, a: int, b: int, func: str):
 #sends a warming quote
 @bot.command()
 async def quote(ctx):
-    """Give you heart warming quotes"""
-    # await ctx.send(msgReturn("quotes")+" :heart:")
     await ctx.send(quotes.formatQuote(text=quotes.getQuoteJSON()[0] + " :heart:"))
 
 #for the admins to turn off the bot
 @bot.command()
 async def off(ctx):
-    """This does ThInGs dont touch"""
     if(isOwner(ctx)):
         await ctx.send(msgReturn("offMsg"))
         await bot.logout()
@@ -220,20 +206,19 @@ async def temp(ctx):
 #for getting nsfw images from the library
 @bot.command()
 async def nsfw(ctx, *args):
-    """This command does what you think it does. NSFW"""
-    if(ctx.guild is None and message.author != bot.user):
+    if(ctx.guild is None and message.author != bot.user): #checks of user is trying to get past the nsfw filter
         await ctx.send("You Dumb stupid you are not allowed to use this command in dms")
     else:
-        if(ctx.channel.is_nsfw()):
+        if(ctx.channel.is_nsfw()):#checks if the channel the command was sent from is nsfw
             query = ' '.join(args)
+            #logic for getting a specific catagory form the catagory list
             if 'category' in query.lower() or 'categories' in query.lower():
                 color = random.randrange(10000, 16777215, 1)
                 for message in prawn.getCategoryMessages():
                     em = discord.Embed(description=message, color=color)
                     await ctx.send(embed=em)
-            else:
-                pu = (
-                    'Error', 'https://www.prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg')
+            else: # logic for random catagory
+                pu = ('Error', 'https://www.prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg')
                 if len(str(query)) <= 2:
                     pu = prawn.getRandom()
                 else:
