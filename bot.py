@@ -56,7 +56,9 @@ async def on_ready():
     await bot.change_presence(activity=discord.Game(name='$help'))
     print('current time - ' + str(ts))
     guilds = await bot.fetch_guilds(limit=150).flatten()
-    print(len(guilds))
+    print(len(guilds)+"\n")
+    for i in guilds:
+        print(i.name+" ")
     print('-------')
 
 #for every message it does these checks
