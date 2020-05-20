@@ -55,7 +55,7 @@ async def on_ready():
     print(bot.user.id)
     await bot.change_presence(activity=discord.Game(name='$help'))
     print('current time - ' + str(ts))
-    guilds = await client.fetch_guilds(limit=150).flatten()
+    guilds = await bot.fetch_guilds(limit=150).flatten()
     print(len(guilds))
     print('-------')
 
