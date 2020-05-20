@@ -106,6 +106,13 @@ async def help(ctx):
 
     await channel.send(embed=embed)
 
+#says hello to your
+@bot.command()
+async def hi(ctx):
+    await ctx.message.delete()
+    user = ("<@" + str(ctx.message.author.id) + "> ")
+    await ctx.send("Hello "+user+"!!!!!!!")
+
 #this allows the admins of the bot to send a message to ANY discord user
 @bot.command()
 async def sendDM(ctx, id: int, *, msg: str):
