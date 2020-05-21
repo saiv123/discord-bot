@@ -103,6 +103,8 @@ async def help(ctx):
     embed.add_field(
         name='$quote', value='Give you heart warming quotes', inline=False)
     embed.add_field(name='$nsfw', value='will give you a random nsfw image\nyou can choose a category from $nsfw category\nfrom the list you have to spell out the category excatly how it is sent to you as\n$nsfw [category]', inline=False)
+    embed.add_field(name='$hi', value='Will send hi back to you', inline=False)
+
 
     await channel.send(embed=embed)
 
