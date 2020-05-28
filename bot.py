@@ -251,8 +251,7 @@ async def spam(ctx):
         with open("Shrek.txt", 'r') as myfile:
             lines = myfile.readlines()
             print('ready in 5')
-        for line in lines:
-            await ctx.send(line)
+            await ctx.send(lines)
 
 #runs the bot after all the methods have been loaded to memory
 bot.run(TOKEN)
