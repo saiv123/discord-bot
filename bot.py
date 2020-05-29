@@ -90,18 +90,12 @@ async def help(ctx):
     )
 
     embed.set_author(name='Help')
-    embed.add_field(
-        name='$notes', value='You can add notes to your notes file', inline=False)
-    embed.add_field(name='$deletenotes',
-                    value='Deletes ALL your notes', inline=False)
-    embed.add_field(name='$getnotes',
-                    value='Dms you your last 5 notes', inline=False)
-    embed.add_field(
-        name='$uptime', value='The time the bot has been up in HH:MM:SS', inline=False)
-    embed.add_field(
-        name='$DefInte', value='Finds the intergral $DefInte a b f(x)', inline=False)
-    embed.add_field(
-        name='$quote', value='Give you heart warming quotes', inline=False)
+    embed.add_field(name='$notes', value='You can add notes to your notes file', inline=False)
+    embed.add_field(name='$deletenotes',value='Deletes ALL your notes', inline=False)
+    embed.add_field(name='$getnotes',value='Dms you your last 5 notes', inline=False)
+    embed.add_field(name='$uptime', value='The time the bot has been up in HH:MM:SS', inline=False)
+    embed.add_field(name='$DefInte', value='Finds the intergral $DefInte a b f(x)', inline=False)
+    embed.add_field(name='$quote', value='Give you heart warming quotes', inline=False)
     embed.add_field(name='$nsfw', value='will give you a random nsfw image\nyou can choose a category from $nsfw category\nfrom the list you have to spell out the category excatly how it is sent to you as\n$nsfw [category]', inline=False)
     embed.add_field(name='$hi', value='Will send hi back to you', inline=False)
 
@@ -173,7 +167,7 @@ async def deletenotes(ctx):
 
 #logic for saving their notes
 @bot.command()
-async def notes(ctx, *, notes):
+async def notes(ctx, *, notes=" "):
     nameNote = ("MyPorn/" + str(ctx.author.id) + ".txt")
     await ctx.message.delete()
     user = ("<@" + str(ctx.message.author.id) + "> ")
