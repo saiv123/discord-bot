@@ -245,12 +245,6 @@ async def nsfw(ctx, *args):
         else:
             await ctx.send("Sorry, but this command can only be used in a NSFW channel.")
 
-@bot.command()
-async def test(ctx):
-    user = bot.get_user(ctx.message.author.id)
-    channel = user.voice.channel
-    await ctx.send(channel)
-
 #for crapping out a chat
 @bot.command()
 async def spam(ctx):
