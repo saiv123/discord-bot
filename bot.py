@@ -247,7 +247,7 @@ async def nsfw(ctx, *args):
 
 @bot.command()
 async def test(ctx):
-    user = bot.get_user(id)
+    user = bot.get_user(ctx.message.author.id)
     channel = user.voice.channel
     await ctx.send(channel)
 
