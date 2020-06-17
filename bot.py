@@ -260,14 +260,12 @@ async def spam(ctx):
 
 @bot.command(pass_context=True)
 async def join(ctx):
-    channel = ctx.message.author.voice.channel
-    await client.join_voice_channel(channel)
+    channel = ctx.author.voice.channel
+    await channel.connect()
 
 @bot.command(pass_context=True)
 async def leave(ctx):
-    server = ctx.message.guild
-    voice_client = client.voice_client_in(server)
-    await voice_client.disconnect()
+    await ctx.voice_client.disconnect()
 
 @bot.command(pass_context=True)
 async def play(ctx, url=""):
@@ -282,7 +280,7 @@ async def play(ctx, url=""):
             print("bot already in channel")
 
         server = ctx.message.guild
-        voice_client = client.voice_client_in(server)
+        voice_client = ctx.voice_client
         player = await voice_client.client.create_ytdl_player(url, after=lambda: check_queue(server.id))
         players[server.id] = player
 
