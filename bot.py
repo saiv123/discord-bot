@@ -247,8 +247,8 @@ async def nsfw(ctx, *args):
 
 @bot.command()
 async def test(ctx):
-    channel = ctx.message.author.voice.is_connected()
-    await ctx.send("hi")
+    channel = ctx.message.author.voice.channel
+    await ctx.send(channel)
 
 #for crapping out a chat
 @bot.command()
