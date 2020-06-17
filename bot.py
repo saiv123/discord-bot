@@ -6,6 +6,7 @@ from discord.ext import commands, tasks
 from discord.ext.commands import Bot
 import time, datetime
 import json, random
+import youtube_dl as yt
 
 # external libraies
 import quotes, prawn
@@ -22,6 +23,10 @@ TOKEN = f.read()
 f.close()
 del f
 
+#object to hold stuff for music
+players = {}
+queues = {}
+
 #for the math stuff
 client = wolframalpha.Client("XLQWQ2-A2HU3H9Y7V")
 
@@ -31,6 +36,12 @@ ts = time.time()
 
 # deleting default help comand
 bot.remove_command('help')
+
+def check_queue(id):
+    if queues[id] != []:
+        player = queues[id].pop(0)
+        players[id] = players
+        player.start()
 
 #used as a check for some command so only the people that are allowed to use it can use it
 def isOwner(ctx):
@@ -246,6 +257,54 @@ async def spam(ctx):
             lines = myfile.readlines()
             print('ready in 5')
             await ctx.send(lines)
+
+@bot.command(pass_context=True)
+async def join(ctx):
+    channel = ctx.message.author.voice.voice_channel
+    await client.join_voice_channel(channel)
+
+@bot.command(pass_context=True)
+async def leave(ctx):
+    server = ctx.message.servers
+    voice_client = client.voice_client_in(server)
+    await voice_client.disconnect()
+
+@bot.command(pass_context=True)
+async def play(ctx, url=""):
+    if url == "":
+        id = ctx.message.server.id
+        players[id].resume()
+        await ctx.send("Music has been resumed")
+    else:
+        try:
+            join(ctx)
+        except Exception as e:
+            print("bot already in channel")
+
+        server = ctx.message.server
+        voice_client = client.voice_client_in(server)
+        player = await voice_client.client.create_ytdl_player(url, after=lambda: check_queue(server.id))
+        players[server.id] = player
+
+        if server.id in queues:
+            queues[server.id].append(player)
+        else:
+            queues[server.id] = [player]
+
+        player.start()
+
+@bot.command(pass_context=True)
+async def pause(ctx):
+    id = ctx.message.server.id
+    players[id].pause()
+    await ctx.send("Music has been Paused")
+
+@bot.command(pass_context=True)
+async def stop(ctx):
+    id = ctx.message.server.id
+    players[id].stop()
+    leave(ctx)
+    await ctx.send("Music has been stoped")
 
 #runs the bot after all the methods have been loaded to memory
 bot.run(TOKEN)
