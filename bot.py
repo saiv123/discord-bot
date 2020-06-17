@@ -260,19 +260,19 @@ async def spam(ctx):
 
 @bot.command(pass_context=True)
 async def join(ctx):
-    channel = ctx.message.author.voice.voice_channel
+    channel = ctx.message.author.voice.channel
     await client.join_voice_channel(channel)
 
 @bot.command(pass_context=True)
 async def leave(ctx):
-    server = ctx.message.servers
+    server = ctx.message.guild
     voice_client = client.voice_client_in(server)
     await voice_client.disconnect()
 
 @bot.command(pass_context=True)
 async def play(ctx, url=""):
     if url == "":
-        id = ctx.message.server.id
+        id = ctx.message.guild.id
         players[id].resume()
         await ctx.send("Music has been resumed")
     else:
@@ -281,7 +281,7 @@ async def play(ctx, url=""):
         except Exception as e:
             print("bot already in channel")
 
-        server = ctx.message.server
+        server = ctx.message.guild
         voice_client = client.voice_client_in(server)
         player = await voice_client.client.create_ytdl_player(url, after=lambda: check_queue(server.id))
         players[server.id] = player
@@ -295,13 +295,13 @@ async def play(ctx, url=""):
 
 @bot.command(pass_context=True)
 async def pause(ctx):
-    id = ctx.message.server.id
+    id = ctx.message.guild.id
     players[id].pause()
     await ctx.send("Music has been Paused")
 
 @bot.command(pass_context=True)
 async def stop(ctx):
-    id = ctx.message.server.id
+    id = ctx.message.guild.id
     players[id].stop()
     leave(ctx)
     await ctx.send("Music has been stoped")
