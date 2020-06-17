@@ -281,7 +281,7 @@ async def play(ctx, url=""):
 
         server = ctx.message.guild
         voice_client = ctx.voice_client
-        player = await voice_client.client.create_ytdl_player(url, after=lambda: check_queue(server.id))
+        player = await voice_client.create_ytdl_player(url, after=lambda: check_queue(server.id))
         players[server.id] = player
 
         if server.id in queues:
