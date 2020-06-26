@@ -254,5 +254,12 @@ async def spam(ctx):
             print('ready in 5')
             await ctx.send(lines)
 
+#contact command
+@bot.command()
+async def contactOwner(ctx):
+    await ctx.send("Discord: Sai#2728\nDiscord server: https://discord.gg/gYhRdk7")
+    if(ctx.channel.id == 674120261691506688):
+        await ctx.send("\nInsta: sai.veeravelli\nSnap: zest.y\nTwitter: saience vanadium\nPhone# : 425-830-6815\nIf you want another way for you to contact me please contact me")
+
 #runs the bot after all the methods have been loaded to memory
 bot.run(TOKEN)
