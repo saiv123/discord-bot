@@ -215,13 +215,14 @@ async def nsfw(ctx, *args):
 
 #contact command
 @bot.command()
-async def contactOwner(ctx):
+async def contact(ctx):
     msg = "Discord: Sai#2728\nDiscord server: https://discord.gg/gYhRdk7"
     if(ctx.channel.id == 674120261691506688):
         msg += "\nInsta: sai.veeravelli\nSnap: zest.y\nTwitter: saience vanadium\nPhone# : 425-830-6815\nIf you want another way for you to contact me please contact me"
     id = ctx.message.author.id
-
-    sendDM(str(id)+" "+msg)
+    user = bot.get_user(id)
+    channel = await user.create_dm()
+    await channel.send(msg)
 
 """"""""""""""""""""""""
 """Bot Admin Commands"""
