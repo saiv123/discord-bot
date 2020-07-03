@@ -53,13 +53,17 @@ def msgReturn(type):
     del data, typeM
     return msgData
 
+""""""""""""""""""""""""""""""""""""""
+"""Inizalization of bot DO NOT EDIT"""
+""""""""""""""""""""""""""""""""""""""
+
 #starting the bot
 @bot.event
 async def on_ready():
     print('loged in as')
     print(bot.user.name)
     print(bot.user.id)
-    await bot.change_presence(activity=discord.Game(name='$help'))
+    await bot.change_presence(activity=discord.Game(name='with his food | $help'))
     print('current time - ' + str(ts))
     guilds = await bot.fetch_guilds(limit=150).flatten()
     print(str(len(guilds))+"\n")
@@ -83,10 +87,14 @@ async def on_message(message):
     else:
         await bot.process_commands(message)
 
+""""""""""""""
+"""Commands"""
+""""""""""""""
+
 #our curtom help command
 @bot.command(pass_context=True)
 async def help(ctx):
-    #creats a channel onject to dm the user the help command
+    #creats a channel object to dm the user the help command
     author = ctx.message.author
     channel = await author.create_dm()
 
@@ -106,7 +114,6 @@ async def help(ctx):
     embed.add_field(name='$hi', value='Will send hi back to you', inline=False)
     embed.add_field(name='$contactOwner', value='Will give you information on how to conact owner for support', inline=False)
 
-
     await channel.send(embed=embed)
 
 #says hello to your
@@ -116,30 +123,6 @@ async def hi(ctx):
     user = ("<@" + str(ctx.message.author.id) + "> ")
     await ctx.send("Hello "+user+"!!!!!!!")
 
-#this allows the admins of the bot to send a message to ANY discord user
-@bot.command()
-async def sendDM(ctx, id: int, *, msg: str):
-    if(isOwner(ctx)):
-        user = bot.get_user(id)
-        channel = await user.create_dm()
-        await channel.send(msg)
-    else:
-        await ctx.send("An error as occurred, please do not contact me about it.")
-
-#this allows the bot admins to change the status from the $help to something else
-@bot.command()
-async def status(ctx, type: str, *, other="https://twitch.tv/saiencevanadium/"):
-    if(isOwner(ctx)):
-        if(type.lower() == "stream"):
-            await bot.change_presence(activity=discord.Streaming(name="Watching my creator", url=other))
-        elif(type.lower() == "help"):
-            await bot.change_presence(activity=discord.Game(name='$help'))
-        elif(type.lower() == "music"):
-            await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=other))
-        elif(type.lower() == "watching"):
-            await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=other))
-    else:
-        await ctx.send(msgReturn("notOwner"))
 
 #for the user to see their notes
 @bot.command()
@@ -201,21 +184,6 @@ async def DefInte(ctx, a: int, b: int, func: str):
 async def quote(ctx):
     await ctx.send(quotes.formatQuote(text=quotes.getQuoteJSON()[0] + " :heart:"))
 
-#for the admins to turn off the bot
-@bot.command()
-async def off(ctx):
-    if(isOwner(ctx)):
-        await ctx.send(msgReturn("offMsg"))
-        await bot.logout()
-        sys.exit(0)
-    else:
-        await ctx.send(msgReturn("notOwner"))
-
-#gets the tempreture of the host pi
-@bot.command()
-async def temp(ctx):
-    temp = os.popen("vcgencmd measure_temp").readline()
-    await ctx.send(temp.replace("temp=",""))
 
 #for getting nsfw images from the library
 @bot.command()
@@ -245,21 +213,61 @@ async def nsfw(ctx, *args):
         else:
             await ctx.send("Sorry, but this command can only be used in a NSFW channel.")
 
-#for crapping out a chat
-@bot.command()
-async def spam(ctx):
-    if(isOwner(ctx)):
-        with open("Shrek.txt", 'r') as myfile:
-            lines = myfile.readlines()
-            print('ready in 5')
-            await ctx.send(lines)
-
 #contact command
 @bot.command()
 async def contactOwner(ctx):
-    await ctx.send("Discord: Sai#2728\nDiscord server: https://discord.gg/gYhRdk7")
+    str = "Discord: Sai#2728\nDiscord server: https://discord.gg/gYhRdk7"
     if(ctx.channel.id == 674120261691506688):
-        await ctx.send("\nInsta: sai.veeravelli\nSnap: zest.y\nTwitter: saience vanadium\nPhone# : 425-830-6815\nIf you want another way for you to contact me please contact me")
+        str += "\nInsta: sai.veeravelli\nSnap: zest.y\nTwitter: saience vanadium\nPhone# : 425-830-6815\nIf you want another way for you to contact me please contact me"
+    id = ctx.message.author.id
+
+    sendDM(id+" "+str)
+
+""""""""""""""""""""""""
+"""Bot Admin Commands"""
+""""""""""""""""""""""""
+
+#for the admins to turn off the bot
+@bot.command()
+async def off(ctx):
+    if(isOwner(ctx)):
+        await ctx.send(msgReturn("offMsg"))
+        await bot.logout()
+        sys.exit(0)
+    else:
+        await ctx.send(msgReturn("notOwner"))
+
+#gets the tempreture of the host pi
+@bot.command()
+async def temp(ctx):
+    temp = os.popen("vcgencmd measure_temp").readline()
+    await ctx.send(temp.replace("temp=",""))
+
+#this allows the admins of the bot to send a message to ANY discord user
+@bot.command()
+async def sendDM(ctx, id: int, *, msg: str):
+    if(isOwner(ctx)):
+        user = bot.get_user(id)
+        channel = await user.create_dm()
+        await channel.send(msg)
+    else:
+        await ctx.send("An error as occurred, please do not contact me about it.")
+
+#this allows the bot admins to change the status from the $help to something else
+@bot.command()
+async def status(ctx, type: str, *, other="https://twitch.tv/saiencevanadium/"):
+    if(isOwner(ctx)):
+        if(type.lower() == "stream"):
+            await bot.change_presence(activity=discord.Streaming(name="Watching my creator", url=other))
+        elif(type.lower() == "help"):
+            await bot.change_presence(activity=discord.Game(name='$help'))
+        elif(type.lower() == "music"):
+            await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=other))
+        elif(type.lower() == "watching"):
+            await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=other))
+    else:
+        await ctx.send(msgReturn("notOwner"))
+
 
 #runs the bot after all the methods have been loaded to memory
 bot.run(TOKEN)
