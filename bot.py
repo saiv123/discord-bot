@@ -282,7 +282,7 @@ async def shrek(ctx):
             toSend = ''
             while len(toSend) < 1500 and i < len(lines): #Send 2000 chars
                 if len(lines[i].lstrip()) > 1:
-                    toSend = toSend +'\n'+ lines[i].lstrip()
+                    toSend = toSend +'\n'+ lines[i].replace('\n','').lstrip()
                 i = i + 1
             await ctx.send(toSend[1:]) #deletes leading newline (ewww what's fenceposting)
 
