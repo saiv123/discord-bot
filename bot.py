@@ -13,7 +13,7 @@ import quotes, prawn
 #dir for the bots location
 os.chdir("/home/pi/discord-bot")
 
-# list is ordered in [leon,sai]
+# List of Owners/Bot admins
 ownerId = [231957319737540608, 240636443829993473]
 
 #gets the bots personal token to boot
@@ -32,11 +32,9 @@ ts = time.time()
 # deleting default help comand
 bot.remove_command('help')
 
-def check_queue(id):
-    if queues[id] != []:
-        player = queues[id].pop(0)
-        players[id] = players
-        player.start()
+""""""""""""""""""""""""""
+"""bots helper commands"""
+""""""""""""""""""""""""""
 
 #used as a check for some command so only the people that are allowed to use it can use it
 def isOwner(ctx):
@@ -112,7 +110,7 @@ async def help(ctx):
     embed.add_field(name='$quote', value='Give you heart warming quotes', inline=False)
     embed.add_field(name='$nsfw', value='will give you a random nsfw image\nyou can choose a category from $nsfw category\nfrom the list you have to spell out the category excatly how it is sent to you as\n$nsfw [category]', inline=False)
     embed.add_field(name='$hi', value='Will send hi back to you', inline=False)
-    embed.add_field(name='$contactOwner', value='Will give you information on how to conact owner for support', inline=False)
+    embed.add_field(name='$contact', value='Will give you information on how to conact owner for support', inline=False)
 
     await channel.send(embed=embed)
 
@@ -206,8 +204,7 @@ async def nsfw(ctx, *args):
                 else:
                     pu = prawn.getRandomLineFromQuery(query)
                 print(pu)
-                em = discord.Embed(description=pu[0], color=random.randrange(
-                    10000, 16777215, 1))  # 16777... is just FFFFFF in base10
+                em = discord.Embed(description=pu[0], color=random.randrange(10000, 16777215, 1))  # 16777... is just FFFFFF in base10
                 em.set_image(url=pu[1])
                 await ctx.send(embed=em)
         else:
@@ -216,9 +213,14 @@ async def nsfw(ctx, *args):
 #contact command
 @bot.command()
 async def contact(ctx):
+    f = open("conact.txt", 'r')
+    cont = f.read()
+    f.close()
+    del f
+
     msg = "Discord: Sai#2728\nDiscord server: https://discord.gg/gYhRdk7"
     if(ctx.channel.id == 674120261691506688):
-        msg += "\nInsta: sai.veeravelli\nSnap: zest.y\nTwitter: saience vanadium\nPhone# : 425-830-6815\nIf you want another way for you to contact me please contact me"
+        msg += cont
     id = ctx.message.author.id
     user = bot.get_user(id)
     channel = await user.create_dm()
@@ -261,7 +263,7 @@ async def status(ctx, type: str, *, other="https://twitch.tv/saiencevanadium/"):
         if(type.lower() == "stream"):
             await bot.change_presence(activity=discord.Streaming(name="Watching my creator", url=other))
         elif(type.lower() == "help"):
-            await bot.change_presence(activity=discord.Game(name='$help'))
+            await bot.change_presence(activity=discord.Game(name='with his food | $help'))
         elif(type.lower() == "music"):
             await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=other))
         elif(type.lower() == "watching"):
