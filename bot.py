@@ -213,10 +213,10 @@ async def nsfw(ctx, *args):
 #contact command
 @bot.command()
 async def contact(ctx):
-    f = open("contact.txt", 'r')
-    cont = f.read()
-    f.close()
-    del f
+    h = open("contact.txt", 'r')
+    cont = h.read()
+    h.close()
+    del h
 
     msg = "Discord: Sai#2728\nDiscord server: https://discord.gg/gYhRdk7"
     if(ctx.channel.id == 674120261691506688):
