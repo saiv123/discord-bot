@@ -26,7 +26,7 @@ del f
 client = wolframalpha.Client("XLQWQ2-A2HU3H9Y7V")
 
 #setting up the bot, with its discritpion etc.
-bot = commands.Bot(command_prefix='$', description="Its a Sick use less bot")
+bot = commands.Bot(command_prefix='$', description="Its a Sick use-less bot")
 ts = time.time()
 
 # deleting default help comand
@@ -75,15 +75,15 @@ async def on_message(message):
     nameNote = "dmLogs.txt"
     if(message.author.id == 371865866704257025): #for removing bobcat from servers
         await message.delete()
-        await bot.process_commands(message)
+        return
     elif message.guild is None and message.author != bot.user: #checks if theres a dm to the bot, and logs it
         other = await bot.fetch_user(message.author.id)
         with open(nameNote, 'a') as file:
             file.write(str(datetime.datetime.now()) + " " +
                        other.name + " -- " + message.content + "\n")
-        await bot.process_commands(message)
-    else:
-        await bot.process_commands(message)
+    
+    # Respond to commands last
+    await bot.process_commands(message)
 
 """"""""""""""
 """Commands"""
@@ -108,6 +108,7 @@ async def help(ctx):
     embed.add_field(name='$uptime', value='The time the bot has been up in HH:MM:SS', inline=False)
     embed.add_field(name='$DefInte', value='Finds the intergral $DefInte a b f(x)', inline=False)
     embed.add_field(name='$quote', value='Give you heart warming quotes', inline=False)
+    embed.add_field(name='$randquote', value='Give you a random quote', inline=False)
     embed.add_field(name='$nsfw', value='will give you a random nsfw image\nyou can choose a category from $nsfw category\nfrom the list you have to spell out the category excatly how it is sent to you as\n$nsfw [category]', inline=False)
     embed.add_field(name='$hi', value='Will send hi back to you', inline=False)
     embed.add_field(name='$contact', value='Will give you information on how to conact owner for support', inline=False)
@@ -182,7 +183,34 @@ async def DefInte(ctx, a: int, b: int, func: str):
 async def quote(ctx):
     await ctx.send(quotes.formatQuote(text=quotes.getQuoteJSON()[0] + " :heart:"))
 
+#sends a random quote
+@bot.command()
+async def randquote(ctx):
+    quote, author = quotes.getQuoteApi()
+    await ctx.send(quotes.formatQuote(text=quote,author=author))
 
+# For getting memes from the library
+memePath = 'ClassWork/'
+@bot.command()
+async def meme(ctx, *args):
+    query = ' '.join(args)
+    #logic for getting the category list
+    if 'category' in query.lower() or 'categories' in query.lower():
+        color = random.randrange(10000, 16777215, 1)
+        for message in prawn.getCategoryMessages(path=memePath):
+            em = discord.Embed(description=message, color=color)
+            await ctx.send(embed=em)
+    else: #Try and get category. If not possible, get a random meme
+        pu = ('Error', 'https://www.prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg')
+        if len(str(query)) <= 2:
+            pu = prawn.getRandom(path=memePath)
+        else:
+            pu = prawn.getRandomLineFromQuery(query,path=memePath)
+        print(pu)
+        em = discord.Embed(description=pu[0], color=random.randrange(10000, 16777215, 1))  # 16777... is just FFFFFF in base10
+        em.set_image(url=pu[1])
+
+        await ctx.send(embed=em)
 #for getting nsfw images from the library
 @bot.command()
 async def nsfw(ctx, *args):

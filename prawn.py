@@ -42,18 +42,18 @@ def getFileName(filePath):
                 filePath = filePath[filePath.rfind('\\')+1:]
         return filePath.replace('_',' ').replace('urls','').replace('url','')
 
-def getRandom():
-        filePath = random.choice(getFileList(prawnPath))
-        return 'From '+getFileName(filePath), getRandomLineFromFile(prawnPath + filePath)
+def getRandom(path=prawnPath):
+        filePath = random.choice(getFileList(path))
+        return 'From '+getFileName(filePath), getRandomLineFromFile(path + filePath)
 
-def getRandomLineFromQuery(query):
-        closest = getClosestFromList(getFileList(prawnPath),query)
+def getRandomLineFromQuery(query,path=prawnPath):
+        closest = getClosestFromList(getFileList(path),query)
         modifier = ''
         
         # Let's check for a threshold
         dist = distance(getFileName(closest).lower(), query.lower())
         if dist > (len(closest)-3)*0.4: # Can be 40% wrong
-                categories = ', '.join(map(getFileName, getFileList(prawnPath)))
+                categories = ', '.join(map(getFileName, getFileList(path)))
                 return 'Error, category not found.\nYou should use the argument \'category\' to list categories. \nDid you mean '+getFileName(closest)+'?', ''
         
         # If 20% wrong, hassle them
@@ -61,11 +61,11 @@ def getRandomLineFromQuery(query):
                 modifier = 'Using category ```'+getFileName(closest)+'```\n'
         
         # Threshold is met, return random line from file
-        return modifier, getRandomLineFromFile(prawnPath + closest)
+        return modifier, getRandomLineFromFile(path + closest)
 
-def getCategoryMessages():
+def getCategoryMessages(path=prawnPath):
         messageList = []
-        fileList = getFileList(prawnPath)
+        fileList = getFileList(path)
         
         i = 0
         subList = []
