@@ -186,8 +186,9 @@ async def quote(ctx):
 #sends a random quote
 @bot.command()
 async def randquote(ctx):
-    quote, author = quotes.getQuoteApi()
-    await ctx.send(quotes.formatQuote(text=quote,author=author))
+    async with ctx.channel.typing():
+        quote, author = quotes.getQuoteApi()
+        await ctx.send(quotes.formatQuote(text=quote,author=author))
 
 # For getting memes from the library
 memePath = 'ClassWork/'
