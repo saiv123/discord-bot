@@ -213,7 +213,7 @@ async def nsfw(ctx, *args):
 #contact command
 @bot.command()
 async def contact(ctx):
-    f = open("conact.txt", 'r')
+    f = open("contact.txt", 'r')
     cont = f.read()
     f.close()
     del f
