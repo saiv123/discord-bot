@@ -268,6 +268,22 @@ async def off(ctx):
     else:
         await ctx.send(msgReturn("notOwner"))
 
+#for admins to admire shrek. Freezes the bot for a bit, so don't actually use
+@bot.command()
+async def shrek(ctx):
+    if not isOwner(ctx):
+        await ctx.send(msgReturn("notOwner"))
+        return
+    with open('Shrek.txt', 'r') as file: 
+        lines = file.readlines()
+        i = 0
+        while i < len(lines):
+            toSend = ''
+            while len(toSend) < 1500 and i < len(lines): #Send 2000 chars
+                toSend = toSend +'\n'+ lines[i]
+                i = i + 1
+            await ctx.send(toSend[1:]) #deletes leading newline (ewww what's fenceposting)
+
 #gets the tempreture of the host pi
 @bot.command()
 async def temp(ctx):
