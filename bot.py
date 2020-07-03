@@ -221,7 +221,7 @@ async def contactOwner(ctx):
         str += "\nInsta: sai.veeravelli\nSnap: zest.y\nTwitter: saience vanadium\nPhone# : 425-830-6815\nIf you want another way for you to contact me please contact me"
     id = ctx.message.author.id
 
-    sendDM(id+" "+str)
+    sendDM(str(id)+" "+str)
 
 """"""""""""""""""""""""
 """Bot Admin Commands"""
