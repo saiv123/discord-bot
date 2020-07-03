@@ -214,7 +214,7 @@ async def meme(ctx, *args):
 #for getting nsfw images from the library
 @bot.command()
 async def nsfw(ctx, *args):
-    if(ctx.guild is None and message.author != bot.user): #checks of user is trying to get past the nsfw filter
+    if(ctx.guild is None and ctx.message.author != bot.user): #checks of user is trying to get past the nsfw filter
         await ctx.send("You Dumb stupid you are not allowed to use this command in dms")
     else:
         if(ctx.channel.is_nsfw()):#checks if the channel the command was sent from is nsfw
