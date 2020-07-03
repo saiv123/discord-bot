@@ -7,7 +7,7 @@ prawnPath = 'MyHomework/'
 
 def getFileList(path):
         filelist = []
-        for root, dirs, files in os.walk(prawnPath):
+        for root, dirs, files in os.walk(path):
                 for file in files:
                         if str(file).endswith('.txt'):
                                 filelist.append(file)
