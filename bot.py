@@ -273,5 +273,4 @@ async def status(ctx, type: str, *, other="https://twitch.tv/saiencevanadium/"):
 
 
 #runs the bot after all the methods have been loaded to memory
-print(TOKEN)
 bot.run(TOKEN)
