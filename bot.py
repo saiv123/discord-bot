@@ -23,7 +23,10 @@ f.close()
 del f
 
 #for the math stuff
-client = wolframalpha.Client("XLQWQ2-A2HU3H9Y7V")
+j = open("wolfID.txt", 'r')
+id = j.read()
+j.close()
+client = wolframalpha.Client(id)
 
 #setting up the bot, with its discritpion etc.
 bot = commands.Bot(command_prefix='$', description="Its a Sick use-less bot")
@@ -67,7 +70,7 @@ async def on_ready():
     print(str(len(guilds))+"\n")
     for i in guilds:
         print(i.name+" ")
-    print('-------')
+    print('-----------')
 
 #for every message it does these checks
 @bot.event
@@ -79,8 +82,7 @@ async def on_message(message):
     elif message.guild is None and message.author != bot.user: #checks if theres a dm to the bot, and logs it
         other = await bot.fetch_user(message.author.id)
         with open(nameNote, 'a') as file:
-            file.write(str(datetime.datetime.now()) + " " +
-                       other.name + " -- " + message.content + "\n")
+            file.write(str(datetime.datetime.now()) + " " +other.name + " -- " + message.content + "\n")
 
     # Respond to commands last
     await bot.process_commands(message)
@@ -214,6 +216,7 @@ async def meme(ctx, *args):
         em.set_image(url=pu[1])
 
         await ctx.send(embed=em)
+
 #for getting nsfw images from the library
 @bot.command()
 async def nsfw(ctx, *args):
