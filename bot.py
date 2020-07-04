@@ -171,8 +171,19 @@ async def notes(ctx, *, notes=" "):
 #return the time the bot has been running
 @bot.command()
 async def uptime(ctx):
+    #calculating time bot has been on
     tso = time.time()
-    await ctx.send(time.strftime("%H:%M:%S", time.gmtime(tso - ts)))
+    msg = time.strftime("%H Hours %M Minutes %S Seconds", time.gmtime(tso - ts))
+
+    #random color for embed
+    color = random.randrange(10000, 16777215, 1)
+
+    #seting up an embed
+    embed = discord.Embed(colour=color)
+    embed.set_author(name='I have been awake for:')
+    embed.add_field(value=msg, inline=False)
+
+    await ctx.send(embed=embed)
 
 #return the answers to deffenet integrals
 @bot.command()
