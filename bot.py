@@ -35,9 +35,9 @@ ts = time.time()
 # deleting default help comand
 bot.remove_command('help')
 
-""""""""""""""""""""""""""
-"""bots helper commands"""
-""""""""""""""""""""""""""
+##########################
+###bots helper commands###
+##########################
 
 #used as a check for some command so only the people that are allowed to use it can use it
 def isOwner(ctx):
@@ -54,9 +54,9 @@ def msgReturn(type):
     del data, typeM
     return msgData
 
-""""""""""""""""""""""""""""""""""""""
-"""Inizalization of bot DO NOT EDIT"""
-""""""""""""""""""""""""""""""""""""""
+######################################
+###Inizalization of bot DO NOT EDIT###
+######################################
 
 #starting the bot
 @bot.event
@@ -87,9 +87,9 @@ async def on_message(message):
     # Respond to commands last
     await bot.process_commands(message)
 
-""""""""""""""
-"""Commands"""
-""""""""""""""
+##############
+###Commands###
+##############
 
 #our curtom help command
 @bot.command(pass_context=True)
@@ -269,9 +269,9 @@ async def contact(ctx):
     channel = await user.create_dm()
     await channel.send(msg)
 
-""""""""""""""""""""""""
-"""Bot Admin Commands"""
-""""""""""""""""""""""""
+########################
+###Bot Admin Commands###
+########################
 
 #for the admins to turn off the bot
 @bot.command()
