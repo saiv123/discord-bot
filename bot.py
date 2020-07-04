@@ -314,7 +314,7 @@ async def sendDM(ctx, id: int, *, msg: str):
         channel = await user.create_dm()
         await channel.send(msg)
     else:
-        await ctx.send("An error as occurred, please do not contact me about it.")
+        await ctx.send(msgReturn("notOwner"))
 
 #this allows the bot admins to change the status from the $help to something else
 @bot.command()
