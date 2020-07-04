@@ -171,20 +171,20 @@ async def notes(ctx, *, notes=" "):
 #return the time the bot has been running
 @bot.command()
 async def uptime(ctx):
-    #calculating time bot has been on
-    tso = time.time()
-    msg = time.strftime("%H Hours %M Minutes %S Seconds", time.gmtime(tso - ts))
+    async with ctx.channel.typing():
+        #calculating time bot has been on
+        tso = time.time()
+        msg = time.strftime("%H Hours %M Minutes %S Seconds", time.gmtime(tso - ts))
+        #random color for embed
+        color = random.randrange(10000, 16777215, 1)
+        #seting up an embed
+        embed = discord.Embed(colour=color)
+        embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png")
+        embed.add_field(name='I have been awake for:',value=msg, inline=True)
 
-    #random color for embed
-    color = random.randrange(10000, 16777215, 1)
+        await ctx.send(embed=embed)
 
-    #seting up an embed
-    embed = discord.Embed(colour=color)
-    embed.add_field(name='I have been awake for:',value=msg, inline=False)
-
-    await ctx.send(embed=embed)
-
-#return the answers to deffenet integrals
+#return the answers to defenet integrals
 @bot.command()
 async def DefInte(ctx, a: int, b: int, func: str):
     res = client.query('integrate ' + func + ' from ' +
