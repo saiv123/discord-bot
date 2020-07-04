@@ -81,7 +81,7 @@ async def on_message(message):
         with open(nameNote, 'a') as file:
             file.write(str(datetime.datetime.now()) + " " +
                        other.name + " -- " + message.content + "\n")
-    
+
     # Respond to commands last
     await bot.process_commands(message)
 
@@ -102,15 +102,16 @@ async def help(ctx):
     )
 
     embed.set_author(name='Help')
+    embed.add_field(name='$hi', value='Will send hi back to you', inline=False)
     embed.add_field(name='$notes', value='You can add notes to your notes file', inline=False)
     embed.add_field(name='$deletenotes',value='Deletes ALL your notes', inline=False)
     embed.add_field(name='$getnotes',value='Dms you your last 5 notes', inline=False)
     embed.add_field(name='$uptime', value='The time the bot has been up in HH:MM:SS', inline=False)
     embed.add_field(name='$DefInte', value='Finds the intergral $DefInte a b f(x)', inline=False)
-    embed.add_field(name='$quote', value='Give you heart warming quotes', inline=False)
+    embed.add_field(name='$quote', value='Gives you heart warming quotes', inline=False)
     embed.add_field(name='$randquote', value='Give you a random quote', inline=False)
     embed.add_field(name='$nsfw', value='will give you a random nsfw image\nyou can choose a category from $nsfw category\nfrom the list you have to spell out the category excatly how it is sent to you as\n$nsfw [category]', inline=False)
-    embed.add_field(name='$hi', value='Will send hi back to you', inline=False)
+    embed.add_field(name='$meme', value='will give you a random meme image\nyou can choose a category from $meme category\nfrom the list you have to spell out the category excatly how it is sent to you as\n$meme [category]', inline=False)
     embed.add_field(name='$contact', value='Will give you information on how to conact owner for support', inline=False)
 
     await channel.send(embed=embed)
@@ -181,7 +182,8 @@ async def DefInte(ctx, a: int, b: int, func: str):
 #sends a warming quote
 @bot.command()
 async def quote(ctx):
-    await ctx.send(quotes.formatQuote(text=quotes.getQuoteJSON()[0] + " :heart:"))
+    async with ctx.channel.typing():
+        await ctx.send(quotes.formatQuote(text=quotes.getQuoteJSON()[0] + " :heart:"))
 
 #sends a random quote
 @bot.command()
@@ -275,7 +277,7 @@ async def shrek(ctx):
     if not isOwner(ctx):
         await ctx.send(msgReturn("notOwner"))
         return
-    with open('Shrek.txt', 'r') as file: 
+    with open('Shrek.txt', 'r') as file:
         lines = file.readlines()
         i = 0
         while i < len(lines):
