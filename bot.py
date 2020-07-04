@@ -180,8 +180,7 @@ async def uptime(ctx):
 
     #seting up an embed
     embed = discord.Embed(colour=color)
-    embed.set_author(name='I have been awake for:')
-    embed.add_field(name=msg,value=msg, inline=False)
+    embed.add_field(name='I have been awake for:',value=msg, inline=False)
 
     await ctx.send(embed=embed)
 
