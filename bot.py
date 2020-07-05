@@ -171,7 +171,7 @@ async def uptime(ctx):
     #seting up an embed
     embed = discord.Embed(colour=color)
     embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png")
-    embed.add_field(name='I have been awake for:',value=msg, inline=True)
+    embed.add_field(name='I have been awake for:',value=msg, inline=False)
     async with ctx.channel.typing():
         await ctx.send(embed=embed)
 
