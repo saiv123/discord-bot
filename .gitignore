@@ -6,6 +6,7 @@ wolfID.txt
 start.sh
 stop.sh
 update.sh
+secret.py
 MyHomework/
 __pycache__/
 MyPorn/
