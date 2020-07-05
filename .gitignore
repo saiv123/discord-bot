@@ -1,8 +1,4 @@
 dmLogs.txt
-token.txt
-photos/
-contact.txt
-wolfID.txt
 start.sh
 stop.sh
 update.sh
@@ -11,3 +7,4 @@ MyHomework/
 __pycache__/
 MyPorn/
 ClassWork/
+photos/
