@@ -260,32 +260,33 @@ async def contact(ctx):
     await channel.send(msg)
 
 @bot.command()
-async def rps(ctx, args):
-    args.lower()
+async def rps(ctx, *args):
+    str = ''.join(args)
+    str.lower()
     correct = False
     opt = ["rock","paper","scissors"]
     for i in opt:
-        if (i == args):
+        if (i == str):
             correct = True
 
     if(correct):
         await ctx.send("Somthing went worng the command is used like\n$rps [rock,paper,or scissors]")
     else:
         randC = opt[random.randint(0,3)]
-        if(randC == args):
+        if(randC == str):
             await ctx.send("Its a draw! Better luck next time")
         elif(randC == "rock"):
-            if(args == "paper"):
+            if(str == "paper"):
                 await ctx.send("You win. Nice job. :partying_face:")
             else:
                 await ctx.send("I win ;) Better luck next time")
         elif(randC == "paper"):
-            if(args == "scissors"):
+            if(str == "scissors"):
                 await ctx.send("You win. Nice job. :partying_face:")
             else:
                 await ctx.send("I win ;) Better luck next time")
         else:
-            if(args == "rock"):
+            if(str == "rock"):
                 await ctx.send("You win. Nice job. :partying_face:")
             else:
                 await ctx.send("I win ;) Better luck next time")
