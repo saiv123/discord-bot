@@ -259,6 +259,7 @@ async def contact(ctx):
     channel = await user.create_dm()
     await channel.send(msg)
 
+#rock paper scissors game with the bot (somwhat buggy so no touchy)
 @bot.command()
 async def rps(ctx, *args):
     str = ''.join(args)
