@@ -265,7 +265,8 @@ async def rps(ctx, *args):
     correct = False
     opt = ["rock","paper","scissors"]
     for i in opt:
-        if (i == args) correct = True
+        if (i == args):
+            correct = True
 
     if(correct):
         await ctx.send("Somthing went worng the command is used like\n$rps [rock,paper,or scissors]")
