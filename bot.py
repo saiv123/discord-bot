@@ -9,6 +9,7 @@ import json, random
 
 # external libraies
 import quotes, prawn
+from secret.py import TOKEN, id, cont
 
 #dir for the bots location
 os.chdir("/home/pi/discord-bot")
@@ -16,16 +17,7 @@ os.chdir("/home/pi/discord-bot")
 # List of Owners/Bot admins
 ownerId = [231957319737540608, 240636443829993473]
 
-#gets the bots personal token to boot
-f = open("token.txt", 'r')
-TOKEN = f.read()
-f.close()
-del f
-
 #for the math stuff
-j = open("wolfID.txt", 'r')
-id = j.read()
-j.close()
 client = wolframalpha.Client(id)
 
 #setting up the bot, with its discritpion etc.
@@ -256,11 +248,6 @@ async def nsfw(ctx, *args):
 #contact command
 @bot.command()
 async def contact(ctx):
-    h = open("contact.txt", 'r')
-    cont = h.read()
-    h.close()
-    del h
-
     msg = "Discord: Sai#2728\nDiscord server: https://discord.gg/gYhRdk7"
     if(ctx.channel.id == 674120261691506688):
         msg += cont
