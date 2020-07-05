@@ -260,6 +260,18 @@ async def contact(ctx):
 ###Bot Admin Commands###
 ########################
 
+#to update and restart bot
+@bot.command()
+async def update(ctx):
+    if(isOwner(ctx)):
+        async with ctx.channel.typing():
+            await ctx.send("Updating ...")
+            await bot.logout()
+        os.system("sh update.sh")
+        sys.exit(0)
+    else:
+        await ctx.send(msgReturn("notOwner"))
+
 #for the admins to turn off the bot
 @bot.command()
 async def off(ctx):
