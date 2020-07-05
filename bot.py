@@ -269,6 +269,8 @@ async def rps(ctx, *args):
         if (i == str):
             correct = True
 
+    if(str == ''):
+        correct = False
     if(correct):
         await ctx.send("Somthing went worng the command is used like\n$rps [rock,paper,or scissors]")
     else:
