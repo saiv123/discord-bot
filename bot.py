@@ -173,6 +173,7 @@ async def uptime(ctx):
     embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png")
     embed.add_field(name='I have been awake for:',value=msg, inline=False)
     async with ctx.channel.typing():
+        time.sleep(3)
         await ctx.send(embed=embed)
 
 #return the answers to defenet integrals
@@ -186,12 +187,14 @@ async def DefInte(ctx, a: int, b: int, func: str):
 @bot.command()
 async def quote(ctx):
     async with ctx.channel.typing():
+        time.sleep(3)
         await ctx.send(quotes.formatQuote(text=quotes.getQuoteJSON()[0] + " :heart:"))
 
 #sends a random quote
 @bot.command()
 async def randquote(ctx):
     async with ctx.channel.typing():
+        time.sleep(3)
         quote, author = quotes.getQuoteApi()
         await ctx.send(quotes.formatQuote(text=quote,author=author))
 
@@ -265,6 +268,7 @@ async def contact(ctx):
 async def update(ctx):
     if(isOwner(ctx)):
         async with ctx.channel.typing():
+            time.sleep(3)
             await ctx.send("Updating ...")
             await bot.logout()
         os.system("sh update.sh")
