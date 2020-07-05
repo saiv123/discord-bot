@@ -9,7 +9,7 @@ import json, random
 
 # external libraies
 import quotes, prawn
-from secret.py import TOKEN, id, cont
+from secret import TOKEN, id, cont
 
 #dir for the bots location
 os.chdir("/home/pi/discord-bot")
