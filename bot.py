@@ -259,6 +259,21 @@ async def contact(ctx):
     channel = await user.create_dm()
     await channel.send(msg)
 
+@bot.command()
+async def rps(ctx, *args):
+    args.lower()
+    correct = False
+    opt = ["rock","paper","scissors"]
+    for i in opt:
+        if (i == args) correct = True
+
+    if(correct):
+        await ctx.send("Somthing went worng the command is used like\n$rps [rock,paper,or scissors]")
+    else:
+        randC = opt[random.randint(0,3)]
+        if(randC == args):
+            await ctx.send("Its a draw! Better luck next time")
+        else:
 ########################
 ###Bot Admin Commands###
 ########################
