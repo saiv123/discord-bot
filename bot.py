@@ -260,7 +260,7 @@ async def contact(ctx):
     await channel.send(msg)
 
 @bot.command()
-async def rps(ctx, *args):
+async def rps(ctx, args):
     args.lower()
     correct = False
     opt = ["rock","paper","scissors"]
