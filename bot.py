@@ -273,7 +273,21 @@ async def rps(ctx, *args):
         randC = opt[random.randint(0,3)]
         if(randC == args):
             await ctx.send("Its a draw! Better luck next time")
+        elif(randC == "rock"):
+            if(args == "paper"):
+                await ctx.send("You win. Nice job. :partying_face:")
+            else:
+                await ctx.send("I win ;) Better luck next time")
+        elif(randC == "paper"):
+            if(args == "scissors"):
+                await ctx.send("You win. Nice job. :partying_face:")
+            else:
+                await ctx.send("I win ;) Better luck next time")
         else:
+            if(args == "rock"):
+                await ctx.send("You win. Nice job. :partying_face:")
+            else:
+                await ctx.send("I win ;) Better luck next time")
 ########################
 ###Bot Admin Commands###
 ########################
