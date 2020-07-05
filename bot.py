@@ -271,7 +271,7 @@ async def rps(ctx, *args):
 
     if(str == ''):
         correct = False
-    if(correct):
+    if(not correct):
         await ctx.send("Somthing went worng the command is used like\n$rps [rock,paper,or scissors]")
     else:
         randC = opt[random.randint(0,3)]
