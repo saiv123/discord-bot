@@ -278,7 +278,7 @@ async def rps(ctx, *args):
     if(not correct):
         output=("Somthing went worng the command is used like\n$rps [rock,paper,or scissors]")
     else:
-        randC = opt[random.randint(0,3)]
+        randC = opt[random.randint(0,2)]
         if(randC == msg):
             output=("Its a draw! Better luck next time\nBot: "+randC+" "+user+": "+msg)
         elif(randC == "rock"):
