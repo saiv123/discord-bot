@@ -293,9 +293,9 @@ async def rps(ctx, *args):
                 output=("I win ;) Better luck next time\nBot: "+randC+" "+user+": "+str)
         else:
             if(str == "rock"):
-                await output=("You win. Nice job. :partying_face:\nBot: "+randC+" "+user+": "+str)
+                output=("You win. Nice job. :partying_face:\nBot: "+randC+" "+user+": "+str)
             else:
-                await output=("I win ;) Better luck next time\nBot: "+randC+" "+user+": "+str)
+                output=("I win ;) Better luck next time\nBot: "+randC+" "+user+": "+str)
     await ctx.send(output)
 ########################
 ###Bot Admin Commands###
