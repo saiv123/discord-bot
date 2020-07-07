@@ -270,7 +270,7 @@ async def rps(ctx, *args):
     correct = False
     opt = ["rock","paper","scissors"]
     for i in opt:
-        if (i == msgData):
+        if (i == msg):
             correct = True
 
     if(msg == ''):
