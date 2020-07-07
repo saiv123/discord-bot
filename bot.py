@@ -265,37 +265,37 @@ async def contact(ctx):
 async def rps(ctx, *args):
     user = ("<@" + str(ctx.message.author.id) + "> ")
     output = ""
-    str = ''.join(args)
-    str.lower()
+    msg = ''.join(args)
+    msg.lower()
     correct = False
     opt = ["rock","paper","scissors"]
     for i in opt:
-        if (i == str):
+        if (i == msgData):
             correct = True
 
-    if(str == ''):
+    if(msg == ''):
         correct = False
     if(not correct):
         output=("Somthing went worng the command is used like\n$rps [rock,paper,or scissors]")
     else:
         randC = opt[random.randint(0,3)]
-        if(randC == str):
-            output=("Its a draw! Better luck next time\nBot: "+randC+" "+user+": "+str)
+        if(randC == msg):
+            output=("Its a draw! Better luck next time\nBot: "+randC+" "+user+": "+msg)
         elif(randC == "rock"):
-            if(str == "paper"):
-                output=("You win. Nice job. :partying_face:\nBot: "+randC+" "+user+": "+str)
+            if(msg == "paper"):
+                output=("You win. Nice job. :partying_face:\nBot: "+randC+" "+user+": "+msg)
             else:
-                output=("I win ;) Better luck next time\nBot: "+randC+" "+user+": "+str)
+                output=("I win ;) Better luck next time\nBot: "+randC+" "+user+": "+msg)
         elif(randC == "paper"):
-            if(str == "scissors"):
-                output=("You win. Nice job. :partying_face:\nBot: "+randC+" "+user+": "+str)
+            if(msg == "scissors"):
+                output=("You win. Nice job. :partying_face:\nBot: "+randC+" "+user+": "+msg)
             else:
-                output=("I win ;) Better luck next time\nBot: "+randC+" "+user+": "+str)
+                output=("I win ;) Better luck next time\nBot: "+randC+" "+user+": "+msg)
         else:
-            if(str == "rock"):
-                output=("You win. Nice job. :partying_face:\nBot: "+randC+" "+user+": "+str)
+            if(msg == "rock"):
+                output=("You win. Nice job. :partying_face:\nBot: "+randC+" "+user+": "+msg)
             else:
-                output=("I win ;) Better luck next time\nBot: "+randC+" "+user+": "+str)
+                output=("I win ;) Better luck next time\nBot: "+randC+" "+user+": "+msg)
     await ctx.send(output)
 ########################
 ###Bot Admin Commands###
