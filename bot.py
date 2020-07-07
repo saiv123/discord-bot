@@ -260,9 +260,11 @@ async def contact(ctx):
     channel = await user.create_dm()
     await channel.send(msg)
 
-#rock paper scissors game with the bot (somwhat buggy so no touchy)
+#rock paper scissors game with the bot (some what buggy so no touchy)
 @bot.command()
 async def rps(ctx, *args):
+    user = ("<@" + str(ctx.message.author.id) + "> ")
+    output = ""
     str = ''.join(args)
     str.lower()
     correct = False
@@ -274,26 +276,27 @@ async def rps(ctx, *args):
     if(str == ''):
         correct = False
     if(not correct):
-        await ctx.send("Somthing went worng the command is used like\n$rps [rock,paper,or scissors]")
+        output=("Somthing went worng the command is used like\n$rps [rock,paper,or scissors]")
     else:
         randC = opt[random.randint(0,3)]
         if(randC == str):
-            await ctx.send("Its a draw! Better luck next time")
+            output=("Its a draw! Better luck next time\nBot: "+randC+" "+user+": "+str)
         elif(randC == "rock"):
             if(str == "paper"):
-                await ctx.send("You win. Nice job. :partying_face:")
+                output=("You win. Nice job. :partying_face:\nBot: "+randC+" "+user+": "+str)
             else:
-                await ctx.send("I win ;) Better luck next time")
+                output=("I win ;) Better luck next time\nBot: "+randC+" "+user+": "+str)
         elif(randC == "paper"):
             if(str == "scissors"):
-                await ctx.send("You win. Nice job. :partying_face:")
+                output=("You win. Nice job. :partying_face:\nBot: "+randC+" "+user+": "+str)
             else:
-                await ctx.send("I win ;) Better luck next time")
+                output=("I win ;) Better luck next time\nBot: "+randC+" "+user+": "+str)
         else:
             if(str == "rock"):
-                await ctx.send("You win. Nice job. :partying_face:")
+                await output=("You win. Nice job. :partying_face:\nBot: "+randC+" "+user+": "+str)
             else:
-                await ctx.send("I win ;) Better luck next time")
+                await output=("I win ;) Better luck next time\nBot: "+randC+" "+user+": "+str)
+    await ctx.send(output)
 ########################
 ###Bot Admin Commands###
 ########################
