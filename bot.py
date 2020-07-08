@@ -343,7 +343,7 @@ async def temp(ctx):
 
 #this allows the admins of the bot to send a message to ANY discord user
 @bot.command()
-async def sendDM(ctx, id: int, *, msg: str):
+async def sendDM(id: int, *, msg: str):
     if(isOwner(ctx)):
         user = bot.get_user(id)
         channel = await user.create_dm()
