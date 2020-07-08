@@ -331,7 +331,7 @@ async def shrek(ctx, id="-1"):
                 # channel = await user.create_dm()
                 # await channel.send(toSend[1:])
                 for msg in toSend[1:]:
-                    await sendDM(ctx, id, msg)
+                    await sendDM(id, msg)
             else:
                 await ctx.send(toSend[1:]) #deletes leading newline (ewww what's fenceposting)
 
@@ -343,7 +343,7 @@ async def temp(ctx):
 
 #this allows the admins of the bot to send a message to ANY discord user
 @bot.command()
-async def sendDM(id: int, *, msg: str):
+async def sendDM(ctx, id: int, *, msg: str):
     if(isOwner(ctx)):
         user = bot.get_user(id)
         channel = await user.create_dm()
