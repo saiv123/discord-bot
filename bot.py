@@ -311,6 +311,24 @@ async def off(ctx):
     else:
         await ctx.send(msgReturn("notOwner"))
 
+@bot.command()
+async def spamPerson(ctx, id: int):
+    if not isOwner(ctx):
+        await ctx.send(msgReturn("notOwner"))
+        return
+    with open('Shrek.txt', 'r') as file:
+        user = bot.get_user(id)
+        channel = await user.create_dm()
+        lines = file.readlines()
+        i = 0
+        while i < len(lines):
+            toSend = ''
+            while len(toSend) < 1500 and i < len(lines): #Send 2000 chars
+                if len(lines[i].lstrip()) > 1:
+                    toSend = toSend +'\n'+ lines[i].replace('\n','').lstrip()
+                i = i + 1
+            await channel.send(toSend[1:]) #deletes leading newline (ewww what's fenceposting)
+
 #for admins to admire shrek. Freezes the bot for a bit, so don't actually use
 @bot.command()
 async def shrek(ctx):
