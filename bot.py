@@ -313,7 +313,7 @@ async def off(ctx):
 
 #for admins to admire shrek. Freezes the bot for a bit, so don't actually use
 @bot.command()
-async def shrek(ctx, id="-1"):
+async def shrek(ctx):
     if not isOwner(ctx):
         await ctx.send(msgReturn("notOwner"))
         return
@@ -326,12 +326,6 @@ async def shrek(ctx, id="-1"):
                 if len(lines[i].lstrip()) > 1:
                     toSend = toSend +'\n'+ lines[i].replace('\n','').lstrip()
                 i = i + 1
-            if(id != "-1"):
-                # user = bot.get_user(id)
-                # channel = await user.create_dm()
-                # await channel.send(toSend[1:])
-                for msg in toSend[1:]:
-                    await sendDM(id, msg)
             else:
                 await ctx.send(toSend[1:]) #deletes leading newline (ewww what's fenceposting)
 
