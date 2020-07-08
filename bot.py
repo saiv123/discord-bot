@@ -331,7 +331,7 @@ async def shrek(ctx, id="-1"):
                 # channel = await user.create_dm()
                 # await channel.send(toSend[1:])
                 for msg in toSend[1:]:
-                    sendDM(ctx, id, msg)
+                    await sendDM(ctx, id, msg)
             else:
                 await ctx.send(toSend[1:]) #deletes leading newline (ewww what's fenceposting)
 
