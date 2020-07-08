@@ -129,6 +129,7 @@ async def getnotes(ctx):
         temp = f.readlines()
         lineNums = len(temp)
 
+        #will loop and get the last 5 notes saved
         if(lineNums <= 5):
             for i in temp:
                 notes += str(i)
@@ -137,7 +138,7 @@ async def getnotes(ctx):
                 notes += str(temp[i])
         channel = await ctx.author.create_dm()
         await channel.send(notes)
-    except IOError:
+    except IOError: #edge case if the user does not have any notes / file
         print("File Not Found")
         channel = await ctx.author.create_dm()
         await channel.send("You do not have any notes")
@@ -154,16 +155,17 @@ async def deletenotes(ctx):
 @bot.command()
 async def notes(ctx, *, notes=" "):
     nameNote = ("MyPorn/" + str(ctx.author.id) + ".txt")
-    await ctx.message.delete()
+    await ctx.message.delete() #deletes the users message so others dont see what they saved
     user = ("<@" + str(ctx.message.author.id) + "> ")
-    with open(nameNote, 'a') as file:
-        file.write(str(datetime.datetime.now()) + " -- " + notes + "\n")
+    with open(nameNote, 'a') as file: #opens the file if the users file in there otherwise it will make it
+        file.write(str(datetime.datetime.now()) + " -- " + notes + "\n") #formating and saving to the file
     await ctx.send(user + "Your Note is recorded and locked up.")
-    del nameNote
+    del nameNote #deletes the variable so it will free up some ram
 
 #return the time the bot has been running
 @bot.command()
 async def uptime(ctx):
+    quote, author = quotes.getQuoteApi()
     #calculating time bot has been on
     tso = time.time()
     msg = time.strftime("%H Hours %M Minutes %S Seconds", time.gmtime(tso - ts))
@@ -171,19 +173,18 @@ async def uptime(ctx):
     color = random.randrange(10000, 16777215, 1)
     #seting up an embed
     embed = discord.Embed(colour=color)
-    embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png")
+    embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png") #setting the clock image
     embed.add_field(name='I have been awake for:',value=msg, inline=False)
-    embed.add_field(name='Quote cus I know your bored:',value=quotes.getQuoteApi(), inline=False)
-    async with ctx.channel.typing():
+    embed.add_field(name='Quote cus I know your bored:',value=quote, inline=False)
+    async with ctx.channel.typing(): #make it look like the bot is typing
         time.sleep(3)
         await ctx.send(embed=embed)
 
 #return the answers to defenet integrals
 @bot.command()
 async def DefInte(ctx, a: int, b: int, func: str):
-    res = client.query('integrate ' + func + ' from ' +
-                       str(a) + ' to ' + str(b))
-    await ctx.send(next(res.results).text)
+    res = client.query('integrate ' + func + ' from ' +str(a) + ' to ' + str(b)) #bunch of text formating to put into the api
+    await ctx.send(next(res.results).text) #getting the answer from the api and parsing
 
 #sends a warming quote
 @bot.command()
@@ -254,9 +255,10 @@ async def nsfw(ctx, *args):
 @bot.command()
 async def contact(ctx):
     msg = "Discord: Sai#2728\nDiscord server: https://discord.gg/gYhRdk7"
-    if(ctx.channel.id == 674120261691506688):
+    if(ctx.channel.id == 674120261691506688): #channel specific to my discord server
         msg += cont
     id = ctx.message.author.id
+    #making the dm channel
     user = bot.get_user(id)
     channel = await user.create_dm()
     await channel.send(msg)
@@ -264,22 +266,26 @@ async def contact(ctx):
 #rock paper scissors game with the bot (some what buggy so no touchy)
 @bot.command()
 async def rps(ctx, *args):
+    #local variables
     user = ("<@" + str(ctx.message.author.id) + "> ")
     output = ""
     msg = ''.join(args)
-    msg.lower()
+    msg.lower() #making the input lower case
     correct = False
     opt = ["rock","paper","scissors"]
+
+    #to test if the input is one of the options
     for i in opt:
         if (i == msg):
             correct = True
 
+    #a waird edge case where if the input was null, it would some how pass the last test and correct would be true
     if(msg == ''):
         correct = False
     if(not correct):
         output=("Somthing went worng the command is used like\n$rps [rock,paper,or scissors]")
     else:
-        randC = opt[random.randint(0,2)]
+        randC = opt[random.randint(0,2)] #chose a random option from the opt list
         if(randC == msg):
             output=("Its a draw! Better luck next time\nBot: "+randC+" "+user+": "+msg)
         elif(randC == "rock"):
