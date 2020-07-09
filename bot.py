@@ -8,7 +8,7 @@ import time, datetime
 import json, random
 
 # external libraies
-import quotes, prawn
+import quotes, prawn, imgutils
 from secret import TOKEN, id, cont
 
 #dir for the bots location
@@ -175,7 +175,7 @@ async def uptime(ctx):
     embed = discord.Embed(colour=color)
     embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png") #setting the clock image
     embed.add_field(name='I have been awake for:',value=msg, inline=False)
-    embed.add_field(name='Quote cus I know your bored:',value=quote, inline=False)
+    embed.add_field(name='Quote cus I know your bored:',value='"'+str(quote)+'"\n ~'+str(author), inline=False)
     async with ctx.channel.typing(): #make it look like the bot is typing
         time.sleep(3)
         await ctx.send(embed=embed)
@@ -201,30 +201,60 @@ async def randquote(ctx):
         quote, author = quotes.getQuoteApi()
         await ctx.send(quotes.formatQuote(text=quote,author=author))
 
+# Splits a string into several sub-2000 char strings
+def splitLongStrings(str, chars=1500):
+    messages = []
+    if ' ' not in str: # If there are no spaces, don't respect spaces
+        message = ""
+        for c in str:
+            if len(message) >= chars: #>= is equivalent to adding 1 to len(message)
+                messages.append(message)
+                message = ""
+            message = message + c
+        messages.append(message)
+        return messages
+    # If there are spaces, respect them
+    words = str.split(' ')
+    message = ""
+    for word in words:
+        if len(message) + len(word) > chars:
+            messages.append(message[1:]) #delete leading space
+            message = ""
+        message = message + ' ' + word
+    if len(message) > 1:
+        messages.append(message[1:])
+    return messages
+
+# Gets embed responses from a library of links
+def getEmbedsFromLibraryQuery(libraryPath, query):
+    # If query is categories, get categories
+    if 'category' in query.lower() or 'categories' in query.lower():
+        color = imgutils.randomSaturatedColor()
+        embeds = []
+        for message in splitLongStrings(' '.join(prawn.getCategoryMessages(path=libraryPath))):
+            embeds.append(discord.Embed(description=message, color=color))
+        return embeds
+    # Otherwise, get image from query
+    namedImg = ('Error', 'https://www.prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg')
+    if len(str(query)) <= 2:
+        namedImg = prawn.getRandom(path=libraryPath)
+    else:
+        namedImg = prawn.getRandomLineFromQuery(query,path=libraryPath)
+
+    embed = discord.Embed(description=namedImg[0], color=imgutils.getAverageColor(namedImg[1]))  # 16777... is just FFFFFF in base10
+    embed.set_image(url=namedImg[1])
+    return [embed]
+
 # For getting memes from the library
 memePath = 'ClassWork/'
 @bot.command()
 async def meme(ctx, *args):
     query = ' '.join(args)
-    #logic for getting the category list
-    if 'category' in query.lower() or 'categories' in query.lower():
-        color = random.randrange(10000, 16777215, 1)
-        for message in prawn.getCategoryMessages(path=memePath):
-            em = discord.Embed(description=message, color=color)
-            await ctx.send(embed=em)
-    else: #Try and get category. If not possible, get a random meme
-        pu = ('Error', 'https://www.prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg')
-        if len(str(query)) <= 2:
-            pu = prawn.getRandom(path=memePath)
-        else:
-            pu = prawn.getRandomLineFromQuery(query,path=memePath)
-        print(pu)
-        em = discord.Embed(description=pu[0], color=random.randrange(10000, 16777215, 1))  # 16777... is just FFFFFF in base10
-        em.set_image(url=pu[1])
-
-        await ctx.send(embed=em)
+    for embed in getEmbedsFromLibraryQuery(memePath, query):
+        await ctx.send(embed)
 
 #for getting nsfw images from the library
+prawnPath = 'MyHomework/'
 @bot.command()
 async def nsfw(ctx, *args):
     if(ctx.guild is None and ctx.message.author != bot.user): #checks of user is trying to get past the nsfw filter
@@ -232,33 +262,19 @@ async def nsfw(ctx, *args):
     else:
         if(ctx.channel.is_nsfw()):#checks if the channel the command was sent from is nsfw
             query = ' '.join(args)
-            #logic for getting a specific catagory form the catagory list
-            if 'category' in query.lower() or 'categories' in query.lower():
-                color = random.randrange(10000, 16777215, 1)
-                for message in prawn.getCategoryMessages():
-                    em = discord.Embed(description=message, color=color)
-                    await ctx.send(embed=em)
-            else: # logic for random catagory
-                pu = ('Error', 'https://www.prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg')
-                if len(str(query)) <= 2:
-                    pu = prawn.getRandom()
-                else:
-                    pu = prawn.getRandomLineFromQuery(query)
-                print(pu)
-                em = discord.Embed(description=pu[0], color=random.randrange(10000, 16777215, 1))  # 16777... is just FFFFFF in base10
-                em.set_image(url=pu[1])
-                await ctx.send(embed=em)
+            for embed in getEmbedsFromLibraryQuery(prawnPath, query):
+                await ctx.send(embed)
         else:
             await ctx.send("Sorry, but this command can only be used in a NSFW channel.")
 
-#contact command
+# Contact command
 @bot.command()
 async def contact(ctx):
     msg = "Discord: Sai#2728\nDiscord server: https://discord.gg/gYhRdk7"
     if(ctx.channel.id == 674120261691506688): #channel specific to my discord server
         msg += cont
     id = ctx.message.author.id
-    #making the dm channel
+    # Making the dm channel
     user = bot.get_user(id)
     channel = await user.create_dm()
     await channel.send(msg)
@@ -326,16 +342,9 @@ async def shrek(ctx):
         await ctx.send(msgReturn("notOwner"))
         return
     with open('Shrek.txt', 'r') as file:
-        lines = file.readlines()
-        i = 0
-        while i < len(lines):
-            toSend = ''
-            while len(toSend) < 1500 and i < len(lines): #Send 2000 chars
-                if len(lines[i].lstrip()) > 1:
-                    toSend = toSend +'\n'+ lines[i].replace('\n','').lstrip()
-                i = i + 1
-            else:
-                await ctx.send(toSend[1:]) #deletes leading newline (ewww what's fenceposting)
+        shrek = file.read()
+        for message in splitLongStrings(shrek):
+            await ctx.send(message)
 
 #gets the tempreture of the host pi
 @bot.command()
