@@ -251,7 +251,7 @@ memePath = 'ClassWork/'
 async def meme(ctx, *args):
     query = ' '.join(args)
     for embed in getEmbedsFromLibraryQuery(memePath, query):
-        await ctx.send(embed)
+        await ctx.send(embed=embed)
 
 #for getting nsfw images from the library
 prawnPath = 'MyHomework/'
@@ -263,7 +263,7 @@ async def nsfw(ctx, *args):
         if(ctx.channel.is_nsfw()):#checks if the channel the command was sent from is nsfw
             query = ' '.join(args)
             for embed in getEmbedsFromLibraryQuery(prawnPath, query):
-                await ctx.send(embed)
+                await ctx.send(embed=embed)
         else:
             await ctx.send("Sorry, but this command can only be used in a NSFW channel.")
 
