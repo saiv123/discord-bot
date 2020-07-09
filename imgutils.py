@@ -8,7 +8,8 @@ import random
 def getAverageColor(image_url):
     # get image from web
     resp = requests.get(image_url)
-    assert resp.ok
+    if not resp.ok: # if not valid, return random saturated color
+        return randomSaturatedColor()
     img = Image.open(BytesIO(resp.content))
 
     # squeeze the image into 1 pixel
@@ -28,5 +29,7 @@ def randomSaturatedColor(minSat=64,steps=1):
     return int(hex.upper(), 16)
     
 if __name__ == '__main__':
-    print(getAverageColor('https://i.redd.it/v7epwhtv4w551.jpg'))
+    for i in range(5):
+        print(getAverageColor('https://i.redd.it/v7epwhtv4w551.jpg'))
+        print(getAverageColor('https://i.imgur.com/vtHTdK4.jpg'))
     print(randomSaturatedColor())
