@@ -377,7 +377,7 @@ async def servers(ctx):
     if isOwner(ctx):
         msg = ""
         guilds = await bot.fetch_guilds(limit=150).flatten()
-        msg = str(len(guilds))+"\n")
+        msg = str(len(guilds))+"\n"
         for i in guilds:
             msg+=i.name+"\n"
 
