@@ -86,7 +86,7 @@ def getEmbedsFromLibraryQuery(libraryPath, query):
     else:
         namedImg = prawn.getRandomLineFromQuery(query,path=libraryPath)
 
-    
+
     namedImg = ('Error', 'https://www.prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg')
 
     embed = discord.Embed(description=namedImg[0], color=imgutils.getAverageColor(namedImg[1]))  # 16777... is just FFFFFF in base10
@@ -115,15 +115,15 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     nameNote = "dmLogs.txt"
-    if(message.author.id == 371865866704257025): #for removing bobcat from servers
+    if(message.author.id is 371865866704257025 and message.guild not None): #for removing user from servers
         await message.delete()
         return
-    elif message.guild is None and message.author != bot.user: #checks if theres a dm to the bot, and logs it
+    elif message.guild is None and message.author not bot.user: #checks if theres a dm to the bot, and logs it
         other = await bot.fetch_user(message.author.id)
         with open(nameNote, 'a') as file:
             file.write(str(datetime.datetime.now()) + " " +other.name + " -- " + message.content + "\n")
 
-    # Respond to commands last
+    # Respond to last command
     await bot.process_commands(message)
 
 ##############
@@ -164,7 +164,6 @@ async def hi(ctx):
     await ctx.message.delete()
     user = ("<@" + str(ctx.message.author.id) + "> ")
     await ctx.send("Hello "+user+"!!!!!!!")
-
 
 #for the user to see their notes
 @bot.command()
@@ -211,8 +210,10 @@ async def notes(ctx, *, notes=" "):
 
 #return the time the bot has been running
 @bot.command()
-async def uptime(ctx):
+async def stats(ctx):
     quote, author = quotes.getQuoteApi()
+    temp = os.popen("vcgencmd measure_temp").readline()
+
     #calculating time bot has been on
     tso = time.time()
     msg = time.strftime("%H Hours %M Minutes %S Seconds", time.gmtime(tso - ts))
@@ -222,6 +223,7 @@ async def uptime(ctx):
     embed = discord.Embed(colour=color)
     embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png") #setting the clock image
     embed.add_field(name='I have been awake for:',value=msg, inline=False)
+    embed.add_field(name='My core body tempreture:',value=temp, inline=False)
     embed.add_field(name='Quote cus I know your bored:',value='"'+str(quote)+'"\n ~'+str(author), inline=False)
     async with ctx.channel.typing(): #make it look like the bot is typing
         time.sleep(3)
@@ -348,12 +350,6 @@ async def shrek(ctx):
         shrek = file.read()
         for message in splitLongStrings(shrek):
             await ctx.send(message)
-
-#gets the tempreture of the host pi
-@bot.command()
-async def temp(ctx):
-    temp = os.popen("vcgencmd measure_temp").readline()
-    await ctx.send(temp.replace("temp=",""))
 
 #this allows the admins of the bot to send a message to ANY discord user
 @bot.command()
