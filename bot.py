@@ -5,7 +5,7 @@ import wolframalpha
 from discord.ext import commands, tasks
 from discord.ext.commands import Bot
 import time, datetime
-import json, random, requests
+import json, random
 
 # external libraies
 import quotes, prawn, imgutils
