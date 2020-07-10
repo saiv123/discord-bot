@@ -118,7 +118,7 @@ async def on_message(message):
     if(message.author.id is 371865866704257025 and message.guild != None): #for removing user from servers
         await message.delete()
         return
-    elif message.guild is None and message.author not bot.user: #checks if theres a dm to the bot, and logs it
+    elif message.guild is None and message.author != bot.user: #checks if theres a dm to the bot, and logs it
         other = await bot.fetch_user(message.author.id)
         with open(nameNote, 'a') as file:
             file.write(str(datetime.datetime.now()) + " " +other.name + " -- " + message.content + "\n")
