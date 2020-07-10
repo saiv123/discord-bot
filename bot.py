@@ -101,7 +101,7 @@ def getEmbedsFromLibraryQuery(libraryPath, query):
 @bot.event
 async def on_ready():
     print('user: '+bot.user.name)
-    print('id: '+bot.user.id)
+    print('id: '+str(bot.user.id))
     await bot.change_presence(activity=discord.Game(name='with his food | $help'))
     print('current time - ' + str(ts))
     print('-----------')
