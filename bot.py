@@ -147,7 +147,7 @@ async def help(ctx):
     embed.add_field(name='$notes', value='You can add notes to your notes file', inline=False)
     embed.add_field(name='$deletenotes',value='Deletes ALL your notes', inline=False)
     embed.add_field(name='$getnotes',value='Dms you your last 5 notes', inline=False)
-    embed.add_field(name='$uptime', value='The time the bot has been up in HH:MM:SS', inline=False)
+    embed.add_field(name='$stats', value='The time the bot has been up in HH:MM:SS\nAlong with the tempreture of the bot', inline=False)
     embed.add_field(name='$DefInte', value='Finds the intergral $DefInte a b f(x)', inline=False)
     embed.add_field(name='$quote', value='Gives you heart warming quotes', inline=False)
     embed.add_field(name='$randquote', value='Give you a random quote', inline=False)
@@ -223,7 +223,7 @@ async def stats(ctx):
     embed = discord.Embed(colour=color)
     embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png") #setting the clock image
     embed.add_field(name='I have been awake for:',value=msg, inline=False)
-    embed.add_field(name='My core body tempreture:',value=temp, inline=False)
+    embed.add_field(name='My core body tempreture:',value=temp.replace("temp=",""), inline=False)
     embed.add_field(name='Quote cus I know your bored:',value='"'+str(quote)+'"\n ~'+str(author), inline=False)
     async with ctx.channel.typing(): #make it look like the bot is typing
         time.sleep(3)
