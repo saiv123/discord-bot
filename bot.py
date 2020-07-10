@@ -115,7 +115,7 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     nameNote = "dmLogs.txt"
-    if(message.author.id is 371865866704257025 and message.guild not None): #for removing user from servers
+    if(message.author.id is 371865866704257025 and message.guild != None): #for removing user from servers
         await message.delete()
         return
     elif message.guild is None and message.author not bot.user: #checks if theres a dm to the bot, and logs it
