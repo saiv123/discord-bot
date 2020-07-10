@@ -10,8 +10,13 @@ def getAverageColor(image_url):
     resp = requests.get(image_url)
     if not resp.ok: # if not valid, return random saturated color
         return randomSaturatedColor()
-    img = Image.open(BytesIO(resp.content))
-
+    
+    #"Fixes" OSError: cannot identify image file <_io.BytesIO object at 0x7475f030>
+    try:
+        img = Image.open(BytesIO(resp.content))
+    except:
+        print('Error with image '+str(image_url))
+        return randomSaturatedColor()
     # squeeze the image into 1 pixel
     img2 = img.resize((1, 1)) 
 
