@@ -5,10 +5,6 @@ from PIL import Image
 
 import random
 
-def isImage(image_urls):
-    resp = requests.get(image_urls)
-    return resp.ok
-
 def getAverageColor(image_url):
     # get image from web
     resp = requests.get(image_url)
