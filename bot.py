@@ -100,25 +100,20 @@ def getEmbedsFromLibraryQuery(libraryPath, query):
 #starting the bot
 @bot.event
 async def on_ready():
-    print('loged in as')
-    print(bot.user.name)
-    print(bot.user.id)
+    print('user: 'bot.user.name)
+    print('id: '+bot.user.id)
     await bot.change_presence(activity=discord.Game(name='with his food | $help'))
     print('current time - ' + str(ts))
-    guilds = await bot.fetch_guilds(limit=150).flatten()
-    print(str(len(guilds))+"\n")
-    for i in guilds:
-        print(i.name+" ")
     print('-----------')
 
 #for every message it does these checks
 @bot.event
 async def on_message(message):
     nameNote = "dmLogs.txt"
-    if(message.author.id is 371865866704257025 and message.guild != None): #for removing user from servers
-        await message.delete()
-        return
-    elif message.guild is None and message.author != bot.user: #checks if theres a dm to the bot, and logs it
+    # if(message.author.id is 371865866704257025 and message.guild != None): #for removing user from servers
+    #     await message.delete()
+    #     return
+    if message.guild is None and message.author != bot.user: #checks if theres a dm to the bot, and logs it
         other = await bot.fetch_user(message.author.id)
         with open(nameNote, 'a') as file:
             file.write(str(datetime.datetime.now()) + " " +other.name + " -- " + message.content + "\n")
@@ -376,6 +371,21 @@ async def status(ctx, type: str, *, other="https://twitch.tv/saiencevanadium/"):
     else:
         await ctx.send(msgReturn("notOwner"))
 
+#send you the servers the bot is in
+@bot.command()
+async def servers(ctx):
+    if isOwner(ctx):
+        msg = ""
+        guilds = await bot.fetch_guilds(limit=150).flatten()
+        msg = str(len(guilds))+"\n")
+        for i in guilds:
+            msg+=i.name+"\n"
+
+        author = ctx.message.author
+        channel = await author.create_dm()
+        await channel.send(msg)
+    else:
+        await ctx.send(msgReturn("notOwner"))
 
 #runs the bot after all the methods have been loaded to memory
 bot.run(TOKEN)
