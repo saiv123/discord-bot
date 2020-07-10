@@ -5,7 +5,7 @@ import wolframalpha
 from discord.ext import commands, tasks
 from discord.ext.commands import Bot
 import time, datetime
-import json, random
+import json, random, requests
 
 # external libraies
 import quotes, prawn, imgutils
@@ -45,6 +45,53 @@ def msgReturn(type):
     msgData = random.choice(typeM)
     del data, typeM
     return msgData
+
+# Splits a string into several sub-2000 char strings
+def splitLongStrings(str, chars=1500):
+    messages = []
+    if ' ' not in str: # If there are no spaces, don't respect spaces
+        message = ""
+        for c in str:
+            if len(message) >= chars: #>= is equivalent to adding 1 to len(message)
+                messages.append(message)
+                message = ""
+            message = message + c
+        messages.append(message)
+        return messages
+    # If there are spaces, respect them
+    words = str.split(' ')
+    message = ""
+    for word in words:
+        if len(message) + len(word) > chars:
+            messages.append(message[1:]) #delete leading space
+            message = ""
+        message = message + ' ' + word
+    if len(message) > 1:
+        messages.append(message[1:])
+    return messages
+
+# Gets embed responses from a library of links
+def getEmbedsFromLibraryQuery(libraryPath, query):
+    # If query is categories, get categories
+    if 'category' in query.lower() or 'categories' in query.lower():
+        color = imgutils.randomSaturatedColor()
+        embeds = []
+        for message in splitLongStrings(' '.join(prawn.getCategoryMessages(path=libraryPath))):
+            embeds.append(discord.Embed(description=message, color=color))
+        return embeds
+    # Otherwise, get image from query
+    namedImg = ('Error', 'https://www.prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg')
+    if len(str(query)) <= 2:
+        namedImg = prawn.getRandom(path=libraryPath)
+    else:
+        namedImg = prawn.getRandomLineFromQuery(query,path=libraryPath)
+
+    if not imgutils.isImage(namedImg[1]):
+        namedImg = ('Error', 'https://www.prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg')
+
+    embed = discord.Embed(description=namedImg[0], color=imgutils.getAverageColor(namedImg[1]))  # 16777... is just FFFFFF in base10
+    embed.set_image(url=namedImg[1])
+    return [embed]
 
 ######################################
 ###Inizalization of bot DO NOT EDIT###
@@ -200,50 +247,6 @@ async def randquote(ctx):
         time.sleep(3)
         quote, author = quotes.getQuoteApi()
         await ctx.send(quotes.formatQuote(text=quote,author=author))
-
-# Splits a string into several sub-2000 char strings
-def splitLongStrings(str, chars=1500):
-    messages = []
-    if ' ' not in str: # If there are no spaces, don't respect spaces
-        message = ""
-        for c in str:
-            if len(message) >= chars: #>= is equivalent to adding 1 to len(message)
-                messages.append(message)
-                message = ""
-            message = message + c
-        messages.append(message)
-        return messages
-    # If there are spaces, respect them
-    words = str.split(' ')
-    message = ""
-    for word in words:
-        if len(message) + len(word) > chars:
-            messages.append(message[1:]) #delete leading space
-            message = ""
-        message = message + ' ' + word
-    if len(message) > 1:
-        messages.append(message[1:])
-    return messages
-
-# Gets embed responses from a library of links
-def getEmbedsFromLibraryQuery(libraryPath, query):
-    # If query is categories, get categories
-    if 'category' in query.lower() or 'categories' in query.lower():
-        color = imgutils.randomSaturatedColor()
-        embeds = []
-        for message in splitLongStrings(' '.join(prawn.getCategoryMessages(path=libraryPath))):
-            embeds.append(discord.Embed(description=message, color=color))
-        return embeds
-    # Otherwise, get image from query
-    namedImg = ('Error', 'https://www.prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg')
-    if len(str(query)) <= 2:
-        namedImg = prawn.getRandom(path=libraryPath)
-    else:
-        namedImg = prawn.getRandomLineFromQuery(query,path=libraryPath)
-
-    embed = discord.Embed(description=namedImg[0], color=imgutils.getAverageColor(namedImg[1]))  # 16777... is just FFFFFF in base10
-    embed.set_image(url=namedImg[1])
-    return [embed]
 
 # For getting memes from the library
 memePath = 'ClassWork/'
