@@ -15,3 +15,11 @@ footer p {
 p.top {
   border-top: 0.125em solid #240090;
 }
+footer:before, footer:after {
+  content: "";
+  display: table;
+  line-height: 0;
+}
+footer:after {
+  clear: both;
+}
