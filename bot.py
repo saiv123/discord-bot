@@ -86,6 +86,7 @@ def getEmbedsFromLibraryQuery(libraryPath, query):
     else:
         namedImg = prawn.getRandomLineFromQuery(query,path=libraryPath)
 
+    resp = requests.get(nameImg[1])
     if not resp.ok: #check for if the image exists
         namedImg = ('Error', 'https://www.prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg')
 
@@ -149,9 +150,18 @@ async def help(ctx):
     embed.add_field(name='$nsfw', value='will give you a random nsfw image\nyou can choose a category from $nsfw category\nfrom the list you have to spell out the category excatly how it is sent to you as\n$nsfw [category]', inline=False)
     embed.add_field(name='$meme', value='will give you a random meme image\nyou can choose a category from $meme category\nfrom the list you have to spell out the category excatly how it is sent to you as\n$meme [category]', inline=False)
     embed.add_field(name='$rps', value='Play a game of rock paper scissors with the bot like $rps [rock,paper,or scissors]')
+    embed.add_field(name='$invite', value='Get a invite link to invite me to your server')
     embed.add_field(name='$contact', value='Will give you information on how to conact owner for support', inline=False)
 
     await channel.send(embed=embed)
+
+#will give you a link to invite the bot to other servers
+@bot.command()
+async def invite(ctx):
+    async with ctx.channel.typing(): #make it look like the bot is typing
+        time.sleep(3)
+        await ctx.send("Invite me to your friends disocrd:\nhttps://discordapp.com/api/oauth2/authorize?client_id=314578387031162882&permissions=402730064&scope=bot")
+
 
 #says hello to your
 @bot.command()
