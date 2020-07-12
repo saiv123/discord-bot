@@ -25,6 +25,16 @@ def getAverageColor(image_url):
     hex = '{:02x}{:02x}{:02x}'.format(*color)
     return int(hex.upper(), 16) #convert the hex string to an int
 
+def isUrlValidImage(url):
+    try:
+        resp = requests.get(url)
+        if not resp.ok:
+            return False
+        Image.open(BytesIO(resp.content))
+        return True
+    except:
+        return False
+
 def randomSaturatedColor(minSat=64,steps=1):
     if minSat <= 1:
         minSat = minSat*255
