@@ -1,2 +1,16 @@
-# dsicord-bot
-This bot does alot of things, soon enough i will add a suggestions form, and the team will work through it slowly
+# discord-bot
+#About The Bot
+The bot is a slow working progress, a side project of mine.
+if the bot is not functioning properly please make a issue request on the Github page
+
+#To-Do
+Nothing currently but will you can add suggestions to the bot here [Link to suggestions forms]
+
+#Other
+Please note since this is a side project, eventually this bot will stop being updated, I know saved
+
+#Contacts
+Discord: sai#2728
+Discord Server:  https://discord.gg/gYhRdk7
+
+Feel Free to message in the discord about any questions you have.
