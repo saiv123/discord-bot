@@ -1,0 +1,7 @@
+Mac bad
+Windows good
+Linux gooder
+
+
+
+It is truth because it is written, now go delete all your .DS_Store files.
