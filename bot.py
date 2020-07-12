@@ -85,6 +85,10 @@ def getEmbedsFromLibraryQuery(libraryPath, query):
         namedImg = prawn.getRandom(path=libraryPath)
     else:
         namedImg = prawn.getRandomLineFromQuery(query,path=libraryPath)
+
+    if not resp.ok: #check for if the image exists
+        namedImg = ('Error', 'https://www.prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg')
+
     embed = discord.Embed(description=namedImg[0], color=imgutils.getAverageColor(namedImg[1]))  # 16777... is just FFFFFF in base10
     embed.set_image(url=namedImg[1])
     return [embed]
