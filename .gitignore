@@ -8,3 +8,5 @@ __pycache__/
 MyPorn/
 ClassWork/
 photos/
+start.sh
+stop.sh
