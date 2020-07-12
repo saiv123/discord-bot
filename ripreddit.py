@@ -92,7 +92,8 @@ def main(argv):
                 print('Input file invalid!')
                 sys.exit(2)
             with open(arg, 'r') as file:
-                subreddits.extend(file.readlines())
+                for line in file.readlines():
+                    subreddits.append(line.replace("\n",""))
     if len(subreddits) <= 0:
         print("Error: No subreddits given.\n"+HELP_STR)
         sys.exit(2)
