@@ -82,11 +82,6 @@ def getEmbedsFromLibraryQuery(libraryPath, query):
     # Otherwise, get image from query
     namedImg = ('Error', 'https://www.prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg')
 
-<<<<<<< HEAD
-    resp = requests.get(nameImg[1])
-    if not resp.ok: #check for if the image exists
-        namedImg = ('Error', 'https://www.prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg')
-=======
     # Iterate up to 5x to try and get a valid image
     for i in range(5):
         if len(str(query)) <= 2:
@@ -97,7 +92,6 @@ def getEmbedsFromLibraryQuery(libraryPath, query):
             break
     if not imgutils.isUrlValidImage(namedImg[1]): # Print error
         print('Image not valid at '+namedImg[1]+'\n\t(name '+namedImg[0]+')')
->>>>>>> 1f5725dd55a9214f21caaf9186fde97b9e19d20a
 
     embed = discord.Embed(description=namedImg[0], color=imgutils.getAverageColor(namedImg[1]))  # 16777... is just FFFFFF in base10
     embed.set_image(url=namedImg[1])
