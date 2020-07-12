@@ -10,7 +10,7 @@ Nothing currently but will you can add suggestions to the bot here [Link to sugg
 Please note since this is a side project, eventually this bot will stop being updated, I know saved
 ***
 # Contacts
-Discord: sai#2728
+Discord: sai#2728\n
 Or you can join the [Discord Server](https://discord.gg/gYhRdk7)
 
 Feel Free to message in the discord about any questions you have.
