@@ -11,6 +11,6 @@ Please note since this is a side project, eventually this bot will stop being up
 ***
 # Contacts
 Discord: sai#2728
-Discord Server:  https://discord.gg/gYhRdk7
+Or you can join the [Discord Server](https://discord.gg/gYhRdk7)
 
 Feel Free to message in the discord about any questions you have.
