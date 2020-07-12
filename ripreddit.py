@@ -1,6 +1,7 @@
 # Inspired by https://github.com/simonwillcock/RipReddit/
 import json
 import requests
+import codecs
 
 # The main cmd
 def get_items(subreddit, sort='hot',count:int=1000):
@@ -93,7 +94,7 @@ def main(argv):
                 sys.exit(2)
             with open(arg, 'r') as file:
                 for line in file.readlines():
-                    subreddits.append(line.replace("\n",""))
+                    subreddits.append(line.replace('\n',''))
     if len(subreddits) <= 0:
         print("Error: No subreddits given.\n"+HELP_STR)
         sys.exit(2)
@@ -116,7 +117,7 @@ def main(argv):
 
         #Save it
         if single:
-            with open(os.path.join(outputdir,'reddit.txt'), 'a+') as file:
+            with codecs.open(os.path.join(outputdir,'reddit.txt'), 'a+','utf-8-sig') as file:
                 # Check for whitespace and add it
                 if file.readable():
                     contents = file.read()
@@ -126,7 +127,7 @@ def main(argv):
                 # Write actual content
                 file.write('\n'.join(urlList))
         else:
-            with open(os.path.join(outputdir,str(subreddit)+'.txt'),write_char+'+') as file:
+            with codecs.open(os.path.join(outputdir,str(subreddit)+'.txt'),write_char+'+','utf-8-sig') as file:
                 # Check for whitespace and add it
                 if 'a' in write_char and file.readable():
                     contents = file.read()
