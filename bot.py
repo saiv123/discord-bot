@@ -125,6 +125,7 @@ async def on_message(message):
     # Respond to last command
     await bot.process_commands(message)
 
+#checks if i am streaming
 @bot.event
 async def on_member_update(before,after):
     if(after.id != ownerId[1]):
@@ -141,17 +142,6 @@ async def on_member_update(before,after):
 ##############
 ###Commands###
 ##############
-
-@bot.command()
-async def test(ctx):
-    embed = discord.Embed(
-        colour=discord.Colour.purple()
-    )
-
-    embed.set_thumbnail(url="https://twitch.tv/saiencevanadium")
-    embed.add_field(name="Sai is streaming",value="[Stream Link](https://twitch.tv/saiencevanadium)")
-
-    await ctx.send(embed=embed)
 
 #our curtom help command
 @bot.command(pass_context=True)
@@ -177,6 +167,7 @@ async def help(ctx):
     embed.add_field(name='$rps', value='Play a game of rock paper scissors with the bot like $rps [rock,paper,or scissors]')
     embed.add_field(name='$invite', value='Get a invite link to invite me to your server', inline=False)
     embed.add_field(name='$contact', value='Will give you information on how to conact owner for support', inline=False)
+    embed.add_field(name='[Invite bot to server](https://discordapp.com/api/oauth2/authorize?client_id=314578387031162882&permissions=402730064&scope=bot)',inline=False)
 
     await author.send(embed=embed)
 
