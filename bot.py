@@ -159,7 +159,7 @@ async def help(ctx):
     embed.add_field(name='$deletenotes',value='Deletes ALL your notes', inline=False)
     embed.add_field(name='$getnotes',value='Dms you your last 5 notes', inline=False)
     embed.add_field(name='$stats', value='The time the bot has been up in HH:MM:SS\nAlong with the tempreture of the bot', inline=False)
-    embed.add_field(name='$DefInte', value='Finds the intergral $DefInte a b f(x)', inline=False)
+    embed.add_field(name='$definte', value='Finds the intergral $DefInte a b f(x)', inline=False)
     embed.add_field(name='$quote', value='Gives you heart warming quotes', inline=False)
     embed.add_field(name='$randquote', value='Give you a random quote', inline=False)
     embed.add_field(name='$nsfw', value='will give you a random nsfw image\nyou can choose a category from $nsfw category\nfrom the list you have to spell out the category excatly how it is sent to you as\n$nsfw [category]', inline=False)
@@ -250,7 +250,7 @@ async def stats(ctx):
 
 #return the answers to defenet integrals
 @bot.command()
-async def DefInte(ctx, a: int, b: int, func: str):
+async def definte(ctx, a: int, b: int, func: str):
     res = client.query('integrate ' + func + ' from ' +str(a) + ' to ' + str(b)) #bunch of text formating to put into the api
     await ctx.send(next(res.results).text) #getting the answer from the api and parsing
 
