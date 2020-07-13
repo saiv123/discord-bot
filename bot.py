@@ -203,7 +203,8 @@ async def getnotes(ctx):
         else:
             for i in range(lineNums - 5, lineNums):
                 notes += str(temp[i])
-        await ctx.author.send(notes)
+        for message in splitLongStrings(notes):
+            await ctx.author.send(message)
     except IOError: #edge case if the user does not have any notes / file
         print("File Not Found")
         await ctx.author.send("You do not have any notes")
