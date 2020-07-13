@@ -125,17 +125,39 @@ async def on_message(message):
     # Respond to last command
     await bot.process_commands(message)
 
+@bot.event
+async def on_member_update(before,after):
+    if(after.id != ownerId[1]):
+        return
+    else:
+        channel = bot.get_channel(675011613165879317)
+        embed = discord.Embed(
+            colour=discord.Colour.purple()
+        )
+
+        embed.set_thumbnail(url="https://static-cdn.jtvnw.net/jtv_user_pictures/04bd2aa9-d0e3-4112-823e-2d11dc4a9a1c-profile_image-300x300.png")
+        embed.add_field(name="Sai is streaming",value="[Stream Link](https://twitch.tv/saiencevanadium)")
+        await channel.send(Embed=embed)
 ##############
 ###Commands###
 ##############
+
+@bot.command()
+async def test(ctx):
+    embed = discord.Embed(
+        colour=discord.Colour.purple()
+    )
+
+    embed.set_thumbnail(url="https://twitch.tv/saiencevanadium")
+    embed.add_field(name="Sai is streaming",value="[Stream Link](https://twitch.tv/saiencevanadium)")
+
+    await ctx.send(Embed=embed)
 
 #our curtom help command
 @bot.command(pass_context=True)
 async def help(ctx):
     #creats a channel object to dm the user the help command
     author = ctx.message.author
-    channel = await author.create_dm()
-
     #seting up an embed
     embed = discord.Embed(
         colour=discord.Colour.green()
@@ -156,7 +178,7 @@ async def help(ctx):
     embed.add_field(name='$invite', value='Get a invite link to invite me to your server', inline=False)
     embed.add_field(name='$contact', value='Will give you information on how to conact owner for support', inline=False)
 
-    await channel.send(embed=embed)
+    await author.send(embed=embed)
 
 #will give you a link to invite the bot to other servers
 @bot.command()
@@ -190,12 +212,10 @@ async def getnotes(ctx):
         else:
             for i in range(lineNums - 5, lineNums):
                 notes += str(temp[i])
-        channel = await ctx.author.create_dm()
-        await channel.send(notes)
+        await ctx.author.send(notes)
     except IOError: #edge case if the user does not have any notes / file
         print("File Not Found")
-        channel = await ctx.author.create_dm()
-        await channel.send("You do not have any notes")
+        await ctx.author.send("You do not have any notes")
 
 #removes the personal files
 @bot.command()
@@ -289,8 +309,7 @@ async def contact(ctx):
     id = ctx.message.author.id
     # Making the dm channel
     user = bot.get_user(id)
-    channel = await user.create_dm()
-    await channel.send(msg)
+    await user.send(msg)
 
 #rock paper scissors game with the bot (some what buggy so no touchy)
 @bot.command()
@@ -364,8 +383,7 @@ async def shrek(ctx):
 async def sendDM(ctx, id: int, *, msg: str):
     if(isOwner(ctx)):
         user = bot.get_user(id)
-        channel = await user.create_dm()
-        await channel.send(msg)
+        await user.send(msg)
     else:
         await ctx.send(msgReturn("notOwner"))
 
@@ -395,8 +413,7 @@ async def servers(ctx):
             msg+=i.name+"\n"
 
         author = ctx.message.author
-        channel = await author.create_dm()
-        await channel.send(msg)
+        await author.send(msg)
     else:
         await ctx.send(msgReturn("notOwner"))
 
