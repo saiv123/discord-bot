@@ -167,7 +167,7 @@ async def help(ctx):
     embed.add_field(name='$rps', value='Play a game of rock paper scissors with the bot like $rps [rock,paper,or scissors]')
     embed.add_field(name='$invite', value='Get a invite link to invite me to your server', inline=False)
     embed.add_field(name='$contact', value='Will give you information on how to conact owner for support', inline=False)
-    embed.add_field(name='[Invite bot to server](https://discordapp.com/api/oauth2/authorize?client_id=314578387031162882&permissions=402730064&scope=bot)',inline=False)
+    embed.add_field(name='[Invite bot to server](https://discordapp.com/api/oauth2/authorize?client_id=314578387031162882&permissions=402730064&scope=bot)',value=' ',inline=False)
 
     await author.send(embed=embed)
 
