@@ -137,7 +137,7 @@ async def on_member_update(before,after):
 
         embed.set_thumbnail(url="https://static-cdn.jtvnw.net/jtv_user_pictures/04bd2aa9-d0e3-4112-823e-2d11dc4a9a1c-profile_image-300x300.png")
         embed.add_field(name="Sai is streaming",value="[Stream Link](https://twitch.tv/saiencevanadium)")
-        await channel.send(Embed=embed)
+        await channel.send(embed=embed)
 ##############
 ###Commands###
 ##############
@@ -151,7 +151,7 @@ async def test(ctx):
     embed.set_thumbnail(url="https://twitch.tv/saiencevanadium")
     embed.add_field(name="Sai is streaming",value="[Stream Link](https://twitch.tv/saiencevanadium)")
 
-    await ctx.send(Embed=embed)
+    await ctx.send(embed=embed)
 
 #our curtom help command
 @bot.command(pass_context=True)
