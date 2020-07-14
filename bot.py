@@ -125,20 +125,6 @@ async def on_message(message):
     # Respond to last command
     await bot.process_commands(message)
 
-#checks if i am streaming
-@bot.event
-async def on_member_update(before,after):
-    if(after.id != ownerId[1]):
-        return
-    elif(after.type == "streaming"):
-        channel = bot.get_channel(675011613165879317)
-        embed = discord.Embed(
-            colour=discord.Colour.purple()
-        )
-
-        embed.set_thumbnail(url="https://static-cdn.jtvnw.net/jtv_user_pictures/04bd2aa9-d0e3-4112-823e-2d11dc4a9a1c-profile_image-300x300.png")
-        embed.add_field(name="Sai is streaming",value="[Stream Link](https://twitch.tv/saiencevanadium)")
-        await channel.send(embed=embed)
 ##############
 ###Commands###
 ##############
