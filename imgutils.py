@@ -24,7 +24,7 @@ def getAverageColor(image_url):
     #converts the 3 rgb values into a hex value
     hex = '{:02x}{:02x}{:02x}'.format(*color)
 
-    if (type(color) = int):
+    if (type(color) == int):
         return color
 
     return int(hex.upper(), 16) #convert the hex string to an int
