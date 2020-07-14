@@ -132,30 +132,17 @@ async def on_message(message):
 #our curtom help command
 @bot.command(pass_context=True)
 async def help(ctx):
-    #creats a channel object to dm the user the help command
-    author = ctx.message.author
     #seting up an embed
     embed = discord.Embed(
         colour=discord.Colour.green()
     )
 
     embed.set_author(name='Help')
-    embed.add_field(name='$hi', value='Will send hi back to you', inline=False)
-    embed.add_field(name='$notes', value='You can add notes to your notes file', inline=False)
-    embed.add_field(name='$deletenotes',value='Deletes ALL your notes', inline=False)
-    embed.add_field(name='$getnotes',value='Dms you your last 5 notes', inline=False)
-    embed.add_field(name='$stats', value='The time the bot has been up in HH:MM:SS\nAlong with the tempreture of the bot', inline=False)
-    embed.add_field(name='$definte', value='Finds the intergral $DefInte a b f(x)', inline=False)
-    embed.add_field(name='$quote', value='Gives you heart warming quotes', inline=False)
-    embed.add_field(name='$randquote', value='Give you a random quote', inline=False)
-    embed.add_field(name='$nsfw', value='will give you a random nsfw image\nyou can choose a category from $nsfw category\nfrom the list you have to spell out the category excatly how it is sent to you as\n$nsfw [category]', inline=False)
-    embed.add_field(name='$meme', value='will give you a random meme image\nyou can choose a category from $meme category\nfrom the list you have to spell out the category excatly how it is sent to you as\n$meme [category]', inline=False)
-    embed.add_field(name='$rps', value='Play a game of rock paper scissors with the bot like $rps [rock,paper,or scissors]')
-    embed.add_field(name='$invite', value='Get a invite link to invite me to your server', inline=False)
-    embed.add_field(name='$contact', value='Will give you information on how to conact owner for support', inline=False)
+    embed.set_thumbnail(url='https://cdn.discordapp.com/avatars/314578387031162882/e4b98a4a9ca3315ca699ffe5cba5b8f1.png?size=512')
+    embed.add_field(name='Commands will be found on the website.',value='[Link to website](https://saiv123.github.io/discord-bot/website/)')
     embed.add_field(name='Please invite me to other discords',value='[Invite bot to server](https://discordapp.com/api/oauth2/authorize?client_id=314578387031162882&permissions=402730064&scope=bot)',inline=False)
 
-    await author.send(embed=embed)
+    await ctx.send(embed=embed)
 
 #will give you a link to invite the bot to other servers
 @bot.command()
