@@ -1,38 +1,43 @@
 # Inspired by https://github.com/simonwillcock/RipReddit/
+import os
+import getopt
+import sys
 import json
 import requests
 import codecs
 
 # The main cmd
-def get_items(subreddit, sort='hot',count:int=1000):
+
+
+def get_items(subreddit, sort='hot', count: int = 1000):
     """ Returns a list of items from the given subreddit, sorted by hot, new, controversial, or top. """
-    url = 'http://www.reddit.com/r/{}/{}.json?limit={}'.format(subreddit, sort,count)
-    header = { 'User-Agent' : 'Amazing script' }
+    url = 'http://www.reddit.com/r/{}/{}.json?limit={}'.format(
+        subreddit, sort, count)
+    header = {'User-Agent': 'Amazing script'}
     try:
-        request = requests.get(url,headers=header)
+        request = requests.get(url, headers=header)
         json_data = request.json()
         return [x['data'] for x in json_data['data']['children']]
     except:
-        print('Error: Subreddit '+subreddit+' did not resolve')
+        print('Error: Subreddit ' + subreddit + ' did not resolve')
         return []
 
 
 def demo():
-	""" Runs a quick demo by getting posts from /r/wallpaper and printing them to the console. """
-	print("Recent items from the Wallpaper subreddit:")
-	items = get_items('wallpaper',count=10)
-	for item in items:
-		print('\t{} - {}'.format(item['title'], item['url']))
+    """ Runs a quick demo by getting posts from /r/wallpaper and printing them to the console. """
+    print("Recent items from the Wallpaper subreddit:")
+    items = get_items('wallpaper', count=10)
+    for item in items:
+        print('\t{} - {}'.format(item['title'], item['url']))
 
-	print("\nRecent items from the Wallpaper subreddit, sorted by Top:")
-	items = get_items('wallpaper', 'top')
-	for item in items:
-		print('\t{} - {}'.format(item['title'], item['url']))
+    print("\nRecent items from the Wallpaper subreddit, sorted by Top:")
+    items = get_items('wallpaper', 'top')
+    for item in items:
+        print('\t{} - {}'.format(item['title'], item['url']))
 
-    
+
 # Command Line Options code below:
 
-import sys, getopt, os
 HELP_STR = """Usage:
     python3 ripreddit.py <subreddit 1> <subreddit 2> ...
 \nCommand Line Options:
@@ -45,12 +50,14 @@ HELP_STR = """Usage:
     -s --single: All outputs be concaternated into a single file (reddit.txt)
     -a --append: Appends instead of overwriting existing files
 """
+
+
 def main(argv):
     subreddits = []
     outputdir = 'reddit'
     single = False
     write_char = 'w'
-    limit='1000'
+    limit = '1000'
 
     # Go through subreddits (stop once an arg starts with -)
     for arg in argv.copy():
@@ -61,14 +68,15 @@ def main(argv):
 
     # Attempt parsing args
     try:
-        opts, args = getopt.getopt(argv,"hdci:o:l:sa",["help","demo","clean","inputfile=","outputfile=","limit=","single","append"])
+        opts, args = getopt.getopt(argv, "hdci:o:l:sa", [
+                                   "help", "demo", "clean", "inputfile=", "outputfile=", "limit=", "single", "append"])
     except:
         print(HELP_STR)
         sys.exit(2)
-    
+
     # Go through args
     for opt, arg in opts:
-        if opt in ('-h','--help'):
+        if opt in ('-h', '--help'):
             print(HELP_STR)
             sys.exit(0)
         elif opt in ('-d', '--demo'):
@@ -83,10 +91,10 @@ def main(argv):
             single = not single
         elif opt in ('-a', '--append'):
             write_char = 'a'
-        elif opt in ('-o','--outputdir'):
+        elif opt in ('-o', '--outputdir'):
             # TODO: Check if valid directory
             outputdir = arg
-        elif opt in ('-l','--limit'):
+        elif opt in ('-l', '--limit'):
             limit = int(arg)
         elif opt in ('-i', '--inputfile'):
             if not os.path.exists(arg):
@@ -94,15 +102,15 @@ def main(argv):
                 sys.exit(2)
             with open(arg, 'r') as file:
                 for line in file.readlines():
-                    subreddits.append(line.replace('\n',''))
+                    subreddits.append(line.replace('\n', ''))
     if len(subreddits) <= 0:
-        print("Error: No subreddits given.\n"+HELP_STR)
+        print("Error: No subreddits given.\n" + HELP_STR)
         sys.exit(2)
 
     # Actually do the work now
     # If mode isn't append and it's in single mode, clear reddit.txt (so we can append later)
     if single and 'w' in write_char:
-        singleFile = os.path.join(outputdir,'reddit.txt')
+        singleFile = os.path.join(outputdir, 'reddit.txt')
         if os.path.exists(singleFile):
             os.remove(singleFile)
 
@@ -115,28 +123,29 @@ def main(argv):
         postList = get_items(subreddit, count=limit)
         urlList = [t['url'] for t in postList]
 
-        #Save it
+        # Save it
         if single:
-            with codecs.open(os.path.join(outputdir,'reddit.txt'), 'a+','utf-8-sig') as file:
+            with codecs.open(os.path.join(outputdir, 'reddit.txt'), 'a+', 'utf-8-sig') as file:
                 # Check for whitespace and add it
                 if file.readable():
                     contents = file.read()
                     if len(contents > 0) and not contents.endswith('\n'):
                         file.write('\n')
-                
+
                 # Write actual content
                 file.write('\n'.join(urlList))
         else:
-            with codecs.open(os.path.join(outputdir,str(subreddit)+'.txt'),write_char+'+','utf-8-sig') as file:
+            with codecs.open(os.path.join(outputdir, str(subreddit) + '.txt'), write_char + '+', 'utf-8-sig') as file:
                 # Check for whitespace and add it
                 if 'a' in write_char and file.readable():
                     contents = file.read()
                     if len(contents) > 0 and not contents.endswith('\n'):
                         file.write('\n')
-                
+
                 # Write actual content
                 file.write('\n'.join(urlList))
     # We're done here
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])
