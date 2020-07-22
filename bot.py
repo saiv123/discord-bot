@@ -165,10 +165,11 @@ async def help(ctx):
     embed.add_field(name='$DefInte', value='Finds the intergral $DefInte a b f(x)', inline=False)
     embed.add_field(name='$quote', value='Gives you heart warming quotes', inline=False)
     embed.add_field(name='$randquote', value='Give you a random quote', inline=False)
+    embed.add_field(name='$shouldI', value='Asks the bot if you should do something. Similar to magic 8 ball', inline=False)
     embed.add_field(name='$nsfw', value='will give you a random nsfw image\nyou can choose a category from $nsfw category\nfrom the list you have to spell out the category excatly how it is sent to you as\n$nsfw [category]', inline=False)
     embed.add_field(name='$meme', value='will give you a random meme image\nyou can choose a category from $meme category\nfrom the list you have to spell out the category excatly how it is sent to you as\n$meme [category]', inline=False)
     embed.add_field(name='$rps', value='Play a game of rock paper scissors with the bot like $rps [rock,paper,or scissors]')
-    embed.add_field(name='$invite', value='Get a invite link to invite me to your server')
+    embed.add_field(name='$invite', value='Get a invite link to invite me to your server', inline=False)
     embed.add_field(name='$contact', value='Will give you information on how to conact owner for support', inline=False)
 
     await channel.send(embed=embed)
@@ -292,11 +293,17 @@ async def definte(ctx, a: int, b: int, func: str):
 # sends a warming quote
 
 
+#magic 8 ball
+@bot.command()
+async def shouldI(ctx, *i):
+    i = ' '.join(i)
+    phrases = ['Yes! Go $','No, it won\'t work.','Hmmm, $ might be a fine idea','Unclear, consider rewording $','I don\'t know, ask someone else about $']
+    await ctx.send(random.choice(phrases).replace('$', i))
+
 #sends a warming quote
 @bot.command()
 async def quote(ctx):
     async with ctx.channel.typing():
-        time.sleep(3)
         await ctx.send(quotes.formatQuote(text=quotes.getQuoteJSON()[0] + " :heart:"))
 
 # sends a random quote
@@ -305,7 +312,6 @@ async def quote(ctx):
 @bot.command()
 async def randquote(ctx):
     async with ctx.channel.typing():
-        time.sleep(3)
         quote, author = quotes.getQuoteApi()
         await ctx.send(quotes.formatQuote(text=quote, author=author))
 
