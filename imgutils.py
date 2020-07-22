@@ -22,11 +22,12 @@ def getAverageColor(image_url):
     img2 = img.resize((1, 1))
 
     color = img2.getpixel((0, 0))
-    # converts the 3 rgb values into a hex value
-    hex = '{:02x}{:02x}{:02x}'.format(*color)
 
     if (type(color) == int):
         return color
+
+    # converts the 3 rgb values into a hex value
+    hex = '{:02x}{:02x}{:02x}'.format(*color)
 
     return int(hex.upper(), 16)  # convert the hex string to an int
 
