@@ -147,8 +147,6 @@ async def on_message(message):
 ##############
 
 # our curtom help command
-
-
 @bot.command(pass_context=True)
 async def help(ctx):
     # seting up an embed
@@ -157,24 +155,6 @@ async def help(ctx):
     )
 
     embed.set_author(name='Help')
-    embed.add_field(name='$hi', value='Will send hi back to you', inline=False)
-    embed.add_field(name='$notes', value='You can add notes to your notes file', inline=False)
-    embed.add_field(name='$deletenotes',value='Deletes ALL your notes', inline=False)
-    embed.add_field(name='$getnotes',value='Dms you your last 5 notes', inline=False)
-    embed.add_field(name='$stats', value='The time the bot has been up in HH:MM:SS\nAlong with the tempreture of the bot', inline=False)
-    embed.add_field(name='$DefInte', value='Finds the intergral $DefInte a b f(x)', inline=False)
-    embed.add_field(name='$quote', value='Gives you heart warming quotes', inline=False)
-    embed.add_field(name='$randquote', value='Give you a random quote', inline=False)
-    embed.add_field(name='$shouldI', value='Asks the bot if you should do something. Similar to magic 8 ball', inline=False)
-    embed.add_field(name='$nsfw', value='will give you a random nsfw image\nyou can choose a category from $nsfw category\nfrom the list you have to spell out the category excatly how it is sent to you as\n$nsfw [category]', inline=False)
-    embed.add_field(name='$meme', value='will give you a random meme image\nyou can choose a category from $meme category\nfrom the list you have to spell out the category excatly how it is sent to you as\n$meme [category]', inline=False)
-    embed.add_field(name='$rps', value='Play a game of rock paper scissors with the bot like $rps [rock,paper,or scissors]')
-    embed.add_field(name='$invite', value='Get a invite link to invite me to your server', inline=False)
-    embed.add_field(name='$contact', value='Will give you information on how to conact owner for support', inline=False)
-
-    await channel.send(embed=embed)
-
-    #will give you a link to invite the bot to other servers
     embed.set_thumbnail(
         url='https://cdn.discordapp.com/avatars/314578387031162882/e4b98a4a9ca3315ca699ffe5cba5b8f1.png?size=1024')
     embed.add_field(name='Commands will be found on the website.',
@@ -184,8 +164,14 @@ async def help(ctx):
 
     await ctx.send(embed=embed)
 
-# will give you a link to invite the bot to other servers
+#magic 8 ball
+@bot.command()
+async def shouldI(ctx, *i):
+    i = ' '.join(i)
+    phrases = ['Yes! Go $','No, it won\'t work.','Hmmm, $ might be a fine idea','Unclear, consider rewording $','I don\'t know, ask someone else about $']
+    await ctx.send(random.choice(phrases).replace('$', i))
 
+# will give you a link to invite the bot to other servers
 @bot.command()
 async def invite(ctx):
     async with ctx.channel.typing():  # make it look like the bot is typing
@@ -201,8 +187,6 @@ async def hi(ctx):
     await ctx.send("Hello " + user + "!!!!!!!")
 
 # for the user to see their notes
-
-
 @bot.command()
 async def getnotes(ctx):
     try:
@@ -226,8 +210,6 @@ async def getnotes(ctx):
         await ctx.author.send("You do not have any notes")
 
 # removes the personal files
-
-
 @bot.command()
 async def deletenotes(ctx):
     nameNote = ('MyPorn/' + str(ctx.author.id) + '.txt')
@@ -236,8 +218,6 @@ async def deletenotes(ctx):
     await ctx.send("Your Personal Notes have been Destroyed")
 
 # logic for saving their notes
-
-
 @bot.command()
 async def notes(ctx, *, notes=" "):
     nameNote = ("MyPorn/" + str(ctx.author.id) + ".txt")
@@ -252,8 +232,6 @@ async def notes(ctx, *, notes=" "):
     del nameNote  # deletes the variable so it will free up some ram
 
 # return the time the bot has been running
-
-
 @bot.command()
 async def stats(ctx):
     quote, author = quotes.getQuoteApi()
@@ -280,8 +258,6 @@ async def stats(ctx):
         await ctx.send(embed=embed)
 
 # return the answers to defenet integrals
-
-
 @bot.command()
 async def definte(ctx, a: int, b: int, func: str):
     # bunch of text formating to put into the api
@@ -291,34 +267,22 @@ async def definte(ctx, a: int, b: int, func: str):
     await ctx.send(next(res.results).text)
 
 # sends a warming quote
-
-
-#magic 8 ball
-@bot.command()
-async def shouldI(ctx, *i):
-    i = ' '.join(i)
-    phrases = ['Yes! Go $','No, it won\'t work.','Hmmm, $ might be a fine idea','Unclear, consider rewording $','I don\'t know, ask someone else about $']
-    await ctx.send(random.choice(phrases).replace('$', i))
-
-#sends a warming quote
 @bot.command()
 async def quote(ctx):
     async with ctx.channel.typing():
+        time.sleep(3)
         await ctx.send(quotes.formatQuote(text=quotes.getQuoteJSON()[0] + " :heart:"))
 
 # sends a random quote
-
-
 @bot.command()
 async def randquote(ctx):
     async with ctx.channel.typing():
+        time.sleep(3)
         quote, author = quotes.getQuoteApi()
         await ctx.send(quotes.formatQuote(text=quote, author=author))
 
 # For getting memes from the library
 memePath = 'ClassWork/'
-
-
 @bot.command()
 async def meme(ctx, *args):
     query = ' '.join(args)
@@ -327,8 +291,6 @@ async def meme(ctx, *args):
 
 # for getting nsfw images from the library
 prawnPath = 'MyHomework/'
-
-
 @bot.command()
 async def nsfw(ctx, *args):
     # checks of user is trying to get past the nsfw filter
@@ -343,8 +305,6 @@ async def nsfw(ctx, *args):
             await ctx.send("Sorry, but this command can only be used in a NSFW channel.")
 
 # Contact command
-
-
 @bot.command()
 async def contact(ctx):
     msg = "Discord: Sai#2728\nDiscord server: https://discord.gg/gYhRdk7\n"
@@ -356,8 +316,6 @@ async def contact(ctx):
     await user.send(msg)
 
 # rock paper scissors game with the bot (some what buggy so no touchy)
-
-
 @bot.command()
 async def rps(ctx, *args):
     # local variables
@@ -413,8 +371,6 @@ async def rps(ctx, *args):
 ########################
 
 # for the admins to turn off the bot
-
-
 @bot.command()
 async def off(ctx):
     if(isOwner(ctx)):
@@ -425,8 +381,6 @@ async def off(ctx):
         await ctx.send(msgReturn("notOwner"))
 
 # for admins to admire shrek. Freezes the bot for a bit, so don't actually use
-
-
 @bot.command()
 async def shrek(ctx):
     if not isOwner(ctx):
@@ -438,8 +392,6 @@ async def shrek(ctx):
             await ctx.send(message)
 
 # this allows the admins of the bot to send a message to ANY discord user
-
-
 @bot.command()
 async def sendDM(ctx, id: int, *, msg: str):
     if(isOwner(ctx)):
@@ -449,8 +401,6 @@ async def sendDM(ctx, id: int, *, msg: str):
         await ctx.send(msgReturn("notOwner"))
 
 # this allows the bot admins to change the status from the $help to something else
-
-
 @bot.command()
 async def status(ctx, type: str, *, other="https://twitch.tv/saiencevanadium/"):
     if(isOwner(ctx)):
@@ -466,8 +416,6 @@ async def status(ctx, type: str, *, other="https://twitch.tv/saiencevanadium/"):
         await ctx.send(msgReturn("notOwner"))
 
 # send you the servers the bot is in
-
-
 @bot.command()
 async def servers(ctx):
     if isOwner(ctx):
