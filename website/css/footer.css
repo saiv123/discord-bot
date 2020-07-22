@@ -1,0 +1,25 @@
+footer p.top  {
+  padding-top: 0.5em;
+}
+footer p.bottom {
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+}
+footer {
+  color: white;
+  background-color: #0C0032;
+}
+footer p {
+  text-align: center;
+}
+p.top {
+  border-top: 0.125em solid #240090;
+}
+footer:before, footer:after {
+  content: "";
+  display: table;
+  line-height: 0;
+}
+footer:after {
+  clear: both;
+}
