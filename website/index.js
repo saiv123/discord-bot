@@ -45,6 +45,10 @@ function closecontact() {
     $("#contact_container").css("display", "none");
   }, 800);
 }
+
+function AsDownload() {
+  window.open("https://discord.gg/gYhRdk7", "_blank");
+};
 setTimeout(function() {
   $("#loading").addClass("animated fadeOut");
   setTimeout(function() {
