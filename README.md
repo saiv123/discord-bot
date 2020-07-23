@@ -8,7 +8,7 @@ if the bot is not functioning properly please make a issue request on [GitHub Is
 Nothing currently but will you can add suggestions to the bot here [Link to suggestions forms](https://forms.gle/oiAhSD5c948G6Lhg8)
 ***
 # Other
-Please note since this is a side project, eventually this bot will stop being updated, I know saved
+Please note since this is a side project, eventually this bot will stop being updated, I know sad
 ***
 # Contacts
 Discord: Sai#2728<br>
