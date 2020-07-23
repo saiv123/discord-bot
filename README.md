@@ -1,4 +1,4 @@
-# Discord-bot
+# Discord-Bot
 # About The Bot
 [Invite bot to server](https://discordapp.com/api/oauth2/authorize?client_id=314578387031162882&permissions=402730064&scope=bot)
 The bot is a slow working progress, a side project of mine.
