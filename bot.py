@@ -32,8 +32,6 @@ bot.remove_command('help')
 ##########################
 
 # used as a check for some command so only the people that are allowed to use it can use it
-
-
 def isOwner(ctx):
     for i in ownerId:
         if(ctx.author.id == i):
@@ -41,8 +39,6 @@ def isOwner(ctx):
     return False
 
 # gets a message from the dictionary with the type inputed
-
-
 def msgReturn(type):
     data = json.load(open("msg.json"))
     typeM = data[type]
@@ -51,8 +47,6 @@ def msgReturn(type):
     return msgData
 
 # Splits a string into several sub-2000 char strings
-
-
 def splitLongStrings(str, chars=1500):
     messages = []
     if ' ' not in str:  # If there are no spaces, don't respect spaces
@@ -77,8 +71,6 @@ def splitLongStrings(str, chars=1500):
     return messages
 
 # Gets embed responses from a library of links
-
-
 def getEmbedsFromLibraryQuery(libraryPath, query):
     # If query is categories, get categories
     if 'category' in query.lower() or 'categories' in query.lower():
@@ -113,8 +105,6 @@ def getEmbedsFromLibraryQuery(libraryPath, query):
 ######################################
 
 # starting the bot
-
-
 @bot.event
 async def on_ready():
     print('user: ' + bot.user.name)
@@ -125,8 +115,6 @@ async def on_ready():
     print('-----------')
 
 # for every message it does these checks
-
-
 @bot.event
 async def on_message(message):
     nameNote = "dmLogs.txt"
