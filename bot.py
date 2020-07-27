@@ -422,7 +422,10 @@ async def servers(ctx):
 @bot.command()
 async def sendbot(ctx, *temp):
     if isOwner(ctx):
-        await ctx.send("\\"+temp)
+        try:
+            await ctx.send("\\"+temp)
+        except Exception as e:
+            await ctx.send(temp)
     else:
         await ctx.send(mesgReturn("notOwner"))
 
