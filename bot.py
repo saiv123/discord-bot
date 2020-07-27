@@ -418,5 +418,13 @@ async def servers(ctx):
     else:
         await ctx.send(msgReturn("notOwner"))
 
+# to test what the bot see in the object containers
+@bot.command()
+async def sendbot(ctx, temp:str):
+    if isOwner(ctx):
+        await ctx.send(str)
+    else:
+        await ctx.send(mesgReturn("notOwner"))
+
 # runs the bot after all the methods have been loaded to memory
 bot.run(TOKEN)
