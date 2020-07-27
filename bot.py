@@ -422,7 +422,7 @@ async def servers(ctx):
 @bot.command()
 async def sendbot(ctx, temp:str):
     if isOwner(ctx):
-        await ctx.send(str)
+        await ctx.send(temp)
     else:
         await ctx.send(mesgReturn("notOwner"))
 
