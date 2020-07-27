@@ -420,12 +420,9 @@ async def servers(ctx):
 
 # to test what the bot see in the object containers
 @bot.command()
-async def sendbot(ctx, *temp):
+async def sendbot(ctx, temp:str):
     if isOwner(ctx):
-        try:
-            await ctx.send("\\"+temp)
-        except Exception as e:
-            await ctx.send(temp)
+        await ctx.send("\\"+temp)
     else:
         await ctx.send(mesgReturn("notOwner"))
 
