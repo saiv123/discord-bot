@@ -104,7 +104,16 @@ def getEmbedsFromLibraryQuery(libraryPath, query):
 ###Inizalization of bot DO NOT EDIT###
 ######################################
 
-# starting the bot
+# you may think that this function
+# is obslete, and doesnt seem to do
+# anything. and you would be correct.
+# but when we remove this function
+# for some reason the whole bot
+# does not work/launch properly
+# and cant figure out why,
+# so here it will stay.
+#  no touchy
+
 @bot.event
 async def on_ready():
     print('user: ' + bot.user.name)
