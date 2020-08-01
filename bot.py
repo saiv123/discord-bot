@@ -270,7 +270,7 @@ async def rps(ctx, *args):
 
         if(randC == msg):
             output = ("Its a draw! Better luck next time\nBot: " + randC + " " + user + ": " + msg)
-        elif(randc == "paper" and msg == "rock") or (randC == "scissors" and msg == "paper") or (randC == "rock" and msg == "scissors"):
+        elif(randC == "paper" and msg == "rock") or (randC == "scissors" and msg == "paper") or (randC == "rock" and msg == "scissors"):
             output = ("I win ;) Better luck next time\nBot: " + randC + " " + user + ": " + msg)
         else:
             output = ("You win. Nice job. :partying_face:\nBot: " +randC + " " + user + ": " + msg)
