@@ -1,4 +1,5 @@
 import prawn, imgutils
+import json
 ##########################
 ###bots helper commands###
 ##########################
