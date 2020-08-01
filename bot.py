@@ -243,7 +243,6 @@ async def contact(ctx):
 async def rps(ctx, *, level:int=1):
     # local variables
     user = ("<@" + str(ctx.message.author.id) + "> ")
-    freeform = freeform.lower().replace(' ','_').replace('\n','')
 
     symbol_names = ['rock','paper','scissors','spock','lizard','alien','well','generic','karen','heat','lemonade']
     # Extend symbol names if necessary
@@ -285,7 +284,7 @@ async def rps(ctx, *, level:int=1):
     if msg is None:
         await ctx.send('Awww, don\'t leave me hangin\'')
         return
-    freeform = msg.content
+    freeform = msg.content.lower().replace(' ','_').replace('\n','')
     print('recieved msg: '+str(freeform))
     
     # Process winner 
