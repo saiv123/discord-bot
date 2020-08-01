@@ -271,30 +271,6 @@ async def rps(ctx, *args):
             output = ("I win ;) Better luck next time\nBot: " + randC + " " + user + ": " + msg)
         else:
             output = ("You win. Nice job. :partying_face:\nBot: " +randC + " " + user + ": " + msg)
-
-        # if(randC == msg):
-        #     output = ("Its a draw! Better luck next time\nBot: " +
-        #               randC + " " + user + ": " + msg)
-        # elif(randC == "rock"):
-        #     if(msg == "paper"):
-        #         output = ("You win. Nice job. :partying_face:\nBot: " +randC + " " + user + ": " + msg)
-        #     else:
-        #         output = ("I win ;) Better luck next time\nBot: " +
-        #                   randC + " " + user + ": " + msg)
-        # elif(randC == "paper"):
-        #     if(msg == "scissors"):
-        #         output = ("You win. Nice job. :partying_face:\nBot: " +
-        #                   randC + " " + user + ": " + msg)
-        #     else:
-        #         output = ("I win ;) Better luck next time\nBot: " +
-        #                   randC + " " + user + ": " + msg)
-        # else:
-        #     if(msg == "rock"):
-        #         output = ("You win. Nice job. :partying_face:\nBot: " +
-        #                   randC + " " + user + ": " + msg)
-        #     else:
-        #         output = ("I win ;) Better luck next time\nBot: " +
-        #                   randC + " " + user + ": " + msg)
     await ctx.send(output)
 
 ########################
