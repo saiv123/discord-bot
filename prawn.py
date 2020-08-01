@@ -83,6 +83,8 @@ def getCategoryMessages(path=prawnPath):
         if i % 30 == 0:
             messageList.append(', '.join(map(getFileName, subList)))
             subList.clear()
+        if i == 1:
+            messageList.append(',')
         i += 1
     messageList.append(', '.join(map(getFileName, subList)))
     return messageList
