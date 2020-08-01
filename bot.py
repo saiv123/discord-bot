@@ -366,7 +366,7 @@ async def sendbot(ctx, temp:str):
     if isOwner(ctx):
         await ctx.send("\\"+temp)
     else:
-        await ctx.send(mesgReturn("notOwner"))
+        await ctx.send(msgReturn("notOwner"))
 
 # runs the bot after all the methods have been loaded to memory
 bot.run(TOKEN)
