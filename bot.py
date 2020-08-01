@@ -137,7 +137,7 @@ async def on_message(message):
                        other.name + " -- " + message.content + "\n")
     elif "corn" in message.content.lower():
         channel = message.channel
-        await channel.send("https://discordapp.com/channels/@me/243806609514561536/738997629970808914")
+        await channel.send("https://cdn.discordapp.com/attachments/654783232969277453/738997605039603772/Corn_is_the_best_crop__wheat_is_worst.mp4")
 
     # Respond to last command
     await bot.process_commands(message)
