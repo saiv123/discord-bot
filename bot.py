@@ -6,11 +6,11 @@ import time, datetime
 import json, random
 from discord.ext import commands, tasks
 from discord.ext.commands import Bot
-from helperFunctions import isOwner, msgReturn, splitLongStrings, getEmbedsFromLibraryQuery
 
 # external libraies
 import quotes, prawn, imgutils
 from secret import TOKEN, id, cont
+from helperFunctions import isOwner, msgReturn, splitLongStrings, getEmbedsFromLibraryQuery
 
 # dir for the bots location
 os.chdir("/home/pi/discord-bot")
@@ -80,12 +80,9 @@ async def help(ctx):
     )
 
     embed.set_author(name='Help')
-    embed.set_thumbnail(
-        url='https://cdn.discordapp.com/avatars/314578387031162882/e4b98a4a9ca3315ca699ffe5cba5b8f1.png?size=1024')
-    embed.add_field(name='Commands will be found on the website.',
-                    value='[Link to website](https://saiv123.github.io/discord-bot/website/)', inline=False)
-    embed.add_field(name='Please invite me to other discords',
-                    value='[Invite bot to server](https://discordapp.com/api/oauth2/authorize?client_id=314578387031162882&permissions=402730064&scope=bot)', inline=False)
+    embed.set_thumbnail(url='https://cdn.discordapp.com/avatars/314578387031162882/e4b98a4a9ca3315ca699ffe5cba5b8f1.png?size=1024')
+    embed.add_field(name='Commands will be found on the website.',value='[Link to website](https://saiv123.github.io/discord-bot/website/)', inline=False)
+    embed.add_field(name='Please invite me to other discords',value='[Invite bot to server](https://discordapp.com/api/oauth2/authorize?client_id=314578387031162882&permissions=402730064&scope=bot)', inline=False)
 
     await ctx.send(embed=embed)
 
@@ -254,13 +251,12 @@ async def rps(ctx, *args):
     for i in opt:
         if (i == msg):
             correct = True
-
     # a waird edge case where if the input was null, it would some how pass the last test and correct would be true
     if(msg == ''):
         correct = False
+
     if(not correct):
-        output = (
-            "Somthing went worng the command is used like\n$rps [rock,paper,or scissors]")
+        output = ("Somthing went worng the command is used like\n$rps [rock,paper,or scissors]")
     else:
         # chose a random option from the opt list
         randC = opt[random.randint(0, 2)]
