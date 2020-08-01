@@ -241,14 +241,14 @@ async def contact(ctx):
 
 # rock paper scissors game with the bot (some what buggy so no touchy)
 @bot.command()
-async def rps(ctx, level:int=1, *, freeform:str):
+async def rps(ctx, *, level:int=1):
     # local variables
     user = ("<@" + str(ctx.message.author.id) + "> ")
     freeform = freeform.lower().replace(' ','_').replace('\n','')
 
     symbol_names = ['rock','paper','scissors','spock','lizard','alien','well','generic','karen','heat','lemonade']
     # Extend symbol names if necessary
-    for i in range(len(symbol_names),level*2+1):
+    for i in range(len(symbol_names),level*2+5):
         symbol_names.append('item'+i)
 
     # RPS helper methods
@@ -272,13 +272,25 @@ async def rps(ctx, level:int=1, *, freeform:str):
 
     # Generate matrix
     matrix = gen_rps_matrix(level)
+
+    # Get user choice
+    def check(m):
+        return m.author is ctx.message.author
+    msg = await client.wait_for('message', check=check,timeout=30)
+    print('recieved raw msg: '+str(msg))
+    if msg is None:
+        await ctx.send('Awww, don\'t leave me hangin\'')
+        return
+    freeform = msg.content
+    print('recieved msg: '+str(freeform))
+
     mlo = getClosestFromList(['rules']+symbol_names,freeform)
     if 'rules' in mlo:
         for msg in splitLongStrings(' \n'.join(format_matrix(matrix, symbol_names))):
             await ctx.send(msg)
     elif distance(freeform, mlo) >= len(freeform)*0.3: #If the most likely option is more than 30% wrong, hassle
         await ctx.send('No option recognized! Your choices are: ')
-        for msg in splitLongStrings('\n '.join(['rules']+symbol_names)):
+        for msg in splitLongStrings('\n '.join(['rules']+symbol_names[:level*2+1])):
             await ctx.send(msg)
     else:
         choice = symbol_names.index(getClosestFromList(symbol_names, freeform))
@@ -291,7 +303,7 @@ async def rps(ctx, level:int=1, *, freeform:str):
             output = "You win. Nice job. :partying_face:"
         elif winner == 2:
             output = "I win ;) Better luck next time"
-        output = "\n\nYou chose "+ symbol_names[choice]+"\nI chose "+symbol_names[computer_choice]
+        output = output+"\n\nYou chose "+ symbol_names[choice]+"\nI chose "+symbol_names[computer_choice]
         await ctx.send(output)
 
 ########################
