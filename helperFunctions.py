@@ -1,5 +1,8 @@
+import asyncio, discord
+from discord.ext import commands, tasks
+from discord.ext.commands import Bot
 import prawn, imgutils
-import json
+import json, random
 ##########################
 ###bots helper commands###
 ##########################
