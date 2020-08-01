@@ -2,6 +2,9 @@
 ###bots helper commands###
 ##########################
 
+# List of Owners/Bot admins
+ownerId = [231957319737540608, 240636443829993473, 243774954955341828]
+
 # used as a check for some command so only the people that are allowed to use it can use it
 def isOwner(ctx):
     for i in ownerId:

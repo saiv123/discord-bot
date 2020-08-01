@@ -15,9 +15,6 @@ from secret import TOKEN, id, cont
 # dir for the bots location
 os.chdir("/home/pi/discord-bot")
 
-# List of Owners/Bot admins
-ownerId = [231957319737540608, 240636443829993473, 243774954955341828]
-
 # for the math stuff
 client = wolframalpha.Client(id)
 
