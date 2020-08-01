@@ -2,10 +2,11 @@
 import sys, os
 import asyncio, discord
 import wolframalpha
-from discord.ext import commands, tasks
-from discord.ext.commands import Bot
 import time, datetime
 import json, random
+from discord.ext import commands, tasks
+from discord.ext.commands import Bot
+from helperFunctions import isOwner, msgReturn, splitLongStrings, getEmbedsFromLibraryQuery
 
 # external libraies
 import quotes, prawn, imgutils
@@ -26,79 +27,6 @@ ts = time.time()
 
 # deleting default help comand
 bot.remove_command('help')
-
-##########################
-###bots helper commands###
-##########################
-
-# used as a check for some command so only the people that are allowed to use it can use it
-def isOwner(ctx):
-    for i in ownerId:
-        if(ctx.author.id == i):
-            return True
-    return False
-
-# gets a message from the dictionary with the type inputed
-def msgReturn(type):
-    data = json.load(open("msg.json"))
-    typeM = data[type]
-    msgData = random.choice(typeM)
-    del data, typeM
-    return msgData
-
-# Splits a string into several sub-2000 char strings
-def splitLongStrings(str, chars=1500):
-    messages = []
-    if ' ' not in str:  # If there are no spaces, don't respect spaces
-        message = ""
-        for c in str:
-            if len(message) >= chars:  # >= is equivalent to adding 1 to len(message)
-                messages.append(message)
-                message = ""
-            message = message + c
-        messages.append(message)
-        return messages
-    # If there are spaces, respect them
-    words = str.split(' ')
-    message = ""
-    for word in words:
-        if len(message) + len(word) > chars:
-            messages.append(message[1:])  # delete leading space
-            message = ""
-        message = message + ' ' + word
-    if len(message) > 1:
-        messages.append(message[1:])
-    return messages
-
-# Gets embed responses from a library of links
-def getEmbedsFromLibraryQuery(libraryPath, query):
-    # If query is categories, get categories
-    if 'category' in query.lower() or 'categories' in query.lower():
-        color = imgutils.randomSaturatedColor()
-        embeds = []
-        for message in splitLongStrings(' '.join(prawn.getCategoryMessages(path=libraryPath))):
-            embeds.append(discord.Embed(description=message, color=color))
-        return embeds
-    # Otherwise, get image from query
-    namedImg = (
-        'Error', 'https://www.prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg')
-
-    # Iterate up to 5x to try and get a valid image
-    for i in range(5):
-        if len(str(query)) <= 2:
-            namedImg = prawn.getRandom(path=libraryPath)
-        else:
-            namedImg = prawn.getRandomLineFromQuery(query, path=libraryPath)
-        if imgutils.isUrlValidImage(namedImg[1]):
-            break
-    if not imgutils.isUrlValidImage(namedImg[1]):  # Print error
-        print('Image not valid at ' +
-              namedImg[1] + '\n\t(name ' + namedImg[0] + ')')
-
-    embed = discord.Embed(description=namedImg[0], color=imgutils.getAverageColor(
-        namedImg[1]))  # 16777... is just FFFFFF in base10
-    embed.set_image(url=namedImg[1])
-    return [embed]
 
 ######################################
 ###Inizalization of bot DO NOT EDIT###
@@ -177,7 +105,6 @@ async def invite(ctx):
     async with ctx.channel.typing():  # make it look like the bot is typing
         time.sleep(3)
         await ctx.send("Invite me to your friends disocrd:\nhttps://discordapp.com/api/oauth2/authorize?client_id=314578387031162882&permissions=402730064&scope=bot")
-
 
 # says hello to your
 @bot.command()
@@ -340,30 +267,37 @@ async def rps(ctx, *args):
     else:
         # chose a random option from the opt list
         randC = opt[random.randint(0, 2)]
+
         if(randC == msg):
-            output = ("Its a draw! Better luck next time\nBot: " +
-                      randC + " " + user + ": " + msg)
-        elif(randC == "rock"):
-            if(msg == "paper"):
-                output = ("You win. Nice job. :partying_face:\nBot: " +
-                          randC + " " + user + ": " + msg)
-            else:
-                output = ("I win ;) Better luck next time\nBot: " +
-                          randC + " " + user + ": " + msg)
-        elif(randC == "paper"):
-            if(msg == "scissors"):
-                output = ("You win. Nice job. :partying_face:\nBot: " +
-                          randC + " " + user + ": " + msg)
-            else:
-                output = ("I win ;) Better luck next time\nBot: " +
-                          randC + " " + user + ": " + msg)
+            output = ("Its a draw! Better luck next time\nBot: " + randC + " " + user + ": " + msg)
+        elif(randc == "paper" and msg == "rock") or (randC == "scissors" and msg == "paper") or (randC == "rock" and msg == "scissors"):
+            output = ("I win ;) Better luck next time\nBot: " + randC + " " + user + ": " + msg)
         else:
-            if(msg == "rock"):
-                output = ("You win. Nice job. :partying_face:\nBot: " +
-                          randC + " " + user + ": " + msg)
-            else:
-                output = ("I win ;) Better luck next time\nBot: " +
-                          randC + " " + user + ": " + msg)
+            output = ("You win. Nice job. :partying_face:\nBot: " +randC + " " + user + ": " + msg)
+
+        # if(randC == msg):
+        #     output = ("Its a draw! Better luck next time\nBot: " +
+        #               randC + " " + user + ": " + msg)
+        # elif(randC == "rock"):
+        #     if(msg == "paper"):
+        #         output = ("You win. Nice job. :partying_face:\nBot: " +randC + " " + user + ": " + msg)
+        #     else:
+        #         output = ("I win ;) Better luck next time\nBot: " +
+        #                   randC + " " + user + ": " + msg)
+        # elif(randC == "paper"):
+        #     if(msg == "scissors"):
+        #         output = ("You win. Nice job. :partying_face:\nBot: " +
+        #                   randC + " " + user + ": " + msg)
+        #     else:
+        #         output = ("I win ;) Better luck next time\nBot: " +
+        #                   randC + " " + user + ": " + msg)
+        # else:
+        #     if(msg == "rock"):
+        #         output = ("You win. Nice job. :partying_face:\nBot: " +
+        #                   randC + " " + user + ": " + msg)
+        #     else:
+        #         output = ("I win ;) Better luck next time\nBot: " +
+        #                   randC + " " + user + ": " + msg)
     await ctx.send(output)
 
 ########################
