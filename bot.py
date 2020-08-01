@@ -244,12 +244,11 @@ async def contact(ctx):
 async def rps(ctx, *, level:int=1):
     # local variables
     user = ("<@" + str(ctx.message.author.id) + "> ")
-    freeform = freeform.lower().replace(' ','_').replace('\n','')
 
     symbol_names = ['rock','paper','scissors','spock','lizard','alien','well','generic','karen','heat','lemonade']
     # Extend symbol names if necessary
     for i in range(len(symbol_names),level*2+5):
-        symbol_names.append('item'+i)
+        symbol_names.append('item'+str(i))
 
     # RPS helper methods
     def gen_rps_matrix(size):
@@ -274,20 +273,19 @@ async def rps(ctx, *, level:int=1):
     matrix = gen_rps_matrix(level)
 
     # Ask for user choice
-    await ctx.send('Pick an option, from ')
-    for msg in splitLongStrings('\n '.join(['rules']+symbol_names[:level*2+1])):
+    await ctx.send('Pick an option:')
+    for msg in splitLongStrings(', '.join(['rules']+symbol_names[:level*2+1])):
             await ctx.send(msg)
     
     # Get user choice
     def check(m):
         return m.author is ctx.message.author
-    msg = await client.wait_for('message', check=check,timeout=30)
-    print('recieved raw msg: '+str(msg))
+    msg = await bot.wait_for('message', check=check,timeout=30)
+
     if msg is None:
         await ctx.send('Awww, don\'t leave me hangin\'')
         return
-    freeform = msg.content
-    print('recieved msg: '+str(freeform))
+    freeform = msg.content.lower().replace(' ','_').replace('\n','')
     
     # Process winner 
     mlo = getClosestFromList(['rules']+symbol_names,freeform)
