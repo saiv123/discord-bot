@@ -1,3 +1,4 @@
+import prawn, imgutils
 ##########################
 ###bots helper commands###
 ##########################

@@ -8,7 +8,7 @@ from discord.ext import commands, tasks
 from discord.ext.commands import Bot
 
 # external libraies
-import quotes, prawn, imgutils
+import quotes
 from secret import TOKEN, id, cont
 from helperFunctions import isOwner, msgReturn, splitLongStrings, getEmbedsFromLibraryQuery
 
