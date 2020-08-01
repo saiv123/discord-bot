@@ -135,7 +135,7 @@ async def on_message(message):
         with open(nameNote, 'a') as file:
             file.write(str(datetime.datetime.now()) + " " +
                        other.name + " -- " + message.content + "\n")
-    elif "corn" in lower(message.content):
+    elif "corn" in message.content.lower():
         channel = message.channel
         await channel.send("https://discordapp.com/channels/@me/243806609514561536/738997629970808914")
 
