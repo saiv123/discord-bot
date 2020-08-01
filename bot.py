@@ -12,6 +12,7 @@ import quotes
 import helperFunctions
 from secret import TOKEN, id, cont
 from helperFunctions import isOwner, msgReturn, splitLongStrings, getEmbedsFromLibraryQuery
+from helperFunctions import gen_rps_matrix, format_matrix, list_god
 from prawn import getClosestFromList
 from Levenshtein import distance
 
@@ -253,39 +254,21 @@ async def rps(ctx, *, level:int=1):
     for i in range(len(symbol_names),level*2+5):
         symbol_names.append('item'+str(i))
 
-    # RPS helper methods
-    def gen_rps_matrix(size):
-        row = [0] + [i%2+1 for i in range(2*size)] # baseline rps winner matrix 0 1 2 1 2 ...
-        matrix = [row]
-        for i in range(2*size):
-            row = row[-1:] + row[:-1] # right shift 2 0 1 2 1 ....
-            matrix.append(row)
-        return matrix
-    def format_matrix(matrix, symbol_names):
-        lines = list()
-        for p1 in range(len(matrix)):
-            for p2 in range(p1+1, len(matrix[p1])):
-                winner_symbol = p2 if matrix[p1][p2] == 1 else p1
-                loser_symbol = p1 if matrix[p1][p2] == 1 else p2
-                lines.append(str(list_god(symbol_names,winner_symbol,'Nothing'))+' beats '+str(list_god(symbol_names,loser_symbol,'nothing')))
-        return lines
-    def list_god(list, index, default): # list_get_or_default, nothing to do with religion
-        return (list[index:index+1]+[default])[0]
-
     # Generate matrix
     matrix = gen_rps_matrix(level)
 
     # Ask for user choice
     await ctx.send(user+': Pick an option:')
-    for msg in splitLongStrings('rules.'+', '.join(symbol_names[:level*2+1])):
+    for msg in splitLongStrings('rules. '+', '.join(symbol_names[:level*2+1])):
             await ctx.send(msg)
     
     # Get user choice
     def check(m):
         return m.author is ctx.message.author
-    msg = await bot.wait_for('message', check=check,timeout=30)
-
-    if msg is None:
+    
+    try:
+        msg = await bot.wait_for('message', check=check,timeout=30)
+    except:
         await ctx.send('Awww, '+user+' don\'t leave me hangin\'')
         return
     freeform = msg.content.lower().replace(' ','_').replace('\n','')

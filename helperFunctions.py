@@ -76,3 +76,23 @@ def getEmbedsFromLibraryQuery(libraryPath, query):
     embed = discord.Embed(description=namedImg[0], color=imgutils.getAverageColor(namedImg[1]))
     embed.set_image(url=namedImg[1])
     return [embed]
+
+
+# RPS helper methods
+def gen_rps_matrix(size):
+    row = [0] + [i%2+1 for i in range(2*size)] # baseline rps winner matrix 0 1 2 1 2 ...
+    matrix = [row]
+    for i in range(2*size):
+        row = row[-1:] + row[:-1] # right shift 2 0 1 2 1 ....
+        matrix.append(row)
+    return matrix
+def format_matrix(matrix, symbol_names):
+    lines = list()
+    for p1 in range(len(matrix)):
+        for p2 in range(p1+1, len(matrix[p1])):
+            winner_symbol = p2 if matrix[p1][p2] == 1 else p1
+            loser_symbol = p1 if matrix[p1][p2] == 1 else p2
+            lines.append(str(list_god(symbol_names,winner_symbol,'Nothing'))+' beats '+str(list_god(symbol_names,loser_symbol,'nothing')))
+    return lines
+def list_god(list, index, default): # list_get_or_default, nothing to do with religion
+    return (list[index:index+1]+[default])[0]
