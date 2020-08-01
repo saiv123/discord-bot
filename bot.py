@@ -272,6 +272,11 @@ async def rps(ctx, *, level:int=1):
     # Generate matrix
     matrix = gen_rps_matrix(level)
 
+    # Ask for user choice
+    await ctx.send('Pick an option, from ')
+    for msg in splitLongStrings('\n '.join(['rules']+symbol_names[:level*2+1])):
+            await ctx.send(msg)
+    
     # Get user choice
     def check(m):
         return m.author is ctx.message.author
@@ -282,7 +287,8 @@ async def rps(ctx, *, level:int=1):
         return
     freeform = msg.content
     print('recieved msg: '+str(freeform))
-
+    
+    # Process winner 
     mlo = getClosestFromList(['rules']+symbol_names,freeform)
     if 'rules' in mlo:
         for msg in splitLongStrings(' \n'.join(format_matrix(matrix, symbol_names))):
