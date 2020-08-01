@@ -247,6 +247,7 @@ async def rps(ctx, *, level:int=1):
     user = ("<@" + str(ctx.message.author.id) + "> ")
     if level > RPS_HARD_CAP:
         await ctx.send(user+'Sorry, but even though the code for it exists, why would you ever want to play rps-'+str(level*2+1)+'???')
+        return
     symbol_names = ['rock','paper','scissors','spock','lizard','alien','well','generic','karen','heat','lemonade']
     # Extend symbol names if necessary
     for i in range(len(symbol_names),level*2+5):
