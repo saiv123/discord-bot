@@ -273,14 +273,14 @@ async def rps(ctx, *, level:int=1):
     matrix = gen_rps_matrix(level)
 
     # Ask for user choice
-    await ctx.send('Pick an option, from ')
-    for msg in splitLongStrings('\n '.join(['rules']+symbol_names[:level*2+1])):
+    await ctx.send('Pick an option:')
+    for msg in splitLongStrings(', '.join(['rules']+symbol_names[:level*2+1])):
             await ctx.send(msg)
     
     # Get user choice
     def check(m):
         return m.author is ctx.message.author
-    msg = await client.wait_for('message', check=check,timeout=30)
+    msg = await bot.wait_for('message', check=check,timeout=30)
     print('recieved raw msg: '+str(msg))
     if msg is None:
         await ctx.send('Awww, don\'t leave me hangin\'')
