@@ -240,11 +240,13 @@ async def contact(ctx):
     await user.send(msg)
 
 # rock paper scissors game with the bot (some what buggy so no touchy)
+RPS_HARD_CAP = 6
 @bot.command()
 async def rps(ctx, *, level:int=1):
     # local variables
     user = ("<@" + str(ctx.message.author.id) + "> ")
-
+    if level > RPS_HARD_CAP:
+        await ctx.send(user+'Sorry, but even though the code for it exists, why would you ever want to play rps-'+str(level*2+1)+'???')
     symbol_names = ['rock','paper','scissors','spock','lizard','alien','well','generic','karen','heat','lemonade']
     # Extend symbol names if necessary
     for i in range(len(symbol_names),level*2+5):
@@ -273,8 +275,8 @@ async def rps(ctx, *, level:int=1):
     matrix = gen_rps_matrix(level)
 
     # Ask for user choice
-    await ctx.send('Pick an option:')
-    for msg in splitLongStrings(', '.join(['rules']+symbol_names[:level*2+1])):
+    await ctx.send(user+': Pick an option:')
+    for msg in splitLongStrings('rules.'+', '.join(symbol_names[:level*2+1])):
             await ctx.send(msg)
     
     # Get user choice
@@ -283,7 +285,7 @@ async def rps(ctx, *, level:int=1):
     msg = await bot.wait_for('message', check=check,timeout=30)
 
     if msg is None:
-        await ctx.send('Awww, don\'t leave me hangin\'')
+        await ctx.send('Awww, '+user+' don\'t leave me hangin\'')
         return
     freeform = msg.content.lower().replace(' ','_').replace('\n','')
     
