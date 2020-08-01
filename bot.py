@@ -248,7 +248,7 @@ async def rps(ctx, *, level:int=1):
     symbol_names = ['rock','paper','scissors','spock','lizard','alien','well','generic','karen','heat','lemonade']
     # Extend symbol names if necessary
     for i in range(len(symbol_names),level*2+5):
-        symbol_names.append('item'+i)
+        symbol_names.append('item'+str(i))
 
     # RPS helper methods
     def gen_rps_matrix(size):
@@ -281,12 +281,11 @@ async def rps(ctx, *, level:int=1):
     def check(m):
         return m.author is ctx.message.author
     msg = await bot.wait_for('message', check=check,timeout=30)
-    print('recieved raw msg: '+str(msg))
+
     if msg is None:
         await ctx.send('Awww, don\'t leave me hangin\'')
         return
     freeform = msg.content.lower().replace(' ','_').replace('\n','')
-    print('recieved msg: '+str(freeform))
     
     # Process winner 
     mlo = getClosestFromList(['rules']+symbol_names,freeform)
