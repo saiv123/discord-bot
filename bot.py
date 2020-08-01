@@ -11,6 +11,8 @@ from discord.ext.commands import Bot
 import quotes
 from secret import TOKEN, id, cont
 from helperFunctions import isOwner, msgReturn, splitLongStrings, getEmbedsFromLibraryQuery
+from prawn import getClosestFromList
+from Levenshtein import distance
 
 # dir for the bots location
 os.chdir("/home/pi/discord-bot")
@@ -238,36 +240,58 @@ async def contact(ctx):
 
 # rock paper scissors game with the bot (some what buggy so no touchy)
 @bot.command()
-async def rps(ctx, *args):
+async def rps(ctx, level:int=1, *, freeform:str):
     # local variables
     user = ("<@" + str(ctx.message.author.id) + "> ")
-    output = ""
-    msg = ''.join(args)
-    msg.lower()  # making the input lower case
-    correct = False
-    opt = ["rock", "paper", "scissors"]
+    freeform = freeform.lower().replace(' ','_').replace('\n','')
 
-    # to test if the input is one of the options
-    for i in opt:
-        if (i == msg):
-            correct = True
-    # a waird edge case where if the input was null, it would some how pass the last test and correct would be true
-    if(msg == ''):
-        correct = False
+    symbol_names = ['rock','paper','scissors','spock','lizard','alien','well','generic','karen','heat','lemonade']
+    # Extend symbol names if necessary
+    for i in range(len(symbol_names),level*2+1):
+        symbol_names.append('item'+i)
 
-    if(not correct):
-        output = ("Somthing went worng the command is used like\n$rps [rock,paper,or scissors]")
+    # RPS helper methods
+    def gen_rps_matrix(size):
+        row = [0] + [i%2+1 for i in range(2*size)] # baseline rps winner matrix 0 1 2 1 2 ...
+        matrix = [row]
+        for i in range(2*size):
+            row = row[-1:] + row[:-1] # right shift 2 0 1 2 1 ....
+            matrix.append(row)
+        return matrix
+    def format_matrix(matrix, symbol_names):
+        lines = list()
+        for p1 in range(len(matrix)):
+            for p2 in range(p1+1, len(matrix[p1])):
+                winner_symbol = p2 if matrix[p1][p2] == 1 else p1
+                loser_symbol = p1 if matrix[p1][p2] == 1 else p2
+                lines.append(str(list_god(symbol_names,winner_symbol,'Nothing'))+' beats '+str(list_god(symbol_names,loser_symbol,'nothing')))
+        return lines
+    def list_god(list, index, default): # list_get_or_default, nothing to do with religion
+        return (list[index:index+1]+[default])[0]
+    
+    # Generate matrix
+    matrix = gen_rps_matrix(level)
+    mlo = getClosestFromList(['rules']+symbol_names,freeform)
+    if 'rules' in mlo:
+        for msg in splitLongStrings(' \n'.join(format_matrix(matrix, symbol_names))):
+            await ctx.send(msg)
+    elif distance(freeform, mlo) >= len(freeform)*0.3: #If the most likely option is more than 30% wrong, hassle
+        await ctx.send('No option recognized! Your choices are: ')
+        for msg in splitLongStrings('\n '.join(['rules']+symbol_names)):
+            await ctx.send(msg)
     else:
-        # chose a random option from the opt list
-        randC = opt[random.randint(0, 2)]
+        choice = symbol_names.index(getClosestFromList(symbol_names, freeform))
+        computer_choice = random.randint(0, len(matrix[0])-1)
 
-        if(randC == msg):
-            output = ("Its a draw! Better luck next time\nBot: " + randC + " " + user + ": " + msg)
-        elif(randC == "paper" and msg == "rock") or (randC == "scissors" and msg == "paper") or (randC == "rock" and msg == "scissors"):
-            output = ("I win ;) Better luck next time\nBot: " + randC + " " + user + ": " + msg)
-        else:
-            output = ("You win. Nice job. :partying_face:\nBot: " +randC + " " + user + ": " + msg)
-    await ctx.send(output)
+        winner = matrix[choice][computer_choice]
+        if winner == 0:
+            output = "Its a draw! Better luck next time"
+        elif winner == 1:
+            output = "You win. Nice job. :partying_face:"
+        elif winner == 2:
+            output = "I win ;) Better luck next time"
+        output = "\n\nYou chose "+ symbol_names[choice]+"\nI chose "+symbol_names[computer_choice]
+        await ctx.send(output)
 
 ########################
 ###Bot Admin Commands###

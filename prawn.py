@@ -17,9 +17,9 @@ def getFileList(path):
 
 def getClosestFromList(list, query):
     minDist = 10000000  # 9223372036854775807
-    minValue = None
+    minValue = None if len(list) <= 0 else list[0]
     for i in list:
-        dist = distance(query, str(i))
+        dist = distance(str(query), str(i))
         if dist < minDist:
             minDist = dist
             minValue = i
