@@ -9,6 +9,7 @@ from discord.ext.commands import Bot
 
 # external libraies
 import quotes
+import helperFunctions
 from secret import TOKEN, id, cont
 from helperFunctions import isOwner, msgReturn, splitLongStrings, getEmbedsFromLibraryQuery
 from prawn import getClosestFromList
@@ -268,7 +269,7 @@ async def rps(ctx, level:int=1, *, freeform:str):
         return lines
     def list_god(list, index, default): # list_get_or_default, nothing to do with religion
         return (list[index:index+1]+[default])[0]
-    
+
     # Generate matrix
     matrix = gen_rps_matrix(level)
     mlo = getClosestFromList(['rules']+symbol_names,freeform)
