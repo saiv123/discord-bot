@@ -55,12 +55,11 @@ def getEmbedsFromLibraryQuery(libraryPath, query):
     if 'category' in query.lower() or 'categories' in query.lower():
         color = imgutils.randomSaturatedColor()
         embeds = []
-        for message in splitLongStrings(' '.join(prawn.getCategoryMessages(path=libraryPath))):
+        for message in splitLongStrings(', '.join(map(prawn.getFileName,prawn.getFileList(libraryPath)))):
             embeds.append(discord.Embed(description=message, color=color))
         return embeds
     # Otherwise, get image from query
-    namedImg = (
-        'Error', 'https://www.prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg')
+    namedImg = ('Error', 'https://www.prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg')
 
     # Iterate up to 5x to try and get a valid image
     for i in range(5):
@@ -70,11 +69,10 @@ def getEmbedsFromLibraryQuery(libraryPath, query):
             namedImg = prawn.getRandomLineFromQuery(query, path=libraryPath)
         if imgutils.isUrlValidImage(namedImg[1]):
             break
+    
     if not imgutils.isUrlValidImage(namedImg[1]):  # Print error
-        print('Image not valid at ' +
-              namedImg[1] + '\n\t(name ' + namedImg[0] + ')')
+        print('Image not valid at ' +namedImg[1] + '\n\t(name ' + namedImg[0] + ')')
 
-    embed = discord.Embed(description=namedImg[0], color=imgutils.getAverageColor(
-        namedImg[1]))  # 16777... is just FFFFFF in base10
+    embed = discord.Embed(description=namedImg[0], color=imgutils.getAverageColor(namedImg[1]))
     embed.set_image(url=namedImg[1])
     return [embed]

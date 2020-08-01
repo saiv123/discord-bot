@@ -61,7 +61,7 @@ def getRandomLineFromQuery(query, path=prawnPath):
     # Let's check for a threshold
     dist = distance(getFileName(closest).lower(), query.lower())
     if dist > (len(closest) - 3) * 0.4:  # Can be 40% wrong
-        categories = ', '.join(map(getFileName, getFileList(path)))
+        #categories = ', '.join(map(getFileName, getFileList(path)))
         return 'Error, category not found.\nYou should use the argument \'category\' to list categories. \nDid you mean ' + getFileName(closest) + '?', ''
 
     # If 20% wrong, hassle them
@@ -71,7 +71,7 @@ def getRandomLineFromQuery(query, path=prawnPath):
     # Threshold is met, return random line from file
     return modifier, getRandomLineFromFile(path + closest)
 
-
+# Unused, returns a list of lists where each element contains up to 30 file names, separated by commas
 def getCategoryMessages(path=prawnPath):
     messageList = []
     fileList = getFileList(path)
@@ -83,8 +83,6 @@ def getCategoryMessages(path=prawnPath):
         if i % 30 == 0:
             messageList.append(', '.join(map(getFileName, subList)))
             subList.clear()
-        if i == 1:
-            messageList.append(',')
         i += 1
     messageList.append(', '.join(map(getFileName, subList)))
     return messageList
