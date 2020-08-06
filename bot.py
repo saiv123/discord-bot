@@ -68,13 +68,18 @@ async def on_message(message):
         channel = message.channel
         await channel.send("https://cdn.discordapp.com/attachments/654783232969277453/738997605039603772/Corn_is_the_best_crop__wheat_is_worst.mp4")
 
-    try:
-        # Respond to last command
-        await bot.process_commands(message)
-    except discord.ext.commands.errors.CommandNotFound as e:
-        Print("Invalid command "+e)
-        await message.channel.send("Sorry but that is not a command\nBut you can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose")
+    # Respond to last command
+    await bot.process_commands(message)
 
+#spits out the errors
+@bot.event
+async def on_command_error(ctx, error):
+    msgSend = ""
+    if isinstance(error, commands.MissingRequiredArgument):
+        msgSend = "You did not use the command correctly\nIf you dont know how to use the command you can use the $help command\nto see how to use all the commands."
+    elif isinstance(error, commands.CommandNotFound):
+        msgSend = "Sorry but that is not a command\nBut you can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
+    await ctx.send(msgSend)
 
 ##############
 ###Commands###
