@@ -68,8 +68,13 @@ async def on_message(message):
         channel = message.channel
         await channel.send("https://cdn.discordapp.com/attachments/654783232969277453/738997605039603772/Corn_is_the_best_crop__wheat_is_worst.mp4")
 
-    # Respond to last command
-    await bot.process_commands(message)
+    try:
+        # Respond to last command
+        await bot.process_commands(message)
+    except discord.ext.commands.errors.CommandNotFound as e:
+        Print("Invalid command "+e)
+        await message.channel.send("Sorry but that is not a command\nBut you can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose")
+
 
 ##############
 ###Commands###
@@ -240,7 +245,7 @@ async def contact(ctx):
     user = bot.get_user(id)
     await user.send(msg)
 
-# rock paper scissors game with the bot (some what buggy so no touchy)
+# rock paper scissors game with the bot (maybe buggy so no touchy)
 RPS_HARD_CAP = 6
 @bot.command()
 async def rps(ctx, *, level:int=1):
@@ -261,19 +266,19 @@ async def rps(ctx, *, level:int=1):
     await ctx.send(user+': Pick an option:')
     for msg in splitLongStrings('rules. '+', '.join(symbol_names[:level*2+1])):
             await ctx.send(msg)
-    
+
     # Get user choice
     def check(m):
         return m.author is ctx.message.author
-    
+
     try:
         msg = await bot.wait_for('message', check=check,timeout=30)
     except:
         await ctx.send('Awww, '+user+' don\'t leave me hangin\'')
         return
     freeform = msg.content.lower().replace(' ','_').replace('\n','')
-    
-    # Process winner 
+
+    # Process winner
     mlo = getClosestFromList(['rules']+symbol_names,freeform)
     if 'rules' in mlo:
         for msg in splitLongStrings(' \n'.join(format_matrix(matrix, symbol_names))):
