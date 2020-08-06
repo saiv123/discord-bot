@@ -1,9 +1,14 @@
 import requests
-import json
+import json, sys, os, string
 
+class HiddenPrints:
+    def __enter__(self):
+        self._original_stdout = sys.stdout
+        sys.stdout = open(os.devnull, 'w')
 
-#r = requests.get(url='https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
-#print(r.json())
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        sys.stdout.close()
+        sys.stdout = self._original_stdout
 
 def getReqJSON(url, args={}):
     """Generic function to get json from an api request"""
@@ -66,7 +71,57 @@ def dumbTrumpQuote(tag:str=""):
         parsed['source'] = resp['_embedded']['source'][0]['url']
     return parsed
 
+
+import nltk
+from nltk.corpus import wordnet
+nltk.download('vader_lexicon',quiet=True)
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+sid = SentimentIntensityAnalyzer()
+
+from itertools import product
+def get_max_sim(list1, list2):
+    allsyns1 = set(ss for word in list1 for ss in wordnet.synsets(word))
+    allsyns2 = set(ss for word in list2 for ss in wordnet.synsets(word))
+    best = max((wordnet.wup_similarity(s1, s2) or 0, s1, s2) for s1, s2 in product(allsyns1, allsyns2))
+    return best
+
+def get_sentiment(phrase:str, useAbs=True, weighted=False, average=True):
+    words = phrase.split(' ')
+
+    max_len = max(words, key=lambda s: len(s))
+    total_score = 0.0
+    for w in words:
+        score = sid.polarity_scores(w)['compound']
+        if useAbs:
+            score = abs(score)
+        if weighted:
+            score *= 1-(len(w)/max_len)
+        total_score += score
+
+    if average:
+        total_score /= len(words)
+    return total_score
+
+def get_contradiction_score(phrase1:str,phrase2:str):
+    return 1/(abs(get_sentiment(phrase1,average=False)-get_sentiment(phrase2,average=False))+abs(phrase1.count('not')-phrase2.count('not'))/2.0)
+
+def get_trump_contradiction(sameTag=False):
+    q1 = dumbTrumpQuote()
+    if not 'tag' in q1 or not 'quote' in q1:
+        return
+    
+    if sameTag:
+        q2 = dumbTrumpQuote(tag=q1['tag'])
+    else:
+        q2 = dumbTrumpQuote()
+    
+    if not 'quote' in q2:
+        return
+    print('getting')
+    return (get_contradiction_score(q1['quote'], q2['quote']), q1, q2)
+
 if __name__ == "__main__":
-    print('Advice:\n'+str(advice()))
-    print('Stupid Trump Quote:\n'+str(dumbTrumpQuote()))
-    print('Stupid Trump Quote on Hillary:\n'+str(dumbTrumpQuote(tag='Hillary')))
+    #print('Advice:\n'+str(advice()))
+    #print('Stupid Trump Quote:\n'+str(dumbTrumpQuote()))
+    #print('Stupid Trump Quote on Hillary:\n'+str(dumbTrumpQuote(tag='Hillary')))
+    print(get_trump_contradiction())
