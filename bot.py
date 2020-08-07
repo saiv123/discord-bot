@@ -89,7 +89,7 @@ async def on_command_error(ctx, error):
 @bot.command(pass_context=True)
 async def help(ctx):
     # seting up an embed
-    embed = discord.Embed(title="Help", description="Info on the bot and how to use it",colour=discord.Colour.green())
+    embed = discord.Embed(description="Info on the bot and how to use it",colour=discord.Colour.green())
 
     embed.set_author(name='Help')
     embed.set_thumbnail(url='https://cdn.discordapp.com/avatars/314578387031162882/e4b98a4a9ca3315ca699ffe5cba5b8f1.png?size=1024')
@@ -171,8 +171,7 @@ async def stats(ctx):
 
     # calculating time bot has been on
     tso = time.time()
-    msg = time.strftime("%H Hours %M Minutes %S Seconds",
-                        time.gmtime(tso - ts))
+    msg = time.strftime("%H Hours %M Minutes %S Seconds",time.gmtime(tso - ts))
     # random color for embed
     color = random.randrange(10000, 16777215, 1)
     # seting up an embed
@@ -193,8 +192,7 @@ async def stats(ctx):
 @bot.command()
 async def definte(ctx, a: int, b: int, func: str):
     # bunch of text formating to put into the api
-    res = client.query('integrate ' + func + ' from ' +
-                       str(a) + ' to ' + str(b))
+    res = client.query('integrate ' + func + ' from ' +str(a) + ' to ' + str(b))
     # getting the answer from the api and parsing
     await ctx.send(next(res.results).text)
 
