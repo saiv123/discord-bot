@@ -89,9 +89,7 @@ async def on_command_error(ctx, error):
 @bot.command(pass_context=True)
 async def help(ctx):
     # seting up an embed
-    embed = discord.Embed(
-        colour=discord.Colour.green()
-    )
+    embed = discord.Embed(title="Help", description="Info on the bot and how to use it",colour=discord.Colour.green())
 
     embed.set_author(name='Help')
     embed.set_thumbnail(url='https://cdn.discordapp.com/avatars/314578387031162882/e4b98a4a9ca3315ca699ffe5cba5b8f1.png?size=1024')
@@ -161,8 +159,7 @@ async def notes(ctx, *, notes=" "):
     user = ("<@" + str(ctx.message.author.id) + "> ")
     # opens the file if the users file in there otherwise it will make it
     with open(nameNote, 'a') as file:
-        file.write(str(datetime.datetime.now()) + " -- " +
-                   notes + "\n")  # formating and saving to the file
+        file.write(str(datetime.datetime.now()) + " -- " +notes + "\n")  # formating and saving to the file
     await ctx.send(user + "Your Note is recorded and locked up.")
     del nameNote  # deletes the variable so it will free up some ram
 
