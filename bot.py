@@ -8,8 +8,10 @@ from discord.ext import commands, tasks
 from discord.ext.commands import Bot
 
 # external libraies
-import libraries.quotes
-import libraries.helperFunctions
+import libraries.quotes as quotes
+import libraries.helperFunctions as helperFunctions
+import libraries.bonusapis as apis
+
 from secret import TOKEN, id, cont
 from libraries.helperFunctions import isOwner, msgReturn, splitLongStrings, getEmbedsFromLibraryQuery
 from libraries.helperFunctions import gen_rps_matrix, format_matrix, list_god
@@ -166,7 +168,7 @@ async def notes(ctx, *, notes=" "):
 # return the time the bot has been running
 @bot.command()
 async def stats(ctx):
-    quote, author = quotes.getQuoteApi()
+    quote = quotes.getQuoteApi()
     temp = os.popen("vcgencmd measure_temp").readline()
 
     # calculating time bot has been on
@@ -183,7 +185,7 @@ async def stats(ctx):
     embed.add_field(name='My core body tempreture:',
                     value=temp.replace("temp=", ""), inline=False)
     embed.add_field(name='Quote cus I know your bored:', value='"' +
-                    str(quote) + '"\n ~' + str(author), inline=False)
+                    quote['quote'] + '"\n\t~' + quote['author'], inline=False)
     async with ctx.channel.typing():  # make it look like the bot is typing
         time.sleep(3)
         await ctx.send(embed=embed)
@@ -201,15 +203,15 @@ async def definte(ctx, a: int, b: int, func: str):
 async def quote(ctx):
     async with ctx.channel.typing():
         time.sleep(3)
-        await ctx.send(quotes.formatQuote(text=quotes.getQuoteJSON()[0] + " :heart:"))
+        await ctx.send(apis.quote_to_discord_message(quotes.getQuoteJSON()) + " :heart:")
 
 # sends a random quote
 @bot.command()
 async def randquote(ctx):
     async with ctx.channel.typing():
         time.sleep(3)
-        quote, author = quotes.getQuoteApi()
-        await ctx.send(quotes.formatQuote(text=quote, author=author))
+        quote = quotes.getQuoteApi()
+        await ctx.send(apis.quote_to_discord_message(quote))
 
 # For getting memes from the library
 memePath = 'ClassWork/'

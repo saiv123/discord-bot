@@ -19,8 +19,8 @@ def getQuoteApi():
     quote = json.loads(response.text)
     qText = quote["content"]
     aText = quote["originator"]["name"]
-    del quote, response
-    return qText, aText
+    
+    return {'quote':qText,'author':aText}
 
 
 def getQuoteJSON():
@@ -30,15 +30,4 @@ def getQuoteJSON():
         quote = random.choice(l)
         while len(quote) < 2:  # Just make sure we don't get a blank line
             quote = random.choice(l)
-    return quote, ''
-
-
-def formatQuote(text='', author=''):
-    text = '> ' + str(text).replace('\n', '\n> ')
-    if len(text) > 2 and len(author) > 2:
-        return str(text) + '\n~ ' + str(author)
-    elif len(text) > 2:  # If no author
-        return str(text)
-    else:  # If neither, get a new quote
-        q = getQuoteApi()
-        return formatQuote(text=q[0], author=q[1])
+    return {'quote': quote}

@@ -150,6 +150,20 @@ def quote_to_discord_embed(quote_dict:dict):
         embed.set_footer(text=quote_dict['date'])
     return embed
 
+def quote_to_discord_message(quote_dict:dict, include_source=False):
+    if 'quote' not in quote_dict:
+        return ''
+    
+    msg = '> ' + str(quote_dict['quote']).replace('\n', '\n> ')
+    msg = msg+'\n'
+    if 'author' in quote_dict:
+        msg = msg + '~'+quote_dict['author']
+    if 'date' in quote_dict:
+        msg = msg+' ('+quote_dict['date']+')'
+    if 'source' in quote_dict and include_source:
+        msg = msg+'\nFrom: '+quote_dict['source']
+    return msg
+
 if __name__ == "__main__":
     print('Advice:\n'+str(advice()))
     print('Stupid Trump Quote:\n'+str(dumbTrumpQuote()))
