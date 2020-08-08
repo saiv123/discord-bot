@@ -43,7 +43,7 @@ def advice(id:int=-1):
         resp = getReqJSON('https://api.adviceslip.com/advice/')
 
     if 'slip' in resp and 'id' in resp['slip'] and 'advice' in resp['slip']:
-        return {'id': resp['slip']['id'], 'quote': resp['slip']['advice']}
+        return {'author': 'Advice','id': resp['slip']['id'], 'quote': resp['slip']['advice']}
     return {}
 
 def dumbTrumpQuote(tag:str=""):
@@ -60,7 +60,7 @@ def dumbTrumpQuote(tag:str=""):
     
     # Get quote json and parse to dict safely
     resp = getReqJSON('http://tronalddump.io/random/quote')
-    parsed = dict()
+    parsed = {'author': 'Donald Trump'}
     if 'value' in resp:
         parsed['quote'] = resp['value']
     if 'appeared_at' in resp:
@@ -120,8 +120,38 @@ def get_trump_contradiction(sameTag=False):
     print('getting')
     return (get_contradiction_score(q1['quote'], q2['quote']), q1, q2)
 
+def url_to_domain(url:str):
+    if '//' in url:
+        url = url[url.find('//')+2:]
+    if '/' in url:
+        url = url[:url.rfind('/')]
+    if '.' in url:
+        url = url[:url.rfind('.')]
+    if len(url) >= 4 and url[3] == '.':
+        url = url[4:]
+    return url.strip().title()
+
+import discord
+def quote_to_discord_embed(quote_dict:dict):
+    kwargs_dict = dict()
+    if 'quote' in quote_dict:
+        kwargs_dict['description'] = quote_dict['quote']
+    if 'author' in quote_dict:
+        kwargs_dict['title'] = quote_dict['author']
+    if 'source' in quote_dict:
+        if 'title' in kwargs_dict:
+            kwargs_dict['title'] = kwargs_dict['title'] + ' via '+url_to_domain(quote_dict['source'])
+        else:
+            kwargs_dict['title'] = 'via '+url_to_domain(quote_dict['source'])
+    
+    embed=discord.Embed(**kwargs_dict)
+
+    if 'date' in quote_dict:
+        embed.set_footer(text=quote_dict['date'])
+    return embed
+
 if __name__ == "__main__":
-    #print('Advice:\n'+str(advice()))
-    #print('Stupid Trump Quote:\n'+str(dumbTrumpQuote()))
-    #print('Stupid Trump Quote on Hillary:\n'+str(dumbTrumpQuote(tag='Hillary')))
+    print('Advice:\n'+str(advice()))
+    print('Stupid Trump Quote:\n'+str(dumbTrumpQuote()))
+    print('Stupid Trump Quote on Hillary:\n'+str(dumbTrumpQuote(tag='Hillary')))
     print(get_trump_contradiction())
