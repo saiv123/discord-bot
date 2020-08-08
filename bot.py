@@ -8,12 +8,12 @@ from discord.ext import commands, tasks
 from discord.ext.commands import Bot
 
 # external libraies
-import quotes
-import helperFunctions
+import libraries.quotes
+import libraries.helperFunctions
 from secret import TOKEN, id, cont
-from helperFunctions import isOwner, msgReturn, splitLongStrings, getEmbedsFromLibraryQuery
-from helperFunctions import gen_rps_matrix, format_matrix, list_god
-from prawn import getClosestFromList
+from libraries.helperFunctions import isOwner, msgReturn, splitLongStrings, getEmbedsFromLibraryQuery
+from libraries.helperFunctions import gen_rps_matrix, format_matrix, list_god
+from libraries.prawn import getClosestFromList
 from Levenshtein import distance
 
 # dir for the bots location
