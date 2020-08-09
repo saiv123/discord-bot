@@ -81,7 +81,13 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         msgSend = "You did not use the command correctly\nIf you dont know how to use the command you can use the $help command\nto see how to use all the commands."
     elif isinstance(error, commands.CommandNotFound):
-        msgSend = "Sorry but that is not a command\nBut you can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
+        cmd = str(ctx.invoked_with)
+        mlo = getClosestFromList(bot.commands, cmd)
+        if distance(cmd, mlo) <= 0.4*len(cmd):
+            msgSend="Sorry, but that is not a valid command. Did you mean "+mlo+"?\n\nYou can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
+        else:
+            msgSend = "Sorry but that is not a valid command\nYou can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
+        
     await ctx.send(msgSend)
     print(error)
 
