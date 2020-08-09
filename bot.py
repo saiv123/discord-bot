@@ -88,14 +88,9 @@ async def on_command_error(ctx, error):
             msgSend="Sorry, but that is not a valid command. Did you mean "+mlo+"?\n\nYou can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
         else:
             msgSend = "Sorry but that is not a valid command\nYou can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
-        
-    await ctx.send(msgSend)
-<<<<<<< HEAD
-"""
-=======
-    print(error)
 
->>>>>>> d9000993250f51f3eeeee405240c8ec7668b5c69
+    await ctx.send(msgSend)
+"""
 ##############
 ###Commands###
 ##############
