@@ -335,12 +335,12 @@ async def rpsc(ctx, user:discord.User, *, level=1):
     # Get your response
     your_choice = symbol_names[0]
     for i in range(3):
-        for msg in splitLongStrings('Your choices are '+', '.join(symbol_names+['abort'])):
+        for msg in splitLongStrings('Your choices are '+', '.join(symbol_names[:2*level+1]+['abort'])):
             await ctx.message.author.send(msg)
         try:
             msg = await bot.wait_for('message', check=get_check(ctx.message.author),timeout=30)
         except:
-            await ctx.message.author.send('Awww, '+user+' don\'t leave me hangin\'')
+            await ctx.message.author.send('Awww, '+user.name+' don\'t leave me hangin\'')
             return # Abort challenge if you don't send an answer
         response = msg.content.lower().replace(' ','_').replace('\n','')
         your_choice = getClosestFromList(['abort']+symbol_names,response)
@@ -364,7 +364,7 @@ async def rpsc(ctx, user:discord.User, *, level=1):
     enemy_choice = symbol_names[0]
     await user.send(str(ctx.message.author.name)+' has challenged you to rps-'+str(level*2+1))
     for i in range(3):
-        for msg in splitLongStrings('Your choices are '+', '.join(symbol_names+['abort'])):
+        for msg in splitLongStrings('Your choices are '+', '.join(symbol_names[:2*level+1]+['abort'])):
             await user.send(msg)
         try:
             msg = await bot.wait_for('message', check=get_check(user),timeout=30)
