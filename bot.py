@@ -82,6 +82,7 @@ async def on_command_error(ctx, error):
     elif isinstance(error, commands.CommandNotFound):
         msgSend = "Sorry but that is not a command\nBut you can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose" 
     await ctx.send(msgSend)
+    print(error)
 
 ##############
 ###Commands###
