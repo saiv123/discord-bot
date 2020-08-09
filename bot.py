@@ -77,13 +77,14 @@ async def on_message(message):
     await bot.process_commands(message)
 
 #spits out the errors
-"""
 @bot.event
 async def on_command_error(ctx, error):
     msgSend = "An internal error has occured. Use $contact to contact the owner if it persists"
     print(error)
     if isinstance(error, commands.MissingRequiredArgument):
         msgSend = "You did not use the command correctly\nIf you dont know how to use the command you can use the $help command\nto see how to use all the commands."
+    elif isinstance(error, commands.CommandOnCooldown):
+        msgSend = 'Your on cooldown for '+ctx.invoked_with + '.\nPlease wait another '+str(error.retry_after)+' seconds (out of '+str(error.cooldown)+')'
     elif isinstance(error, commands.CommandNotFound):
         cmd = str(ctx.invoked_with)
         mlo = getClosestFromList(bot.commands, cmd)
@@ -94,7 +95,7 @@ async def on_command_error(ctx, error):
 
     await ctx.send(msgSend)
     print(traceback.format_exc()) # Attempt to print exception
-"""
+
 ##############
 ###Commands###
 ##############
@@ -204,11 +205,22 @@ async def stats(ctx):
 
 # return the answers to defenet integrals
 @bot.command()
+@commands.cooldown(3, 60, commands.BucketType.user)
 async def definte(ctx, a: int, b: int, func: str):
     # bunch of text formating to put into the api
     res = client.query('integrate ' + func + ' from ' +str(a) + ' to ' + str(b))
     # getting the answer from the api and parsing
     await ctx.send(next(res.results).text)
+
+@bot.command()
+@commands.cooldown(3, 60, commands.BucketType.user)
+async def wolfram(ctx, func:str):
+    res = client.query(func)
+    res = next(res.results).text
+
+    embed=discord.Embed(title="Wolfram Aplha", description=func+':\n\n'+res)
+    embed.set_thumbnail(url="https://cdn.iconscout.com/icon/free/png-512/wolfram-alpha-2-569293.png")
+    await ctx.send(embed=embed)
 
 # sends a warming quote
 @bot.command()
@@ -227,6 +239,7 @@ async def randquote(ctx):
 
 # For getting memes from the library
 memePath = 'ClassWork/'
+@commands.cooldown(3, 60, commands.BucketType.user)
 @bot.command()
 async def meme(ctx, *args):
     query = ' '.join(args)
@@ -250,6 +263,7 @@ async def nsfw(ctx, *args):
 
 # Contact command
 @bot.command()
+@commands.cooldown(3, 60, commands.BucketType.user)
 async def contact(ctx):
     msg = "Discord: Sai#2728\nDiscord server: https://discord.gg/gYhRdk7\n"
     if(ctx.channel.id == 674120261691506688):  # channel specific to my discord server
