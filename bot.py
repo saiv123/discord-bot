@@ -77,10 +77,11 @@ async def on_message(message):
 @bot.event
 async def on_command_error(ctx, error):
     msgSend = "An internal error has occured. Use $contact to contact the owner if it persists"
+    print(error)
     if isinstance(error, commands.MissingRequiredArgument):
         msgSend = "You did not use the command correctly\nIf you dont know how to use the command you can use the $help command\nto see how to use all the commands."
     elif isinstance(error, commands.CommandNotFound):
-        msgSend = "Sorry but that is not a command\nBut you can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose" 
+        msgSend = "Sorry but that is not a command\nBut you can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
     await ctx.send(msgSend)
     print(error)
 
@@ -251,7 +252,7 @@ async def contact(ctx):
 # rock paper scissors game with the bot (maybe buggy so no touchy)
 RPS_HARD_CAP = 6
 @bot.command()
-async def rps(ctx, *, level:int=1):
+async def rps(ctx, *, level=1):
     # local variables
     user = ("<@" + str(ctx.message.author.id) + "> ")
     if level > RPS_HARD_CAP:
@@ -303,7 +304,7 @@ async def rps(ctx, *, level:int=1):
         await ctx.send(output)
 
 @bot.command()
-async def rpsc(ctx, user:discord.User, *, level:int=1):
+async def rpsc(ctx, user:discord.User, *, level=1):
     # local variables
     ping = ("<@" + str(ctx.message.author.id) + "> ")
     if level > RPS_HARD_CAP:
