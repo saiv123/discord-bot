@@ -1,3 +1,7 @@
+import sys, os
+FILEPATH, filename = os.path.split(os.path.abspath(__file__))
+sys.path.insert(1, FILEPATH)
+
 import asyncio, discord
 from discord.ext import commands, tasks
 from discord.ext.commands import Bot
