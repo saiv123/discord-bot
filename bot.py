@@ -77,13 +77,12 @@ async def on_message(message):
 @bot.event
 async def on_command_error(ctx, error):
     msgSend = "An internal error has occured. Use $contact to contact the owner if it persists"
+    print(error)
     if isinstance(error, commands.MissingRequiredArgument):
         msgSend = "You did not use the command correctly\nIf you dont know how to use the command you can use the $help command\nto see how to use all the commands."
-        await ctx.send(msgSend)
     elif isinstance(error, commands.CommandNotFound):
         msgSend = "Sorry but that is not a command\nBut you can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
-        await ctx.send(msgSend)
-
+    await ctx.send(msgSend)
 
 ##############
 ###Commands###
