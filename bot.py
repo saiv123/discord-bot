@@ -234,8 +234,8 @@ async def randquote(ctx):
 
 # For getting memes from the library
 memePath = 'ClassWork/'
-@commands.cooldown(3, 60, commands.BucketType.user)
 @bot.command()
+@commands.cooldown(3, 60, commands.BucketType.user)
 async def meme(ctx, *args):
     query = ' '.join(args)
     for embed in getEmbedsFromLibraryQuery(memePath, query):
