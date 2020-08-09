@@ -124,7 +124,7 @@ async def shouldI(ctx, *i):
 @bot.command()
 async def invite(ctx):
     async with ctx.channel.typing():  # make it look like the bot is typing
-        time.sleep(3)
+        asyncio.sleep(3)
         await ctx.send("Invite me to your friends disocrd:\nhttps://discordapp.com/api/oauth2/authorize?client_id=314578387031162882&permissions=402730064&scope=bot")
 
 # says hello to your
@@ -200,7 +200,7 @@ async def stats(ctx):
     embed.add_field(name='Quote cus I know your bored:', value='"' +
                     quote['quote'] + '"\n\t~' + quote['author'], inline=False)
     async with ctx.channel.typing():  # make it look like the bot is typing
-        time.sleep(3)
+        asyncio.sleep(3)
         await ctx.send(embed=embed)
 
 # return the answers to defenet integrals
@@ -226,14 +226,14 @@ async def wolfram(ctx, func:str):
 @bot.command()
 async def quote(ctx):
     async with ctx.channel.typing():
-        time.sleep(3)
+        asyncio.sleep(3)
         await ctx.send(apis.quote_to_discord_message(quotes.getQuoteJSON()) + " :heart:")
 
 # sends a random quote
 @bot.command()
 async def randquote(ctx):
     async with ctx.channel.typing():
-        time.sleep(3)
+        asyncio.sleep(3)
         quote = quotes.getQuoteApi()
         await ctx.send(apis.quote_to_discord_message(quote))
 
