@@ -52,6 +52,8 @@ async def on_ready():
     print('id: ' + str(bot.user.id))
     # setst the activity for the bot
     await bot.change_presence(activity=discord.Game(name='with his food | $help'))
+    ch = discord.get_channel(741893281679409202)
+    await ch.send("Bot is back up!!!"+str(datetime.datetime.now()))
     print('current time - ' + str(ts))
     print('-----------')
 
