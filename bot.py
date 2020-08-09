@@ -124,7 +124,6 @@ async def shouldI(ctx, *i):
 @bot.command()
 async def invite(ctx):
     async with ctx.channel.typing():  # make it look like the bot is typing
-        asyncio.sleep(3)
         await ctx.send("Invite me to your friends disocrd:\nhttps://discordapp.com/api/oauth2/authorize?client_id=314578387031162882&permissions=402730064&scope=bot")
 
 # says hello to your
@@ -181,26 +180,26 @@ async def notes(ctx, *, notes=" "):
 # return the time the bot has been running
 @bot.command()
 async def stats(ctx):
-    quote = quotes.getQuoteApi()
-    temp = os.popen("vcgencmd measure_temp").readline()
-
-    # calculating time bot has been on
-    tso = time.time()
-    msg = time.strftime("%H Hours %M Minutes %S Seconds",time.gmtime(tso - ts))
-    # random color for embed
-    color = random.randrange(10000, 16777215, 1)
-    # seting up an embed
-    embed = discord.Embed(colour=color)
-    # setting the clock image
-    embed.set_thumbnail(
-        url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png")
-    embed.add_field(name='I have been awake for:', value=msg, inline=False)
-    embed.add_field(name='My core body tempreture:',
-                    value=temp.replace("temp=", ""), inline=False)
-    embed.add_field(name='Quote cus I know your bored:', value='"' +
-                    quote['quote'] + '"\n\t~' + quote['author'], inline=False)
     async with ctx.channel.typing():  # make it look like the bot is typing
-        asyncio.sleep(3)
+        quote = quotes.getQuoteApi()
+        temp = os.popen("vcgencmd measure_temp").readline()
+
+        # calculating time bot has been on
+        tso = time.time()
+        msg = time.strftime("%H Hours %M Minutes %S Seconds",time.gmtime(tso - ts))
+        # random color for embed
+        color = random.randrange(10000, 16777215, 1)
+        # seting up an embed
+        embed = discord.Embed(colour=color)
+        # setting the clock image
+        embed.set_thumbnail(
+            url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png")
+        embed.add_field(name='I have been awake for:', value=msg, inline=False)
+        embed.add_field(name='My core body tempreture:',
+                        value=temp.replace("temp=", ""), inline=False)
+        embed.add_field(name='Quote cus I know your bored:', value='"' +
+                        quote['quote'] + '"\n\t~' + quote['author'], inline=False)
+        
         await ctx.send(embed=embed)
 
 # return the answers to defenet integrals
@@ -226,14 +225,12 @@ async def wolfram(ctx, func:str):
 @bot.command()
 async def quote(ctx):
     async with ctx.channel.typing():
-        asyncio.sleep(3)
         await ctx.send(apis.quote_to_discord_message(quotes.getQuoteJSON()) + " :heart:")
 
 # sends a random quote
 @bot.command()
 async def randquote(ctx):
     async with ctx.channel.typing():
-        asyncio.sleep(3)
         quote = quotes.getQuoteApi()
         await ctx.send(apis.quote_to_discord_message(quote))
 
