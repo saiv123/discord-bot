@@ -76,11 +76,11 @@ async def on_message(message):
 #spits out the errors
 @bot.event
 async def on_command_error(ctx, error):
-    msgSend = ""
+    msgSend = "An internal error has occured. Use $contact to contact the owner if it persists"
     if isinstance(error, commands.MissingRequiredArgument):
         msgSend = "You did not use the command correctly\nIf you dont know how to use the command you can use the $help command\nto see how to use all the commands."
     elif isinstance(error, commands.CommandNotFound):
-        msgSend = "Sorry but that is not a command\nBut you can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
+        msgSend = "Sorry but that is not a command\nBut you can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose" 
     await ctx.send(msgSend)
 
 ##############
@@ -377,7 +377,7 @@ async def rpsc(ctx, user:discord.User, *, level:int=1):
             for msg in splitLongStrings(' \n'.join(format_matrix(matrix, symbol_names))):
                 await user.send(msg)
             i -= 1
-            
+
     await user.send('You chose '+str(enemy_choice))
 
     # Display results
