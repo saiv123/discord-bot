@@ -251,7 +251,7 @@ async def contact(ctx):
 # rock paper scissors game with the bot (maybe buggy so no touchy)
 RPS_HARD_CAP = 6
 @bot.command()
-async def rps(ctx, *, level:int=1):
+async def rps(ctx, *, level=1):
     # local variables
     user = ("<@" + str(ctx.message.author.id) + "> ")
     if level > RPS_HARD_CAP:
@@ -303,7 +303,7 @@ async def rps(ctx, *, level:int=1):
         await ctx.send(output)
 
 @bot.command()
-async def rpsc(ctx, user:discord.User, *, level:int=1):
+async def rpsc(ctx, user:discord.User, *, level=1):
     # local variables
     ping = ("<@" + str(ctx.message.author.id) + "> ")
     if level > RPS_HARD_CAP:
