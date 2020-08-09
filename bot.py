@@ -337,16 +337,18 @@ async def rpsc(ctx, user:discord.User, *, level=1):
 
     # Get your response
     your_choice = symbol_names[0]
-    for i in range(3):
-        for msg in splitLongStrings('Your choices are '+', '.join(symbol_names[:2*level+1]+['abort'])):
+    i = 0
+    while i < 3:
+        i += 1
+        for msg in splitLongStrings('Your choices are '+', '.join(symbol_names[:2*level+1]+['rules','abort'])):
             await ctx.message.author.send(msg)
         try:
-            msg = await bot.wait_for('message', check=get_check(ctx.message.author),timeout=30)
+            msg = await bot.wait_for('message', check=get_check(ctx.message.author),timeout=5*60)
         except:
             await ctx.message.author.send('Awww, '+user.name+' don\'t leave me hangin\'')
             return # Abort challenge if you don't send an answer
         response = msg.content.lower().replace(' ','_').replace('\n','')
-        your_choice = getClosestFromList(['abort']+symbol_names,response)
+        your_choice = getClosestFromList(['abort','rules']+symbol_names,response)
 
         if distance(response, your_choice) >= len(response)*0.3:
             await ctx.message.author.send('No option recognized, try again')
@@ -360,22 +362,27 @@ async def rpsc(ctx, user:discord.User, *, level=1):
             for msg in splitLongStrings(' \n'.join(format_matrix(matrix, symbol_names))):
                 await user.send(msg)
             i -= 1
+        else: # If neither rules or abort, it is correct
+            break
 
     await ctx.message.author.send('You chose '+str(your_choice))
 
     # Get other person's response
     enemy_choice = symbol_names[0]
-    await user.send(str(ctx.message.author.name)+' has challenged you to rps-'+str(level*2+1))
-    for i in range(3):
-        for msg in splitLongStrings('Your choices are '+', '.join(symbol_names[:2*level+1]+['abort'])):
+    await user.send(str(ctx.message.author.name)+' has challenged you to rock-paper-scissors'+('-'+str(level*2+1)) if level > 1 else '')
+    i = 0
+    while i < 3:
+        i += 1
+        for msg in splitLongStrings('Your choices are '+', '.join(symbol_names[:2*level+1]+['rules','abort'])):
             await user.send(msg)
         try:
-            msg = await bot.wait_for('message', check=get_check(user),timeout=30)
+            msg = await bot.wait_for('message', check=get_check(user),timeout=5*60)
         except:
-            await user.send('Awww, '+user+' don\'t leave me hangin\'')
-            break # Leave at default if you ignore the challenge
+            await user.send('Challenge cancelled')
+            await ctx.send(user.name+' has cancelled the challenge')
+            return # Consider breaking and leaving it at default instead of cancelling
         response = msg.content.lower().replace(' ','_').replace('\n','')
-        enemy_choice = getClosestFromList(['abort']+symbol_names,response)
+        enemy_choice = getClosestFromList(['abort','rules']+symbol_names,response)
 
         if distance(response, enemy_choice) >= len(response)*0.3:
             await user.send('No option recognized, try again')
@@ -389,6 +396,8 @@ async def rpsc(ctx, user:discord.User, *, level=1):
             for msg in splitLongStrings(' \n'.join(format_matrix(matrix, symbol_names))):
                 await user.send(msg)
             i -= 1
+        else: # If neither rules or abort, it is correct
+            break
 
     await user.send('You chose '+str(enemy_choice))
 
