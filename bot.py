@@ -312,7 +312,6 @@ async def rpsc(ctx, user:discord.User, *, level:int=1):
     # Extend symbol names if necessary
     for i in range(len(symbol_names),level*2+5):
         symbol_names.append('item'+str(i))
-    
     # Generate matrix
     matrix = gen_rps_matrix(level)
 
