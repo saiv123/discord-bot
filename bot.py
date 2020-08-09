@@ -77,13 +77,14 @@ async def on_message(message):
     await bot.process_commands(message)
 
 #spits out the errors
-"""
 @bot.event
 async def on_command_error(ctx, error):
     msgSend = "An internal error has occured. Use $contact to contact the owner if it persists"
     print(error)
     if isinstance(error, commands.MissingRequiredArgument):
         msgSend = "You did not use the command correctly\nIf you dont know how to use the command you can use the $help command\nto see how to use all the commands."
+    elif isinstance(error, commands.CommandOnCooldown):
+        msgSend = 'Your on cooldown for '+ctx.invoked_with + '.\nPlease wait another '+str(error.retry_after)+' seconds (out of '+str(error.cooldown)+')'
     elif isinstance(error, commands.CommandNotFound):
         cmd = str(ctx.invoked_with)
         mlo = getClosestFromList(bot.commands, cmd)
@@ -94,7 +95,7 @@ async def on_command_error(ctx, error):
 
     await ctx.send(msgSend)
     print(traceback.format_exc()) # Attempt to print exception
-"""
+
 ##############
 ###Commands###
 ##############
@@ -123,7 +124,6 @@ async def shouldI(ctx, *i):
 @bot.command()
 async def invite(ctx):
     async with ctx.channel.typing():  # make it look like the bot is typing
-        time.sleep(3)
         await ctx.send("Invite me to your friends disocrd:\nhttps://discordapp.com/api/oauth2/authorize?client_id=314578387031162882&permissions=402730064&scope=bot")
 
 # says hello to your
@@ -180,53 +180,63 @@ async def notes(ctx, *, notes=" "):
 # return the time the bot has been running
 @bot.command()
 async def stats(ctx):
-    quote = quotes.getQuoteApi()
-    temp = os.popen("vcgencmd measure_temp").readline()
-
-    # calculating time bot has been on
-    tso = time.time()
-    msg = time.strftime("%H Hours %M Minutes %S Seconds",time.gmtime(tso - ts))
-    # random color for embed
-    color = random.randrange(10000, 16777215, 1)
-    # seting up an embed
-    embed = discord.Embed(colour=color)
-    # setting the clock image
-    embed.set_thumbnail(
-        url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png")
-    embed.add_field(name='I have been awake for:', value=msg, inline=False)
-    embed.add_field(name='My core body tempreture:',
-                    value=temp.replace("temp=", ""), inline=False)
-    embed.add_field(name='Quote cus I know your bored:', value='"' +
-                    quote['quote'] + '"\n\t~' + quote['author'], inline=False)
     async with ctx.channel.typing():  # make it look like the bot is typing
-        time.sleep(3)
+        quote = quotes.getQuoteApi()
+        temp = os.popen("vcgencmd measure_temp").readline()
+
+        # calculating time bot has been on
+        tso = time.time()
+        msg = time.strftime("%H Hours %M Minutes %S Seconds",time.gmtime(tso - ts))
+        # random color for embed
+        color = random.randrange(10000, 16777215, 1)
+        # seting up an embed
+        embed = discord.Embed(colour=color)
+        # setting the clock image
+        embed.set_thumbnail(
+            url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png")
+        embed.add_field(name='I have been awake for:', value=msg, inline=False)
+        embed.add_field(name='My core body tempreture:',
+                        value=temp.replace("temp=", ""), inline=False)
+        embed.add_field(name='Quote cus I know your bored:', value='"' +
+                        quote['quote'] + '"\n\t~' + quote['author'], inline=False)
+        
         await ctx.send(embed=embed)
 
 # return the answers to defenet integrals
 @bot.command()
+@commands.cooldown(3, 60, commands.BucketType.user)
 async def definte(ctx, a: int, b: int, func: str):
     # bunch of text formating to put into the api
     res = client.query('integrate ' + func + ' from ' +str(a) + ' to ' + str(b))
     # getting the answer from the api and parsing
     await ctx.send(next(res.results).text)
 
+@bot.command()
+@commands.cooldown(3, 60, commands.BucketType.user)
+async def wolfram(ctx, func:str):
+    res = client.query(func)
+    res = next(res.results).text
+
+    embed=discord.Embed(title="Wolfram Aplha", description=func+':\n\n'+res)
+    embed.set_thumbnail(url="https://cdn.iconscout.com/icon/free/png-512/wolfram-alpha-2-569293.png")
+    await ctx.send(embed=embed)
+
 # sends a warming quote
 @bot.command()
 async def quote(ctx):
     async with ctx.channel.typing():
-        time.sleep(3)
         await ctx.send(apis.quote_to_discord_message(quotes.getQuoteJSON()) + " :heart:")
 
 # sends a random quote
 @bot.command()
 async def randquote(ctx):
     async with ctx.channel.typing():
-        time.sleep(3)
         quote = quotes.getQuoteApi()
         await ctx.send(apis.quote_to_discord_message(quote))
 
 # For getting memes from the library
 memePath = 'ClassWork/'
+@commands.cooldown(3, 60, commands.BucketType.user)
 @bot.command()
 async def meme(ctx, *args):
     query = ' '.join(args)
@@ -250,6 +260,7 @@ async def nsfw(ctx, *args):
 
 # Contact command
 @bot.command()
+@commands.cooldown(3, 60, commands.BucketType.user)
 async def contact(ctx):
     msg = "Discord: Sai#2728\nDiscord server: https://discord.gg/gYhRdk7\n"
     if(ctx.channel.id == 674120261691506688):  # channel specific to my discord server
@@ -339,16 +350,18 @@ async def rpsc(ctx, user:discord.User, *, level=1):
 
     # Get your response
     your_choice = symbol_names[0]
-    for i in range(3):
-        for msg in splitLongStrings('Your choices are '+', '.join(symbol_names[:2*level+1]+['abort'])):
+    i = 0
+    while i < 3:
+        i += 1
+        for msg in splitLongStrings('Your choices are '+', '.join(symbol_names[:2*level+1]+['rules','abort'])):
             await ctx.message.author.send(msg)
         try:
-            msg = await bot.wait_for('message', check=get_check(ctx.message.author),timeout=30)
+            msg = await bot.wait_for('message', check=get_check(ctx.message.author),timeout=5*60)
         except:
             await ctx.message.author.send('Awww, '+user.name+' don\'t leave me hangin\'')
             return # Abort challenge if you don't send an answer
         response = msg.content.lower().replace(' ','_').replace('\n','')
-        your_choice = getClosestFromList(['abort']+symbol_names,response)
+        your_choice = getClosestFromList(['abort','rules']+symbol_names,response)
 
         if distance(response, your_choice) >= len(response)*0.3:
             await ctx.message.author.send('No option recognized, try again')
@@ -362,22 +375,27 @@ async def rpsc(ctx, user:discord.User, *, level=1):
             for msg in splitLongStrings(' \n'.join(format_matrix(matrix, symbol_names))):
                 await user.send(msg)
             i -= 1
+        else: # If neither rules or abort, it is correct
+            break
 
     await ctx.message.author.send('You chose '+str(your_choice))
 
     # Get other person's response
     enemy_choice = symbol_names[0]
-    await user.send(str(ctx.message.author.name)+' has challenged you to rps-'+str(level*2+1))
-    for i in range(3):
-        for msg in splitLongStrings('Your choices are '+', '.join(symbol_names[:2*level+1]+['abort'])):
+    await user.send(str(ctx.message.author.name)+' has challenged you to rock-paper-scissors'+('-'+str(level*2+1)) if level > 1 else '')
+    i = 0
+    while i < 3:
+        i += 1
+        for msg in splitLongStrings('Your choices are '+', '.join(symbol_names[:2*level+1]+['rules','abort'])):
             await user.send(msg)
         try:
-            msg = await bot.wait_for('message', check=get_check(user),timeout=30)
+            msg = await bot.wait_for('message', check=get_check(user),timeout=5*60)
         except:
-            await user.send('Awww, '+user+' don\'t leave me hangin\'')
-            break # Leave at default if you ignore the challenge
+            await user.send('Challenge cancelled')
+            await ctx.send(user.name+' has cancelled the challenge')
+            return # Consider breaking and leaving it at default instead of cancelling
         response = msg.content.lower().replace(' ','_').replace('\n','')
-        enemy_choice = getClosestFromList(['abort']+symbol_names,response)
+        enemy_choice = getClosestFromList(['abort','rules']+symbol_names,response)
 
         if distance(response, enemy_choice) >= len(response)*0.3:
             await user.send('No option recognized, try again')
@@ -391,6 +409,8 @@ async def rpsc(ctx, user:discord.User, *, level=1):
             for msg in splitLongStrings(' \n'.join(format_matrix(matrix, symbol_names))):
                 await user.send(msg)
             i -= 1
+        else: # If neither rules or abort, it is correct
+            break
 
     await user.send('You chose '+str(enemy_choice))
 
