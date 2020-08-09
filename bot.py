@@ -265,13 +265,12 @@ async def rps(ctx, *, level:int=1):
     matrix = gen_rps_matrix(level)
 
     # Ask for user choice
-    await ctx.send(user+': Pick an option:')
-    for msg in splitLongStrings('rules. '+', '.join(symbol_names[:level*2+1])):
+    for msg in splitLongStrings(user+': Pick an option.\nrules. '+', '.join(symbol_names[:level*2+1])):
             await ctx.send(msg)
 
     # Get user choice
     def check(m):
-        return m.author is ctx.message.author
+        return m.author is ctx.message.author and m.channel == ctx.message.channel
 
     try:
         msg = await bot.wait_for('message', check=check,timeout=30)
@@ -286,8 +285,7 @@ async def rps(ctx, *, level:int=1):
         for msg in splitLongStrings(' \n'.join(format_matrix(matrix, symbol_names))):
             await ctx.send(msg)
     elif distance(freeform, mlo) >= len(freeform)*0.3: #If the most likely option is more than 30% wrong, hassle
-        await ctx.send('No option recognized! Your choices are: ')
-        for msg in splitLongStrings('\n '.join(['rules']+symbol_names[:level*2+1])):
+        for msg in splitLongStrings('No option recognized! Your choices are: '+', '.join(['rules']+symbol_names[:level*2+1])):
             await ctx.send(msg)
     else:
         choice = symbol_names.index(getClosestFromList(symbol_names, freeform))
@@ -302,6 +300,102 @@ async def rps(ctx, *, level:int=1):
             output = "I win ;) Better luck next time"
         output = output+"\n\nYou chose "+ symbol_names[choice]+"\nI chose "+symbol_names[computer_choice]
         await ctx.send(output)
+
+@bot.command()
+async def rpsc(ctx, user:discord.User, *, level:int=1):
+    # local variables
+    ping = ("<@" + str(ctx.message.author.id) + "> ")
+    if level > RPS_HARD_CAP:
+        await ctx.send(user+'Sorry, but even though the code for it exists, why would you ever want to play rps-'+str(level*2+1)+', let alone with someone else???')
+        return
+    symbol_names = ['rock','paper','scissors','spock','lizard','alien','well','generic','karen','heat','lemonade']
+    # Extend symbol names if necessary
+    for i in range(len(symbol_names),level*2+5):
+        symbol_names.append('item'+str(i))
+    
+    # Generate matrix
+    matrix = gen_rps_matrix(level)
+
+    await ctx.send('You are challending '+user.name+' to rps-'+str(level*2+1)+'\nCheck your DMs!')
+
+    def get_check(user):
+        def check(msg):
+            return msg.author is user and isinstance(msg.channel, discord.DMChannel)
+        return check
+
+    # Get your response
+    your_choice = symbol_names[0]
+    for i in range(3):
+        for msg in splitLongStrings('Your choices are '+', '.join(symbol_names+['abort'])):
+            await ctx.message.author.send(msg)
+        try:
+            msg = await bot.wait_for('message', check=get_check(ctx.message.author),timeout=30)
+        except:
+            await ctx.message.author.send('Awww, '+user+' don\'t leave me hangin\'')
+            return # Abort challenge if you don't send an answer
+        response = msg.content.lower().replace(' ','_').replace('\n','')
+        your_choice = getClosestFromList(['abort']+symbol_names,response)
+
+        if distance(response, your_choice) >= len(response)*0.3:
+            await ctx.message.author.send('No option recognized, try again')
+
+        if 'abort' in your_choice.lower():
+            await ctx.message.author.send('Challenge cancelled')
+            await ctx.send(ctx.message.author.name+' has cancelled the challenge')
+            return
+
+        if 'rules' in your_choice.lower():
+            for msg in splitLongStrings(' \n'.join(format_matrix(matrix, symbol_names))):
+                await user.send(msg)
+            i -= 1
+
+    await ctx.message.author.send('You chose '+str(your_choice))
+
+    # Get other person's response
+    enemy_choice = symbol_names[0]
+    await user.send(str(ctx.message.author.name)+' has challenged you to rps-'+str(level*2+1))
+    for i in range(3):
+        for msg in splitLongStrings('Your choices are '+', '.join(symbol_names+['abort'])):
+            await user.send(msg)
+        try:
+            msg = await bot.wait_for('message', check=get_check(user),timeout=30)
+        except:
+            await user.send('Awww, '+user+' don\'t leave me hangin\'')
+            break # Leave at default if you ignore the challenge
+        response = msg.content.lower().replace(' ','_').replace('\n','')
+        enemy_choice = getClosestFromList(['abort']+symbol_names,response)
+
+        if distance(response, enemy_choice) >= len(response)*0.3:
+            await user.send('No option recognized, try again')
+
+        if 'abort' in enemy_choice.lower():
+            await user.send('Challenge cancelled')
+            await ctx.send(user.name+' has cancelled the challenge')
+            return
+
+        if 'rules' in enemy_choice.lower():
+            for msg in splitLongStrings(' \n'.join(format_matrix(matrix, symbol_names))):
+                await user.send(msg)
+            i -= 1
+            
+    await user.send('You chose '+str(enemy_choice))
+
+    # Display results
+    await ctx.send(ctx.message.author.name+' chose '+your_choice)
+    await ctx.send(user.name+' chose '+enemy_choice)
+
+    # Calculate and display winner
+    your_choice = symbol_names.index(your_choice)
+    enemy_choice = symbol_names.index(enemy_choice)
+
+    winner = matrix[your_choice][enemy_choice]
+    if winner == 0:
+        output = "Its a draw! Better luck next time"
+    elif winner == 1:
+        output = ctx.message.author.name+" won. Nice job. :partying_face:"
+    elif winner == 2:
+        output = user.name+" won. Better luck next time"
+    await ctx.send(output)
 
 ########################
 ###Bot Admin Commands###
