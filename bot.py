@@ -52,8 +52,6 @@ async def on_ready():
     print('id: ' + str(bot.user.id))
     # setst the activity for the bot
     await bot.change_presence(activity=discord.Game(name='with his food | $help'))
-    ch = bot.get_channel(741893281679409202)
-    await ch.send("Bot is back up!!!"+str(datetime.datetime.now()))
     print('current time - ' + str(ts))
     print('-----------')
 
@@ -199,7 +197,7 @@ async def stats(ctx):
                         value=temp.replace("temp=", ""), inline=False)
         embed.add_field(name='Quote cus I know your bored:', value='"' +
                         quote['quote'] + '"\n\t~' + quote['author'], inline=False)
-        
+
         await ctx.send(embed=embed)
 
 # return the answers to defenet integrals
