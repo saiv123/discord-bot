@@ -325,11 +325,14 @@ async def rpsc(ctx, user:discord.User, *, level=1):
     # Generate matrix
     matrix = gen_rps_matrix(level)
 
-    await ctx.send('You are challending '+user.name+' to rps-'+str(level*2+1)+'\nCheck your DMs!')
+    msg = 'You are challending '+user.name+' to rock-paper-scissors'
+    if level > 1:
+        msg = msg+'-'+str(level*2+1)
+    await ctx.send(msg+'\nCheck your DMs!')
 
     def get_check(user):
         def check(msg):
-            return msg.author is user and isinstance(msg.channel, discord.DMChannel)
+            return msg.author == user and msg.channel == user.dm_channel
         return check
 
     # Get your response
