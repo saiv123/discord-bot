@@ -19,13 +19,13 @@ def getQuoteApi():
     quote = json.loads(response.text)
     qText = quote["content"]
     aText = quote["originator"]["name"]
-    
+
     return {'quote':qText,'author':aText}
 
 
 def getQuoteJSON():
     quote = 'Tough times dont last, but tough people do'
-    with open('quotes.txt', mode='r') as file:
+    with open('libraries\quotes.txt', mode='r') as file:
         l = file.read().split('\n')
         quote = random.choice(l)
         while len(quote) < 2:  # Just make sure we don't get a blank line
