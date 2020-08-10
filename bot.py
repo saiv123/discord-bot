@@ -92,6 +92,7 @@ async def on_command_error(ctx, error):
             msgSend = "Sorry but that is not a valid command\nYou can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
 
     await ctx.send(msgSend)
+    print(error)
     print(traceback.format_exc()) # Attempt to print exception
 
 ##############
@@ -257,7 +258,7 @@ async def tronalddump(ctx):
 
     await ctx.send('For educational and mockery purposes only!')
     await ctx.send(embeds=embeds)
-    await ctx.send('Contradiction Score:\n'+contra_meter+'\Score:'+str(contra_tuple[0]))
+    await ctx.send('Contradiction Score:\n'+contra_meter+'\Score: '+str(contra_tuple[0]))
 # For getting memes from the library
 memePath = 'ClassWork/'
 @bot.command()
