@@ -105,7 +105,7 @@ def get_sentiment(phrase:str, useAbs=True, weighted=False, average=True):
 
 def get_contradiction_score(phrase1:str,phrase2:str):
     raw_score = 1/(abs(get_sentiment(phrase1,average=False)-get_sentiment(phrase2,average=False))+abs(phrase1.count('not')-phrase2.count('not'))/2.0)
-    return round(2*math.log2(1+raw_score))/2 # Round to nearest 0.5 and use log2 to make spread smaller (might as well use a root)
+    return round(4*math.log2(1+raw_score))/4 # Round to nearest 0.25 and use log2 to make spread smaller (might as well use a root)
 
 def get_trump_contradiction(sameTag=False):
     q1 = dumbTrumpQuote()

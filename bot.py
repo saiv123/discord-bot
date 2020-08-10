@@ -252,7 +252,8 @@ async def tronalddump(ctx):
     embeds = [apis.quote_to_discord_embed(i) for i in contra_tuple[1:]]
     
     nearest_contra_score = str(round(min(10,contra_tuple[0])))
-    contra_meter = '0       1       2       3       4       5       6       7       8       9       10'.replace(nearest_contra_score,'<b>'+nearest_contra_score+'</b>')
+    #contra_meter = '0       1       2       3       4       5       6       7       8       9       10'.replace(nearest_contra_score,'<b>'+nearest_contra_score+'</b>')
+    contra_meter = '0       1       2       3       4       5       6       7       8       9       10'.replace(nearest_contra_score, apis.number_to_discord_emote(nearest_contra_score))
 
     #embeds.append(discord.Embed(title='Contradiction Score',description=contra_meter+'\nExact Score:'+str(contra_tuple[0])))
 
@@ -260,7 +261,7 @@ async def tronalddump(ctx):
         await ctx.send('For educational and mockery purposes only!')
         for embed in embeds:
             await ctx.send(embed=embed)
-        await ctx.send('Contradiction Score:\n'+contra_meter+'\Score: '+str(contra_tuple[0]))
+        await ctx.send('Contradiction Score:\n'+contra_meter+'\nScore: '+str(contra_tuple[0]))
 # For getting memes from the library
 memePath = 'ClassWork/'
 @bot.command()
