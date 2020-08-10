@@ -149,17 +149,23 @@ def number_to_discord_emote(numb):
     return numb
 
 import discord
-def quote_to_discord_embed(quote_dict:dict):
+def quote_to_discord_embed(quote_dict:dict, switch=False):
     kwargs_dict = {'title': 'A quote'}
     if 'quote' in quote_dict:
         kwargs_dict['description'] = quote_dict['quote']
     if 'author' in quote_dict:
         kwargs_dict['title'] = quote_dict['author']
     if 'source' in quote_dict:
+        kwargs_dict['url'] = quote_dict['source']
         if 'author' in quote_dict:
             kwargs_dict['title'] = kwargs_dict['title'] + ' via '+url_to_domain(quote_dict['source'])
         else:
             kwargs_dict['title'] = 'via '+url_to_domain(quote_dict['source'])
+    
+    if switch:
+        tempT = kwargs_dict['title']
+        kwargs_dict['title'] = kwargs_dict['description']
+        kwargs_dict['description'] = tempT
     
     embed=discord.Embed(**kwargs_dict)
 
