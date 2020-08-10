@@ -81,7 +81,7 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         msgSend = "You did not use the command correctly\nIf you dont know how to use the command you can use the $help command\nto see how to use all the commands."
     elif isinstance(error, commands.CommandOnCooldown):
-        msgSend = 'Your on cooldown for '+ctx.invoked_with + '.\nPlease wait another '+str(error.retry_after)+' seconds (out of '+str(error.cooldown)+')'
+        msgSend = 'Your on cooldown for '+ctx.invoked_with + '.\nPlease wait another '+str(round(error.retry_after))+' seconds'
     elif isinstance(error, commands.CommandNotFound):
         cmd = str(ctx.invoked_with)
         cmd_list = [cmd.name for cmd in bot.commands]
@@ -92,6 +92,7 @@ async def on_command_error(ctx, error):
             msgSend = "Sorry but that is not a valid command\nYou can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
 
     await ctx.send(msgSend)
+    print(error)
     print(traceback.format_exc()) # Attempt to print exception
 
 ##############
@@ -241,20 +242,24 @@ async def advice(ctx):
         await ctx.send(embed=apis.quote_to_discord_embed(advice))
 
 # sends 2 stupid donald trump quotes and their contradiction score
-@bot.command
+@bot.command()
 @commands.cooldown(3, 60, commands.BucketType.user)
 async def tronalddump(ctx):
-    contra_tuple = apis.get_trump_contradiction()
-    embeds = [apis.quote_to_discord_embed(i) for i in contra_tuple[1:]]
+    async with ctx.channel.typing():
+        contra_tuple = apis.get_trump_contradiction()
+        embeds = [apis.quote_to_discord_embed(i) for i in contra_tuple[1:]]
 
-    nearest_contra_score = str(round(min(10,contra_tuple[0])))
-    contra_meter = '0       1       2       3       4       5       6       7       8       9       10'.replace(nearest_contra_score,'<b>'+nearest_contra_score+'</b>')
+        nearest_contra_score = str(int(min(10,contra_tuple[0])))
 
-    #embeds.append(discord.Embed(title='Contradiction Score',description=contra_meter+'\nExact Score:'+str(contra_tuple[0])))
+        #contra_meter = '0       1       2       3       4       5       6       7       8       9       10'.replace(nearest_contra_score,'<b>'+nearest_contra_score+'</b>')
+        contra_meter = '0       1       2       3       4       5       6       7       8       9       10'.replace(nearest_contra_score, apis.number_to_discord_emote(nearest_contra_score))
 
-    await ctx.send('For educational and mockery purposes only!')
-    await ctx.send(embeds=embeds)
-    await ctx.send('Contradiction Score:\n'+contra_meter+'\Score:'+str(contra_tuple[0]))
+        #embeds.append(discord.Embed(title='Contradiction Score',description=contra_meter+'\nExact Score:'+str(contra_tuple[0])))
+
+        await ctx.send('For educational and mockery purposes only!')
+        for embed in embeds:
+            await ctx.send(embed=embed)
+        await ctx.send('Contradiction Score:\n'+contra_meter+'\nScore: '+str(contra_tuple[0]))
 # For getting memes from the library
 memePath = 'ClassWork/'
 @bot.command()

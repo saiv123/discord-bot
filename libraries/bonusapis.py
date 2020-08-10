@@ -1,6 +1,7 @@
 import requests
 import json, sys, os, string
 import math
+from imgutils import randomSaturatedColor
 
 class HiddenPrints:
     def __enter__(self):
@@ -105,7 +106,7 @@ def get_sentiment(phrase:str, useAbs=True, weighted=False, average=True):
 
 def get_contradiction_score(phrase1:str,phrase2:str):
     raw_score = 1/(abs(get_sentiment(phrase1,average=False)-get_sentiment(phrase2,average=False))+abs(phrase1.count('not')-phrase2.count('not'))/2.0)
-    return round(2*math.log2(1+raw_score))/2 # Round to nearest 0.5 and use log2 to make spread smaller (might as well use a root)
+    return round(4*math.log2(1+raw_score))/4 # Round to nearest 0.25 and use log2 to make spread smaller (might as well use a root)
 
 def get_trump_contradiction(sameTag=False):
     q1 = dumbTrumpQuote()
@@ -119,7 +120,6 @@ def get_trump_contradiction(sameTag=False):
     
     if not 'quote' in q2:
         return
-    print('getting')
     return (get_contradiction_score(q1['quote'], q2['quote']), q1, q2)
 
 def url_to_domain(url:str):
@@ -150,7 +150,7 @@ def number_to_discord_emote(numb):
 
 import discord
 def quote_to_discord_embed(quote_dict:dict, switch=False):
-    kwargs_dict = {'title': 'A quote'}
+    kwargs_dict = {'title': 'A quote','colour':randomSaturatedColor()}
     if 'quote' in quote_dict:
         kwargs_dict['description'] = quote_dict['quote']
     if 'author' in quote_dict:
