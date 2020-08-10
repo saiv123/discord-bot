@@ -224,7 +224,7 @@ async def wolfram(ctx, func:str):
 async def quote(ctx):
     async with ctx.channel.typing():
         quote = apis.quote_to_discord_embed(quotes.getQuoteJSON())
-        quote.image = 'https://clipart.info/images/ccovers/1531011033heart-emoji.png'
+        quote.set_image(url='https://clipart.info/images/ccovers/1531011033heart-emoji.png')
         await ctx.send(embed=quote)
 
 # sends a random quote
