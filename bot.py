@@ -244,7 +244,7 @@ async def advice(ctx):
         await ctx.send(embed=apis.quote_to_discord_embed(advice))
 
 # sends 2 stupid donald trump quotes and their contradiction score
-@bot.command
+@bot.command()
 @commands.cooldown(3, 60, commands.BucketType.user)
 async def tronalddump(ctx):
     contra_tuple = apis.get_trump_contradiction()
