@@ -119,7 +119,6 @@ def get_trump_contradiction(sameTag=False):
     
     if not 'quote' in q2:
         return
-    print('getting')
     return (get_contradiction_score(q1['quote'], q2['quote']), q1, q2)
 
 def url_to_domain(url:str):
