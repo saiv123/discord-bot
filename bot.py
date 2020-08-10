@@ -78,15 +78,14 @@ async def on_message(message):
 @bot.event
 async def on_command_error(ctx, error):
     msgSend = "An internal error has occured. Use $contact to contact the owner if it persists"
-    print(error)
     if isinstance(error, commands.MissingRequiredArgument):
         msgSend = "You did not use the command correctly\nIf you dont know how to use the command you can use the $help command\nto see how to use all the commands."
     elif isinstance(error, commands.CommandOnCooldown):
         msgSend = 'Your on cooldown for '+ctx.invoked_with + '.\nPlease wait another '+str(error.retry_after)+' seconds (out of '+str(error.cooldown)+')'
     elif isinstance(error, commands.CommandNotFound):
         cmd = str(ctx.invoked_with)
-        print(bot.commands) # not a list of strings, sadly
-        mlo = getClosestFromList(bot.commands, cmd)
+        cmd_list = [cmd.name for cmd in bot.commands]
+        mlo = getClosestFromList(cmd_list, cmd)
         if distance(cmd, mlo) <= 0.4*len(cmd):
             msgSend="Sorry, but that is not a valid command. Did you mean "+mlo+"?\n\nYou can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
         else:
@@ -352,7 +351,6 @@ async def rps(ctx, *, level=1):
 @bot.command()
 async def rpsc(ctx, user:discord.User, *, level=1):
     # local variables
-    ping = ("<@" + str(ctx.message.author.id) + "> ")
     if level > RPS_HARD_CAP:
         await ctx.send(user+'Sorry, but even though the code for it exists, why would you ever want to play rps-'+str(level*2+1)+', let alone with someone else???')
         return
@@ -407,7 +405,7 @@ async def rpsc(ctx, user:discord.User, *, level=1):
 
     # Get other person's response
     enemy_choice = symbol_names[0]
-    await user.send(str(ctx.message.author.name)+' has challenged you to rock-paper-scissors'+('-'+str(level*2+1)) if level > 1 else '')
+    await user.send(str(ctx.message.author.name)+' has challenged you to rock-paper-scissors'+('-'+str(level*2+1) if level > 1 else ''))
     i = 0
     while i < 3:
         i += 1
