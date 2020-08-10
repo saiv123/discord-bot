@@ -190,13 +190,10 @@ async def stats(ctx):
         # seting up an embed
         embed = discord.Embed(colour=color)
         # setting the clock image
-        embed.set_thumbnail(
-            url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png")
+        embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png")
         embed.add_field(name='I have been awake for:', value=msg, inline=False)
-        embed.add_field(name='My core body tempreture:',
-                        value=temp.replace("temp=", ""), inline=False)
-        embed.add_field(name='Quote cus I know your bored:', value='"' +
-                        quote['quote'] + '"\n\t~' + quote['author'], inline=False)
+        embed.add_field(name='My core body tempreture:',value=temp.replace("temp=", ""), inline=False)
+        embed.add_field(name='Quote cus I know your bored:', value='"' +quote['quote'] + '"\n\t~' + quote['author'], inline=False)
 
         await ctx.send(embed=embed)
 
@@ -249,7 +246,7 @@ async def advice(ctx):
 async def tronalddump(ctx):
     contra_tuple = apis.get_trump_contradiction()
     embeds = [apis.quote_to_discord_embed(i) for i in contra_tuple[1:]]
-    
+
     nearest_contra_score = str(round(min(10,contra_tuple[0])))
     contra_meter = '0       1       2       3       4       5       6       7       8       9       10'.replace(nearest_contra_score,'<b>'+nearest_contra_score+'</b>')
 
