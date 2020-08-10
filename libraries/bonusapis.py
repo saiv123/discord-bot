@@ -1,5 +1,6 @@
 import requests
 import json, sys, os, string
+import math
 
 class HiddenPrints:
     def __enter__(self):
@@ -103,7 +104,8 @@ def get_sentiment(phrase:str, useAbs=True, weighted=False, average=True):
     return total_score
 
 def get_contradiction_score(phrase1:str,phrase2:str):
-    return 1/(abs(get_sentiment(phrase1,average=False)-get_sentiment(phrase2,average=False))+abs(phrase1.count('not')-phrase2.count('not'))/2.0)
+    raw_score = 1/(abs(get_sentiment(phrase1,average=False)-get_sentiment(phrase2,average=False))+abs(phrase1.count('not')-phrase2.count('not'))/2.0)
+    return round(2*math.log2(1+raw_score))/2 # Round to nearest 0.5 and use log2 to make spread smaller (might as well use a root)
 
 def get_trump_contradiction(sameTag=False):
     q1 = dumbTrumpQuote()
@@ -131,15 +133,30 @@ def url_to_domain(url:str):
         url = url[4:]
     return url.strip().title()
 
+def number_to_discord_emote(numb):
+    numb = str(numb)
+    numb.replace('10',':keycap_ten:')
+    numb.replace('0',':zero:')
+    numb.replace('1',':one:')
+    numb.replace('2',':two:')
+    numb.replace('3',':three:')
+    numb.replace('4',':four:')
+    numb.replace('5',':five:')
+    numb.replace('6',':six:')
+    numb.replace('7',':seven:')
+    numb.replace('8',':eight:')
+    numb.replace('9',':nine:')
+    return numb
+
 import discord
 def quote_to_discord_embed(quote_dict:dict):
-    kwargs_dict = dict()
+    kwargs_dict = {'title': 'A quote'}
     if 'quote' in quote_dict:
         kwargs_dict['description'] = quote_dict['quote']
     if 'author' in quote_dict:
         kwargs_dict['title'] = quote_dict['author']
     if 'source' in quote_dict:
-        if 'title' in kwargs_dict:
+        if 'author' in quote_dict:
             kwargs_dict['title'] = kwargs_dict['title'] + ' via '+url_to_domain(quote_dict['source'])
         else:
             kwargs_dict['title'] = 'via '+url_to_domain(quote_dict['source'])

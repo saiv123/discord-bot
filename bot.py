@@ -85,6 +85,7 @@ async def on_command_error(ctx, error):
         msgSend = 'Your on cooldown for '+ctx.invoked_with + '.\nPlease wait another '+str(error.retry_after)+' seconds (out of '+str(error.cooldown)+')'
     elif isinstance(error, commands.CommandNotFound):
         cmd = str(ctx.invoked_with)
+        print(bot.commands) # not a list of strings, sadly
         mlo = getClosestFromList(bot.commands, cmd)
         if distance(cmd, mlo) <= 0.4*len(cmd):
             msgSend="Sorry, but that is not a valid command. Did you mean "+mlo+"?\n\nYou can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
@@ -215,7 +216,7 @@ async def wolfram(ctx, func:str):
     res = client.query(func)
     res = next(res.results).text
 
-    embed=discord.Embed(title="Wolfram Aplha", description=func+':\n\n'+res)
+    embed=discord.Embed(title="Wolfram Aplha", description=func+':\n'+res)
     embed.set_thumbnail(url="https://cdn.iconscout.com/icon/free/png-512/wolfram-alpha-2-569293.png")
     await ctx.send(embed=embed)
 
@@ -223,15 +224,41 @@ async def wolfram(ctx, func:str):
 @bot.command()
 async def quote(ctx):
     async with ctx.channel.typing():
-        await ctx.send(apis.quote_to_discord_message(quotes.getQuoteJSON()) + " :heart:")
+        quote = apis.quote_to_discord_embed(quotes.getQuoteJSON())
+        quote.image = 'https://clipart.info/images/ccovers/1531011033heart-emoji.png'
+        await ctx.send(embed=quote)
 
 # sends a random quote
 @bot.command()
+@commands.cooldown(3, 60, commands.BucketType.user)
 async def randquote(ctx):
     async with ctx.channel.typing():
         quote = quotes.getQuoteApi()
-        await ctx.send(apis.quote_to_discord_message(quote))
+        await ctx.send(embed=apis.quote_to_discord_embed(quote))
 
+# sends a random piece of advice
+@bot.command()
+@commands.cooldown(3, 60, commands.BucketType.user)
+async def advice(ctx):
+    async with ctx.channel.typing():
+        advice = apis.advice()
+        await ctx.send(embed=apis.quote_to_discord_embed(advice))
+
+# sends 2 stupid donald trump quotes and their contradiction score
+@bot.command
+@commands.cooldown(3, 60, commands.BucketType.user)
+async def tronalddump(ctx):
+    contra_tuple = apis.get_trump_contradiction()
+    embeds = [apis.quote_to_discord_embed(i) for i in contra_tuple[1:]]
+    
+    nearest_contra_score = str(round(min(10,contra_tuple[0])))
+    contra_meter = '0       1       2       3       4       5       6       7       8       9       10'.replace(nearest_contra_score,'<b>'+nearest_contra_score+'</b>')
+
+    #embeds.append(discord.Embed(title='Contradiction Score',description=contra_meter+'\nExact Score:'+str(contra_tuple[0])))
+
+    await ctx.send('For educational and mockery purposes only!')
+    await ctx.send(embeds=embeds)
+    await ctx.send('Contradiction Score:\n'+contra_meter+'\Score:'+str(contra_tuple[0]))
 # For getting memes from the library
 memePath = 'ClassWork/'
 @bot.command()
