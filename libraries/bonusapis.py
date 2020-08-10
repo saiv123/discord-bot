@@ -1,6 +1,7 @@
 import requests
 import json, sys, os, string
 import math
+from imgutils import randomSaturatedColor
 
 class HiddenPrints:
     def __enter__(self):
@@ -149,7 +150,7 @@ def number_to_discord_emote(numb):
 
 import discord
 def quote_to_discord_embed(quote_dict:dict, switch=False):
-    kwargs_dict = {'title': 'A quote'}
+    kwargs_dict = {'title': 'A quote','colour':randomSaturatedColor()}
     if 'quote' in quote_dict:
         kwargs_dict['description'] = quote_dict['quote']
     if 'author' in quote_dict:

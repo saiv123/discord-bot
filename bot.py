@@ -252,7 +252,7 @@ async def tronalddump(ctx):
         contra_tuple = apis.get_trump_contradiction()
         embeds = [apis.quote_to_discord_embed(i) for i in contra_tuple[1:]]
         
-        nearest_contra_score = str(round(min(10,contra_tuple[0])))
+        nearest_contra_score = str(int(min(10,contra_tuple[0])))
 
         #contra_meter = '0       1       2       3       4       5       6       7       8       9       10'.replace(nearest_contra_score,'<b>'+nearest_contra_score+'</b>')
         contra_meter = '0       1       2       3       4       5       6       7       8       9       10'.replace(nearest_contra_score, apis.number_to_discord_emote(nearest_contra_score))
