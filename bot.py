@@ -256,10 +256,11 @@ async def tronalddump(ctx):
 
     #embeds.append(discord.Embed(title='Contradiction Score',description=contra_meter+'\nExact Score:'+str(contra_tuple[0])))
 
-    await ctx.send('For educational and mockery purposes only!')
-    for embed in embeds:
-        await ctx.send(embed=embed)
-    await ctx.send('Contradiction Score:\n'+contra_meter+'\Score: '+str(contra_tuple[0]))
+    async with ctx.channel.typing():
+        await ctx.send('For educational and mockery purposes only!')
+        for embed in embeds:
+            await ctx.send(embed=embed)
+        await ctx.send('Contradiction Score:\n'+contra_meter+'\Score: '+str(contra_tuple[0]))
 # For getting memes from the library
 memePath = 'ClassWork/'
 @bot.command()
