@@ -288,7 +288,7 @@ async def nsfw(ctx, *args):
 @bot.command()
 @commands.cooldown(3, 60, commands.BucketType.user)
 async def contact(ctx):
-    msg = "Discord: Sai#3400\nDiscord server: https://discord.gg/gYhRdk7\n"
+    msg = "Discord: Sai#3400\nDiscord server: https://discord.gg/2zUTJ7j\n"
     if(ctx.channel.id == 674120261691506688):  # channel specific to my discord server
         msg += cont
     id = ctx.message.author.id
