@@ -65,8 +65,7 @@ async def on_message(message):
     if message.guild is None and message.author != bot.user:  # checks if theres a dm to the bot, and logs it
         other = await bot.fetch_user(message.author.id)
         with open(nameNote, 'a') as file:
-            file.write(str(datetime.datetime.now()) + " " +
-                       other.name + " -- " + message.content + "\n")
+            file.write(str(datetime.datetime.now()) + " " +other.name + " -- " + message.content + "\n")
     elif "corn" in message.content.lower() and message.author != bot.user:
         channel = message.channel
         await channel.send("https://cdn.discordapp.com/attachments/654783232969277453/738997605039603772/Corn_is_the_best_crop__wheat_is_worst.mp4")
