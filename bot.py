@@ -259,6 +259,7 @@ async def tronalddump(ctx):
         for embed in embeds:
             await ctx.send(embed=embed)
         await ctx.send('Contradiction Score:\n'+contra_meter+'\nScore: '+str(contra_tuple[0]))
+
 # For getting memes from the library
 memePath = 'ClassWork/'
 @bot.command()
