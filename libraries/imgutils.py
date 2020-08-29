@@ -5,7 +5,6 @@ from PIL import Image
 
 import random
 
-
 def getAverageColor(image_url):
     # get image from web
     resp = requests.get(image_url)
@@ -31,7 +30,6 @@ def getAverageColor(image_url):
 
     return int(hex.upper(), 16)  # convert the hex string to an int
 
-
 def isUrlValidImage(url):
     try:
         resp = requests.get(url)
@@ -42,7 +40,6 @@ def isUrlValidImage(url):
     except:
         return False
 
-
 def randomSaturatedColor(minSat=64, steps=1):
     if minSat <= 1:
         minSat = minSat * 255
@@ -51,7 +48,6 @@ def randomSaturatedColor(minSat=64, steps=1):
     hex = '{:02x}{:02x}{:02x}'.format(random.randrange(minSat, 255, steps), random.randrange(
         minSat, 255, steps), random.randrange(minSat, 255, steps))
     return int(hex.upper(), 16)
-
 
 if __name__ == '__main__':
     for i in range(5):

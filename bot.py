@@ -69,6 +69,9 @@ async def on_message(message):
     elif "corn" in message.content.lower() and message.author != bot.user:
         channel = message.channel
         await channel.send("https://cdn.discordapp.com/attachments/654783232969277453/738997605039603772/Corn_is_the_best_crop__wheat_is_worst.mp4")
+    elif "bird" in message.content.lower() and message.author != bot.user:
+        chennel = message.channel
+        await channel.send("The birds work for the bourgeoisie.")
 
     # Respond to last command
     await bot.process_commands(message)
