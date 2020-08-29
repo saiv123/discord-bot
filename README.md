@@ -18,7 +18,7 @@ You can add suggestions to the bot here [Link to suggestions forms](https://gith
 Please note since this is a side project, eventually this bot will stop being updated, I know sad
 ***
 # Contacts
-Discord: Sai#2728<br>
+Discord: Sai#3400<br>
 Or you can join the [Discord Server](https://discord.gg/2zUTJ7j)
 
-Feel Free to message in the discord about any questions you have.
+Feel Free to message me in the discord about any questions you have.
