@@ -2,14 +2,14 @@
 # About The Bot
 [Invite bot to server](https://discordapp.com/api/oauth2/authorize?client_id=314578387031162882&permissions=402730064&scope=bot)
 The bot is a slow working progress, a side project of mine.
-if the bot is not functioning properly please make a issue request on [GitHub Issues](https://github.com/saiv123/discord-bot/issues/new/choose)
+if the bot is not functioning properly please make a issue request on [GitHub Issues](https://github.com/saiv123/discord-bot/issues/new?assignees=&labels=&template=bug_report.md&title=)
 1) click the New Issues button
 2) click get started under the bug report tab
 3) fill out the template as best as possible
 ***
 # To-Do
 Nothing currently on the todo list.
-You can add suggestions to the bot here [Link to suggestions forms](https://github.com/saiv123/discord-bot/issues/new/choose)
+You can add suggestions to the bot here [Link to suggestions forms](https://github.com/saiv123/discord-bot/issues/new?assignees=&labels=&template=feature_request.md&title=)
 1) click the New Issues button
 2) click get started under the feature request tab
 3) fill out the template as best as possible
