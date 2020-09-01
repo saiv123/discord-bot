@@ -5,6 +5,7 @@ import asyncio, discord
 import wolframalpha
 import time, datetime
 import json, random
+import lyricsgenius as LyrGen
 from discord.ext import commands, tasks
 from discord.ext.commands import Bot
 
@@ -13,7 +14,7 @@ import libraries.quotes as quotes
 import libraries.helperFunctions as helperFunctions
 import libraries.bonusapis as apis
 
-from secret import TOKEN, id, cont
+from secret import TOKEN, id, cont, GenID
 from libraries.helperFunctions import isOwner, msgReturn, splitLongStrings, getEmbedsFromLibraryQuery
 from libraries.helperFunctions import gen_rps_matrix, format_matrix, list_god
 from libraries.prawn import getClosestFromList
@@ -28,6 +29,9 @@ client = wolframalpha.Client(id)
 # setting up the bot, with its discritpion etc.
 bot = commands.Bot(command_prefix='$', description="Its a Sick use-less bot")
 ts = time.time()
+
+#setting up LyricGenius stuff
+Gen = LyrGen.Genius(GenID)
 
 # deleting default help comand
 bot.remove_command('help')
@@ -298,6 +302,18 @@ async def contact(ctx):
     # Making the dm channel
     user = bot.get_user(id)
     await user.send(msg)
+
+#Get song lyrics
+@bot.command()
+@commands.cooldown(1, 30, commands.BucketType.user)
+async def song(ctx, *songName):
+    try:
+        i = songName.index(" by ")
+        song = Gen.search_song(songName[0:i], songName[i+4:])
+        for message in splitLongStrings(song.lyrics):
+            await ctx.send(message)
+    except Exception as e:
+        ctx.send("The command was used in correctly\nCommand is used like ```$song songTitle by songArtist```")
 
 # rock paper scissors game with the bot (maybe buggy so no touchy)
 RPS_HARD_CAP = 6
