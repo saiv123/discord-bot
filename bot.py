@@ -306,7 +306,7 @@ async def contact(ctx):
 #Get song lyrics
 @bot.command()
 @commands.cooldown(1, 30, commands.BucketType.user)
-async def song(ctx, *songName):
+async def song(ctx, songName=" "):
     try:
         i = songName.index(" by ")
         song = Gen.search_song(songName[0:i], songName[i+4:])
