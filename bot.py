@@ -313,7 +313,7 @@ async def song(ctx, *songName):
         for message in splitLongStrings(song.lyrics):
             await ctx.send(message)
     except Exception as e:
-        ctx.send("The command was used in correctly\nCommand is used like ```$song songTitle by songArtist```")
+        await ctx.send("The command was used in correctly\nCommand is used like ```$song songTitle by songArtist```")
 
 # rock paper scissors game with the bot (maybe buggy so no touchy)
 RPS_HARD_CAP = 6
