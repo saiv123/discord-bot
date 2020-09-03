@@ -406,7 +406,7 @@ async def rpsc(ctx, user:discord.User, *, level=1):
             await ctx.message.author.send('Awww, '+user.name+' don\'t leave me hangin\'')
             return # Abort challenge if you don't send an answer
         response = msg.content.lower().replace(' ','_').replace('\n','')
-        your_choice = getClosestFromList(['abort','rules']+symbol_names,response)
+        your_choice = getClosestFromList(['abort','rules']+symbol_names,response.lower())
 
         if distance(response, your_choice) >= len(response)*0.3:
             await ctx.message.author.send('No option recognized, try again')
@@ -437,16 +437,18 @@ async def rpsc(ctx, user:discord.User, *, level=1):
             msg = await bot.wait_for('message', check=get_check(user),timeout=5*60)
         except:
             await user.send('Challenge cancelled')
+            await ctx.message.author.send('Your opponent has cancelled the challenge')
             await ctx.send(user.name+' has cancelled the challenge')
             return # Consider breaking and leaving it at default instead of cancelling
         response = msg.content.lower().replace(' ','_').replace('\n','')
-        enemy_choice = getClosestFromList(['abort','rules']+symbol_names,response)
+        enemy_choice = getClosestFromList(['abort','rules']+symbol_names,response.lower())
 
         if distance(response, enemy_choice) >= len(response)*0.3:
             await user.send('No option recognized, try again')
 
         if 'abort' in enemy_choice.lower():
             await user.send('Challenge cancelled')
+            await ctx.message.author.send('Your opponent has cancelled the challenge')
             await ctx.send(user.name+' has cancelled the challenge')
             return
 
@@ -469,11 +471,17 @@ async def rpsc(ctx, user:discord.User, *, level=1):
 
     winner = matrix[your_choice][enemy_choice]
     if winner == 0:
-        output = "Its a draw! Better luck next time"
+        output = "Its a draw! What a sad conclusion..."
+        await ctx.message.author.send('The bout ended in a draw')
+        await user.send('The bout ended in a draw')
     elif winner == 1:
         output = ctx.message.author.name+" won. Nice job. :partying_face:"
+        await ctx.message.author.send('You won! :partying_face:')
+        await user.send('You lost')
     elif winner == 2:
-        output = user.name+" won. Better luck next time"
+        output = user.name+" won. Nice job. :partying_face:"
+        await ctx.message.author.send('You lost')
+        await user.send('You won! :partying_face:')
     await ctx.send(output)
 
 ########################
