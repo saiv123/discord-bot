@@ -322,7 +322,7 @@ RPS_HARD_CAP = 6
 async def rps(ctx, *, level=1):
     # local variables
     user = ("<@" + str(ctx.message.author.id) + "> ")
-    if level > RPS_HARD_CAP:
+    if level > RPS_HARD_CAP and not isOwner(ctx):
         await ctx.send(user+'Sorry, but even though the code for it exists, why would you ever want to play rps-'+str(level*2+1)+'???')
         return
     symbol_names = ['rock','paper','scissors','spock','lizard','alien','well','generic','karen','heat','lemonade']
@@ -373,7 +373,7 @@ async def rps(ctx, *, level=1):
 @bot.command()
 async def rpsc(ctx, user:discord.User, *, level=1):
     # local variables
-    if level > RPS_HARD_CAP:
+    if level > RPS_HARD_CAP and not isOwner(ctx):
         await ctx.send(user+'Sorry, but even though the code for it exists, why would you ever want to play rps-'+str(level*2+1)+', let alone with someone else???')
         return
     symbol_names = ['rock','paper','scissors','spock','lizard','alien','well','generic','karen','heat','lemonade']
