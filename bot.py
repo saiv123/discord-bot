@@ -411,15 +411,16 @@ async def rpsc(ctx, user:discord.User, *, level=1):
         if distance(response, your_choice) >= len(response)*0.3:
             await ctx.message.author.send('No option recognized, try again')
 
-        if 'abort' in your_choice.lower():
+        elif 'abort' in your_choice.lower():
             await ctx.message.author.send('Challenge cancelled')
             await ctx.send(ctx.message.author.name+' has cancelled the challenge')
             return
 
-        if 'rules' in your_choice.lower():
+        elif 'rules' in your_choice.lower():
             for msg in splitLongStrings(' \n'.join(format_matrix(matrix, symbol_names))):
-                await user.send(msg)
+                await ctx.message.author.send(msg)
             i -= 1
+
         else: # If neither rules or abort, it is correct
             break
 
@@ -446,13 +447,13 @@ async def rpsc(ctx, user:discord.User, *, level=1):
         if distance(response, enemy_choice) >= len(response)*0.3:
             await user.send('No option recognized, try again')
 
-        if 'abort' in enemy_choice.lower():
+        elif 'abort' in enemy_choice.lower():
             await user.send('Challenge cancelled')
             await ctx.message.author.send('Your opponent has cancelled the challenge')
             await ctx.send(user.name+' has cancelled the challenge')
             return
 
-        if 'rules' in enemy_choice.lower():
+        elif 'rules' in enemy_choice.lower():
             for msg in splitLongStrings(' \n'.join(format_matrix(matrix, symbol_names))):
                 await user.send(msg)
             i -= 1
