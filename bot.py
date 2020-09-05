@@ -62,7 +62,7 @@ async def on_ready():
 # for every message it does these checks
 @bot.event
 async def on_message(message):
-    nameNote = "dmLogs.txt"
+    #nameNote = "dmLogs.txt"
     # if(message.author.id is 371865866704257025 and message.guild != None): #for removing user from servers
     #     await message.delete()
     #     return
@@ -469,7 +469,8 @@ async def rpsc(ctx, user:discord.User, *, level=1):
     your_choice = symbol_names.index(your_choice)
     enemy_choice = symbol_names.index(enemy_choice)
 
-    winner = matrix[your_choice][enemy_choice]
+    #winner = matrix[your_choice][enemy_choice]
+    winner = matrix[enemy_choice][your_choice]
     if winner == 0:
         output = "Its a draw! What a sad conclusion..."
         await ctx.message.author.send('The bout ended in a draw')
