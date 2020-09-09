@@ -309,10 +309,12 @@ async def contact(ctx):
 async def song(ctx, *, songName=" "):
     try:
         i = songName.index(" by ")
-        Ns = songName[0:i]
         song = Gen.search_song(songName[0:i], songName[i+4:])
         embed = discord.Embed()
-        embed.add_field(name="song name", value=song.lyrics, inline=Flase)
+        words = song.lyrics
+        print(type(words))
+        embed.add_field(name="song name", value=words, inline=Flase)
+        embed.set_footer(text='ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤRequested by: ' + ctx.message.author.name)
         await ctx.send(embed=embed)
         # for message in splitLongStrings(song.lyrics):
         #     await ctx.send(message)
