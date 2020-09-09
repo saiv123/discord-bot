@@ -99,7 +99,7 @@ async def on_command_error(ctx, error):
 
     await ctx.send(msgSend)
     print(error)
-    print(traceback.format_exc()) # Attempt to print exception
+    print(traceback) # Attempt to print exception
 
 ##############
 ###Commands###
