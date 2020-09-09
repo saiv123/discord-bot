@@ -313,7 +313,7 @@ async def song(ctx, *, songName=" "):
         embed = discord.Embed()
         words = song.lyrics
         print(type(words))
-        embed.add_field(name="song name", value=words, inline=Flase)
+        embed.add_field(name="song name", value=words, inline=False)
         embed.set_footer(text='ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤRequested by: ' + ctx.message.author.name)
         await ctx.send(embed=embed)
         # for message in splitLongStrings(song.lyrics):
