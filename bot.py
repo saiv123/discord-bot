@@ -310,8 +310,11 @@ async def song(ctx, *, songName=" "):
     try:
         i = songName.index(" by ")
         song = Gen.search_song(songName[0:i], songName[i+4:])
-        for message in splitLongStrings(song.lyrics):
-            await ctx.send(message)
+        embed = discord.Embed(description='requested by:\n{0}'.format(ctx.author))
+        embed.add_field(name=songName[0:i], value=song.lyrics, inline=Flase)
+        await ctx.send(embed=embed)
+        # for message in splitLongStrings(song.lyrics):
+        #     await ctx.send(message)
     except Exception as e:
         print(e)
         await ctx.send("The command was used in correctly\nCommand is used like ```$song songTitle by songArtist```")
@@ -411,16 +414,15 @@ async def rpsc(ctx, user:discord.User, *, level=1):
         if distance(response, your_choice) >= len(response)*0.3:
             await ctx.message.author.send('No option recognized, try again')
 
-        elif 'abort' in your_choice.lower():
+        if 'abort' in your_choice.lower():
             await ctx.message.author.send('Challenge cancelled')
             await ctx.send(ctx.message.author.name+' has cancelled the challenge')
             return
 
-        elif 'rules' in your_choice.lower():
+        if 'rules' in your_choice.lower():
             for msg in splitLongStrings(' \n'.join(format_matrix(matrix, symbol_names))):
-                await ctx.message.author.send(msg)
+                await user.send(msg)
             i -= 1
-
         else: # If neither rules or abort, it is correct
             break
 
@@ -447,13 +449,13 @@ async def rpsc(ctx, user:discord.User, *, level=1):
         if distance(response, enemy_choice) >= len(response)*0.3:
             await user.send('No option recognized, try again')
 
-        elif 'abort' in enemy_choice.lower():
+        if 'abort' in enemy_choice.lower():
             await user.send('Challenge cancelled')
             await ctx.message.author.send('Your opponent has cancelled the challenge')
             await ctx.send(user.name+' has cancelled the challenge')
             return
 
-        elif 'rules' in enemy_choice.lower():
+        if 'rules' in enemy_choice.lower():
             for msg in splitLongStrings(' \n'.join(format_matrix(matrix, symbol_names))):
                 await user.send(msg)
             i -= 1
@@ -553,14 +555,10 @@ async def servers(ctx):
 # to test what the bot see in the object containers
 @bot.command()
 async def sendbot(ctx, temp:str):
-    em = discord.Embed(description='requested by:\n{0}'.format(ctx.author),colour=discord.Colour.green()
-    )
-
-    embed.set_author(name='Help')
-    embed.add_field(name='$hi', value='Will send hi back to you', inline=False)
-    embed.add_field(name='$notes', value='You can add notes to your notes file', inline=False)
-    em.set_thumbnail(url=ctx.author_url)
-
+    if isOwner(ctx):
+        await ctx.send("\\"+temp)
+    else:
+        await ctx.send(msgReturn("notOwner"))
 
 # runs the bot after all the methods have been loaded to memory
 bot.run(TOKEN)
