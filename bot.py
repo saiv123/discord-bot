@@ -552,10 +552,14 @@ async def servers(ctx):
 # to test what the bot see in the object containers
 @bot.command()
 async def sendbot(ctx, temp:str):
-    if isOwner(ctx):
-        await ctx.send("\\"+temp)
-    else:
-        await ctx.send(msgReturn("notOwner"))
+    em = discord.Embed(description='requested by:\n{0}'.format(ctx.author),colour=discord.Colour.green()
+    )
+
+    embed.set_author(name='Help')
+    embed.add_field(name='$hi', value='Will send hi back to you', inline=False)
+    embed.add_field(name='$notes', value='You can add notes to your notes file', inline=False)
+    em.set_thumbnail(url=ctx.author_url)
+
 
 # runs the bot after all the methods have been loaded to memory
 bot.run(TOKEN)
