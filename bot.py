@@ -311,9 +311,8 @@ async def song(ctx, *, songName=" "):
         i = songName.index(" by ")
         song = Gen.search_song(songName[0:i], songName[i+4:])
         embed = discord.Embed()
-        words = song.lyrics
-        print(type(words))
-        embed.add_field(name="song name", value=words, inline=False)
+        for message in splitLongStrings(song.Lyrics):
+            embed.add_field(name="song name", value=message, inline=False)
         embed.set_footer(text='ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤRequested by: ' + ctx.message.author.name)
         await ctx.send(embed=embed)
         # for message in splitLongStrings(song.lyrics):
