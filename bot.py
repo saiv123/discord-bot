@@ -313,9 +313,7 @@ async def song(ctx, *, songName=" "):
         embed.set_author(name=songName[0:i])
         for message in splitLongStrings(song.lyrics, 1024):
             embed.add_field(name="-",value=message, inline=False)
-
-        embed.set_footer(text='Song Requested by: ' + ctx.message.author.mention, icon_url=ctx.message.author.avatar_url)
-
+        embed.set_footer(text='Song Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
         await ctx.send(embed=embed)
         # for message in splitLongStrings(song.lyrics):
         #     await ctx.send(message)
