@@ -30,9 +30,9 @@ def msgReturn(type):
     return msgData
 
 # Splits a string into several sub-2000 char strings
-def splitLongStrings(str, chars=1500):
+def splitLongStrings(str, chars=1500, preferred_char:' '):
     messages = []
-    if ' ' not in str:  # If there are no spaces, don't respect spaces
+    if preferred_char not in str:  # If there are no spaces, don't respect spaces
         message = ""
         for c in str:
             if len(message) >= chars:  # >= is equivalent to adding 1 to len(message)
@@ -42,13 +42,13 @@ def splitLongStrings(str, chars=1500):
         messages.append(message)
         return messages
     # If there are spaces, respect them
-    words = str.split(' ')
+    words = str.split(preferred_char)
     message = ""
     for word in words:
         if len(message) + len(word) > chars:
             messages.append(message[1:])  # delete leading space
             message = ""
-        message = message + ' ' + word
+        message = message + preferred_char + word
     if len(message) > 1:
         messages.append(message[1:])
     return messages
