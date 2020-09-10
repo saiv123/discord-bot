@@ -305,21 +305,18 @@ async def contact(ctx):
 @bot.command()
 @commands.cooldown(1, 30, commands.BucketType.user)
 async def song(ctx, *, songName=" "):
-    try:
-        i = songName.index(" by ")
-        song = Gen.search_song(songName[0:i], songName[i+4:])
-        embed = discord.Embed(colour = imgutils.randomSaturatedColor())
-        print(song.lyrics)
-        embed.set_author(name=songName[0:i])
-        for message in splitLongStrings(song.lyrics, 1024):
-            embed.add_field(name=chr(0xffa0),value=message, inline=False)
-        embed.set_footer(text='Song Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
-        await ctx.send(embed=embed)
-        # for message in splitLongStrings(song.lyrics):
-        #     await ctx.send(message)
-    except Exception as e:
-        print(e)
-        await ctx.send("The command was used incorrectly\nCommand is used like ```$song songTitle by songArtist```")
+    if ' by ' not in str(songName): songName = str(songName) + ' by '
+    songName = str(songName).split(" by ")
+    song = Gen.search_song(songName[0], songName[1])
+    embed = discord.Embed(colour = imgutils.randomSaturatedColor())
+
+    # Create and send embed
+    embed.set_author(name=songName[0].title())
+    for message in splitLongStrings(song.lyrics, 1024):
+        embed.add_field(name=chr(0xffa0),value=message, inline=False)
+    embed.set_footer(text='Song Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+    await ctx.send(embed=embed)
+
 
 # rock paper scissors game with the bot (maybe buggy so no touchy)
 RPS_HARD_CAP = 6
