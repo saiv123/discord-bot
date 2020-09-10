@@ -208,7 +208,7 @@ async def stats(ctx):
 # return the answers to defenet integrals
 @bot.command()
 @commands.cooldown(3, 60, commands.BucketType.user)
-async def definte(ctx, a: int, b: int, func: str):
+async def definte(ctx, a:int, b:int, *, func:str):
     # bunch of text formating to put into the api
     res = client.query('integrate ' + func + ' from ' +str(a) + ' to ' + str(b))
     # getting the answer from the api and parsing
@@ -216,7 +216,7 @@ async def definte(ctx, a: int, b: int, func: str):
 
 @bot.command()
 @commands.cooldown(3, 60, commands.BucketType.user)
-async def wolfram(ctx, func:str):
+async def wolfram(ctx, *, func:str):
     res = client.query(func)
     res = next(res.results).text
 
@@ -304,7 +304,7 @@ async def contact(ctx):
 #Get song lyrics
 @bot.command()
 @commands.cooldown(1, 30, commands.BucketType.user)
-async def song(ctx, *, songName=" "):
+async def song(ctx, *, songName:str):
     if ' by ' not in str(songName): songName = str(songName) + ' by '
     songName = str(songName).split(" by ")
     song = Gen.search_song(songName[0], songName[1])
