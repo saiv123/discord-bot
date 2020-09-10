@@ -85,9 +85,9 @@ async def on_message(message):
 async def on_command_error(ctx, error):
     msgSend = "An internal error has occured. Use $contact to contact the owner if it persists"
     if isinstance(error, commands.MissingRequiredArgument):
-        msgSend = "You did not use the command correctly\nIf you dont know how to use the command you can use the $help command\nto see how to use all the commands."
+        msgSend = "You did not use the command correctly\nIf you dont know how to use the command you can use the $help command\nto see how to use all commands."
     elif isinstance(error, commands.CommandOnCooldown):
-        msgSend = 'Your on cooldown for '+ctx.invoked_with + '.\nPlease wait another '+str(round(error.retry_after))+' seconds'
+        msgSend = 'You\'re on cooldown for '+ctx.invoked_with + '.\nPlease wait another '+str(round(error.retry_after))+' seconds'
     elif isinstance(error, commands.CommandNotFound):
         cmd = str(ctx.invoked_with)
         cmd_list = [cmd.name for cmd in bot.commands]
@@ -114,7 +114,7 @@ async def help(ctx):
     embed.set_author(name='Help')
     embed.set_thumbnail(url='https://cdn.discordapp.com/avatars/314578387031162882/e4b98a4a9ca3315ca699ffe5cba5b8f1.png?size=1024')
     embed.add_field(name='Commands will be found on the website.',value='[Link to website](https://saiv123.github.io/discord-bot/website/)', inline=False)
-    embed.add_field(name='Please invite me to other discords',value='[Invite bot to server](https://discord.com/api/oauth2/authorize?client_id=314578387031162882&permissions=8&scope=bot)', inline=False)
+    embed.add_field(name='Please invite me to other Discords',value='[Invite bot to server](https://discord.com/api/oauth2/authorize?client_id=314578387031162882&permissions=8&scope=bot)', inline=False)
 
     await ctx.send(embed=embed)
 
@@ -129,7 +129,7 @@ async def shouldI(ctx, *i):
 @bot.command()
 async def invite(ctx):
     async with ctx.channel.typing():  # make it look like the bot is typing
-        await ctx.send("Invite me to your friends disocrd:\nhttps://discord.com/api/oauth2/authorize?client_id=314578387031162882&permissions=8&scope=bot")
+        await ctx.send("Invite me to your friend's Discord:\nhttps://discord.com/api/oauth2/authorize?client_id=314578387031162882&permissions=8&scope=bot")
 
 # says hello to your
 @bot.command()
@@ -199,8 +199,8 @@ async def stats(ctx):
         # setting the clock image
         embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png")
         embed.add_field(name='I have been awake for:', value=msg, inline=False)
-        embed.add_field(name='My core body tempreture:',value=temp.replace("temp=", ""), inline=False)
-        embed.add_field(name='Quote cus I know your bored:', value='"' +quote['quote'] + '"\n\t~' + quote['author'], inline=False)
+        embed.add_field(name='My core body temperature:',value=temp.replace("temp=", ""), inline=False)
+        embed.add_field(name='Quote cus I know you\'re bored:', value='"' +quote['quote'] + '"\n\t~' + quote['author'], inline=False)
 
         await ctx.send(embed=embed)
 
@@ -321,7 +321,7 @@ async def song(ctx, *, songName=" "):
         #     await ctx.send(message)
     except Exception as e:
         print(e)
-        await ctx.send("The command was used in correctly\nCommand is used like ```$song songTitle by songArtist```")
+        await ctx.send("The command was used incorrectly\nCommand is used like ```$song songTitle by songArtist```")
 
 # rock paper scissors game with the bot (maybe buggy so no touchy)
 RPS_HARD_CAP = 6
