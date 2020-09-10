@@ -308,17 +308,18 @@ async def contact(ctx):
 @commands.cooldown(1, 30, commands.BucketType.user)
 async def song(ctx, *, songName:str):
     try:
-        if ' by ' not in str(songName): songName = str(songName) + ' by '
-        songName = str(songName).split(" by ")
-        song = Gen.search_song(songName[0], songName[1])
-        embed = discord.Embed(colour = imgutils.randomSaturatedColor())
+        async with ctx.channel.typing():
+            if ' by ' not in str(songName): songName = str(songName) + ' by '
+            songName = str(songName).split(" by ")
+            song = Gen.search_song(songName[0], songName[1])
+            embed = discord.Embed(colour = imgutils.randomSaturatedColor())
 
-        # Create and send embed
-        embed.set_author(name=songName[0].title())
-        for message in splitLongStrings(song.lyrics, chars=1024, preferred_char='\n'):
-            embed.add_field(name=chr(0xffa0),value=message, inline=False)
-        embed.set_footer(text='Song Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
-        await ctx.send(embed=embed)
+            # Create and send embed
+            embed.set_author(name=songName[0].title())
+            for message in splitLongStrings(song.lyrics, chars=1024, preferred_char='\n'):
+                embed.add_field(name=chr(0xffa0),value=message, inline=False)
+            embed.set_footer(text='Song Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+            await ctx.send(embed=embed)
     except AttributeError as e:
         print(e)
         await ctx.send("The command was either used incorrectly or the song was not found\nCommand is used like:```$song songTitle by songArtist```")
