@@ -13,7 +13,7 @@ from discord.ext.commands import Bot
 import libraries.quotes as quotes
 import libraries.helperFunctions as helperFunctions
 import libraries.bonusapis as apis
-import libraries.imageutils as imgutils
+import libraries.imgutils as imgutils
 
 from secret import TOKEN, id, cont, GenID
 from libraries.helperFunctions import isOwner, msgReturn, splitLongStrings, getEmbedsFromLibraryQuery
