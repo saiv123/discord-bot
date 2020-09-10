@@ -13,6 +13,7 @@ from discord.ext.commands import Bot
 import libraries.quotes as quotes
 import libraries.helperFunctions as helperFunctions
 import libraries.bonusapis as apis
+import libraries.imageutils as imgutils
 
 from secret import TOKEN, id, cont, GenID
 from libraries.helperFunctions import isOwner, msgReturn, splitLongStrings, getEmbedsFromLibraryQuery
@@ -257,10 +258,7 @@ async def tronalddump(ctx):
 
         nearest_contra_score = str(int(min(10,contra_tuple[0])))
 
-        #contra_meter = '0       1       2       3       4       5       6       7       8       9       10'.replace(nearest_contra_score,'<b>'+nearest_contra_score+'</b>')
         contra_meter = '0       1       2       3       4       5       6       7       8       9       10'.replace(nearest_contra_score, apis.number_to_discord_emote(nearest_contra_score))
-
-        #embeds.append(discord.Embed(title='Contradiction Score',description=contra_meter+'\nExact Score:'+str(contra_tuple[0])))
 
         await ctx.send('For educational and mockery purposes only!')
         for embed in embeds:
@@ -310,7 +308,7 @@ async def song(ctx, *, songName=" "):
     try:
         i = songName.index(" by ")
         song = Gen.search_song(songName[0:i], songName[i+4:])
-        embed = discord.Embed()
+        embed = discord.Embed(imgutils.randomSaturatedColor())
         print(song.lyrics)
         for message in splitLongStrings(song.lyrics, 1024):
             embed.add_field(name=songName[0:i], value=message, inline=False)
