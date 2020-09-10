@@ -304,16 +304,18 @@ async def contact(ctx):
 #Get song lyrics
 @bot.command()
 @commands.cooldown(1, 30, commands.BucketType.user)
-async def song(ctx, *, songName=" "):
+async def song(ctx, member: discord.member, *, songName=" "):
     try:
         i = songName.index(" by ")
         song = Gen.search_song(songName[0:i], songName[i+4:])
         embed = discord.Embed(colour = imgutils.randomSaturatedColor())
         print(song.lyrics)
+        embed.set_author(name=songName[0:i])
         for message in splitLongStrings(song.lyrics, 1024):
-            embed.add_field(name=songName[0:i], value=message, inline=False)
+            embed.add_field(value=message, inline=False)
 
-        embed.set_footer(text='Song Requested by: ' + ctx.message.author.name)
+        embed.set_footer(text='Song Requested by: ' + ctx.message.author.mention, icon_url='{}'.format(member.avatar_url))
+
         await ctx.send(embed=embed)
         # for message in splitLongStrings(song.lyrics):
         #     await ctx.send(message)
