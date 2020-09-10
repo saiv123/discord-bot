@@ -21,6 +21,16 @@ def isOwner(ctx):
             return True
     return False
 
+class OwnersIgnoreCooldown(commands.Command):
+    async def prepare(self, ctx):
+        try:
+            return await super().prepare(ctx)
+        except commands.CommandOnCooldown as e:
+            if isOwner(ctx.message.author.id):
+                return
+            else:
+                raise e
+
 # gets a message from the dictionary with the type inputed
 def msgReturn(type):
     data = json.load(open("msg.json"))

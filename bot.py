@@ -16,7 +16,7 @@ import libraries.bonusapis as apis
 import libraries.imgutils as imgutils
 
 from secret import TOKEN, id, cont, GenID
-from libraries.helperFunctions import isOwner, msgReturn, splitLongStrings, getEmbedsFromLibraryQuery
+from libraries.helperFunctions import isOwner, OwnersIgnoreCooldown, msgReturn, splitLongStrings, getEmbedsFromLibraryQuery
 from libraries.helperFunctions import gen_rps_matrix, format_matrix, list_god
 from libraries.prawn import getClosestFromList
 from Levenshtein import distance
@@ -208,7 +208,7 @@ async def stats(ctx):
         await ctx.send(embed=embed)
 
 # return the answers to defenet integrals
-@bot.command()
+@bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(3, 60, commands.BucketType.user)
 async def definte(ctx, a:int, b:int, *, func:str):
     # bunch of text formating to put into the api
@@ -216,7 +216,7 @@ async def definte(ctx, a:int, b:int, *, func:str):
     # getting the answer from the api and parsing
     await ctx.send(next(res.results).text)
 
-@bot.command()
+@bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(3, 60, commands.BucketType.user)
 async def wolfram(ctx, *, func:str):
     res = client.query(func)
@@ -235,7 +235,7 @@ async def quote(ctx):
         await ctx.send(embed=quote)
 
 # sends a random quote
-@bot.command()
+@bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(3, 60, commands.BucketType.user)
 async def randquote(ctx):
     async with ctx.channel.typing():
@@ -243,7 +243,7 @@ async def randquote(ctx):
         await ctx.send(embed=apis.quote_to_discord_embed(quote))
 
 # sends a random piece of advice
-@bot.command()
+@bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(3, 60, commands.BucketType.user)
 async def advice(ctx):
     async with ctx.channel.typing():
@@ -251,7 +251,7 @@ async def advice(ctx):
         await ctx.send(embed=apis.quote_to_discord_embed(advice))
 
 # sends 2 stupid donald trump quotes and their contradiction score
-@bot.command()
+@bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(3, 60, commands.BucketType.user)
 async def tronalddump(ctx):
     async with ctx.channel.typing():
@@ -269,7 +269,7 @@ async def tronalddump(ctx):
 
 # For getting memes from the library
 memePath = 'ClassWork/'
-@bot.command()
+@bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(3, 60, commands.BucketType.user)
 async def meme(ctx, *args):
     query = ' '.join(args)
@@ -292,7 +292,7 @@ async def nsfw(ctx, *args):
             await ctx.send("Sorry, but this command can only be used in a NSFW channel.")
 
 # Contact command
-@bot.command()
+@bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(3, 60, commands.BucketType.user)
 async def contact(ctx):
     msg = "Discord: Sai#3400\nDiscord server: https://discord.gg/2zUTJ7j\n"
@@ -304,7 +304,7 @@ async def contact(ctx):
     await user.send(msg)
 
 #Get song lyrics
-@bot.command()
+@bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(1, 30, commands.BucketType.user)
 async def song(ctx, *, songName:str):
     try:
