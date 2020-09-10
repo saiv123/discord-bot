@@ -304,7 +304,7 @@ async def contact(ctx):
 #Get song lyrics
 @bot.command()
 @commands.cooldown(1, 30, commands.BucketType.user)
-async def song(ctx, member: discord.member, *, songName=" "):
+async def song(ctx, *, songName=" "):
     try:
         i = songName.index(" by ")
         song = Gen.search_song(songName[0:i], songName[i+4:])
@@ -314,7 +314,7 @@ async def song(ctx, member: discord.member, *, songName=" "):
         for message in splitLongStrings(song.lyrics, 1024):
             embed.add_field(value=message, inline=False)
 
-        embed.set_footer(text='Song Requested by: ' + ctx.message.author.mention, icon_url='{}'.format(member.avatar_url))
+        embed.set_footer(text='Song Requested by: ' + ctx.message.author.mention, icon_url=ctx.message.author.avatar)
 
         await ctx.send(embed=embed)
         # for message in splitLongStrings(song.lyrics):
