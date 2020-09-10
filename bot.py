@@ -86,7 +86,9 @@ async def on_message(message):
 async def on_command_error(ctx, error):
     msgSend = "An internal error has occured. Use $contact to contact the owner if it persists"
     if isinstance(error, commands.MissingRequiredArgument):
-        msgSend = "You did not use the command correctly\nIf you dont know how to use the command you can use the $help command\nto see how to use all commands."
+        msgSend = 'You did not use the command correctly\nArguments: '+str(error.args)+'\nIf you dont know how to use the command, use the $help command\nto see how to use all commands.'
+        print('arg' + str(error.args))
+        print('params' + str(error.param))
     elif isinstance(error, commands.CommandOnCooldown):
         msgSend = 'You\'re on cooldown for '+ctx.invoked_with + '.\nPlease wait another '+str(round(error.retry_after))+' seconds'
     elif isinstance(error, commands.CommandNotFound):
