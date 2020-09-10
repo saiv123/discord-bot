@@ -318,7 +318,7 @@ async def song(ctx, *, songName=" "):
         embed.set_footer(text='Song Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
         await ctx.send(embed=embed)
     except AttributeError as e:
-        pirnt(e)
+        print(e)
         await ctx.send("The command was either used incorrectly or the song was not found\nCommand is used like:```$song songTitle by songArtist```")
 
 
