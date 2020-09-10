@@ -308,7 +308,7 @@ async def song(ctx, *, songName=" "):
     try:
         i = songName.index(" by ")
         song = Gen.search_song(songName[0:i], songName[i+4:])
-        embed = discord.Embed(imgutils.randomSaturatedColor())
+        embed = discord.Embed(colour = imgutils.randomSaturatedColor())
         print(song.lyrics)
         for message in splitLongStrings(song.lyrics, 1024):
             embed.add_field(name=songName[0:i], value=message, inline=False)
