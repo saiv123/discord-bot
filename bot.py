@@ -122,6 +122,12 @@ async def help(ctx):
 
     await ctx.send(embed=embed)
 
+#Gives you the github website link
+@bot.command()
+async def github(ctx):
+    embed = discord.Embed(url="https://github.com/saiv123/discord-bot")
+    await ctx.send(embed=embed)
+
 # magic 8 ball
 @bot.command()
 async def shouldI(ctx, *i):
