@@ -505,10 +505,10 @@ async def color(ctx, *inputColor):
             await ctx.send("The hex color vlaue inputed was not properly formated, like this #FFF or #FFFFFF")
     elif(len(inputColor) == 3): #inputColor[0][0] == "(" and inputColor[0][len(inputColor)-1] == ")"
         for i in inputColor:
-            if(i>255 or i<0):
+            if(int(i)>255 or int(i)<0):
                 await ctx.send("The RGB vlues are not correct the RGB vlues have to be between 0 and 255")
                 return #to send the loop because the numbers are wrong
-        hex = RgbToHex(inputColor[0],inputColor[1], inputColor[2])
+        hex = RgbToHex(int(inputColor[0]),int(inputColor[1]),int(inputColor[2]))
     else:
         raise commands.MissingRequiredArgument
 ########################
