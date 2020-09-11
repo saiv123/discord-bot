@@ -495,7 +495,7 @@ async def rpsc(ctx, user:discord.User, *, level=1):
         await user.send('You won! :partying_face:')
     await ctx.send(output)
 
-@bot.comand()
+@bot.command()
 async def color(ctx, *inputColor):
     if(inputColor[0][0] == "#"):
         if(len(inputColor[0].lstrip('#'))%3 == 0 and len(inputColor[0].lstrip('#')) < 7):
