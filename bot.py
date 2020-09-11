@@ -500,18 +500,18 @@ async def rpsc(ctx, user:discord.User, *, level=1):
 async def color(ctx, *inputColor):
     if(inputColor[0][0] == "#"):
         if(len(inputColor[0].lstrip('#'))%3 == 0 and len(inputColor[0].lstrip('#')) < 7): #checks if its a valid hex color value
-            if len(inputColor[0].lstrip("#")) == 3:
-                temp = inputColor[0].lstrip("#")
+            hexS = inputColor[0]
+            if len(hexS.lstrip("#")) == 3:
+                temp = hexS.lstrip("#")
                 out = ""
                 for c in temp:
                     out += c*2
-                inputColor[0] = "#"+out
-
-            rgb = HexToRgb(inputColor[0])
-            embed = discord.Embed(colour=int(inputColor[0].lstrip("#"), 16)) #converts the hex color value(str) to a hex number
-            embed.add_field(name="Hex",value=inputColor[0], inline=True)
+                hexS = "#"+out
+            rgb = HexToRgb(hexS)
+            embed = discord.Embed(colour=int(hexS.lstrip("#"), 16)) #converts the hex color value(str) to a hex number
+            embed.add_field(name="Hex",value=hexS, inline=True)
             embed.add_field(name="RGB",value=rgb, inline=True)
-            embed.set_author(name="[Website for the Color]",url="https://www.color-hex.com/color/"+inputColor[0].lstrip("#"))
+            embed.set_author(name="[Website for the Color]",url="https://www.color-hex.com/color/"+hexS.lstrip("#"))
             embed.set_footer(text='Color picked by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
             await ctx.send(embed=embed)
         else:
