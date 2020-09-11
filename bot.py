@@ -500,6 +500,13 @@ async def rpsc(ctx, user:discord.User, *, level=1):
 async def color(ctx, *inputColor):
     if(inputColor[0][0] == "#"):
         if(len(inputColor[0].lstrip('#'))%3 == 0 and len(inputColor[0].lstrip('#')) < 7): #checks if its a valid hex color value
+            if len(inputColor[0].lstrip("#")) == 3:
+                temp = inputColor[0].lstrip("#")
+                out = ""
+                for c in temp:
+                    out += c*2
+                inputColor[0] = "#"+out
+
             rgb = HexToRgb(inputColor[0])
             embed = discord.Embed(colour=int(inputColor[0].lstrip("#"), 16)) #converts the hex color value(str) to a hex number
             embed.add_field(name="Hex",value=inputColor[0], inline=True)
