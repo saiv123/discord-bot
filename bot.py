@@ -500,7 +500,7 @@ async def color(ctx, *inputColor):
     if(inputColor[0][0] == "#"):
         if(len(inputColor[0].lstrip('#'))%3 == 0 and len(inputColor[0].lstrip('#')) < 7):
             rgb = HexToRgb(inputColor[0])
-            embed = discord.Embed(colour=inputColor[0])
+            embed = discord.Embed(colour=int(inputColor[0].lstrip('#')))
             embed.add_field(name="Hex",value=inputColor[0], inline=True)
             embed.add_field(names="RGB",value=rgb, inline=True)
             embed.set_footer(text='Color picked by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
