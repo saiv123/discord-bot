@@ -502,7 +502,7 @@ async def color(ctx, *inputColor):
             rgb = HexToRgb(inputColor[0])
             embed = discord.Embed(colour=int(inputColor[0].lstrip("#"), 16))
             embed.add_field(name="Hex",value=inputColor[0], inline=True)
-            embed.add_field(names="RGB",value=rgb, inline=True)
+            embed.add_field(name="RGB",value=rgb, inline=True)
             embed.set_footer(text='Color picked by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
             await ctx.send(embed=embed)
         else:
@@ -516,7 +516,7 @@ async def color(ctx, *inputColor):
         hexI = int(hexS.lstrip("#"), 16)
         embed = discord.Embed(colour=hexI)
         embed.add_field(name="Hex",value=hexI, inline=True)
-        embed.add_field(names="RGB",value='({})'.format(', '.join(inputColor)), inline=True)
+        embed.add_field(name="RGB",value='({})'.format(', '.join(inputColor)), inline=True)
         embed.set_footer(text='Color picked by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
         await ctx.send(embed=embed)
     else:
