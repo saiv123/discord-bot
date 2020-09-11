@@ -102,7 +102,6 @@ async def on_command_error(ctx, error):
             msgSend = "Sorry but that is not a valid command\nYou can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
 
     await ctx.send(msgSend)
-    traceback.print_stack()
     print(error)
     print(traceback.format_exc()) # Attempt to print exception
 
@@ -497,7 +496,7 @@ async def rpsc(ctx, user:discord.User, *, level=1):
     await ctx.send(output)
 
 @bot.command()
-async def color(ctx, *inputColor):
+async def color(ctx, *inputColor,**red,**green,**blue):
     if(inputColor[0][0] == "#"):
         if(len(inputColor[0].lstrip('#'))%3 == 0 and len(inputColor[0].lstrip('#')) < 7):
             rgb = HexToRgb(inputColor[0])
