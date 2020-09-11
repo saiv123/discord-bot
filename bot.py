@@ -102,6 +102,7 @@ async def on_command_error(ctx, error):
             msgSend = "Sorry but that is not a valid command\nYou can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
 
     await ctx.send(msgSend)
+    traceback.print_exception()
     print(error)
     print(traceback.format_exc()) # Attempt to print exception
 
