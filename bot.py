@@ -281,7 +281,6 @@ async def meme(ctx, *args):
 prawnPath = 'MyHomework/'
 @bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(3, 60, commands.BucketType.user)
-@bot.command()
 async def nsfw(ctx, *args):
     # checks of user is trying to get past the nsfw filter
     if(ctx.guild is None and ctx.message.author != bot.user):
