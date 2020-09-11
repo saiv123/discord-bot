@@ -18,6 +18,7 @@ import libraries.imgutils as imgutils
 from secret import TOKEN, id, cont, GenID
 from libraries.helperFunctions import isOwner, OwnersIgnoreCooldown, msgReturn, splitLongStrings, getEmbedsFromLibraryQuery
 from libraries.helperFunctions import gen_rps_matrix, format_matrix, list_god
+from libraries.helperFunctions import RgbToHex,HexToRgb
 from libraries.prawn import getClosestFromList
 from Levenshtein import distance
 
@@ -326,7 +327,6 @@ async def song(ctx, *, songName:str):
         print(e)
         await ctx.send("The command was either used incorrectly or the song was not found\nCommand is used like:```$song songTitle by songArtist```")
 
-
 # rock paper scissors game with the bot (maybe buggy so no touchy)
 RPS_HARD_CAP = 6
 @bot.command()
@@ -496,6 +496,22 @@ async def rpsc(ctx, user:discord.User, *, level=1):
         await user.send('You won! :partying_face:')
     await ctx.send(output)
 
+@bot.comand()
+async def color(ctx, *inputColor):
+    if(inputColor[0][0] == "#"):
+        if(len(inputColor[0].lstrip('#'))%3 == 0 and len(inputColor[0].lstrip('#')) < 7):
+            rgb = HexToRgb(inputColor[0])
+            #add embed and send
+        else:
+            await ctx.send("The hex color vlaue inputed was not properly formated, like this #FFF or #FFFFFF")
+    elif(len(inputColor) == 3): #inputColor[0][0] == "(" and inputColor[0][len(inputColor)-1] == ")"
+        for i in inputColor:
+            if(i>255 or i<0):
+                await ctx.send("The RGB vlues are not correct the RGB vlues have to be between 0 and 255")
+                return #to send the loop because the numbers are wrong
+        hex = RgbToHex(inputColor[0],inputColor[1], inputColor[2])
+    else:
+        raise commands.MissingRequiredArgument
 ########################
 ###Bot Admin Commands###
 ########################

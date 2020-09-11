@@ -83,14 +83,13 @@ def getEmbedsFromLibraryQuery(libraryPath, query):
             namedImg = prawn.getRandomLineFromQuery(query, path=libraryPath)
         if imgutils.isUrlValidImage(namedImg[1]):
             break
-    
+
     if not imgutils.isUrlValidImage(namedImg[1]):  # Print error
         print('Image not valid at ' +namedImg[1] + '\n\t(name ' + namedImg[0] + ')')
 
     embed = discord.Embed(description=namedImg[0], color=imgutils.getAverageColor(namedImg[1]))
     embed.set_image(url=namedImg[1])
     return [embed]
-
 
 # RPS helper methods
 def gen_rps_matrix(size):
@@ -110,3 +109,13 @@ def format_matrix(matrix, symbol_names):
     return lines
 def list_god(list, index, default): # list_get_or_default, nothing to do with religion
     return (list[index:index+1]+[default])[0]
+
+def RgbToHex(red, green, blue):
+    hex = '#%02x%02x%02x' % (red, green, blue)
+    print(hex)
+    return hex
+def HexToRgb(hex):
+    hex=hex.lstrip('#')
+    rgb = tuple(int(h[i:i+2], 16) for i in (0, 2, 4))
+    print(rgb)
+    return rgb
