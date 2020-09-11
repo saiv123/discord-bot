@@ -190,7 +190,6 @@ def quote_to_discord_message(quote_dict:dict, include_source=False):
 import re
 def getColor(entry:str, code=''):
     entry = re.sub(r"(\s*[.,`~!@#$%^&*();:<>/?'\"|\\/]+\s*)|(\s+)", ',', entry.strip())
-    print(entry)
     # if type is not given, attempt auto detection
     if len(code) <= 1:
         if '#' in entry or ',' not in entry:

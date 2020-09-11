@@ -507,7 +507,6 @@ async def color(ctx, *, inputColor:str):
         await ctx.send(embed=embed)
     except ValueError:
         await ctx.send("The given color is incorrect. Enter it in Hex, RGB, or CMYK form")
-        raise commands.MissingRequiredArgument #TODO: add parameter argument
 
 ########################
 ###Bot Admin Commands###
