@@ -496,33 +496,18 @@ async def rpsc(ctx, user:discord.User, *, level=1):
     await ctx.send(output)
 
 @bot.command()
-async def color(ctx, *inputColor):
-    if(inputColor[0][0] == "#"):
-        if(len(inputColor[0].lstrip('#'))%3 == 0 and len(inputColor[0].lstrip('#')) < 7):
-            rgb = HexToRgb(inputColor[0])
-            embed = discord.Embed(colour=int(inputColor[0].lstrip("#"), 16))
-            embed.add_field(name="Hex",value=inputColor[0], inline=True)
-            embed.add_field(name="RGB",value=rgb, inline=True)
-            embed.set_author(name="[Website for the Color]",url="https://www.color-hex.com/color/"+inputColor[0].lstrip("#"))
-            embed.set_footer(text='Color picked by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
-            await ctx.send(embed=embed)
-        else:
-            await ctx.send("The hex color vlaue inputed was not properly formated, like this #FFF or #FFFFFF")
-    elif(len(inputColor) == 3): #inputColor[0][0] == "(" and inputColor[0][len(inputColor)-1] == ")"
-        for i in inputColor:
-            if(int(i)>255 or int(i)<0):
-                await ctx.send("The RGB vlues are not correct the RGB vlues have to be between 0 and 255")
-                return #to send the loop because the numbers are wrong
-        hexS = RgbToHex(int(inputColor[0]),int(inputColor[1]),int(inputColor[2]))
-        hexI = int(hexS.lstrip("#"), 16)
-        embed = discord.Embed(colour=hexI)
-        embed.add_field(name="Hex",value=hexS, inline=True)
-        embed.add_field(name="RGB",value='({})'.format(', '.join(inputColor)), inline=True)
-        embed.set_author(name="[Website for the Color]",url="https://www.color-hex.com/color/"+hexS.lstrip("#"))
+async def color(ctx, *, inputColor:str):
+    try:
+        color_dict = apis.getColor(inputColor)
+        embed = apis.colorDictToEmbed(color_dict)
+        embed.set_author(name="see it here",url=color_dict['url'])
         embed.set_footer(text='Color picked by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
-        await ctx.send(embed=embed)
-    else:
-        raise commands.MissingRequiredArgument
+        
+        await ctx.send(embed)
+    except ValueError:
+        await ctx.send("The given color is incorrect. Enter it in Hex, RGB, or CMYK form")
+        raise commands.MissingRequiredArgument #TODO: add parameter argument
+
 ########################
 ###Bot Admin Commands###
 ########################

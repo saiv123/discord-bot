@@ -187,8 +187,61 @@ def quote_to_discord_message(quote_dict:dict, include_source=False):
         msg = msg+'\nFrom: '+quote_dict['source']
     return msg
 
+import re
+def getColor(entry:str, code=''):
+    entry = re.sub(r"(\s*[:punct:]+\s*)|(\s+)", ',', entry.strip())
+    
+    # if type is not given, attempt auto detection
+    if len(code) <= 1:
+        if '#' in entry or ',' not in entry:
+            entry = entry.replace(',','').replace('#','')
+            code = 'hex'
+        elif entry.count(',') == 2: # assume rgb
+            code = 'rgb'
+        elif entry.count(',') == 3: # assume cmyk
+            code = 'cmyk'
+
+    # get and parse response
+    resp = getReqJSON('https://www.thecolorapi.com/id?format=json&'+str(code)+'='+str(entry))
+    if str(resp).count('None')  > 2: raise ValueError
+
+    color_dict = {'url': 'https://www.thecolorapi.com/id?format=html&'+str(code)+'='+str(entry)}
+    if 'hex' in resp: color_dict['hex'] = int(resp['hex']['clean'],16)
+    if 'rgb' in resp: color_dict['rgb'] = [resp['rgb']['r'],resp['rgb']['g'],resp['rgb']['b']]
+    if 'hsl' in resp: color_dict['hsl'] = [resp['hsl']['h'],resp['hsl']['s'],resp['hsl']['l']]
+    if 'hsv' in resp: color_dict['hsv'] = [resp['hsv']['h'],resp['hsv']['s'],resp['hsv']['v']]
+    if 'XYZ' in resp: color_dict['xyz'] = [resp['XYZ']['X'],resp['XYZ']['Y'],resp['XYZ']['Z']]
+    if 'cmyk' in resp: color_dict['cmyk'] = [resp['cmyk']['c'],resp['cmyk']['m'],resp['cmyk']['y'],resp['cmyk']['k']]
+
+    if 'image' in resp and 'named' in resp['image']: color_dict['img'] = resp['image']['named']
+    if 'name' in resp:
+        if 'value' in resp['name']: color_dict['name'] = resp['name']['value']
+        if 'distance' in resp['name']: color_dict['distance'] = resp['name']['distance']
+    
+    return color_dict
+
+def colorDictToEmbed(color_dict, titled=True, named=True):
+    kwargs_dict = {'title':'Color','color':randomSaturatedColor()}
+    if 'hex' in color_dict: kwargs_dict['color'] = color_dict['hex']
+    if 'name' in color_dict and titled: kwargs_dict['title'] = color_dict['name']
+
+    embed = discord.Embed(**kwargs_dict)
+    embed.add_field(name='Hex',value='#'+str(color_dict['hex']), inline=True)
+    
+    # add alternate values
+    vals_to_add = ('rgb','hsl','hsv','cmyk')
+    for val in vals_to_add:
+        if val in color_dict: embed.add_field(name=val.upper(),value='({})'.format(', '.join([str(i) for i in color_dict[val]])), inline=True)
+    
+    # add image
+    url_add = '&named=False' if not named else ''
+    if 'img' in color_dict: embed.set_thumbnail(url=color_dict['img']+url_add)
+
+    return embed
 if __name__ == "__main__":
-    print('Advice:\n'+str(advice()))
-    print('Stupid Trump Quote:\n'+str(dumbTrumpQuote()))
-    print('Stupid Trump Quote on Hillary:\n'+str(dumbTrumpQuote(tag='Hillary')))
-    print(get_trump_contradiction())
+    # print('Advice:\n'+str(advice()))
+    # print('Stupid Trump Quote:\n'+str(dumbTrumpQuote()))
+    # print('Stupid Trump Quote on Hillary:\n'+str(dumbTrumpQuote(tag='Hillary')))
+    # print(get_trump_contradiction())
+    print(getColor('255 5 5'))
+    print(colorDictToEmbed(getColor('255 5 5')))
