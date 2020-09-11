@@ -500,7 +500,7 @@ async def color(ctx, *inputColor):
     if(inputColor[0][0] == "#"):
         if(len(inputColor[0].lstrip('#'))%3 == 0 and len(inputColor[0].lstrip('#')) < 7):
             rgb = HexToRgb(inputColor[0])
-            embed = discord.Embed(colour=int(inputColor[0].lstrip('#')))
+            embed = discord.Embed(colour=hex(int(inputColor[0].lstrip("#"), 16))))
             embed.add_field(name="Hex",value=inputColor[0], inline=True)
             embed.add_field(names="RGB",value=rgb, inline=True)
             embed.set_footer(text='Color picked by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
@@ -512,9 +512,10 @@ async def color(ctx, *inputColor):
             if(int(i)>255 or int(i)<0):
                 await ctx.send("The RGB vlues are not correct the RGB vlues have to be between 0 and 255")
                 return #to send the loop because the numbers are wrong
-        hex = RgbToHex(int(inputColor[0]),int(inputColor[1]),int(inputColor[2]))
-        embed = discord.Embed(colour=hex)
-        embed.add_field(name="Hex",value=hex, inline=True)
+        hexS = RgbToHex(int(inputColor[0]),int(inputColor[1]),int(inputColor[2]))
+        hexI = hex(int(hexS.lstrip("#"), 16))
+        embed = discord.Embed(colour=hexI)
+        embed.add_field(name="Hex",value=hexI, inline=True)
         embed.add_field(names="RGB",value='({})'.format(', '.join(inputColor)), inline=True)
         embed.set_footer(text='Color picked by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
         await ctx.send(embed=embed)
