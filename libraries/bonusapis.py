@@ -189,8 +189,8 @@ def quote_to_discord_message(quote_dict:dict, include_source=False):
 
 import re
 def getColor(entry:str, code=''):
-    entry = re.sub(r"(\s*[:punct:]+\s*)|(\s+)", ',', entry.strip())
-    
+    entry = re.sub(r"(\s*[.,`~!@#$%^&*();:<>/?'\"|\\/]+\s*)|(\s+)", ',', entry.strip())
+    print(entry)
     # if type is not given, attempt auto detection
     if len(code) <= 1:
         if '#' in entry or ',' not in entry:
@@ -203,7 +203,7 @@ def getColor(entry:str, code=''):
 
     # get and parse response
     resp = getReqJSON('https://www.thecolorapi.com/id?format=json&'+str(code)+'='+str(entry))
-    if str(resp).count('None')  > 2: raise ValueError
+    if str(resp).count('None')  > 2 or 'hex' not in resp: raise ValueError
 
     color_dict = {'url': 'https://www.thecolorapi.com/id?format=html&'+str(code)+'='+str(entry)}
     if 'hex' in resp: color_dict['hex'] = resp['hex']['clean']
@@ -243,5 +243,5 @@ if __name__ == "__main__":
     # print('Stupid Trump Quote:\n'+str(dumbTrumpQuote()))
     # print('Stupid Trump Quote on Hillary:\n'+str(dumbTrumpQuote(tag='Hillary')))
     # print(get_trump_contradiction())
-    print(getColor('255 5 5'))
+    print(getColor('255 ,.,.,. 5 5'))
     print(colorDictToEmbed(getColor('255 5 5')))
