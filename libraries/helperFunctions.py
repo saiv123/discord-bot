@@ -40,7 +40,7 @@ def msgReturn(type):
     return msgData
 
 # Splits a string into several sub-2000 char strings
-def splitLongStrings(str, chars=1500, preferred_char:' '):
+def splitLongStrings(str, chars=1500, preferred_char=' '):
     messages = []
     if preferred_char not in str:  # If there are no spaces, don't respect spaces
         message = ""
