@@ -500,7 +500,11 @@ async def color(ctx, *inputColor):
     if(inputColor[0][0] == "#"):
         if(len(inputColor[0].lstrip('#'))%3 == 0 and len(inputColor[0].lstrip('#')) < 7):
             rgb = HexToRgb(inputColor[0])
-            #add embed and send
+            embed = discord.Embed(colour=inputColor[0])
+            embed.add_field(name="Hex",value=inputColor[0], inline=True)
+            embed.add_field(names="RGB",value=rgb, inline=True)
+            embed.set_footer(text='Color picked by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+            await ctx.send(embed=embed)
         else:
             await ctx.send("The hex color vlaue inputed was not properly formated, like this #FFF or #FFFFFF")
     elif(len(inputColor) == 3): #inputColor[0][0] == "(" and inputColor[0][len(inputColor)-1] == ")"
@@ -509,6 +513,11 @@ async def color(ctx, *inputColor):
                 await ctx.send("The RGB vlues are not correct the RGB vlues have to be between 0 and 255")
                 return #to send the loop because the numbers are wrong
         hex = RgbToHex(int(inputColor[0]),int(inputColor[1]),int(inputColor[2]))
+        embed = discord.Embed(colour=hex)
+        embed.add_field(name="Hex",value=hex, inline=True)
+        embed.add_field(names="RGB",value='({})'.format(', '.join(inputColor)), inline=True)
+        embed.set_footer(text='Color picked by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+        await ctx.send(embed=embed)
     else:
         raise commands.MissingRequiredArgument
 ########################
