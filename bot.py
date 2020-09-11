@@ -278,6 +278,8 @@ async def meme(ctx, *args):
 
 # for getting nsfw images from the library
 prawnPath = 'MyHomework/'
+@bot.command(cls=OwnersIgnoreCooldown)
+@commands.cooldown(3, 60, commands.BucketType.user)
 @bot.command()
 async def nsfw(ctx, *args):
     # checks of user is trying to get past the nsfw filter
