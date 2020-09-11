@@ -501,7 +501,7 @@ async def color(ctx, *, inputColor:str):
     try:
         color_dict = apis.getColor(inputColor)
         embed = apis.colorDictToEmbed(color_dict)
-        embed.set_author(name="see it here",url=color_dict['url'])
+        embed.set_author(name="[See It Here]",url=color_dict['url'])
         embed.set_footer(text='Color picked by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
 
         await ctx.send(embed=embed)
