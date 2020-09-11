@@ -116,6 +116,6 @@ def RgbToHex(red, green, blue):
     return hex
 def HexToRgb(hex):
     hex=hex.lstrip('#')
-    rgb = tuple(int(hex[i:i+2], 16) for i in (0, 2, 4))
+    rgb = tuple(int(hex[i:i+2], 16) for i in (0, 2, 4)) #using tuple object to split the string to convert to rgb
     print(rgb)
     return rgb

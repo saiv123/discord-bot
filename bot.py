@@ -193,14 +193,14 @@ async def stats(ctx):
         quote = quotes.getQuoteApi()
         temp = os.popen("vcgencmd measure_temp").readline()
 
-        # calculating time bot has been on
+        #calculating time bot has been on
         tso = time.time()
         msg = time.strftime("%H Hours %M Minutes %S Seconds",time.gmtime(tso - ts))
-        # random color for embed
+        #random color for embed
         color = random.randrange(10000, 16777215, 1)
-        # seting up an embed
+        #seting up an embed
         embed = discord.Embed(colour=color)
-        # setting the clock image
+        #setting the clock image
         embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png")
         embed.add_field(name='I have been awake for:', value=msg, inline=False)
         embed.add_field(name='My core body temperature:',value=temp.replace("temp=", ""), inline=False)
@@ -311,6 +311,7 @@ async def contact(ctx):
 async def song(ctx, *, songName:str):
     try:
         async with ctx.channel.typing():
+            #splitting the stream to check if the input has a artist if not add by . to earch for the song name
             if ' by ' not in str(songName): songName = str(songName) + ' by '
             songName = str(songName).split(" by ")
             song = Gen.search_song(songName[0], songName[1])
