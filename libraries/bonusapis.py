@@ -206,7 +206,7 @@ def getColor(entry:str, code=''):
     if str(resp).count('None')  > 2: raise ValueError
 
     color_dict = {'url': 'https://www.thecolorapi.com/id?format=html&'+str(code)+'='+str(entry)}
-    if 'hex' in resp: color_dict['hex'] = int(resp['hex']['clean'],16)
+    if 'hex' in resp: color_dict['hex'] = resp['hex']['clean']
     if 'rgb' in resp: color_dict['rgb'] = [resp['rgb']['r'],resp['rgb']['g'],resp['rgb']['b']]
     if 'hsl' in resp: color_dict['hsl'] = [resp['hsl']['h'],resp['hsl']['s'],resp['hsl']['l']]
     if 'hsv' in resp: color_dict['hsv'] = [resp['hsv']['h'],resp['hsv']['s'],resp['hsv']['v']]
@@ -222,7 +222,7 @@ def getColor(entry:str, code=''):
 
 def colorDictToEmbed(color_dict, titled=True, named=True):
     kwargs_dict = {'title':'Color','color':randomSaturatedColor()}
-    if 'hex' in color_dict: kwargs_dict['color'] = color_dict['hex']
+    if 'hex' in color_dict: kwargs_dict['color'] = int(color_dict['hex'], 16)
     if 'name' in color_dict and titled: kwargs_dict['title'] = color_dict['name']
 
     embed = discord.Embed(**kwargs_dict)
@@ -235,7 +235,7 @@ def colorDictToEmbed(color_dict, titled=True, named=True):
     
     # add image
     url_add = '&named=False' if not named else ''
-    if 'img' in color_dict: embed.set_thumbnail(url=color_dict['img']+url_add)
+    if 'img' in color_dict: embed.set_image(url=color_dict['img']+url_add)
 
     return embed
 if __name__ == "__main__":
