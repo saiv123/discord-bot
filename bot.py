@@ -311,6 +311,7 @@ async def contact(ctx):
 async def song(ctx, *, songName:str):
     try:
         async with ctx.channel.typing():
+            #splitting the stream to check if the input has a artist if not add by . to earch for the song name
             if ' by ' not in str(songName): songName = str(songName) + ' by '
             songName = str(songName).split(" by ")
             song = Gen.search_song(songName[0], songName[1])
@@ -498,9 +499,9 @@ async def rpsc(ctx, user:discord.User, *, level=1):
 @bot.command()
 async def color(ctx, *inputColor):
     if(inputColor[0][0] == "#"):
-        if(len(inputColor[0].lstrip('#'))%3 == 0 and len(inputColor[0].lstrip('#')) < 7):
+        if(len(inputColor[0].lstrip('#'))%3 == 0 and len(inputColor[0].lstrip('#')) < 7): #checks if its a valid hex color value
             rgb = HexToRgb(inputColor[0])
-            embed = discord.Embed(colour=int(inputColor[0].lstrip("#"), 16))
+            embed = discord.Embed(colour=int(inputColor[0].lstrip("#"), 16)) #converts the hex color value(str) to a hex number
             embed.add_field(name="Hex",value=inputColor[0], inline=True)
             embed.add_field(name="RGB",value=rgb, inline=True)
             embed.set_author(name="[Website for the Color]",url="https://www.color-hex.com/color/"+inputColor[0].lstrip("#"))
@@ -508,13 +509,15 @@ async def color(ctx, *inputColor):
             await ctx.send(embed=embed)
         else:
             await ctx.send("The hex color vlaue inputed was not properly formated, like this #FFF or #FFFFFF")
-    elif(len(inputColor) == 3): #inputColor[0][0] == "(" and inputColor[0][len(inputColor)-1] == ")"
+    elif(len(inputColor) == 3):
         for i in inputColor:
             if(int(i)>255 or int(i)<0):
                 await ctx.send("The RGB vlues are not correct the RGB vlues have to be between 0 and 255")
                 return #to send the loop because the numbers are wrong
+        #converting hex string to hex number value
         hexS = RgbToHex(int(inputColor[0]),int(inputColor[1]),int(inputColor[2]))
         hexI = int(hexS.lstrip("#"), 16)
+        #discord embed setup
         embed = discord.Embed(colour=hexI)
         embed.add_field(name="Hex",value=hexS, inline=True)
         embed.add_field(name="RGB",value='({})'.format(', '.join(inputColor)), inline=True)
