@@ -496,7 +496,7 @@ async def rpsc(ctx, user:discord.User, *, level=1):
     await ctx.send(output)
 
 @bot.command()
-async def color(ctx, *inputColor,**red,**green,**blue):
+async def color(ctx, *inputColor):
     if(inputColor[0][0] == "#"):
         if(len(inputColor[0].lstrip('#'))%3 == 0 and len(inputColor[0].lstrip('#')) < 7):
             rgb = HexToRgb(inputColor[0])
