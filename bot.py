@@ -125,7 +125,7 @@ async def help(ctx):
 #Gives you the github website link
 @bot.command()
 async def github(ctx):
-    embed = discord.Embed(url="https://github.com/saiv123/discord-bot")
+    embed = discord.Embed(title= "[GitHub Website for Bot]",discritpion="This is where you can see how the bot works",url="https://github.com/saiv123/discord-bot")
     await ctx.send(embed=embed)
 
 # magic 8 ball
