@@ -32,7 +32,7 @@ client = wolframalpha.Client(id)
 bot = commands.Bot(command_prefix='$', description="Its a Sick use-less bot")
 ts = time.time()
 
-#setting up LyricGenius stuff
+# setting up LyricGenius stuff
 Gen = LyrGen.Genius(GenID)
 
 # deleting default help comand
@@ -122,7 +122,7 @@ async def help(ctx):
 
     await ctx.send(embed=embed)
 
-#magic 8 ball
+# magic 8 ball
 @bot.command()
 async def shouldI(ctx, *i):
     i = ' '.join(i)
@@ -193,14 +193,14 @@ async def stats(ctx):
         quote = quotes.getQuoteApi()
         temp = os.popen("vcgencmd measure_temp").readline()
 
-        #calculating time bot has been on
+        # calculating time bot has been on
         tso = time.time()
         msg = time.strftime("%H Hours %M Minutes %S Seconds",time.gmtime(tso - ts))
-        #random color for embed
+        # random color for embed
         color = random.randrange(10000, 16777215, 1)
-        #seting up an embed
+        # seting up an embed
         embed = discord.Embed(colour=color)
-        #setting the clock image
+        # setting the clock image
         embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png")
         embed.add_field(name='I have been awake for:', value=msg, inline=False)
         embed.add_field(name='My core body temperature:',value=temp.replace("temp=", ""), inline=False)
@@ -480,7 +480,7 @@ async def rpsc(ctx, user:discord.User, *, level=1):
     your_choice = symbol_names.index(your_choice)
     enemy_choice = symbol_names.index(enemy_choice)
 
-    #winner = matrix[your_choice][enemy_choice]
+    # winner = matrix[your_choice][enemy_choice]
     winner = matrix[enemy_choice][your_choice]
     if winner == 0:
         output = "Its a draw! What a sad conclusion..."
