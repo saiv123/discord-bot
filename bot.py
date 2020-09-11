@@ -503,8 +503,8 @@ async def color(ctx, *, inputColor:str):
         embed = apis.colorDictToEmbed(color_dict)
         embed.set_author(name="see it here",url=color_dict['url'])
         embed.set_footer(text='Color picked by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
-        
-        await ctx.send(embed)
+
+        await ctx.send(embed=embed)
     except ValueError:
         await ctx.send("The given color is incorrect. Enter it in Hex, RGB, or CMYK form")
         raise commands.MissingRequiredArgument #TODO: add parameter argument
