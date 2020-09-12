@@ -73,7 +73,7 @@ async def on_message(message):
     #     with open(nameNote, 'a') as file:
     #         file.write(str(datetime.datetime.now()) + " " +other.name + " -- " + message.content + "\n")
     if "456247671506599936" in message.content and message.author != bot.user:
-        await ctx.send("HEY! <@456247671506599936> YOUR MONTY FUCKING SUCKS <3~ ash aka motorcycle gal that loves ya")
+        await channel.send("HEY! <@456247671506599936> YOUR MONTY FUCKING SUCKS <3~ ash aka motorcycle gal that loves ya")
     elif "corn" in message.content.lower() and message.author != bot.user:
         channel = message.channel
         await channel.send("https://cdn.discordapp.com/attachments/654783232969277453/738997605039603772/Corn_is_the_best_crop__wheat_is_worst.mp4")
