@@ -42,16 +42,7 @@ bot.remove_command('help')
 ###Inizalization of bot DO NOT EDIT###
 ######################################
 
-# you may think that this function
-# is obslete, and doesnt seem to do
-# anything. and you would be correct.
-# but when we remove this function
-# for some reason the whole bot
-# does not work/launch properly
-# and cant figure out why,
-# so here it will stay.
-#  no touchy
-
+#what the bot does on boot
 @bot.event
 async def on_ready():
     print('user: ' + bot.user.name)
@@ -65,14 +56,6 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     channel = message.channel
-    #nameNote = "dmLogs.txt"
-    # if(message.author.id is 371865866704257025 and message.guild != None): #for removing user from servers
-    #     await message.delete()
-    #     return
-    # if message.guild is None and message.author != bot.user:  # checks if theres a dm to the bot, and logs it
-    #     other = await bot.fetch_user(message.author.id)
-    #     with open(nameNote, 'a') as file:
-    #         file.write(str(datetime.datetime.now()) + " " +other.name + " -- " + message.content + "\n")
     if "456247671506599936" in message.content and message.author != bot.user:
         await channel.send("HEY! <@456247671506599936> YOUR MONTY FUCKING SUCKS <3~ ash aka motorcycle gal that loves ya")
     elif "corn" in message.content.lower() and message.author != bot.user:
@@ -140,7 +123,11 @@ async def shouldI(ctx, *i):
 @bot.command()
 async def invite(ctx):
     async with ctx.channel.typing():  # make it look like the bot is typing
-        await ctx.send("Invite me to your friend's Discord:\nhttps://discord.com/api/oauth2/authorize?client_id=314578387031162882&permissions=8&scope=bot")
+        embed = discord.Embed(colour=discord.Colour.green())
+        embed.set_author(name='Invite the Bot to another server')
+        embed.set_thumbnail(url='https://cdn.discordapp.com/avatars/314578387031162882/e4b98a4a9ca3315ca699ffe5cba5b8f1.png?size=1024')
+        embed.add_field(name='Please invite me to other Discords',value='[Invite bot to server](https://discord.com/api/oauth2/authorize?client_id=314578387031162882&permissions=8&scope=bot)', inline=False)
+        await ctx.send(embed=embed)
 
 # says hello to your
 @bot.command()
@@ -487,7 +474,6 @@ async def rpsc(ctx, user:discord.User, *, level=1):
     your_choice = symbol_names.index(your_choice)
     enemy_choice = symbol_names.index(enemy_choice)
 
-    # winner = matrix[your_choice][enemy_choice]
     winner = matrix[enemy_choice][your_choice]
     if winner == 0:
         output = "Its a draw! What a sad conclusion..."
