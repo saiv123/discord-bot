@@ -501,6 +501,11 @@ async def color(ctx, *, inputColor:str):
     except ValueError:
         await ctx.send("The given color is incorrect. Enter it in Hex, RGB, or CMYK form")
 
+@bot.command(cls=OwnersIgnoreCooldown)
+@commands.cooldown(1, 30, commands.BucketType.user)
+async def ping(ctx):
+    await ctx.send('Pong! {0}'.format(round(bot.latency, 1)))
+
 ########################
 ###Bot Admin Commands###
 ########################
