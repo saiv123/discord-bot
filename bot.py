@@ -573,6 +573,6 @@ async def servers(ctx):
 # command will change offten to test out commands
 @bot.command()
 async def test(ctx):
-    await ctx.send("this is a test command :)" + libraries.helperFunctions.hasAdminRole(ctx))
+    await ctx.send("this is a test command :)" + helperFunctions.hasAdminRole(ctx))
 # runs the bot after all the methods have been loaded to memory
 bot.run(TOKEN)
