@@ -84,8 +84,6 @@ async def on_command_error(ctx, error):
             msgSend="Sorry, but that is not a valid command. Did you mean "+mlo+"?\n\nYou can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
         else:
             msgSend = "Sorry but that is not a valid command\nYou can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
-    elif isinstance(error, notAdmin):
-        msgSend = "you are not an admin"
 
     await ctx.send(msgSend)
     print(error)
@@ -575,8 +573,6 @@ async def servers(ctx):
 # command will change offten to test out commands
 @bot.command()
 async def test(ctx):
-    raise Exception("notAdmin")
-
-
+    await ctx.send("this is a test command :)" + libraries.helperFunctions.hasAdminRole(ctx))
 # runs the bot after all the methods have been loaded to memory
 bot.run(TOKEN)
