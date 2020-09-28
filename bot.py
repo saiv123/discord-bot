@@ -575,7 +575,7 @@ async def servers(ctx):
 # command will change offten to test out commands
 @bot.command()
 async def test(ctx):
-    raise notAdmin
+    raise Exception("notAdmin")
 
 
 # runs the bot after all the methods have been loaded to memory
