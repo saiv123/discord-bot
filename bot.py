@@ -84,6 +84,8 @@ async def on_command_error(ctx, error):
             msgSend="Sorry, but that is not a valid command. Did you mean "+mlo+"?\n\nYou can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
         else:
             msgSend = "Sorry but that is not a valid command\nYou can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
+    elif isinstance(error, notAdmin):
+        msgSend = "you are not an admin"
 
     await ctx.send(msgSend)
     print(error)
@@ -504,7 +506,7 @@ async def color(ctx, *, inputColor:str):
 @bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(1, 30, commands.BucketType.user)
 async def ping(ctx):
-    await ctx.send('Pong! {0}'.format(round(bot.latency, 1)))
+    await ctx.send('Pong! {0}ms'.format(round(bot.latency, 1)))
 
 ########################
 ###Bot Admin Commands###
@@ -570,13 +572,11 @@ async def servers(ctx):
     else:
         await ctx.send(msgReturn("notOwner"))
 
-# to test what the bot see in the object containers
+# command will change offten to test out commands
 @bot.command()
-async def sendbot(ctx, temp:str):
-    if isOwner(ctx):
-        await ctx.send("\\"+temp)
-    else:
-        await ctx.send(msgReturn("notOwner"))
+async def test(ctx):
+    raise notAdmin
+
 
 # runs the bot after all the methods have been loaded to memory
 bot.run(TOKEN)
