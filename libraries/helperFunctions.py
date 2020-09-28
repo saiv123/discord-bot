@@ -122,6 +122,6 @@ def HexToRgb(hex):
 
 def hasAdminRole(ctx):
     if ctx.message.author.guild_permissions.administrator:
-        return true
+        return True
     else:
-        return false
+        return False
