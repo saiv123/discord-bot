@@ -84,7 +84,6 @@ async def on_command_error(ctx, error):
             msgSend="Sorry, but that is not a valid command. Did you mean "+mlo+"?\n\nYou can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
         else:
             msgSend = "Sorry but that is not a valid command\nYou can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
-
     await ctx.send(msgSend)
     print(error)
     print(traceback.format_exc()) # Attempt to print exception
@@ -172,11 +171,10 @@ async def notes(ctx, *, notes=" "):
     nameNote = ("MyPorn/" + str(ctx.author.id) + ".txt")
     # deletes the users message so others dont see what they saved
     await ctx.message.delete()
-    user = ("<@" + str(ctx.message.author.id) + "> ")
     # opens the file if the users file in there otherwise it will make it
     with open(nameNote, 'a') as file:
         file.write(str(datetime.datetime.now()) + " -- " +notes + "\n")  # formating and saving to the file
-    await ctx.send(user + "Your Note is recorded and locked up.")
+    await ctx.send("{0.message.author.mention} Your Note is recorded and locked up.".format(ctx))
     del nameNote  # deletes the variable so it will free up some ram
 
 # return the time the bot has been running
@@ -189,14 +187,12 @@ async def stats(ctx):
         # calculating time bot has been on
         tso = time.time()
         msg = time.strftime("%H Hours %M Minutes %S Seconds",time.gmtime(tso - ts))
-        # random color for embed
-        color = random.randrange(10000, 16777215, 1)
         # seting up an embed
-        embed = discord.Embed(colour=color)
+        embed = discord.Embed(colour=imgutils.randomSaturatedColor())
         # setting the clock image
         embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png")
-        embed.add_field(name='I have been awake for:', value=msg, inline=False)
-        embed.add_field(name='My core body temperature:',value=temp.replace("temp=", ""), inline=False)
+        embed.add_field(name='I have been awake for:', value=msg, inline=True)
+        embed.add_field(name='My core body temperature:',value=temp.replace("temp=", ""), inline=True)
         embed.add_field(name='Quote cus I know you\'re bored:', value='"' +quote['quote'] + '"\n\t~' + quote['author'], inline=False)
 
         await ctx.send(embed=embed)
