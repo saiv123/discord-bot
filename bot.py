@@ -133,8 +133,7 @@ async def invite(ctx):
 @bot.command()
 async def hi(ctx):
     await ctx.message.delete()
-    user = ("<@" + str(ctx.message.author.id) + "> ")
-    await ctx.send("Hello " + user + "!!!!!!!")
+    await ctx.send("Hello {0.message.author.mention}!!!!!!!".format(ctx))
 
 # for the user to see their notes
 @bot.command()
