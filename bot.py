@@ -507,10 +507,10 @@ async def ping(ctx):
 
 #kick command
 @bot.command()
-async def kick(ctx, *, reason:str):
+async def kick(ctx, mention: str, *, reason = "No reason was given"):
     if hasAdminRole(ctx):
-        if "<@" in reason:
-            await ctx.send("metnions and kick for reason")
+        if "<@" in mention:
+            await ctx.send("metnions and kick for reason\n" + reason)
         else:
             msgSend = 'You did not use the command correctly\nArguments: '+str(error.args)+'\nIf you dont know how to use the command, use the $help command\nto see how to use all commands.'
             await ctx.send(msgSend)
