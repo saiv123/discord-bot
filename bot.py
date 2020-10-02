@@ -508,12 +508,13 @@ async def ping(ctx):
 #kick command
 @bot.command()
 async def kick(ctx, mention: str, *, reason = "No reason was given"):
-    if hasAdminRole(ctx):
-        if "<@" in mention:
+    mentionID = mention[2:len(mention)-1]
+    if hasAdminRole(ctx.message.author.id):
+        if "<@" in mention and ctx.message.author.id not mentionID and hasAdminRole(mentionID):
             await ctx.send("metnions and kick for reason\n" + reason)
         else:
             msgSend = 'You did not use the command correctly\nArguments: '+str(error.args)+'\nIf you dont know how to use the command, use the $help command\nto see how to use all commands.'
-            await ctx.send(msgSend)
+            await ctx.send(msgSend+"\n or you tried kicking a admin or your self")
     else:
         await ctx.send("You do not have the required permissions to use this command talk to server admins or owner if you think this is a mistake.")
 
