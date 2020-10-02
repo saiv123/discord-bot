@@ -119,9 +119,3 @@ def HexToRgb(hex):
     rgb = tuple(int(hex[i:i+2], 16) for i in (0, 2, 4)) #using tuple object to split the string to convert to rgb
     print(rgb)
     return rgb
-
-def hasAdminRole(member:discord.member, bot):
-    if member.guild_permissions.administrator:
-        return True
-    else:
-        return False

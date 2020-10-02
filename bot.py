@@ -505,6 +505,12 @@ async def ping(ctx):
 ###Server Admin Commands###
 ###########################
 
+def hasAdminRole(member:discord.member, bot):
+    if member.guild_permissions.administrator:
+        return True
+    else:
+        return False
+
 #kick command
 @bot.command()
 async def kick(ctx, mention: str, *, reason = "No reason was given"):
