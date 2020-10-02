@@ -120,7 +120,7 @@ def HexToRgb(hex):
     print(rgb)
     return rgb
 
-def hasAdminRole(member:member, bot):
+def hasAdminRole(member:discord.member, bot):
     if member.guild_permissions.administrator:
         return True
     else:
