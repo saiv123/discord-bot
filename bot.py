@@ -568,7 +568,10 @@ async def servers(ctx):
 # command will change offten to test out commands
 @bot.command()
 async def test(ctx):
-    await ctx.send("this is a test command :)" + str(helperFunctions.hasAdminRole(ctx)))
+    if ctx.message.author.mention:
+        await ctx.send(ctx.message.author.mention)
+    else:
+        await ctx.send("no mention")
 
 # runs the bot after all the methods have been loaded to memory
 bot.run(TOKEN)
