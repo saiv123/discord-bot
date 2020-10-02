@@ -501,6 +501,22 @@ async def color(ctx, *, inputColor:str):
 async def ping(ctx):
     await ctx.send('Pong! {0}ms'.format(round(bot.latency, 1)))
 
+###########################
+###Server Admin Commands###
+###########################
+
+#kick command
+@bot.command()
+async def kick(ctx, *, reason:str):
+    if hasAdminRole(ctx):
+        if "<@" in reason:
+            await ctx.send("metnions and kick for reason")
+        else:
+            msgSend = 'You did not use the command correctly\nArguments: '+str(error.args)+'\nIf you dont know how to use the command, use the $help command\nto see how to use all commands.'
+            await ctx.send(msgSend)
+    else:
+        await ctx.send("You do not have the required permissions to use this command talk to server admins or owner if you think this is a mistake.")
+
 ########################
 ###Bot Admin Commands###
 ########################
