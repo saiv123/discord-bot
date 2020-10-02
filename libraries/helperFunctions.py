@@ -11,9 +11,6 @@ import json, random
 ###bots helper commands###
 ##########################
 
-#setting bot
-bot = commands.Bot()
-
 # List of Owners/Bot admins
 ownerId = [231957319737540608, 240636443829993473, 243774954955341828]
 
@@ -123,7 +120,7 @@ def HexToRgb(hex):
     print(rgb)
     return rgb
 
-def hasAdminRole(id:str):
+def hasAdminRole(id:str, bot):
     user = bot.get_user(id)
     if user.guild_permissions.administrator:
         return True
