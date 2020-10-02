@@ -11,6 +11,9 @@ import json, random
 ###bots helper commands###
 ##########################
 
+#setting bot
+bot = commands.Bot()
+
 # List of Owners/Bot admins
 ownerId = [231957319737540608, 240636443829993473, 243774954955341828]
 
