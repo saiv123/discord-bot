@@ -509,8 +509,9 @@ async def ping(ctx):
 @bot.command()
 async def kick(ctx, mention: str, *, reason = "No reason was given"):
     mentionID = mention[2:len(mention)-1]
+    server = ctx.message.guild
     if hasAdminRole(ctx.message.author, bot):
-        if "<@" in mention and ctx.message.author.id is not mentionID and hasAdminRole(get_member(mentionID), bot):
+        if "<@" in mention and ctx.message.author.id is not mentionID and hasAdminRole(server.get_member(mentionID), bot):
             await ctx.send("metnions and kick for reason\n" + reason)
         else:
             msgSend = 'You did not use the command correctly\nArguments: '+str(error.args)+'\nIf you dont know how to use the command, use the $help command\nto see how to use all commands.'
