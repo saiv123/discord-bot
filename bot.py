@@ -16,7 +16,7 @@ import libraries.bonusapis as apis
 import libraries.imgutils as imgutils
 
 from secret import TOKEN, id, cont, GenID
-from libraries.helperFunctions import isOwner, OwnersIgnoreCooldown, msgReturn, splitLongStrings, getEmbedsFromLibraryQuery, hasAdminRole
+from libraries.helperFunctions import isOwner, OwnersIgnoreCooldown, msgReturn, splitLongStrings, getEmbedsFromLibraryQuery
 from libraries.helperFunctions import gen_rps_matrix, format_matrix, list_god
 from libraries.helperFunctions import RgbToHex,HexToRgb
 from libraries.prawn import getClosestFromList
