@@ -574,7 +574,6 @@ async def sad(ctx):
             await server.disconnect()
         except Exception as e:
             print("user is not in a voice channel, reverting to text for unsadening user")
-        break
     else:
         async with ctx.channel.typing():
             quote = apis.quote_to_discord_embed(quotes.getQuoteJSON())
