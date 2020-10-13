@@ -16,7 +16,7 @@ import libraries.bonusapis as apis
 import libraries.imgutils as imgutils
 
 from secret import TOKEN, id, cont, GenID
-from libraries.helperFunctions import isOwner, OwnersIgnoreCooldown, msgReturn, splitLongStrings, getEmbedsFromLibraryQuery
+from libraries.helperFunctions import isOwner, OwnersIgnoreCooldown, msgReturn, splitLongStrings, getEmbedsFromLibraryQuery, checkAuthSerers
 from libraries.helperFunctions import gen_rps_matrix, format_matrix, list_god
 from libraries.helperFunctions import RgbToHex,HexToRgb
 from libraries.prawn import getClosestFromList
@@ -560,7 +560,28 @@ async def kick(ctx, mention: str, *, reason = "No reason was given"):
 ################################
 ###Commands to make you unsad###
 ################################
+@bot.command(pass_context=True)
+async def sad(ctx):
+    if checkAuthSerers(ctx):
+        try:
+            channel = ctx.message.author.voice.channel
+            await channel.connect()
 
+            #add logic for finding the music channel
+
+            #leaving the voice channel
+            server = ctx.message.guild.voice_client
+            await server.disconnect()
+        except Exception as e:
+            print("user is not in a voice channel, reverting to text for unsadening user")
+            break
+    else:
+        async with ctx.channel.typing():
+            quote = apis.quote_to_discord_embed(quotes.getQuoteJSON())
+            quote.set_thumbnail(url='https://clipart.info/images/ccovers/1531011033heart-emoji.png')
+            await ctx.send(embed=quote)
+
+    #play / do something depending on if the user is in a voice channel or not
 ########################
 ###Bot Admin Commands###
 ########################

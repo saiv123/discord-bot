@@ -14,6 +14,16 @@ import json, random
 # List of Owners/Bot admins
 ownerId = [231957319737540608, 240636443829993473, 243774954955341828]
 
+#list of secure servers
+servers = [648012188685959169, 749047084275204166, 297919267620388864]
+
+#checking for server for sad command
+def checkAuthSerers(ctx):
+    for i in servers:
+        if ctx.message.guild.id == i:
+            return True
+    return False
+
 # used as a check for some command so only the people that are allowed to use it can use it
 def isOwner(ctx):
     for i in ownerId:
