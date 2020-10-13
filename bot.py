@@ -574,6 +574,10 @@ async def sad(ctx):
             await server.disconnect()
         except Exception as e:
             print("user is not in a voice channel, reverting to text for unsadening user")
+            async with ctx.channel.typing():
+                quote = apis.quote_to_discord_embed(quotes.getQuoteJSON())
+                quote.set_thumbnail(url='https://clipart.info/images/ccovers/1531011033heart-emoji.png')
+                await ctx.send(embed=quote)
     else:
         async with ctx.channel.typing():
             quote = apis.quote_to_discord_embed(quotes.getQuoteJSON())
