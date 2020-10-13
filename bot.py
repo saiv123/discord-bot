@@ -511,6 +511,7 @@ async def userinfo(ctx):
     if ctx.author.guild_permissions.administrator:
         x = ctx.guild.members
         if target in x and ctx.message.mention[0].id != 0:
+             target = ctx.message.mention[0]
              roles = [role for role in member.roles[1:]]
              embed = discord.Embed(title="User information", colour=discord.Color.gold(), timestamp=datetime.utcnow())
 
@@ -518,7 +519,7 @@ async def userinfo(ctx):
 
              embed.set_thumbnail(url=target.avatar_url)
 
-             embed.set_footer(text="Mr.KapiBara", icon_url="https://cdn.discordapp.com/attachments/618434755981213716/718861010223497236/kapi-1.png")
+             embed.set_footer(text="Made By Mr.KapiBara", icon_url="https://cdn.discordapp.com/attachments/618434755981213716/718861010223497236/kapi-1.png")
 
              fields = [("Name", str(target), False),
                    ("ID", target.id, False),
@@ -555,6 +556,10 @@ async def kick(ctx, mention: str, *, reason = "No reason was given"):
             await ctx.send(msgSend+"\n or you tried kicking a admin or your self")
     else:
         await ctx.send("You do not have the required permissions to use this command talk to server admins or owner if you think this is a mistake.")
+
+################################
+###Commands to make you unsad###
+################################
 
 ########################
 ###Bot Admin Commands###
