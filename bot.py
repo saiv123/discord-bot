@@ -570,9 +570,9 @@ async def sad(ctx):
             #add logic for finding the music channel
 
             #leaving the voice channel
-            server = ctx.message.guild.voice_client
-            await server.disconnect(True)
-
+            for i in bot.voice_clients:
+                if(i.guild == ctx.message.guild):
+                    return await i.disconnect()
         except Exception as e:
             print("user is not in a voice channel, reverting to text for unsadening user")
             async with ctx.channel.typing():
