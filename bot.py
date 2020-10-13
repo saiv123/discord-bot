@@ -571,7 +571,8 @@ async def sad(ctx):
 
             #leaving the voice channel
             server = ctx.message.guild.voice_client
-            await server.disconnect()
+            await server.disconnect(True)
+
         except Exception as e:
             print("user is not in a voice channel, reverting to text for unsadening user")
             async with ctx.channel.typing():
