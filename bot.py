@@ -572,9 +572,8 @@ async def sad(ctx):
             #leaving the voice channel NEED TO FIX DISCONNECTING - possible error on the conneting end, so might have to check that
             await ctx.voice_client.disconnect()
 
-        except Exception as e:
+        except AttributeError as e:
             print("user is not in a voice channel, reverting to text for unsadening user")
-            print(e)
             async with ctx.channel.typing():
                 quote = apis.quote_to_discord_embed(quotes.getQuoteJSON())
                 quote.set_thumbnail(url='https://clipart.info/images/ccovers/1531011033heart-emoji.png')
