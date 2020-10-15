@@ -564,18 +564,17 @@ async def kick(ctx, mention: str, *, reason = "No reason was given"):
 async def sad(ctx):
     if checkAuthSerers(ctx):
         try:
-            channel = ctx.message.author.voice.channel
+            channel = ctx.author.voice.channel
             await channel.connect()
 
             #add logic for finding the music channel
 
             #leaving the voice channel NEED TO FIX DISCONNECTING - possible error on the conneting end, so might have to check that
-            # for i in bot.voice_clients:
-            #     if(i.guild == ctx.message.guild):
-            #         await i.disconnect()
+            await ctx.voice_client.disconnect()
 
         except Exception as e:
             print("user is not in a voice channel, reverting to text for unsadening user")
+            print(e)
             async with ctx.channel.typing():
                 quote = apis.quote_to_discord_embed(quotes.getQuoteJSON())
                 quote.set_thumbnail(url='https://clipart.info/images/ccovers/1531011033heart-emoji.png')
