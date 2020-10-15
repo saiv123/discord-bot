@@ -570,9 +570,9 @@ async def sad(ctx):
             #add logic for finding the music channel
 
             #leaving the voice channel NEED TO FIX DISCONNECTING - possible error on the conneting end, so might have to check that
-            for i in bot.voice_clients:
-                if(i.guild == ctx.message.guild):
-                    return await i.disconnect()
+            # for i in bot.voice_clients:
+            #     if(i.guild == ctx.message.guild):
+            #         await i.disconnect()
 
         except Exception as e:
             print("user is not in a voice channel, reverting to text for unsadening user")
