@@ -22,9 +22,6 @@ from libraries.helperFunctions import RgbToHex,HexToRgb
 from libraries.prawn import getClosestFromList
 from Levenshtein import distance
 
-# dir for the bots location
-os.chdir("discord-bot")
-
 # for the math stuff
 client = wolframalpha.Client(id)
 
