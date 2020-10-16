@@ -179,7 +179,7 @@ async def notes(ctx, *, notes=" "):
 async def stats(ctx):
     async with ctx.channel.typing():  # make it look like the bot is typing
         quote = quotes.getQuoteApi()
-        temp = os.popen("vcgencmd measure_temp").readline()
+        # temp = os.popen("vcgencmd measure_temp").readline()
 
         # calculating time bot has been on
         tso = time.time()
@@ -189,7 +189,7 @@ async def stats(ctx):
         # setting the clock image
         embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png")
         embed.add_field(name='I have been awake for:', value=msg, inline=True)
-        embed.add_field(name='My core body temperature:',value=temp.replace("temp=", ""), inline=True)
+        # embed.add_field(name='My core body temperature:',value=temp.replace("temp=", ""), inline=True)
         embed.add_field(name='Quote cus I know you\'re bored:', value='"' +quote['quote'] + '"\n\t~' + quote['author'], inline=False)
 
         await ctx.send(embed=embed)
