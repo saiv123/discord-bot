@@ -510,7 +510,7 @@ async def ping(ctx):
 async def userinfo(ctx):
     if ctx.author.guild_permissions.administrator:
         x = ctx.guild.members
-        if target in x and ctx.message.mention[0].id != 0:
+        if ctx.message.mention[0].id != 0:
              target = ctx.message.mention[0]
              roles = [role for role in member.roles[1:]]
              embed = discord.Embed(title="User information", colour=discord.Color.gold(), timestamp=datetime.utcnow())
@@ -560,6 +560,8 @@ async def kick(ctx, mention: str, *, reason = "No reason was given"):
 ################################
 ###Commands to make you unsad###
 ################################
+
+#up date to how the command will work, it will be limited to onnce ever 24 hours, but will always send the quote even if it does join the vc
 @bot.command(pass_context=True)
 async def sad(ctx):
     if checkAuthSerers(ctx):
