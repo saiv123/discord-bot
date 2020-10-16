@@ -23,7 +23,7 @@ from libraries.prawn import getClosestFromList
 from Levenshtein import distance
 
 # dir for the bots location
-os.chdir("/home/pi/discord-bot")
+os.chdir("discord-bot")
 
 # for the math stuff
 client = wolframalpha.Client(id)
