@@ -521,7 +521,7 @@ async def userinfo(ctx):
 
              fields = [("Name", str(target), False),
                    #("Status", str(target.status).title(), False),
-                   ("Status", target.raw_status, False)
+                   ("Status", target.raw_status, False),
                    (f"Roles ({len(roles)})", " ".join([role.mention for role in roles]), False),
                    ("Created at", target.created_at.strftime("%d/%m/%Y %H:%M:%S"), False),
                    ("Joined at", target.joined_at.strftime("%d/%m/%Y %H:%M:%S"), False)]
