@@ -567,9 +567,9 @@ async def sad(ctx):
             await channel.connect()
 
             #add logic for finding the music channel
-            await ctx.send("!p let it go")
+            await ctx.send("!p https://www.youtube.com/playlist?list=PLzSGJo-pe00ka90V3cFrEjCCJKROnHCMj")
 
-            #leaving the voice channel NEED TO FIX DISCONNECTING - possible error on the conneting end, so might have to check that
+            #leaving the voice channel
             await ctx.voice_client.disconnect()
 
         except AttributeError as e:
