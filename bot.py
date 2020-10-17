@@ -572,12 +572,14 @@ async def sad(ctx):
             await ctx.voice_client.disconnect()
 
         except AttributeError as e:
+            #this is what it will do if user is not in vc
             print("user is not in a voice channel, reverting to text for unsadening user")
             async with ctx.channel.typing():
                 quote = apis.quote_to_discord_embed(quotes.getQuoteJSON())
                 quote.set_thumbnail(url='https://clipart.info/images/ccovers/1531011033heart-emoji.png')
                 await ctx.send(embed=quote)
     else:
+        #this is what it will do if user is not in trusted server
         async with ctx.channel.typing():
             quote = apis.quote_to_discord_embed(quotes.getQuoteJSON())
             quote.set_thumbnail(url='https://clipart.info/images/ccovers/1531011033heart-emoji.png')
@@ -636,13 +638,17 @@ async def status(ctx, type: str, *, other="https://twitch.tv/saiencevanadium/"):
 # send you the servers the bot is in
 @bot.command()
 async def servers(ctx):
+    #cheks if your owner
     if isOwner(ctx):
         msg = ""
+        #gets all the servers from bot object
         guilds = await bot.fetch_guilds(limit=150).flatten()
         msg = str(len(guilds)) + "\n"
+        #loops through them and puts them in a string
         for i in guilds:
             msg += i.name + "\n"
 
+        #creates a dm with user and dms it to them
         author = ctx.message.author
         await author.send(msg)
     else:
