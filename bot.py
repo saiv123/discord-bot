@@ -324,7 +324,7 @@ async def rps(ctx, *, level=1):
         return
     symbol_names = ['rock','paper','scissors','spock','lizard','alien','well','generic','karen','heat','lemonade']
     # Extend symbol names if necessary
-    for i in range(len(symbol_names),level*2+5):
+    for i in range(len(symbol_names), level*2+5):
         symbol_names.append('item'+str(i))
 
     # Generate matrix
@@ -507,8 +507,8 @@ async def ping(ctx):
 async def userinfo(ctx):
     if ctx.author.guild_permissions.administrator:
         x = ctx.guild.members
-        if ctx.message.mention[0].id != 0:
-             target = ctx.message.mention[0]
+        if ctx.message.mentions[0].id != 0:
+             target = ctx.message.mentions[0]
              roles = [role for role in member.roles[1:]]
              embed = discord.Embed(title="User information", colour=discord.Color.gold(), timestamp=datetime.utcnow())
 
