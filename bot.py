@@ -533,7 +533,7 @@ async def userinfo(ctx):
         await ctx.send(f'Not enough permissions')
 
 def hasAdminRole(ctx, id:int):
-    member =
+    member = ctx.guild.get_member(id)
     if member.guild_permissions.administrator:
         return True
     else:
