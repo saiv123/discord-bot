@@ -22,9 +22,6 @@ from libraries.helperFunctions import RgbToHex,HexToRgb
 from libraries.prawn import getClosestFromList
 from Levenshtein import distance
 
-#setting today
-today = date.today()
-
 # for the math stuff
 client = wolframalpha.Client(id)
 
