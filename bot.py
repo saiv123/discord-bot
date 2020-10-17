@@ -508,7 +508,7 @@ async def ping(ctx):
 async def userinfo(ctx):
     if ctx.author.guild_permissions.administrator:
         x = ctx.guild.members
-        if len(ctx.message.mentions[0]) != 0:
+        if len(ctx.message.mentions[]) != 0:
              target = ctx.message.mentions[0]
              roles = [role for role in ctx.message.author.roles[1:]]
              embed = discord.Embed(title="User information", colour=discord.Color.gold(), timestamp= datetime.fromtimestamp(time.time()))
