@@ -510,7 +510,7 @@ async def userinfo(ctx):
         x = ctx.guild.members
         if len(ctx.message.mentions) != 0:
              target = ctx.message.mentions[0]
-             roles = [role for role in ctx.message.author.roles[1:]]
+             roles = [role for role in target.roles[1:]]
              embed = discord.Embed(title="User information", colour=discord.Color.gold(), timestamp= datetime.fromtimestamp(time.time()))
 
              embed.set_author(name=target.name, icon_url=target.avatar_url)
@@ -520,7 +520,6 @@ async def userinfo(ctx):
              embed.set_footer(text="Made By Mr.KapiBara", icon_url="https://cdn.discordapp.com/attachments/618434755981213716/718861010223497236/kapi-1.png")
 
              fields = [("Name", str(target), False),
-                   ("ID", target.id, False),
                    ("Status", str(target.status).title(), False),
                    (f"Roles ({len(roles)})", " ".join([role.mention for role in roles]), False),
                    ("Created at", target.created_at.strftime("%d/%m/%Y %H:%M:%S"), False),
@@ -531,7 +530,7 @@ async def userinfo(ctx):
 
              await ctx.send(embed=embed)
         else:
-            await ctx.send(f'You have to ping soneone from this server')
+            await ctx.send(f'You have to ping someone from this server')
     else:
         await ctx.send(f'Not enough permissions')
 
