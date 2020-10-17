@@ -520,7 +520,8 @@ async def userinfo(ctx):
              embed.set_footer(text="Made By Mr.KapiBara", icon_url="https://cdn.discordapp.com/attachments/618434755981213716/718861010223497236/kapi-1.png")
 
              fields = [("Name", str(target), False),
-                   ("Status", str(target.status).title(), False),
+                   #("Status", str(target.status).title(), False),
+                   ("Status", target.raw_status, False)
                    (f"Roles ({len(roles)})", " ".join([role.mention for role in roles]), False),
                    ("Created at", target.created_at.strftime("%d/%m/%Y %H:%M:%S"), False),
                    ("Joined at", target.joined_at.strftime("%d/%m/%Y %H:%M:%S"), False)]
