@@ -4,6 +4,7 @@ import traceback
 import asyncio, discord
 import wolframalpha
 import time, datetime
+from datetime import date
 import json, random
 import lyricsgenius as LyrGen
 from discord.ext import commands, tasks
@@ -21,6 +22,9 @@ from libraries.helperFunctions import gen_rps_matrix, format_matrix, list_god
 from libraries.helperFunctions import RgbToHex,HexToRgb
 from libraries.prawn import getClosestFromList
 from Levenshtein import distance
+
+#setting today
+today = date.today()
 
 # for the math stuff
 client = wolframalpha.Client(id)
@@ -510,7 +514,7 @@ async def userinfo(ctx):
         if ctx.message.mentions[0].id != 0:
              target = ctx.message.mentions[0]
              roles = [role for role in ctx.message.author.roles[1:]]
-             embed = discord.Embed(title="User information", colour=discord.Color.gold(), timestamp=datetime.utcnow())
+             embed = discord.Embed(title="User information", colour=discord.Color.gold(), timestamp=today.strftime("%m/%d/%y"))
 
              embed.set_author(name=target.name, icon_url=target.avatar_url)
 
