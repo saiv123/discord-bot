@@ -506,7 +506,7 @@ async def ping(ctx):
 #give information on the user
 @bot.command()
 async def userinfo(ctx):
-    if ctx.author.guild_permissions.administrator and :
+    if ctx.author.guild_permissions.administrator:
         x = ctx.guild.members
         if len(ctx.message.mentions[0]) != 0:
              target = ctx.message.mentions[0]
@@ -598,6 +598,7 @@ async def off(ctx):
     if(isOwner(ctx)):
         await ctx.send(msgReturn("offMsg"))
         await bot.logout()
+
         sys.exit(0)
     else:
         await ctx.send(msgReturn("notOwner"))
