@@ -505,7 +505,7 @@ async def ping(ctx):
 #give information on the user
 @bot.command()
 async def userinfo(ctx):
-    now = datetime.datetime.now()
+    now = datetime.datetime.now(datetime.timezone.utc)
     if ctx.author.guild_permissions.administrator:
         x = ctx.guild.members
         if ctx.message.mentions[0].id != 0:
