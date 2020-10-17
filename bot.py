@@ -4,7 +4,6 @@ import traceback
 import asyncio, discord
 import wolframalpha
 import time, datetime
-from datetime import date
 import json, random
 import lyricsgenius as LyrGen
 from discord.ext import commands, tasks
@@ -509,14 +508,13 @@ async def ping(ctx):
 #give information on the user
 @bot.command()
 async def userinfo(ctx):
-    now = datetime.now()
-    dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+    now = datetime.datetime.now()
     if ctx.author.guild_permissions.administrator:
         x = ctx.guild.members
         if ctx.message.mentions[0].id != 0:
              target = ctx.message.mentions[0]
              roles = [role for role in ctx.message.author.roles[1:]]
-             embed = discord.Embed(title="User information", colour=discord.Color.gold(), timestamp=dt_string)
+             embed = discord.Embed(title="User information", colour=discord.Color.gold(), timestamp=now.strftime("%d/%m/%Y %H:%M:%S"))
 
              embed.set_author(name=target.name, icon_url=target.avatar_url)
 
