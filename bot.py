@@ -567,7 +567,7 @@ async def sad(ctx):
             await channel.connect()
 
             #add logic for finding the music channel
-            print("ahhahahahah found you <3")
+            await ctx.send("!p let it go")
 
             #leaving the voice channel NEED TO FIX DISCONNECTING - possible error on the conneting end, so might have to check that
             await ctx.voice_client.disconnect()
