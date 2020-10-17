@@ -505,6 +505,7 @@ async def ping(ctx):
 #give information on the user
 @bot.command()
 async def userinfo(ctx):
+    member = ctx.guild.get_member(ctx.author.id)
     if ctx.author.guild_permissions.administrator:
         x = ctx.guild.members
         if ctx.message.mentions[0].id != 0:
