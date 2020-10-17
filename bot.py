@@ -511,16 +511,13 @@ async def userinfo(ctx):
         if len(ctx.message.mentions) != 0:
              target = ctx.message.mentions[0]
              roles = [role for role in target.roles[1:]]
+
              embed = discord.Embed(title="User information", colour=discord.Color.gold(), timestamp= datetime.fromtimestamp(time.time()))
-
              embed.set_author(name=target.name, icon_url=target.avatar_url)
-
              embed.set_thumbnail(url=target.avatar_url)
-
              embed.set_footer(text="Made By Mr.KapiBara", icon_url="https://cdn.discordapp.com/attachments/618434755981213716/718861010223497236/kapi-1.png")
 
              fields = [("Name", str(target), False),
-                   #("Status", str(target.status).title(), False),
                    ("Status", target.raw_status, False),
                    (f"Roles ({len(roles)})", " ".join([role.mention for role in roles]), False),
                    ("Created at", target.created_at.strftime("%d/%m/%Y %H:%M:%S"), False),
@@ -535,7 +532,8 @@ async def userinfo(ctx):
     else:
         await ctx.send(f'Not enough permissions')
 
-def hasAdminRole(member:discord.member, bot):
+def hasAdminRole(ctx, id:int):
+    member =
     if member.guild_permissions.administrator:
         return True
     else:
@@ -546,7 +544,7 @@ def hasAdminRole(member:discord.member, bot):
 async def kick(ctx, mention: str, *, reason = "No reason was given"):
     mentionID = mention[2:len(mention)-1]
     server = ctx.message.guild
-    if hasAdminRole(ctx.message.author, bot):
+    if hasAdminRole(ctx, ctx.message.author.id):
         if "<@" in mention and ctx.message.author.id is not mentionID and hasAdminRole(server.get_member(mentionID), bot):
             await ctx.send("metnions and kick for reason\n" + reason)
         else:
