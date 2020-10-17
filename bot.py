@@ -108,13 +108,6 @@ async def github(ctx):
     embed = discord.Embed(title= "[GitHub Website for Bot]",discritpion="This is where you can see how the bot works",url="https://github.com/saiv123/discord-bot")
     await ctx.send(embed=embed)
 
-# magic 8 ball
-@bot.command()
-async def shouldI(ctx, *i):
-    i = ' '.join(i)
-    phrases = ['Yes! Go $','No, it won\'t work.','Hmmm, $ might be a fine idea','Unclear, consider rewording $','I don\'t know, ask someone else about $']
-    await ctx.send(random.choice(phrases).replace('$', i))
-
 # will give you a link to invite the bot to other servers
 @bot.command()
 async def invite(ctx):
@@ -124,6 +117,13 @@ async def invite(ctx):
         embed.set_thumbnail(url='https://cdn.discordapp.com/avatars/314578387031162882/e4b98a4a9ca3315ca699ffe5cba5b8f1.png?size=1024')
         embed.add_field(name='Please invite me to other Discords',value='[Invite bot to server](https://discord.com/api/oauth2/authorize?client_id=314578387031162882&permissions=8&scope=bot)', inline=False)
         await ctx.send(embed=embed)
+
+# magic 8 ball
+@bot.command()
+async def shouldI(ctx, *i):
+    i = ' '.join(i)
+    phrases = ['Yes! Go $','No, it won\'t work.','Hmmm, $ might be a fine idea','Unclear, consider rewording $','I don\'t know, ask someone else about $']
+    await ctx.send(random.choice(phrases).replace('$', i))
 
 # says hello to your
 @bot.command()
@@ -567,6 +567,7 @@ async def sad(ctx):
             await channel.connect()
 
             #add logic for finding the music channel
+            print("ahhahahahah found you <3")
 
             #leaving the voice channel NEED TO FIX DISCONNECTING - possible error on the conneting end, so might have to check that
             await ctx.voice_client.disconnect()
