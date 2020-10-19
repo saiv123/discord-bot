@@ -532,13 +532,6 @@ async def userinfo(ctx):
     else:
         await ctx.send(f'Not enough permissions')
 
-def hasAdminRole(ctx, id):
-    member = ctx.guild.get_member(id)
-    if member.guild_permissions.administrator:
-        return True
-    else:
-        return False
-
 #kick command
 @bot.command()
 async def kick(ctx):
@@ -564,13 +557,15 @@ async def kick(ctx):
 ################################
 
 #up date to how the command will work, it will be limited to onnce ever 24 hours, but will always send the quote even if it does join the vc
+#play / do something depending on if the user is in a voice channel or not
 @bot.command(pass_context=True)
 async def sad(ctx):
+    user = bot.get_user(id)
+    await user.send("Hey i see you have used the sad command, you are loved just know that :heart:")
     if checkAuthSerers(ctx):
         try:
             channel = ctx.author.voice.channel
             await channel.connect()
-
             #add logic for finding the music channel
             await ctx.send("!p https://www.youtube.com/playlist?list=PLzSGJo-pe00ka90V3cFrEjCCJKROnHCMj")
 
@@ -591,7 +586,6 @@ async def sad(ctx):
             quote.set_thumbnail(url='https://clipart.info/images/ccovers/1531011033heart-emoji.png')
             await ctx.send(embed=quote)
 
-    #play / do something depending on if the user is in a voice channel or not
 ########################
 ###Bot Admin Commands###
 ########################
