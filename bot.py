@@ -497,7 +497,9 @@ async def color(ctx, *, inputColor:str):
 @bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(1, 30, commands.BucketType.user)
 async def ping(ctx):
-    await ctx.send('Pong! {0}ms'.format(round(bot.latency, 1)))
+    msg = await ctx.send('Pong! \nLatency: {0}ms'.format(round(bot.latency*1000, 1)))
+    t = (msg.timestamp - ctx.message.timestamp).total_seconds() * 1000
+    await client.edit_message(msg, new_content='{0}\nRound Trip Time: {1}ms'.format(msg.content,round(t, 1)))
 
 ###########################
 ###Server Admin Commands###
