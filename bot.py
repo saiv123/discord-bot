@@ -538,7 +538,11 @@ async def kick(ctx):
     if ctx.author.guild_permissions.administrator:
         if len(ctx.message.mentions) != 0:
             target = ctx.message.mentions[0]
-            if target != ctx.guild.get_member(ctx.author.id) and target.guild_permissions.administrator != True:
+            if ctx.guild.owner.id == ctx.author.id:
+                msg= msgReturn("kick")
+                await ctx.send(msg.format(target.name))
+                print("kicking person")
+            elif target != ctx.guild.get_member(ctx.author.id) and target.guild_permissions.administrator != True:
                 #
                 #
                 # add logic later
