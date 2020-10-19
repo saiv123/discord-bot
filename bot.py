@@ -546,7 +546,7 @@ async def kick(ctx):
         if len(ctx.message.mentions) != 0:
             target = ctx.message.mentions[0]
             id = target.id
-            if target != ctx.guild.get_member(ctx.author.id) and hasAdminRole(id):
+            if target != ctx.guild.get_member(ctx.author.id) and hasAdminRole(ctx, id):
                 #
                 #
                 #
