@@ -553,7 +553,7 @@ async def kick(ctx):
                 #
                 print("kicking person")
             else:
-                await ctx.send("You can not kick <@"+target.id+"> \nthey either have permissions higher or equal to you.")
+                await ctx.send("You can not kick <@"+str(target.id)+"> \nthey either have permissions higher or equal to you.")
         else:
             await ctx.send("You need to ping someone from this server to kick")
     else:
