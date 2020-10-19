@@ -507,7 +507,7 @@ async def ping(ctx):
 @bot.command()
 async def userinfo(ctx):
     if ctx.author.guild_permissions.administrator:
-        x = ctx.guild.members
+        # x = ctx.guild.members
         if len(ctx.message.mentions) != 0:
              target = ctx.message.mentions[0]
              roles = [role for role in target.roles[1:]]
@@ -541,17 +541,33 @@ def hasAdminRole(ctx, id:int):
 
 #kick command
 @bot.command()
-async def kick(ctx, mention: str, *, reason = "No reason was given"):
-    mentionID = mention[2:len(mention)-1]
-    server = ctx.message.guild
-    if hasAdminRole(ctx, ctx.message.author.id):
-        if "<@" in mention and ctx.message.author.id is not mentionID and hasAdminRole(server.get_member(mentionID), bot):
-            await ctx.send("metnions and kick for reason\n" + reason)
+async def kick(ctx):
+    if ctx.guild_permissions.administrator:
+        if len(ctx.message.mentions) != 0:
+            target = ctx.message.mentions[0]
+            if target != ctx.guild.get_member(ctx.author.id) and hasAdminRole(ctx.guild.get_member(target.id)):
+                #
+                #
+                #
+                #
+                #
+                print(kicking person)
+            else:
+                await ctx.send("You can not kick <@"+target.id+"> \nthey either have permissions higher or equal to you.")
         else:
-            msgSend = 'You did not use the command correctly\nArguments: '+str(error.args)+'\nIf you dont know how to use the command, use the $help command\nto see how to use all commands.'
-            await ctx.send(msgSend+"\n or you tried kicking a admin or your self")
+            await ctx.send("You need to ping someone from this server to kick")
     else:
-        await ctx.send("You do not have the required permissions to use this command talk to server admins or owner if you think this is a mistake.")
+        await ctx.send("Not enough permissions")
+    # mentionID = mention[2:len(mention)-1]
+    # server = ctx.message.guild
+    # if hasAdminRole(ctx, ctx.message.author.id):
+    #     if "<@" in mention and ctx.message.author.id is not mentionID and hasAdminRole(server.get_member(mentionID), bot):
+    #         await ctx.send("metnions and kick for reason\n" + reason)
+    #     else:
+    #         msgSend = 'You did not use the command correctly\nArguments: '+str(error.args)+'\nIf you dont know how to use the command, use the $help command\nto see how to use all commands.'
+    #         await ctx.send(msgSend+"\n or you tried kicking a admin or your self")
+    # else:
+    #     await ctx.send("You do not have the required permissions to use this command talk to server admins or owner if you think this is a mistake.")
 
 ################################
 ###Commands to make you unsad###
