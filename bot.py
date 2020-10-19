@@ -535,7 +535,8 @@ async def userinfo(ctx):
 #kick command
 @bot.command()
 async def kick(ctx):
-    if ctx.author.guild_permissions.administrator:
+    perms = ctx.author.guild_permissions
+    if perms.administrator or perms.kick_members:
         if len(ctx.message.mentions) != 0:
             target = ctx.message.mentions[0]
             if ctx.guild.owner_id == ctx.author.id:
@@ -559,7 +560,8 @@ async def kick(ctx):
 #banning command
 @bot.command()
 async def ban(ctx):
-    if ctx.author.guild_permissions.administrator:
+    perms = ctx.author.guild_permissions
+    if perms.administrator or perms.ban_members:
         if len(ctx.message.mentions) != 0:
             target = ctx.message.mentions[0]
             if ctx.guild.owner_id == ctx.author.id:
