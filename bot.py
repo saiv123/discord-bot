@@ -551,7 +551,7 @@ async def kick(ctx):
                 #
                 #
                 #
-                print(kicking person)
+                print("kicking person")
             else:
                 await ctx.send("You can not kick <@"+target.id+"> \nthey either have permissions higher or equal to you.")
         else:
