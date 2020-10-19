@@ -507,7 +507,7 @@ async def ping(ctx):
 @bot.command()
 async def userinfo(ctx):
     if ctx.author.guild_permissions.administrator:
-        # x = ctx.guild.members
+        x = ctx.guild.members
         if len(ctx.message.mentions) != 0:
              target = ctx.message.mentions[0]
              roles = [role for role in target.roles[1:]]
@@ -542,7 +542,7 @@ def hasAdminRole(ctx, id:int):
 #kick command
 @bot.command()
 async def kick(ctx):
-    if ctx.guild_permissions.administrator:
+    if ctx.author.guild_permissions.administrator:
         if len(ctx.message.mentions) != 0:
             target = ctx.message.mentions[0]
             if target != ctx.guild.get_member(ctx.author.id) and hasAdminRole(ctx.guild.get_member(target.id)):
