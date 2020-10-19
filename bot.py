@@ -642,7 +642,7 @@ async def shrek(ctx):
     with open('Shrek.txt', 'r') as file:
         shrek = file.read()
         for message in splitLongStrings(shrek):
-            await ctx.send(message)
+            await ctx.send(message.replace('\n\n','\n'))
 
 # this allows the admins of the bot to send a message to ANY discord user
 @bot.command()
