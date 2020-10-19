@@ -532,7 +532,7 @@ async def userinfo(ctx):
     else:
         await ctx.send(f'Not enough permissions')
 
-def hasAdminRole(ctx, id:int):
+def hasAdminRole(ctx, id):
     member = ctx.guild.get_member(id)
     if member.guild_permissions.administrator:
         return True
@@ -545,7 +545,8 @@ async def kick(ctx):
     if ctx.author.guild_permissions.administrator:
         if len(ctx.message.mentions) != 0:
             target = ctx.message.mentions[0]
-            if target != ctx.guild.get_member(ctx.author.id) and hasAdminRole(target.id):
+            id = target.id
+            if target != ctx.guild.get_member(ctx.author.id) and hasAdminRole(id):
                 #
                 #
                 #
@@ -558,16 +559,6 @@ async def kick(ctx):
             await ctx.send("You need to ping someone from this server to kick")
     else:
         await ctx.send("Not enough permissions")
-    # mentionID = mention[2:len(mention)-1]
-    # server = ctx.message.guild
-    # if hasAdminRole(ctx, ctx.message.author.id):
-    #     if "<@" in mention and ctx.message.author.id is not mentionID and hasAdminRole(server.get_member(mentionID), bot):
-    #         await ctx.send("metnions and kick for reason\n" + reason)
-    #     else:
-    #         msgSend = 'You did not use the command correctly\nArguments: '+str(error.args)+'\nIf you dont know how to use the command, use the $help command\nto see how to use all commands.'
-    #         await ctx.send(msgSend+"\n or you tried kicking a admin or your self")
-    # else:
-    #     await ctx.send("You do not have the required permissions to use this command talk to server admins or owner if you think this is a mistake.")
 
 ################################
 ###Commands to make you unsad###
