@@ -560,7 +560,7 @@ async def kick(ctx):
 #play / do something depending on if the user is in a voice channel or not
 @bot.command(pass_context=True)
 async def sad(ctx):
-    user = bot.get_user(id)
+    user = bot.get_user(ctx.author.id)
     await user.send("Hey i see you have used the sad command, you are loved just know that :heart:")
     if checkAuthSerers(ctx):
         try:
