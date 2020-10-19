@@ -556,6 +556,30 @@ async def kick(ctx):
     else:
         await ctx.send("Not enough permissions")
 
+#banning command
+@bot.command()
+async def ban(ctx):
+    if ctx.author.guild_permissions.administrator:
+        if len(ctx.message.mentions) != 0:
+            target = ctx.message.mentions[0]
+            if ctx.guild.owner_id == ctx.author.id:
+                msg= msgReturn("ban")
+                await ctx.send(msg.format(target.name))
+                print("banning person")
+            elif target != ctx.guild.get_member(ctx.author.id) and target.guild_permissions.administrator != True:
+                #
+                #
+                # add logic later
+                msg= msgReturn("ban")
+                await ctx.send(msg.format(target.name))
+                print("banning person")
+            else:
+                await ctx.send("You can not ban <@"+str(target.id)+"> \nthey either have permissions higher or equal to you.")
+        else:
+            await ctx.send("You need to ping someone from this server to ban")
+    else:
+        await ctx.send("Not enough permissions")
+
 ################################
 ###Commands to make you unsad###
 ################################
