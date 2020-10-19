@@ -112,12 +112,11 @@ async def github(ctx):
 # will give you a link to invite the bot to other servers
 @bot.command()
 async def invite(ctx):
-    async with ctx.channel.typing():  # make it look like the bot is typing
-        embed = discord.Embed(colour=discord.Colour.green())
-        embed.set_author(name='Invite the Bot to another server')
-        embed.set_thumbnail(url='https://cdn.discordapp.com/avatars/314578387031162882/e4b98a4a9ca3315ca699ffe5cba5b8f1.png?size=1024')
-        embed.add_field(name='Please invite me to other Discords',value='[Invite bot to server](https://discord.com/api/oauth2/authorize?client_id=314578387031162882&permissions=8&scope=bot)', inline=False)
-        await ctx.send(embed=embed)
+    embed = discord.Embed(colour=discord.Colour.green())
+    embed.set_author(name='Invite the Bot to another server')
+    embed.set_thumbnail(url='https://cdn.discordapp.com/avatars/314578387031162882/e4b98a4a9ca3315ca699ffe5cba5b8f1.png?size=1024')
+    embed.add_field(name='Please invite me to other Discords',value='[Invite bot to server](https://discord.com/api/oauth2/authorize?client_id=314578387031162882&permissions=8&scope=bot)', inline=False)
+    await ctx.send(embed=embed)
 
 # magic 8 ball
 @bot.command()
@@ -178,22 +177,21 @@ async def notes(ctx, *, notes=" "):
 # return the time the bot has been running
 @bot.command()
 async def stats(ctx):
-    async with ctx.channel.typing():  # make it look like the bot is typing
-        quote = quotes.getQuoteApi()
-        # temp = os.popen("vcgencmd measure_temp").readline()
+    quote = quotes.getQuoteApi()
+    # temp = os.popen("vcgencmd measure_temp").readline()
 
-        # calculating time bot has been on
-        tso = time.time()
-        msg = time.strftime("%H Hours %M Minutes %S Seconds",time.gmtime(tso - ts))
-        # seting up an embed
-        embed = discord.Embed(colour=imgutils.randomSaturatedColor())
-        # setting the clock image
-        embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png")
-        embed.add_field(name='I have been awake for:', value=msg, inline=True)
-        # embed.add_field(name='My core body temperature:',value=temp.replace("temp=", ""), inline=True)
-        embed.add_field(name='Quote cus I know you\'re bored:', value='"' +quote['quote'] + '"\n\t~' + quote['author'], inline=False)
+    # calculating time bot has been on
+    tso = time.time()
+    msg = time.strftime("%H Hours %M Minutes %S Seconds",time.gmtime(tso - ts))
+    # seting up an embed
+    embed = discord.Embed(colour=imgutils.randomSaturatedColor())
+    # setting the clock image
+    embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png")
+    embed.add_field(name='I have been awake for:', value=msg, inline=True)
+    # embed.add_field(name='My core body temperature:',value=temp.replace("temp=", ""), inline=True)
+    embed.add_field(name='Quote cus I know you\'re bored:', value='"' +quote['quote'] + '"\n\t~' + quote['author'], inline=False)
 
-        await ctx.send(embed=embed)
+    await ctx.send(embed=embed)
 
 # return the answers to defenet integrals
 @bot.command(cls=OwnersIgnoreCooldown)
@@ -217,32 +215,30 @@ async def wolfram(ctx, *, func:str):
 # sends a warming quote
 @bot.command()
 async def quote(ctx):
-    async with ctx.channel.typing():
-        quote = apis.quote_to_discord_embed(quotes.getQuoteJSON())
-        quote.set_thumbnail(url='https://clipart.info/images/ccovers/1531011033heart-emoji.png')
-        await ctx.send(embed=quote)
+    quote = apis.quote_to_discord_embed(quotes.getQuoteJSON())
+    quote.set_thumbnail(url='https://clipart.info/images/ccovers/1531011033heart-emoji.png')
+    await ctx.send(embed=quote)
 
 # sends a random quote
 @bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(3, 60, commands.BucketType.user)
 async def randquote(ctx):
-    async with ctx.channel.typing():
-        quote = quotes.getQuoteApi()
-        await ctx.send(embed=apis.quote_to_discord_embed(quote))
+    quote = quotes.getQuoteApi()
+    await ctx.send(embed=apis.quote_to_discord_embed(quote))
 
 # sends a random piece of advice
 @bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(3, 60, commands.BucketType.user)
 async def advice(ctx):
-    async with ctx.channel.typing():
-        advice = apis.advice()
-        await ctx.send(embed=apis.quote_to_discord_embed(advice))
+    advice = apis.advice()
+    await ctx.send(embed=apis.quote_to_discord_embed(advice))
 
 # sends 2 stupid donald trump quotes and their contradiction score
 @bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(3, 60, commands.BucketType.user)
 async def tronalddump(ctx):
     async with ctx.channel.typing():
+        t = time.time()
         contra_tuple = apis.get_trump_contradiction()
         embeds = [apis.quote_to_discord_embed(i) for i in contra_tuple[1:]]
 
@@ -250,6 +246,7 @@ async def tronalddump(ctx):
 
         contra_meter = '0       1       2       3       4       5       6       7       8       9       10'.replace(nearest_contra_score, apis.number_to_discord_emote(nearest_contra_score))
 
+        await asyncio.sleep(max(0, 2-(time.time()-t))) # wait a maximum of 2s. This command takes a lot of cpu
         await ctx.send('For educational and mockery purposes only!')
         for embed in embeds:
             await ctx.send(embed=embed)
@@ -297,19 +294,18 @@ async def contact(ctx):
 @commands.cooldown(1, 30, commands.BucketType.user)
 async def song(ctx, *, songName:str):
     try:
-        async with ctx.channel.typing():
-            #splitting the stream to check if the input has a artist if not add by . to earch for the song name
-            if ' by ' not in str(songName): songName = str(songName) + ' by '
-            songName = str(songName).split(" by ")
-            song = Gen.search_song(songName[0], songName[1])
-            embed = discord.Embed(colour = imgutils.randomSaturatedColor())
+        #splitting the stream to check if the input has a artist if not add by . to earch for the song name
+        if ' by ' not in str(songName): songName = str(songName) + ' by '
+        songName = str(songName).split(" by ")
+        song = Gen.search_song(songName[0], songName[1])
+        embed = discord.Embed(colour = imgutils.randomSaturatedColor())
 
-            # Create and send embed
-            embed.set_author(name=songName[0].title())
-            for message in splitLongStrings(song.lyrics, chars=1024, preferred_char='\n'):
-                embed.add_field(name=chr(0xffa0),value=message, inline=False)
-            embed.set_footer(text='Song Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
-            await ctx.send(embed=embed)
+        # Create and send embed
+        embed.set_author(name=songName[0].title())
+        for message in splitLongStrings(song.lyrics, chars=1024, preferred_char='\n'):
+            embed.add_field(name=chr(0xffa0),value=message, inline=False)
+        embed.set_footer(text='Song Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+        await ctx.send(embed=embed)
     except AttributeError as e:
         print(e)
         await ctx.send("The command was either used incorrectly or the song was not found\nCommand is used like:```$song songTitle by songArtist```")
@@ -607,16 +603,14 @@ async def sad(ctx):
         except AttributeError as e:
             #this is what it will do if user is not in vc
             print("user is not in a voice channel, reverting to text for unsadening user")
-            async with ctx.channel.typing():
-                quote = apis.quote_to_discord_embed(quotes.getQuoteJSON())
-                quote.set_thumbnail(url='https://clipart.info/images/ccovers/1531011033heart-emoji.png')
-                await ctx.send(embed=quote)
-    else:
-        #this is what it will do if user is not in trusted server
-        async with ctx.channel.typing():
             quote = apis.quote_to_discord_embed(quotes.getQuoteJSON())
             quote.set_thumbnail(url='https://clipart.info/images/ccovers/1531011033heart-emoji.png')
             await ctx.send(embed=quote)
+    else:
+        #this is what it will do if user is not in trusted server
+        quote = apis.quote_to_discord_embed(quotes.getQuoteJSON())
+        quote.set_thumbnail(url='https://clipart.info/images/ccovers/1531011033heart-emoji.png')
+        await ctx.send(embed=quote)
 
 ########################
 ###Bot Admin Commands###
