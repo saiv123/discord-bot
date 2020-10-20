@@ -110,7 +110,7 @@ async def help(ctx):
 #Gives you the github website link
 @bot.command()
 async def github(ctx):
-    embed = discord.Embed(title= "[GitHub Website for Bot]",description="This is where you can see how the bot works",url="https://github.com/saiv123/discord-bot")
+    embed = discord.Embed(title= "GitHub Website for Bot",description="This is where you can see how the bot works",url="https://github.com/saiv123/discord-bot")
     await ctx.send(embed=embed)
 
 # will give you a link to invite the bot to other servers
