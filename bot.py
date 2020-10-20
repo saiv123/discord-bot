@@ -67,7 +67,7 @@ async def on_message(message):
 
     # check if it responed to a command
     ran_cmd = message.content.startswith(bot.command_prefix) and message.content.split(' ')[0].strip(bot.command_prefix).lower() in [cmd.name.lower() for cmd in bot.commands]
-    if DEL_CMD:
+    if DEL_CMD and ran_cmd: # Delete it if it can or should
         if message.guild.get_member(bot.user.id).permissions_in(message.channel).manage_messages:
             await message.delete()
 
