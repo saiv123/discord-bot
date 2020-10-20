@@ -563,7 +563,7 @@ async def kick(ctx):
         await ctx.send("*One of us* doesn't have the permissions to do that...")
         return
 
-    if len(ctx.message.mentions) == 0:
+    if len(ctx.message.mentions) <= 0:
         await ctx.send("You need to ping someone from this server to kick")
         return
     
@@ -571,7 +571,7 @@ async def kick(ctx):
 
     canKick = True # I can't stand all these `if`s
     canKick = canKick and target.roles[-1] < ctx.author.roles[-1] # require a lesser role
-    canKick = canKick and target.id != ctx.author.id # you can't kick yourself
+    canKick = canKick and target.id != ctx.message.author.id # you can't kick yourself
     canKick = canKick and (not target.guild_permissions.administrator or target.bot) # can't kick admins (but can kick bot admins)
     if ctx.author.id == ctx.guild.owner.id: canKick = True # can't say no to the owners
 
@@ -593,7 +593,7 @@ async def ban(ctx):
         await ctx.send("*One of us* doesn't have the permissions to do that...")
         return
     
-    if len(ctx.message.mentions) == 0:
+    if len(ctx.message.mentions) <= 0:
         await ctx.send("You need to ping someone from this server to ban")
         return
     
@@ -601,7 +601,7 @@ async def ban(ctx):
     
     canBan = True # I can't stand all these `if`s
     canBan = canBan and target.roles[-1] < ctx.author.roles[-1] # require a lesser role
-    canBan = canBan and target.id != ctx.author.id # you can't ban yourself
+    canBan = canBan and target.id != ctx.message.author.id # you can't ban yourself
     canBan = canBan and (not target.guild_permissions.administrator or target.bot) # can't ban admins (but can ban bot admins)
     if ctx.author.id == ctx.guild.owner.id: canBan = True # can't say no to the owners
 
