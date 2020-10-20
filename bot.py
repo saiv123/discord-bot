@@ -357,12 +357,11 @@ async def space(ctx, *, msg:str):
         await ctx.send('That message would be {0} characters, waaaay higher than the limit of {1}. Chill.'.format(exp_len, SPACE_LEN_HARD_CAP))
         return
 
-    await ctx.send(msg)
-    # msgs = splitLongStrings((' '*max(1, space)).join(msg), chars=1000)
-    # embeds = add_to_embed('Space Out', msgs)
-    # for embed in embeds:
-    #     embed.set_footer(text='Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
-    #     await ctx.send(embed=embed)
+    msgs = splitLongStrings((' '*max(1, space)).join(msg), chars=1000)
+    embeds = add_to_embed('Space Out', msgs)
+    for embed in embeds:
+        embed.set_footer(text='Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+        await ctx.send(embed=embed)
 
 # rock paper scissors game with the bot (maybe buggy so no touchy)
 RPS_HARD_CAP = 6
