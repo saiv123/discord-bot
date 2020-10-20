@@ -73,6 +73,32 @@ def splitLongStrings(str, chars=1500, preferred_char=' '):
         messages.append(message[1:])
     return messages
 
+# split a string or a list of strings into subfields of an embed
+def add_to_embed(embed:discord.Embed or str or None, message:str or list, chars:int=1000, use_description:bool=True):
+    if embed == None: embed = discord.Embed(title=chr(0xffa0))
+    elif isinstance(embed, str): embed = discord.Embed(title=embed)
+
+    if chars > 2000: chars = 2000
+
+    current_fields = '\n'.join([x.value for x in embed.fields])
+    if isinstance(message, list): message = '\n'.join(message)
+    message = f'{current_fields}\n{message}'
+    
+    dummy_embed = discord.Embed(title=chr(0xffa0))
+    dummy_embed.author = embed.author; dummy_embed.footer = embed.footer
+    dummy_embed.provider = embed.provider
+
+    # each embed can hold 6000 chars
+    message = splitLongStrings(message, chars=5000, preferred_char='\n')
+
+    embeds = [embed] + [dummy_embed] * (len(message)-1)
+    for i in range(len(message)):
+        msg_txt = splitLongStrings(message[i], chars=chars, preferred_char='\n' if message[i].count('\n') >= len(message[i])/(1.5*chars) else ' ')
+        if use_description: embeds[i].description = f'{embeds[i].description}\n{msg_txt.pop(0)}' if len(embeds[i].description) else msg_txt.pop(0)
+        for j in range(len(msg_txt)):
+            embed[i].add_field(name=str(chr(0xffa0))*j, value=msg_txt[j], inline=False)
+    return embeds
+
 # Gets embed responses from a library of links
 def getEmbedsFromLibraryQuery(libraryPath, query):
     # If query is categories, get categories

@@ -17,7 +17,7 @@ import libraries.bonusapis as apis
 import libraries.imgutils as imgutils
 
 from secret import TOKEN, id, cont, GenID
-from libraries.helperFunctions import isOwner, OwnersIgnoreCooldown, msgReturn, splitLongStrings, getEmbedsFromLibraryQuery, checkAuthSerers
+from libraries.helperFunctions import isOwner, OwnersIgnoreCooldown, msgReturn, splitLongStrings, getEmbedsFromLibraryQuery, checkAuthSerers, add_to_embed
 from libraries.helperFunctions import gen_rps_matrix, format_matrix, list_god
 from libraries.helperFunctions import RgbToHex,HexToRgb
 from libraries.prawn import getClosestFromList
@@ -229,7 +229,7 @@ async def wolfram(ctx, *, func:str):
     for i in range(len(res)):
         opener = True
         for msg in splitLongStrings(res[i].text, chars=1024):
-            embed.add_field(name='Answer {}:'.format(i+1) if opener and len(res) > 1 else chr(0xffa0),value=msg, inline=False)
+            embed.add_field(name='Answer {}:'.format(i+1) if opener and len(res) > 1 else chr(0xffa0)*i+1,value=msg, inline=False)
             opener = False
     
     embed.set_footer(text='Answer Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
@@ -333,14 +333,14 @@ async def song(ctx, *, songName:str):
         embed = discord.Embed(colour = imgutils.randomSaturatedColor())
 
         # Create and send embed
-        embed.set_author(name=songName[0].title())
-        for message in splitLongStrings(song.lyrics, chars=1024, preferred_char='\n'):
-            embed.add_field(name=chr(0xffa0),value=message, inline=False)
-        embed.set_footer(text='Song Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
-        await ctx.send(embed=embed)
+        for embed in add_to_embed(songName[0].title(), song.lyrics):
+            embed.set_footer(text='Song Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+            await ctx.send(embed=embed)
     except AttributeError as e:
         print(e)
-        await ctx.send("The command was either used incorrectly or the song was not found\nCommand is used like:```$song songTitle by songArtist```")
+        embed = discord.Embed(title='Error in Song', description='The command was either used incorrectly or the song was not found\nCommand is used as follows: <b>$song songTitle by songArtist</b>')
+        embed.set_footer(text='Song Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+        await ctx.send(embed=embed)
 
 SPACE_LEN_HARD_CAP = 4000
 @bot.command()
@@ -357,12 +357,11 @@ async def space(ctx, *, msg:str):
         await ctx.send('That message would be {0} characters, waaaay higher than the limit of {1}. Chill.'.format(exp_len, SPACE_LEN_HARD_CAP))
         return
     
-    msgs = splitLongStrings((' '*max(1, space)).join(msg), chars=500)
-    embed = discord.Embed(title=chr(0xffa0), description=msgs.pop(0))
-    for msg in msgs: embed.add_field(name=chr(0xffa0), value=msg, inline=False)
-    
-    embed.set_footer(text='Space Out Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
-    await ctx.send(embed=embed)
+    msgs = splitLongStrings((' '*max(1, space)).join(msg), chars=1000)
+    embeds = add_to_embed('Space Out', msgs)
+    for embed in embeds:
+        embed.set_footer(text='Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+        await ctx.send(embed=embed)
 
 # rock paper scissors game with the bot (maybe buggy so no touchy)
 RPS_HARD_CAP = 6
@@ -416,7 +415,8 @@ async def rps(ctx, *, level=1):
         elif winner == 2:
             output = "I win ;) Better luck next time"
         output = output+"\n\nYou chose "+ symbol_names[choice]+"\nI chose "+symbol_names[computer_choice]
-        await ctx.send(output)
+        
+        
 
 @bot.command()
 async def rpsc(ctx, user:discord.User, *, level=1):
@@ -705,14 +705,19 @@ async def off(ctx):
 
 # for admins to admire shrek. Freezes the bot for a bit, so don't actually use
 @bot.command()
-async def shrek(ctx):
+async def shrek(ctx, *, embed:bool=False):
     if not isOwner(ctx):
         await ctx.send(msgReturn("notOwner"))
         return
     with open('Shrek.txt', 'r') as file:
         shrek = file.read()
-        for message in splitLongStrings(shrek):
-            await ctx.send(message.replace('\n\n','\n'))
+        if embed:
+            for embed in add_to_embed('Shrek is love, Shrek is life', shrek.replace('\n\n','\n')):
+                embed.color = discord.Colour(imgutils.randomSaturatedColor())
+                await ctx.send(embed=embed)
+        else:
+            for message in splitLongStrings(shrek):
+                await ctx.send(message.replace('\n\n','\n'))
 
 # this allows the admins of the bot to send a message to ANY discord user
 @bot.command()
