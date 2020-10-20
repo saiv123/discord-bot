@@ -495,7 +495,7 @@ async def color(ctx, *, inputColor:str):
 async def ping(ctx):
     msg = await ctx.send('Pong! \nLatency: {0}ms'.format(round(bot.latency*1000, 1)))
     t = (msg.timestamp - ctx.message.timestamp).total_seconds() * 1000
-    await client.edit_message(msg, new_content='{0}\nRound Trip Time: {1}ms'.format(msg.content,round(t, 1)))
+    await msg.edit(content='{0}\nRound Trip Time: {1}ms'.format(msg.content,round(t, 1)))
 
 ###########################
 ###Server Admin Commands###
