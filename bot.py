@@ -69,7 +69,8 @@ async def on_message(message):
 async def on_command_error(ctx, error):
     msgSend = "An internal error has occured. Use $contact to contact the owner if it persists"
     if isinstance(error, commands.MissingRequiredArgument):
-        msgSend = 'You did not use the command correctly\nArguments: '+str(error.args)+'\nIf you dont know how to use the command, use the $help command\nto see how to use all commands.'
+        e_msg = ', a'.join(str(error.param).replace('params','').split(':'))
+        msgSend = f'You did not use the command correctly\nYou\'re missing {e_msg}\nIf you dont know how to use the command, use the $help command\nto see how to use all commands.'
         print('arg' + str(error.args))
         print('params' + str(error.param))
     elif isinstance(error, commands.CommandOnCooldown):
