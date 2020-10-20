@@ -319,7 +319,7 @@ async def song(ctx, *, songName:str):
 
 SPACE_LEN_HARD_CAP = 4000
 @bot.command()
-async def space(ctx, *, space:int=1, msg:str):
+async def space(ctx, space:int=1, *, msg:str):
     if not isOwner(ctx) and len(msg)*(space+1) <= SPACE_LEN_HARD_CAP:
         await ctx.send('That message would be {0} characters, waaaay higher than the limit of {1}. Chill.'.format(len(msg)*(space+1), SPACE_LEN_HARD_CAP))
         return
