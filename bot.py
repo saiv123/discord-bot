@@ -231,7 +231,7 @@ async def wolfram(ctx, *, func:str):
         for msg in splitLongStrings(res[i].text, chars=1024):
             embed.add_field(name='Answer {}:'.format(i+1) if opener and len(res) > 1 else chr(0xffa0)*i+1,value=msg, inline=False)
             opener = False
-    
+
     embed.set_footer(text='Answer Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
     await ctx.send(embed=embed)
 
@@ -347,7 +347,7 @@ SPACE_LEN_HARD_CAP = 4000
 async def space(ctx, *, msg:str):
     # extract the first message from msg
     ints = re.findall(r'\d+',msg)
-    if len(ints) > 0: 
+    if len(ints) > 0:
         space = int(ints[0])
         msg = re.sub(r'\s+','', msg.replace(str(space), ' '))
     else: space = 1
@@ -356,12 +356,13 @@ async def space(ctx, *, msg:str):
     if not isOwner(ctx) and exp_len >= SPACE_LEN_HARD_CAP:
         await ctx.send('That message would be {0} characters, waaaay higher than the limit of {1}. Chill.'.format(exp_len, SPACE_LEN_HARD_CAP))
         return
-    
-    msgs = splitLongStrings((' '*max(1, space)).join(msg), chars=1000)
-    embeds = add_to_embed('Space Out', msgs)
-    for embed in embeds:
-        embed.set_footer(text='Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
-        await ctx.send(embed=embed)
+
+    await ctx.send(msg)
+    # msgs = splitLongStrings((' '*max(1, space)).join(msg), chars=1000)
+    # embeds = add_to_embed('Space Out', msgs)
+    # for embed in embeds:
+    #     embed.set_footer(text='Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+    #     await ctx.send(embed=embed)
 
 # rock paper scissors game with the bot (maybe buggy so no touchy)
 RPS_HARD_CAP = 6
@@ -415,8 +416,8 @@ async def rps(ctx, *, level=1):
         elif winner == 2:
             output = "I win ;) Better luck next time"
         output = output+"\n\nYou chose "+ symbol_names[choice]+"\nI chose "+symbol_names[computer_choice]
-        
-        
+
+
 
 @bot.command()
 async def rpsc(ctx, user:discord.User, *, level=1):
@@ -549,7 +550,7 @@ async def color(ctx, *, inputColor:str):
 async def ping(ctx):
     msg = await ctx.send('Latency: {0}ms'.format(round(bot.latency*1000, 1)))
     t = (msg.created_at - ctx.message.created_at).total_seconds() * 1000
-    
+
     embed = discord.Embed(title='Ping', description='{}\nRound Trip Time: {}ms'.format(msg.content, round(t, 1)))
     embed.set_footer(text='Ping Measured by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
     await msg.edit(content=None, embed=embed)
@@ -595,11 +596,11 @@ async def kick(ctx):
         await ctx.send("*One of us* doesn't have the permissions to do that...")
         return
 
-    
+
     if len(ctx.message.mentions) <= 0:
         await ctx.send("You need to ping someone from this server to kick")
         return
-    
+
     target = ctx.message.mentions[0]
 
     if not ctx.guild.get_member(bot.user.id).permissions_in(ctx.message.channel).kick_members or  ctx.guild.get_member(bot.user.id).roles[-1] <=  target.roles[-1]:
@@ -629,17 +630,17 @@ async def ban(ctx):
     if not (perms.administrator or perms.ban_members):
         await ctx.send("*One of us* doesn't have the permissions to do that...")
         return
-    
+
     if len(ctx.message.mentions) <= 0:
         await ctx.send("You need to ping someone from this server to ban")
         return
-    
+
     target = ctx.message.mentions[0]
 
     if not ctx.guild.get_member(bot.user.id).permissions_in(ctx.message.channel).kick_members or  ctx.guild.get_member(bot.user.id).roles[-1] <=  target.roles[-1]:
         await ctx.send("I don't have enough power to do that.")
         return
-    
+
     canBan = True # I can't stand all these `if`s
     canBan = canBan and target.roles[-1] < ctx.author.roles[-1] # require a lesser role
     canBan = canBan and (not target.guild_permissions.administrator or target.bot) # can't ban admins (but can ban bot admins)
