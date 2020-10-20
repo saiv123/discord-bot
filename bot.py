@@ -110,12 +110,14 @@ async def help(ctx):
     embed.add_field(name='Commands will be found on the website.',value='[Link to website](https://saiv123.github.io/discord-bot/website/>)', inline=False)
     embed.add_field(name='Please invite me to other Discords',value='[Invite bot to server](https://discord.com/api/oauth2/authorize?client_id=314578387031162882&permissions=8&scope=bot)', inline=False)
 
+    embed.set_footer(text='Help Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
     await ctx.send(embed=embed)
 
 #Gives you the github website link
 @bot.command()
 async def github(ctx):
     embed = discord.Embed(title= "GitHub Website for Bot",description="This is where you can see how the bot works",url="https://github.com/saiv123/discord-bot")
+    embed.set_footer(text='Github Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
     await ctx.send(embed=embed)
 
 # will give you a link to invite the bot to other servers
@@ -125,14 +127,17 @@ async def invite(ctx):
     embed.set_author(name='Invite the Bot to another server')
     embed.set_thumbnail(url='https://cdn.discordapp.com/avatars/314578387031162882/e4b98a4a9ca3315ca699ffe5cba5b8f1.png?size=1024')
     embed.add_field(name='Please invite me to other Discords',value='[Invite bot to server](https://discord.com/api/oauth2/authorize?client_id=314578387031162882&permissions=8&scope=bot)', inline=False)
+    embed.set_footer(text='Invite Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
     await ctx.send(embed=embed)
 
 # magic 8 ball
 @bot.command()
-async def shouldI(ctx, *i):
+async def shouldI(ctx, *, msg:str):
     i = ' '.join(i)
     phrases = ['Yes! Go $','No, it won\'t work.','Hmmm, $ might be a fine idea','Unclear, consider rewording $','I don\'t know, ask someone else about $']
-    await ctx.send(random.choice(phrases).replace('$', i))
+    embed = discord.Embed(title='Should I...', description='{}\n{}'.format(i, random.choice(phrases).replace('$', i)))
+    embed.set_footer(text='Asked by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+    await ctx.send(embed=embed)
 
 # says hello to your
 @bot.command()
@@ -200,6 +205,7 @@ async def stats(ctx):
     # embed.add_field(name='My core body temperature:',value=temp.replace("temp=", ""), inline=True)
     embed.add_field(name='Quote cus I know you\'re bored:', value='"' +quote['quote'] + '"\n\t~' + quote['author'], inline=False)
 
+    embed.set_footer(text='Status Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
     await ctx.send(embed=embed)
 
 # return the answers to defenet integrals
@@ -225,7 +231,8 @@ async def wolfram(ctx, *, func:str):
         for msg in splitLongStrings(res[i].text, chars=1024):
             embed.add_field(name='Answer {}:'.format(i+1) if opener and len(res) > 1 else chr(0xffa0),value=msg, inline=False)
             opener = False
-
+    
+    embed.set_footer(text='Answer Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
     await ctx.send(embed=embed)
 
 # sends a warming quote
@@ -233,6 +240,7 @@ async def wolfram(ctx, *, func:str):
 async def quote(ctx):
     quote = apis.quote_to_discord_embed(quotes.getQuoteJSON())
     quote.set_thumbnail(url='https://clipart.info/images/ccovers/1531011033heart-emoji.png')
+    quote.set_footer(text='Quote Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
     await ctx.send(embed=quote)
 
 # sends a random quote
@@ -240,14 +248,18 @@ async def quote(ctx):
 @commands.cooldown(3, 60, commands.BucketType.user)
 async def randquote(ctx):
     quote = quotes.getQuoteApi()
-    await ctx.send(embed=apis.quote_to_discord_embed(quote))
+    embed = apis.quote_to_discord_embed(quote)
+    embed.set_footer(text='Quote Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+    await ctx.send(embed=embed)
 
 # sends a random piece of advice
 @bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(3, 60, commands.BucketType.user)
 async def advice(ctx):
     advice = apis.advice()
-    await ctx.send(embed=apis.quote_to_discord_embed(advice))
+    embed = apis.quote_to_discord_embed(advice)
+    embed.set_footer(text='Advice Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+    await ctx.send(embed=embed)
 
 # sends 2 stupid donald trump quotes and their contradiction score
 @bot.command(cls=OwnersIgnoreCooldown)
@@ -275,6 +287,7 @@ memePath = 'ClassWork/'
 async def meme(ctx, *args):
     query = ' '.join(args)
     for embed in getEmbedsFromLibraryQuery(memePath, query):
+        embed.set_footer(text='Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
         await ctx.send(embed=embed)
 
 # for getting nsfw images from the library
@@ -289,9 +302,12 @@ async def nsfw(ctx, *args):
         if(ctx.channel.is_nsfw()):  # checks if the channel the command was sent from is nsfw
             query = ' '.join(args)
             for embed in getEmbedsFromLibraryQuery(prawnPath, query):
+                embed.set_footer(text='Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
                 await ctx.send(embed=embed)
         else:
-            await ctx.send("Sorry, but this command can only be used in a NSFW channel.")
+            embed = discord.Embed(title='Sorry',description='I\'m sorry {}, $nsfw can only be used in an NSFW channel'.format(ctx.message.author.name))
+            embed.set_footer(text='Porn Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+            await ctx.send(embed=embed)
 
 # Contact command
 @bot.command(cls=OwnersIgnoreCooldown)
@@ -341,9 +357,11 @@ async def space(ctx, *, msg:str):
         await ctx.send('That message would be {0} characters, waaaay higher than the limit of {1}. Chill.'.format(exp_len, SPACE_LEN_HARD_CAP))
         return
     
-    to_send = (' '*max(1, space)).join(msg)
-    for msg in splitLongStrings(to_send):
-        await ctx.send(msg)
+    embed = discord.Embed(title=chr(0xffa0))
+    for msg in splitLongStrings((' '*max(1, space)).join(msg), chars=500):
+        embed.add_field(name=chr(0xffa0), value=msg, inline=False)
+    embed.set_footer(text='Space Out Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+    await ctx.send(embed=embed)
 
 # rock paper scissors game with the bot (maybe buggy so no touchy)
 RPS_HARD_CAP = 6
@@ -528,9 +546,12 @@ async def color(ctx, *, inputColor:str):
 @bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(1, 30, commands.BucketType.user)
 async def ping(ctx):
-    msg = await ctx.send('Pong! \nLatency: {0}ms'.format(round(bot.latency*1000, 1)))
+    msg = await ctx.send('Latency: {0}ms'.format(round(bot.latency*1000, 1)))
     t = (msg.created_at - ctx.message.created_at).total_seconds() * 1000
-    await msg.edit(content='{0}\nRound Trip Time: {1}ms'.format(msg.content,round(t, 1)))
+    
+    embed = discord.Embed(title='Ping', description='{}\nRound Trip Time: {}ms'.format(msg.content, round(t, 1)))
+    embed.set_footer(text='Ping Measured by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+    await msg.edit(content=None, embed=embed)
 
 ###########################
 ###Server Admin Commands###
@@ -738,6 +759,7 @@ async def servers(ctx):
 # command will change offten to test out commands
 @bot.command()
 async def test(ctx):
+    if not isOwner(ctx): return
     if ctx.message.author.mention:
         await ctx.send(ctx.message.author.mention)
     else:
