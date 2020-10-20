@@ -555,9 +555,10 @@ async def kick(ctx):
     canKick = canKick and target.roles[-1] < ctx.author.roles[-1] # require a lesser role
     canKick = canKick and target.id != ctx.author.id # you can't kick yourself
     canKick = canKick and (not target.guild_permissions.administrator or target.bot) # can't kick admins (but can kick bot admins)
+    if ctx.author.id == ctx.guild.owner.id: canKick = True # can't say no to the owners
 
     if not canKick:
-        await ctx.send("You can not kick <@"+str(target.id)+"> \nthey either have permissions higher or equal to you.")
+        await ctx.send("You cannot kick <@"+str(target.id)+"> \nthey have permissions higher than or equal to yours.")
         return
 
     # we can kick now
@@ -569,13 +570,13 @@ async def kick(ctx):
 #banning command
 @bot.command()
 async def ban(ctx):
-        perms = ctx.author.guild_permissions
+    perms = ctx.author.guild_permissions
     if not (perms.administrator or perms.ban_members) or bot.user.permissions_in(ctx.message.channel).ban_members:
         await ctx.send("*One of us* doesn't have the permissions to do that...")
         return
     
     if len(ctx.message.mentions) == 0:
-        await ctx.send("You need to ping someone from this server to kick")
+        await ctx.send("You need to ping someone from this server to ban")
         return
     
     target = ctx.message.mentions[0]
@@ -584,6 +585,7 @@ async def ban(ctx):
     canBan = canBan and target.roles[-1] < ctx.author.roles[-1] # require a lesser role
     canBan = canBan and target.id != ctx.author.id # you can't ban yourself
     canBan = canBan and (not target.guild_permissions.administrator or target.bot) # can't ban admins (but can ban bot admins)
+    if ctx.author.id == ctx.guild.owner.id: canBan = True # can't say no to the owners
 
     if not canBan:
         await ctx.send("You cannot ban <@"+str(target.id)+"> \nthey have permissions higher than or equal to yours.")
