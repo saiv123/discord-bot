@@ -327,8 +327,9 @@ async def space(ctx, *, msg:str):
         msg = re.sub(r'\s+','', msg.replace(str(space), ' '))
     else: space = 1
 
-    if not isOwner(ctx) and len(msg)*(space+1) <= SPACE_LEN_HARD_CAP:
-        await ctx.send('That message would be {0} characters, waaaay higher than the limit of {1}. Chill.'.format(len(msg)*(space+1), SPACE_LEN_HARD_CAP))
+    exp_len = (len(msg)-1)*space + len(msg)
+    if not isOwner(ctx) and exp_len >= SPACE_LEN_HARD_CAP:
+        await ctx.send('That message would be {0} characters, waaaay higher than the limit of {1}. Chill.'.format(exp_len, SPACE_LEN_HARD_CAP))
         return
     
     to_send = (' '*max(1, space)).join(msg)
