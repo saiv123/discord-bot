@@ -51,6 +51,7 @@ async def on_ready():
     print('-----------')
 
 # for every message it does these checks
+DEL_CMD = True
 @bot.event
 async def on_message(message):
     channel = message.channel
@@ -63,6 +64,12 @@ async def on_message(message):
 
     # Respond to last command
     await bot.process_commands(message)
+
+    # check if it responed to a command
+    ran_cmd = message.content.startswith(bot.command_prefix) and message.content.split(' ')[0].strip(bot.command_prefix).lower() in [cmd.name.lower() for cmd in bot.commands]
+    if DEL_CMD:
+        if message.guild.get_member(bot.user.id).permissions_in(message.channel).manage_messages:
+            await message.delete()
 
 #spits out the errors
 @bot.event
