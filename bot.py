@@ -83,9 +83,9 @@ async def on_command_error(ctx, error):
         cmd_list = [cmd.name for cmd in bot.commands]
         mlo = getClosestFromList(cmd_list, cmd)
         if distance(cmd, mlo) <= 0.6*len(cmd):
-            msgSend= f"Sorry, but that is not a valid command. Did you mean {mlo}?\n\nYou can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
+            msgSend= f"Sorry, but that is not a valid command. Did you mean {mlo}?\n\nYou can add suggestions at <https://github.com/saiv123/discord-bot/issues/new/choose>"
         else:
-            msgSend = "Sorry but that is not a valid command\nYou can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
+            msgSend = "Sorry but that is not a valid command\nYou can add suggestions at <https://github.com/saiv123/discord-bot/issues/new/choose>"
     await ctx.send(msgSend)
     print(error)
     print(traceback.format_exc()) # Attempt to print exception
@@ -102,7 +102,7 @@ async def help(ctx):
 
     embed.set_author(name='Help')
     embed.set_thumbnail(url='https://cdn.discordapp.com/avatars/314578387031162882/e4b98a4a9ca3315ca699ffe5cba5b8f1.png?size=1024')
-    embed.add_field(name='Commands will be found on the website.',value='[Link to website](https://saiv123.github.io/discord-bot/website/)', inline=False)
+    embed.add_field(name='Commands will be found on the website.',value='[Link to website](https://saiv123.github.io/discord-bot/website/>)', inline=False)
     embed.add_field(name='Please invite me to other Discords',value='[Invite bot to server](https://discord.com/api/oauth2/authorize?client_id=314578387031162882&permissions=8&scope=bot)', inline=False)
 
     await ctx.send(embed=embed)
@@ -110,7 +110,7 @@ async def help(ctx):
 #Gives you the github website link
 @bot.command()
 async def github(ctx):
-    embed = discord.Embed(title= "[GitHub Website for Bot]",discritpion="This is where you can see how the bot works",url="https://github.com/saiv123/discord-bot")
+    embed = discord.Embed(title= "[GitHub Website for Bot]",description="This is where you can see how the bot works",url="https://github.com/saiv123/discord-bot")
     await ctx.send(embed=embed)
 
 # will give you a link to invite the bot to other servers
@@ -292,7 +292,7 @@ async def nsfw(ctx, *args):
 @bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(3, 60, commands.BucketType.user)
 async def contact(ctx):
-    msg = "Discord: Sai#3400\nDiscord server: https://discord.gg/2zUTJ7j\n"
+    msg = "Discord: Sai#3400\nDiscord server: <https://discord.gg/2zUTJ7j>\n"
     if(ctx.channel.id == 674120261691506688):  # channel specific to my discord server
         msg += cont
     id = ctx.message.author.id
