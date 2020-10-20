@@ -317,6 +317,17 @@ async def song(ctx, *, songName:str):
         print(e)
         await ctx.send("The command was either used incorrectly or the song was not found\nCommand is used like:```$song songTitle by songArtist```")
 
+SPACE_LEN_HARD_CAP = 4000
+@bot.command()
+async def space(ctx, *, space:int=1, msg:str):
+    if not isOwner(ctx) and len(msg)*space <= SPACE_LEN_HARD_CAP:
+        await ctx.send('That message would be {0} characters, waaaay higher than the limit of {1}. Chill.'.format(len(msg)*space, SPACE_LEN_HARD_CAP))
+        return
+    
+    to_send = (' '*max(1, space)).join(msg.replace(' ',''))
+    for msg in splitLongStrings(to_send):
+        await ctx.send(msg)
+
 # rock paper scissors game with the bot (maybe buggy so no touchy)
 RPS_HARD_CAP = 6
 @bot.command()
