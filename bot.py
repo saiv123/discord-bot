@@ -512,7 +512,7 @@ async def color(ctx, *, inputColor:str):
 @commands.cooldown(1, 30, commands.BucketType.user)
 async def ping(ctx):
     msg = await ctx.send('Pong! \nLatency: {0}ms'.format(round(bot.latency*1000, 1)))
-    t = (msg.timestamp - ctx.message.timestamp).total_seconds() * 1000
+    t = (msg.created_at - ctx.message.created_at).total_seconds() * 1000
     await msg.edit(content='{0}\nRound Trip Time: {1}ms'.format(msg.content,round(t, 1)))
 
 ###########################
