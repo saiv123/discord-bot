@@ -214,7 +214,7 @@ async def wolfram(ctx, *, func:str):
     for i in range(len(res)):
         opener = True
         for msg in splitLongStrings(res[i].text, chars=1024):
-            embed.add_field(name='Answer {}'.format(i+1) if opener else chr(0xffa0),value=msg, inline=False)
+            embed.add_field(name='Answer {}:'.format(i+1) if opener and len(res) > 1 else chr(0xffa0),value=msg, inline=False)
             opener = False
 
     await ctx.send(embed=embed)
