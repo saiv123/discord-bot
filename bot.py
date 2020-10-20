@@ -559,16 +559,16 @@ async def userinfo(ctx):
 @bot.command()
 async def kick(ctx):
     perms = ctx.author.guild_permissions
-    if not (perms.administrator or perms.kick_members) or ctx.guild.get_member(bot.user.id).permissions_in(ctx.message.channel).kick_members:
+    if not (perms.administrator or perms.kick_members) or not ctx.guild.get_member(bot.user.id).permissions_in(ctx.message.channel).kick_members:
         await ctx.send("*One of us* doesn't have the permissions to do that...")
         return
-    print('c1')
+
     if len(ctx.message.mentions) == 0:
         await ctx.send("You need to ping someone from this server to kick")
         return
     
     target = ctx.message.mentions[0]
-    print('c2')
+
     canKick = True # I can't stand all these `if`s
     canKick = canKick and target.roles[-1] < ctx.author.roles[-1] # require a lesser role
     canKick = canKick and target.id != ctx.author.id # you can't kick yourself
@@ -589,7 +589,7 @@ async def kick(ctx):
 @bot.command()
 async def ban(ctx):
     perms = ctx.author.guild_permissions
-    if not (perms.administrator or perms.ban_members) or bot.user.permissions_in(ctx.message.channel).ban_members:
+    if not (perms.administrator or perms.ban_members) or not ctx.guild.get_member(bot.user.id).permissions_in(ctx.message.channel).ban_members:
         await ctx.send("*One of us* doesn't have the permissions to do that...")
         return
     
