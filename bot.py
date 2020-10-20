@@ -206,10 +206,17 @@ async def definte(ctx, a:int, b:int, *, func:str):
 @commands.cooldown(3, 60, commands.BucketType.user)
 async def wolfram(ctx, *, func:str):
     res = client.query(func)
-    res = next(res.results).text
+    res = list(res.results)
 
-    embed=discord.Embed(title="Wolfram Aplha", description=func+':\n'+res)
+    embed=discord.Embed(title="Wolfram Aplha", description=func)
     embed.set_thumbnail(url="https://cdn.iconscout.com/icon/free/png-512/wolfram-alpha-2-569293.png")
+
+    for i in range(len(res)):
+        opener = True
+        for msg in splitLongStrings(res[i].text, chars=1024):
+            embed.add_field(name='Answer {}'.format(i+1) if opener else chr(0xffa0),value=msg, inline=False)
+            opener = False
+
     await ctx.send(embed=embed)
 
 # sends a warming quote
