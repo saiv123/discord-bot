@@ -70,17 +70,20 @@ async def on_command_error(ctx, error):
     msgSend = "An internal error has occured. Use $contact to contact the owner if it persists"
     if isinstance(error, commands.MissingRequiredArgument):
         e_msg = ', a'.join(str(error.param).replace('params','').split(':'))
-        msgSend = f'You did not use the command correctly\nYou\'re missing {e_msg}\nIf you dont know how to use the command, use the $help command\nto see how to use all commands.'
+        msgSend = f'You did not use the command correctly\nYou\'re missing {e_msg}\n\nIf you dont know how to use the command, use the $help command\nto see how to use all commands.'
         print('arg' + str(error.args))
         print('params' + str(error.param))
+    elif isinstance(error, commands.BadArgument):
+        e_msg = ' and '.join(error.args)
+        msgSend = f'You did not use the command correctly\nYou\'re arguements are wrong: {e_msg}\n\nIf you dont know how to use the command, use the $help command\nto see how to use all commands.'
     elif isinstance(error, commands.CommandOnCooldown):
         msgSend = 'You\'re on cooldown for '+ctx.invoked_with + '.\nPlease wait another '+str(round(error.retry_after))+' seconds'
     elif isinstance(error, commands.CommandNotFound):
         cmd = str(ctx.invoked_with)
         cmd_list = [cmd.name for cmd in bot.commands]
         mlo = getClosestFromList(cmd_list, cmd)
-        if distance(cmd, mlo) <= 0.4*len(cmd):
-            msgSend="Sorry, but that is not a valid command. Did you mean "+mlo+"?\n\nYou can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
+        if distance(cmd, mlo) <= 0.6*len(cmd):
+            msgSend= f"Sorry, but that is not a valid command. Did you mean {mlo}?\n\nYou can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
         else:
             msgSend = "Sorry but that is not a valid command\nYou can add suggestions at https://github.com/saiv123/discord-bot/issues/new/choose"
     await ctx.send(msgSend)
