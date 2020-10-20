@@ -520,7 +520,7 @@ async def userinfo(ctx):
              embed = discord.Embed(title="User information", colour=discord.Color.gold(), timestamp= datetime.fromtimestamp(time.time()))
              embed.set_author(name=target.name, icon_url=target.avatar_url)
              embed.set_thumbnail(url=target.avatar_url)
-             embed.set_footer(text="Made By Mr.KapiBara", icon_url="https://cdn.discordapp.com/attachments/618434755981213716/718861010223497236/kapi-1.png")
+             embed.set_footer(text='Info Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
 
              fields = [("Name", str(target), False),
                    ("Status", target.raw_status, False),
