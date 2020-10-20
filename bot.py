@@ -357,9 +357,10 @@ async def space(ctx, *, msg:str):
         await ctx.send('That message would be {0} characters, waaaay higher than the limit of {1}. Chill.'.format(exp_len, SPACE_LEN_HARD_CAP))
         return
     
-    embed = discord.Embed(title=chr(0xffa0))
-    for msg in splitLongStrings((' '*max(1, space)).join(msg), chars=500):
-        embed.add_field(name=chr(0xffa0), value=msg, inline=False)
+    msgs = splitLongStrings((' '*max(1, space)).join(msg), chars=500)
+    embed = discord.Embed(title=chr(0xffa0), description=msgs.pop(0))
+    for msg in msgs: embed.add_field(name=chr(0xffa0), value=msg, inline=False)
+    
     embed.set_footer(text='Space Out Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
     await ctx.send(embed=embed)
 
