@@ -129,7 +129,7 @@ async def shouldI(ctx, *i):
 @bot.command()
 async def hi(ctx):
     await ctx.message.delete()
-    await ctx.send("Hello {0.message.author.mention}!!!!!!!".format(ctx))
+    await ctx.send("Hello {0}!!!".format(ctx.message.author.mention))
 
 # for the user to see their notes
 @bot.command()
