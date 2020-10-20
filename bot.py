@@ -569,27 +569,31 @@ async def kick(ctx):
 #banning command
 @bot.command()
 async def ban(ctx):
-    perms = ctx.author.guild_permissions
-    if perms.administrator or perms.ban_members:
-        if len(ctx.message.mentions) != 0:
-            target = ctx.message.mentions[0]
-            if ctx.guild.owner_id == ctx.author.id:
-                msg= msgReturn("ban")
-                await ctx.send(msg.format(target.name))
-                print("banning person")
-            elif target != ctx.guild.get_member(ctx.author.id) and target.guild_permissions.administrator != True:
-                #
-                #
-                # add logic later
-                msg= msgReturn("ban")
-                await ctx.send(msg.format(target.name))
-                print("banning person")
-            else:
-                await ctx.send("You can not ban <@"+str(target.id)+"> \nthey either have permissions higher or equal to you.")
-        else:
-            await ctx.send("You need to ping someone from this server to ban")
-    else:
-        await ctx.send("Not enough permissions")
+        perms = ctx.author.guild_permissions
+    if not (perms.administrator or perms.ban_members) or bot.user.permissions_in(ctx.message.channel).ban_members:
+        await ctx.send("*One of us* doesn't have the permissions to do that...")
+        return
+    
+    if len(ctx.message.mentions) == 0:
+        await ctx.send("You need to ping someone from this server to kick")
+        return
+    
+    target = ctx.message.mentions[0]
+    
+    canBan = True # I can't stand all these `if`s
+    canBan = canBan and target.roles[-1] < ctx.author.roles[-1] # require a lesser role
+    canBan = canBan and target.id != ctx.author.id # you can't ban yourself
+    canBan = canBan and (not target.guild_permissions.administrator or target.bot) # can't ban admins (but can ban bot admins)
+
+    if not canBan:
+        await ctx.send("You cannot ban <@"+str(target.id)+"> \nthey have permissions higher than or equal to yours.")
+        return
+
+    # we can ban now
+    msg = msgReturn("ban")
+    await ctx.send(msg.format(target.name))
+    print('Banning')
+    await target.ban()
 
 ################################
 ###Commands to make you unsad###
