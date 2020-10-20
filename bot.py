@@ -568,7 +568,7 @@ async def kick(ctx):
         return
     
     target = ctx.message.mentions[0]
-
+    print(target)
     canKick = True # I can't stand all these `if`s
     canKick = canKick and target.roles[-1] < ctx.author.roles[-1] # require a lesser role
     canKick = canKick and target.id != ctx.message.author.id # you can't kick yourself
