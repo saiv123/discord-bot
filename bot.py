@@ -321,8 +321,11 @@ SPACE_LEN_HARD_CAP = 4000
 @bot.command()
 async def space(ctx, *, msg:str):
     # extract the first message from msg
-    try: space = int(re.findall(r'\d+',msg)); msg = re.sub(r'\s+','', msg.replace(str(space), ' '))
-    except: space = 1
+    ints = re.findall(r'\d+',msg)
+    if len(ints) > 0: 
+        space = int(ints[0])
+        msg = re.sub(r'\s+','', msg.replace(str(space), ' '))
+    else: space = 1
 
     if not isOwner(ctx) and len(msg)*(space+1) <= SPACE_LEN_HARD_CAP:
         await ctx.send('That message would be {0} characters, waaaay higher than the limit of {1}. Chill.'.format(len(msg)*(space+1), SPACE_LEN_HARD_CAP))
