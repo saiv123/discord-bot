@@ -534,26 +534,29 @@ async def userinfo(ctx):
 @bot.command()
 async def kick(ctx):
     perms = ctx.author.guild_permissions
-    if perms.administrator or perms.kick_members:
-        if len(ctx.message.mentions) != 0:
-            target = ctx.message.mentions[0]
-            if ctx.guild.owner_id == ctx.author.id:
-                msg= msgReturn("kick")
-                await ctx.send(msg.format(target.name))
-                print("kicking person")
-            elif target != ctx.guild.get_member(ctx.author.id) and target.guild_permissions.administrator != True:
-                #
-                #
-                # add logic later
-                msg= msgReturn("kick")
-                await ctx.send(msg.format(target.name))
-                print("kicking person")
-            else:
-                await ctx.send("You can not kick <@"+str(target.id)+"> \nthey either have permissions higher or equal to you.")
-        else:
-            await ctx.send("You need to ping someone from this server to kick")
-    else:
+    if not (perms.administrator or perms.kick_members):
         await ctx.send("Not enough permissions")
+        return
+    
+    if len(ctx.message.mentions) == 0:
+        await ctx.send("You need to ping someone from this server to kick")
+        return
+    
+    target = ctx.message.mentions[0]
+    
+    canKick = True # I can't stand all these `if`s
+    canKick = canKick and target.roles[-1] < ctx.author.roles[-1] # require a lesser role
+    canKick = canKick and target.id != ctx.author.id # you can't kick yourself
+    canKick = canKick and (not target.guild_permissions.administrator or target.bot) # can't kick admins (but can kick bot admins)
+
+    if not canKick:
+        await ctx.send("You can not kick <@"+str(target.id)+"> \nthey either have permissions higher or equal to you.")
+        return
+
+    # we can kick now
+    msg= msgReturn("kick")
+    await ctx.send(msg.format(target.name))
+    print("kicking person")
 
 #banning command
 @bot.command()
