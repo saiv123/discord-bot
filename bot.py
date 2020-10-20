@@ -534,8 +534,8 @@ async def userinfo(ctx):
 @bot.command()
 async def kick(ctx):
     perms = ctx.author.guild_permissions
-    if not (perms.administrator or perms.kick_members):
-        await ctx.send("Not enough permissions")
+    if not (perms.administrator or perms.kick_members) or bot.user.permissions_in(ctx.message.channel).kick_members:
+        await ctx.send("*One of us* doesn't have the permissions to do that...")
         return
     
     if len(ctx.message.mentions) == 0:
@@ -554,9 +554,10 @@ async def kick(ctx):
         return
 
     # we can kick now
-    msg= msgReturn("kick")
+    msg = msgReturn("kick")
     await ctx.send(msg.format(target.name))
-    print("kicking person")
+    print('Kicking')
+    await target.kick()
 
 #banning command
 @bot.command()
