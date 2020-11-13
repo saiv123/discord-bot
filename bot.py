@@ -62,7 +62,7 @@ async def on_message(message):
     elif "bird" in message.content.lower() and message.author != bot.user:
         await channel.send("The birds work for the bourgeoisie.")
     elif "nut" in message.content.lower() and message.author != bot.user:
-        if(ctx.guild is None and ctx.message.author != bot.user):
+        if(message.guild is None and message.author != bot.user):
             print("dm nut")
         else:
             if(channel.is_nsfw()):  # checks if the channel the command was sent from is nsfw
