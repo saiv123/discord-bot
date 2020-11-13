@@ -65,8 +65,8 @@ async def on_message(message):
         if(ctx.guild is None and ctx.message.author != bot.user):
             print("dm nut")
         else:
-            if(ctx.channel.is_nsfw()):  # checks if the channel the command was sent from is nsfw
-                await ctx.send("https://cdn.discordapp.com/attachments/606355593887744013/726970883884711956/video0_1-8.mp4")
+            if(channel.is_nsfw()):  # checks if the channel the command was sent from is nsfw
+                await channel.send("https://cdn.discordapp.com/attachments/606355593887744013/726970883884711956/video0_1-8.mp4")
             else:
                 print("not in nsfw channel")
 
