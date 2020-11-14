@@ -69,6 +69,8 @@ async def on_message(message):
                 await channel.send("https://cdn.discordapp.com/attachments/606355593887744013/726970883884711956/video0_1-8.mp4")
             else:
                 print("not in nsfw channel")
+    elif "pog" in message.content.lower() and message.author != bot.user and message.guild.id == 759462211818225684:
+        await channel.send("https://tenor.com/view/oh-omg-fish-shookt-triggered-gif-9720855")
 
     # Respond to last command
     await bot.process_commands(message)
