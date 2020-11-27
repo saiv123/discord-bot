@@ -1,3 +1,8 @@
+import discord
+intents = discord.Intents.default()
+intents.typing = True
+intents.presences = True
+
 #all of the py libraires used
 import sys, os, re
 import traceback
@@ -27,7 +32,7 @@ from Levenshtein import distance
 client = wolframalpha.Client(id)
 
 # setting up the bot, with its discritpion etc.
-bot = commands.Bot(command_prefix='$', description="Its a Sick use-less bot")
+bot = commands.Bot(command_prefix='$', description="Its a Sick use-less bot", intents=intents)
 ts = time.time()
 
 # setting up LyricGenius stuff
