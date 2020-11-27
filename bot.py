@@ -2,6 +2,7 @@ import discord
 intents = discord.Intents.default()
 intents.typing = True
 intents.presences = True
+Intents.members = True
 
 #all of the py libraires used
 import sys, os, re
