@@ -787,6 +787,7 @@ async def servers(ctx):
 async def test(ctx):
     if not isOwner(ctx): return
     member = ctx.author
+    print(dict(bot.intents))
     print(member.status)
 
 # runs the bot after all the methods have been loaded to memory
