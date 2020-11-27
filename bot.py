@@ -575,6 +575,7 @@ async def userinfo(ctx):
         x = ctx.guild.members
         if len(ctx.message.mentions) != 0:
              target = ctx.message.mentions[0]
+             print(str(target), target.raw_status)
              roles = [role for role in target.roles[1:]]
 
              embed = discord.Embed(title="User information", colour=discord.Color.gold(), timestamp= datetime.fromtimestamp(time.time()))
