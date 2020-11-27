@@ -575,7 +575,6 @@ async def userinfo(ctx):
         x = ctx.guild.members
         if len(ctx.message.mentions) != 0:
              target = ctx.message.mentions[0]
-             print(str(target), target.raw_status)
              roles = [role for role in target.roles[1:]]
 
              embed = discord.Embed(title="User information", colour=discord.Color.gold(), timestamp= datetime.fromtimestamp(time.time()))
@@ -782,10 +781,7 @@ async def servers(ctx):
 @bot.command()
 async def test(ctx):
     if not isOwner(ctx): return
-    if ctx.message.author.mention:
-        await ctx.send(ctx.message.author.mention)
-    else:
-        await ctx.send("no mention")
+
 
 # runs the bot after all the methods have been loaded to memory
 bot.run(TOKEN)
