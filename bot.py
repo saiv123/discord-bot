@@ -583,8 +583,9 @@ async def userinfo(ctx):
              embed.set_thumbnail(url=target.avatar_url)
              embed.set_footer(text='Info Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
 
+             status = target.raw_status #for some reason you cant use userinfo other than for your self
              fields = [("Name", str(target), False),
-                   ("Status", target.raw_status, False),
+                   ("Status", status, False),
                    (f"Roles ({len(roles)})", " ".join([role.mention for role in roles]), False),
                    ("Created at", target.created_at.strftime("%d/%m/%Y %H:%M:%S"), False),
                    ("Joined at", target.joined_at.strftime("%d/%m/%Y %H:%M:%S"), False)]
