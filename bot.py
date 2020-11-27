@@ -584,10 +584,9 @@ async def userinfo(ctx):
              embed.set_footer(text='Info Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
 
              #this checks if the user has no roles it will say they have no roles
+             listRoles = "User has no roles"
              if len(roles) != 0:
                  listRoles = " ".join([role.mention for role in roles])
-            else:
-                listRoles = "User has no roles"
 
              fields = [("Name", str(target), False),
                    ("Status", target.raw_status, False),
