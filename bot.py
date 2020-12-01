@@ -149,7 +149,7 @@ async def invite(ctx):
 # magic 8 ball
 @bot.command()
 async def shouldI(ctx, *, msg:str):
-    i = ' '.join(msg)
+    msg = ' '.join(msg)
     phrases = ['Yes! Go $','No, it won\'t work.','Hmmm, $ might be a fine idea','Unclear, consider rewording $','I don\'t know, ask someone else about $']
     embed = discord.Embed(title='Should I...', description='{}\n{}'.format(i, random.choice(phrases).replace('$', i)))
     embed.set_footer(text='Asked by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
