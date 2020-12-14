@@ -36,7 +36,7 @@ class OwnersIgnoreCooldown(commands.Command):
         try:
             return await super().prepare(ctx)
         except commands.CommandOnCooldown as e:
-            if isOwner(ctx.message.author.id):
+            if isOwner(ctx):
                 return
             else:
                 raise e
@@ -83,7 +83,7 @@ def add_to_embed(embed:discord.Embed or str or None, message:str or list, chars:
     current_fields = '\n'.join([x.value for x in embed.fields])
     if isinstance(message, list): message = '\n'.join(message)
     message = f'{current_fields}\n{message}'
-    
+
     dummy_embed = discord.Embed(title=chr(0xffa0))
     dummy_embed.author = embed.author; dummy_embed.footer = embed.footer
     dummy_embed.provider = embed.provider
