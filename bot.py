@@ -10,7 +10,7 @@ import traceback
 import asyncio, discord
 import wolframalpha
 import time, datetime
-from datetime import datetime
+from datetime import date
 import json, random
 import lyricsgenius as LyrGen
 from discord.ext import commands, tasks
@@ -201,7 +201,9 @@ async def notes(ctx, *, notes=" "):
     await ctx.message.delete()
     # opens the file if the users file in there otherwise it will make it
     with open(nameNote, 'a') as file:
-        file.write(str(datetime.datetime.now()) + " -- " +notes + "\n")  # formating and saving to the file
+        today = date.today()
+        d1 = today.strftime("%d/%m/%Y")
+        file.write(str(d1) + " -- " +notes + "\n")  # formating and saving to the file
     await ctx.send("{0.message.author.mention} Your Note is recorded and locked up.".format(ctx))
     del nameNote  # deletes the variable so it will free up some ram
 
