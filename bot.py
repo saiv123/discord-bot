@@ -11,6 +11,7 @@ import asyncio, discord
 import wolframalpha
 import time, datetime
 from datetime import date
+from datetime import datetime
 import json, random
 import lyricsgenius as LyrGen
 from discord.ext import commands, tasks
@@ -585,9 +586,7 @@ async def userinfo(ctx):
         if len(ctx.message.mentions) != 0:
              target = ctx.message.mentions[0]
              roles = [role for role in target.roles[1:]]
-             today = date.today()
-             d1 = today.strftime("%d/%m/%Y")
-             embed = discord.Embed(title="User information", colour=discord.Color.gold(), timestamp= today)
+             embed = discord.Embed(title="User information", colour=discord.Color.gold(), timestamp= datetime.fromtimestamp(time.time()))
              embed.set_author(name=target.name, icon_url=target.avatar_url)
              embed.set_thumbnail(url=target.avatar_url)
              embed.set_footer(text='Info Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
