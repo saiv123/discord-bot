@@ -392,7 +392,6 @@ RPS_HARD_CAP = 6
 @bot.command()
 async def rps(ctx, *, level=1):
     # local variables
-    user = ("<@" + str(ctx.message.author.id) + ">")
     if level > RPS_HARD_CAP and not isOwner(ctx):
         msgs = add_to_embed('Level too high!', f'Sorry, but even though the code for it exists, why would you ever want to play rps-{level*2+1}???')
         for msg in msgs:
@@ -456,17 +455,24 @@ async def rps(ctx, *, level=1):
 async def rpsc(ctx, user:discord.User, *, level=1):
     # local variables
     if level > RPS_HARD_CAP and not isOwner(ctx):
-        await ctx.send(user+'Sorry, but even though the code for it exists, why would you ever want to play rps-'+str(level*2+1)+', let alone with someone else???')
+        msgs = add_to_embed('Level too high!', f'Sorry, but even though the code for it exists, why would you ever want to play rps-{level*2+1}???')
+        for msg in msgs:
+            msg.set_footer(text='RPS Played by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+            await ctx.send(msg)
         return
+
     symbol_names = ['rock','paper','scissors','spock','lizard','alien','well','generic','karen','heat','lemonade']
+    
     # Extend symbol names if necessary
     for i in range(len(symbol_names),level*2+5):
         symbol_names.append('item'+str(i))
+    
     # Generate matrix
     matrix = gen_rps_matrix(level)
 
     msg = 'You are challenging '+user.name+' to rock-paper-scissors'
-    if level > 1: msg = msg+'-'+str(level*2+1)
+    if level > 1:
+        msg = msg+'-'+str(level*2+1)
     await ctx.send(msg+'\nCheck your DMs!')
 
     def get_check(user):
@@ -474,96 +480,78 @@ async def rpsc(ctx, user:discord.User, *, level=1):
             return msg.author == user and msg.channel == user.dm_channel
         return check
 
+    def get_response(_user, title='RPSC', timeout=10*60):
+        choice = symbol_names[0]
+        i = 0
+        while i < 3:
+            i += 1
+            for msg in add_to_embed(title, 'Your choices are '+', '.join(symbol_names[:2*level+1]+['rules','abort'])):
+                await _user.send(msg)
+            
+            try:
+                msg = await bot.wait_for('message', check=get_check(_user),timeout=timeout)
+            except:
+                await _user.send(add_to_embed(title, f'Awww, {_user.name} don\'t leave me hangin\'')[0])
+                return -1 # Abort challenge if you don't send an answer
+            
+            response = msg.content.lower().replace(' ','_').replace('\n','')
+            choice = getClosestFromList(['abort','rules']+symbol_names,response.lower())
+
+            if distance(response, choice) >= len(response)*0.3:
+                await _user.send('No option recognized, try again')
+
+            if 'abort' in choice.lower():
+                return -1
+
+            if 'rules' in choice.lower():
+                for msg in add_to_embed(title, ' \n'.join(format_matrix(matrix, symbol_names))):
+                    await _user.send(msg)
+                i -= 1
+            else: # If neither rules or abort, it is correct
+                break
+        return symbol_names.index(choice)
+    
     # Get your response
-    your_choice = symbol_names[0]
-    i = 0
-    while i < 3:
-        i += 1
-        for msg in splitLongStrings('Your choices are '+', '.join(symbol_names[:2*level+1]+['rules','abort'])):
-            await ctx.message.author.send(msg)
-        try:
-            msg = await bot.wait_for('message', check=get_check(ctx.message.author),timeout=5*60)
-        except:
-            await ctx.message.author.send('Awww, '+user.name+' don\'t leave me hangin\'')
-            return # Abort challenge if you don't send an answer
-        response = msg.content.lower().replace(' ','_').replace('\n','')
-        your_choice = getClosestFromList(['abort','rules']+symbol_names,response.lower())
-
-        if distance(response, your_choice) >= len(response)*0.3:
-            await ctx.message.author.send('No option recognized, try again')
-
-        if 'abort' in your_choice.lower():
-            await ctx.message.author.send('Challenge cancelled')
-            await ctx.send(ctx.message.author.name+' has cancelled the challenge')
-            return
-
-        if 'rules' in your_choice.lower():
-            for msg in splitLongStrings(' \n'.join(format_matrix(matrix, symbol_names))):
-                await user.send(msg)
-            i -= 1
-        else: # If neither rules or abort, it is correct
-            break
-
-    await ctx.message.author.send('You chose '+str(your_choice))
+    your_choice = get_response(ctx.message.author, title=f'Your challenge to {user.name}')
+    if your_choice == -1:
+        await ctx.message.author.send(add_to_embed(f'Your challenge to {user.name}', 'Challenge cancelled!')[0])
+        await ctx.send(embed)
+        return
+    await ctx.message.author.send(add_to_embed(f'Your challenge to {user.name}',f'You chose {symbol_names[your_choice]}'))
 
     # Get other person's response
-    enemy_choice = symbol_names[0]
-    await user.send(str(ctx.message.author.name)+' has challenged you to rock-paper-scissors'+('-'+str(level*2+1) if level > 1 else ''))
-    i = 0
-    while i < 3:
-        i += 1
-        for msg in splitLongStrings('Your choices are '+', '.join(symbol_names[:2*level+1]+['rules','abort'])):
-            await user.send(msg)
-        try:
-            msg = await bot.wait_for('message', check=get_check(user),timeout=5*60)
-        except:
-            await user.send('Challenge cancelled')
-            await ctx.message.author.send('Your opponent has cancelled the challenge')
-            await ctx.send(user.name+' has cancelled the challenge')
-            return # Consider breaking and leaving it at default instead of cancelling
-        response = msg.content.lower().replace(' ','_').replace('\n','')
-        enemy_choice = getClosestFromList(['abort','rules']+symbol_names,response.lower())
+    await user.send(add_to_embed(None, f'{ctx.message.author.name} has challenged you to rock-paper-scissors-'+str(level*2+1) if level > 1 else '')))
+    enemy_choice = get_response(user, title=f'{ctx.message.author.name}\'s challenge')
+    if enemy_choice == -1:
+        embed = add_to_embed(f'{ctx.message.author.name}\'s challenge', 'Challenge cancelled!')[0]
+        await user.send(embed)
+        await ctx.send(embed)
+        await ctx.message.author.send(add_to_embed(f'Your challenge to {user.name}', 'Challenge cancelled by opponent')[0])
+        return
 
-        if distance(response, enemy_choice) >= len(response)*0.3:
-            await user.send('No option recognized, try again')
+    await user.send(add_to_embed(f'{ctx.message.author.name}\'s challenge', f'You chose {symbol_names[enemy_choice]}')[0])
 
-        if 'abort' in enemy_choice.lower():
-            await user.send('Challenge cancelled')
-            await ctx.message.author.send('Your opponent has cancelled the challenge')
-            await ctx.send(user.name+' has cancelled the challenge')
-            return
-
-        if 'rules' in enemy_choice.lower():
-            for msg in splitLongStrings(' \n'.join(format_matrix(matrix, symbol_names))):
-                await user.send(msg)
-            i -= 1
-        else: # If neither rules or abort, it is correct
-            break
-
-    await user.send('You chose '+str(enemy_choice))
+    msg = ""
 
     # Display results
-    await ctx.send(ctx.message.author.name+' chose '+your_choice)
-    await ctx.send(user.name+' chose '+enemy_choice)
-
-    # Calculate and display winner
-    your_choice = symbol_names.index(your_choice)
-    enemy_choice = symbol_names.index(enemy_choice)
+    msg = f'{ctx.message.author.name} chose {your_choice}'
+    msg += f'\n{user.name} chose {enemy_choice}'
 
     winner = matrix[enemy_choice][your_choice]
     if winner == 0:
-        output = "Its a draw! What a sad conclusion..."
-        await ctx.message.author.send('The bout ended in a draw')
-        await user.send('The bout ended in a draw')
+        await ctx.message.author.send(add_to_embed(f'Your challenge to {user.name}', msg.replace(ctx.message.author.name,'You')+'\nThe bout ended in a draw')[0])
+        await user.send(add_to_embed(f'{ctx.message.author.name}\'s challenge', msg.replace(user.name,'You')+'\nThe bout ended in a draw')[0])
+        msg += '\nThe bout ended in a draw'
     elif winner == 1:
-        output = ctx.message.author.name+" won. Nice job. :partying_face:"
-        await ctx.message.author.send('You won! :partying_face:')
-        await user.send('You lost')
+        await ctx.message.author.send(add_to_embed(f'Your challenge to {user.name}', msg.replace(ctx.message.author.name,'You')+'\nYou won :partying_face:')[0])
+        await user.send(add_to_embed(f'{ctx.message.author.name}\'s challenge', msg.replace(user.name,'You')+'\nYou lost.')[0])
+        msg += f'\n{ctx.message.author.name} won! :partying_face:'
     elif winner == 2:
-        output = user.name+" won. Nice job. :partying_face:"
-        await ctx.message.author.send('You lost')
-        await user.send('You won! :partying_face:')
-    await ctx.send(output)
+        msg += f'\n{user.name} won. Nice job. :partying_face:'
+        await ctx.message.author.send(add_to_embed(f'Your challenge to {user.name}', msg.replace(ctx.message.author.name,'You')+'\nYou lost')[0])
+        await user.send(add_to_embed(f'{ctx.message.author.name}\'s challenge', msg.replace(user.name,'You')+'\nYou won :partying_face:')[0])
+    
+    await ctx.send(add_to_embed(f'{ctx.message.author.name}\'s challenge', msg)[0])
 
 @bot.command()
 async def color(ctx, *, inputColor:str):
