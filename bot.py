@@ -551,7 +551,9 @@ async def rpsc(ctx, user:discord.User, *, level=1):
         await ctx.message.author.send(add_to_embed(f'Your challenge to {user.name}', msg.replace(ctx.message.author.name,'You')+'\nYou lost')[0])
         await user.send(add_to_embed(f'{ctx.message.author.name}\'s challenge', msg.replace(user.name,'You')+'\nYou won :partying_face:')[0])
     
-    await ctx.send(add_to_embed(f'{ctx.message.author.name}\'s challenge', msg)[0])
+    for embed in add_to_embed(f'{ctx.message.author.name}\'s challenge', msg):
+        embed.set_footer(text='RPS Played by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+        await ctx.send(embed)
 
 @bot.command()
 async def color(ctx, *, inputColor:str):
