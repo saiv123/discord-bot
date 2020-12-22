@@ -108,7 +108,10 @@ async def on_command_error(ctx, error):
             msgSend= f"Sorry, but that is not a valid command. Did you mean {mlo}?\n\nYou can add suggestions at <https://github.com/saiv123/discord-bot/issues/new/choose>"
         else:
             msgSend = "Sorry but that is not a valid command\nYou can add suggestions at <https://github.com/saiv123/discord-bot/issues/new/choose>"
-    await ctx.send(msgSend)
+    
+    embed = add_to_embed("Error","Command Entered: {}\n{}".format(ctx.message, msgSend))
+    embed.set_footer(text='Command Broken by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+    await ctx.send(embed)
     print(error)
     print(traceback.format_exc()) # Attempt to print exception
 
@@ -406,7 +409,7 @@ async def rps(ctx, *, level=1):
 
     # Get user choice
     def check(m):
-        return m.author is ctx.message.author and m.channel == ctx.message.channel
+        return m.author == ctx.message.author and m.channel == ctx.message.channel
 
     try:
         msg = await bot.wait_for('message', check=check,timeout=30)
@@ -567,10 +570,10 @@ async def color(ctx, *, inputColor:str):
 @bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(1, 30, commands.BucketType.user)
 async def ping(ctx):
-    msg = await ctx.send('Latency: {0}ms'.format(round(bot.latency*1000, 1)))
+    msg = await ctx.send(add_to_embed('Ping','Latency: {0}ms\nRound Trip Time: ??ms'.format(round(bot.latency*1000, 1))))
     t = (msg.created_at - ctx.message.created_at).total_seconds() * 1000
 
-    embed = discord.Embed(title='Ping', description='{}\nRound Trip Time: {}ms'.format(msg.content, round(t, 1)))
+    embed = add_to_embed('Ping','Latency: {}ms\nRound Trip Time: {}ms'.format(round(bot.latency*1000, 1), round(t, 1)))
     embed.set_footer(text='Ping Measured by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
     await msg.edit(content=None, embed=embed)
 
@@ -579,7 +582,7 @@ async def ping(ctx):
 ###########################
 
 #give information on the user
-@bot.command()
+@bot.command(aliases=["userstatus"])
 async def userinfo(ctx):
     if ctx.author.guild_permissions.administrator:
         x = ctx.guild.members
@@ -790,7 +793,9 @@ async def servers(ctx):
 @bot.command()
 async def test(ctx):
     if not isOwner(ctx): return
-    print(ctx.author.discriminator)
+    member = ctx.author
+    print(dict(bot.intents))
+    print(member.status)
 
 # runs the bot after all the methods have been loaded to memory
 bot.run(TOKEN)
