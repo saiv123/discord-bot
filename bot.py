@@ -109,9 +109,10 @@ async def on_command_error(ctx, error):
         else:
             msgSend = "Sorry but that is not a valid command\nYou can add suggestions at <https://github.com/saiv123/discord-bot/issues/new/choose>"
     
-    embed = add_to_embed("Error","Command Entered: {}\n{}".format(ctx.message, msgSend))
-    embed.set_footer(text='Command Broken by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
-    await ctx.send(embed)
+    embeds = add_to_embed('Error','Command Entered: {}\n{}'.format(ctx.message, msgSend))
+    for embed in embeds:
+        embed.set_footer(text='Command Broken by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+        await ctx.send(embed)
     print(error)
     print(traceback.format_exc()) # Attempt to print exception
 
@@ -391,10 +392,14 @@ RPS_HARD_CAP = 6
 @bot.command()
 async def rps(ctx, *, level=1):
     # local variables
-    user = ("<@" + str(ctx.message.author.id) + "> ")
+    user = ("<@" + str(ctx.message.author.id) + ">")
     if level > RPS_HARD_CAP and not isOwner(ctx):
-        await ctx.send(user+'Sorry, but even though the code for it exists, why would you ever want to play rps-'+str(level*2+1)+'???')
+        msgs = add_to_embed('Level too high!', f'Sorry, but even though the code for it exists, why would you ever want to play rps-{level*2+1}???')
+        for msg in msgs:
+            msg.set_footer(text='RPS Played by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+            await ctx.send(msg)
         return
+    
     symbol_names = ['rock','paper','scissors','spock','lizard','alien','well','generic','karen','heat','lemonade']
     # Extend symbol names if necessary
     for i in range(len(symbol_names), level*2+5):
@@ -404,8 +409,9 @@ async def rps(ctx, *, level=1):
     matrix = gen_rps_matrix(level)
 
     # Ask for user choice
-    for msg in splitLongStrings(user+': Pick an option.\nrules. '+', '.join(symbol_names[:level*2+1])):
-            await ctx.send(msg)
+    for embed in add_to_embed(f'{ctx.message.author.name}\'s RPS','Pick an option:\nrules'+'\n'.join(symbol_names[:level*2+1])):
+            await ctx.send(embed)
+    
 
     # Get user choice
     def check(m):
@@ -421,11 +427,11 @@ async def rps(ctx, *, level=1):
     # Process winner
     mlo = getClosestFromList(['rules']+symbol_names,freeform)
     if 'rules' in mlo:
-        for msg in splitLongStrings(' \n'.join(format_matrix(matrix, symbol_names))):
-            await ctx.send(msg)
+        for embed in add_to_embed(f'{ctx.message.author.name}\'s RPS',' \n'.join(format_matrix(matrix, symbol_names))):
+            await ctx.send(embed)
     elif distance(freeform, mlo) >= len(freeform)*0.3: #If the most likely option is more than 30% wrong, hassle
-        for msg in splitLongStrings('No option recognized! Your choices are: '+', '.join(['rules']+symbol_names[:level*2+1])):
-            await ctx.send(msg)
+        for embed in add_to_embed(f'{ctx.message.author.name}\'s RPS','No option recognized! Your choices are: '+'\n'.join(['rules']+symbol_names[:level*2+1])):
+            await ctx.send(embed)
     else:
         choice = symbol_names.index(getClosestFromList(symbol_names, freeform))
         computer_choice = random.randint(0, len(matrix[0])-1)
@@ -434,11 +440,11 @@ async def rps(ctx, *, level=1):
         if winner == 0:
             output = "Its a draw! Better luck next time"
         elif winner == 1:
-            output = "You win. Nice job. :partying_face:"
+            output = "You win. Nice job. 🥳"
         elif winner == 2:
             output = "I win ;) Better luck next time"
         output = output+"\n\nYou chose "+ symbol_names[choice]+"\nI chose "+symbol_names[computer_choice]
-        await ctx.send(output)
+        await ctx.send(add_to_embed(f'{ctx.message.author.name}\'s RPS',output))
 
 
 
@@ -571,10 +577,10 @@ async def color(ctx, *, inputColor:str):
 @bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(1, 30, commands.BucketType.user)
 async def ping(ctx):
-    msg = await ctx.send(add_to_embed('Ping','Latency: {0}ms\nRound Trip Time: ??ms'.format(round(bot.latency*1000, 1))))
+    msg = await ctx.send(add_to_embed('Ping','Latency: {0}ms\nRound Trip Time: ??ms'.format(round(bot.latency*1000, 1)))[0])
     t = (msg.created_at - ctx.message.created_at).total_seconds() * 1000
 
-    embed = add_to_embed('Ping','Latency: {}ms\nRound Trip Time: {}ms'.format(round(bot.latency*1000, 1), round(t, 1)))
+    embed = add_to_embed('Ping','Latency: {}ms\nRound Trip Time: {}ms'.format(round(bot.latency*1000, 1), round(t, 1)))[0]
     embed.set_footer(text='Ping Measured by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
     await msg.edit(content=None, embed=embed)
 

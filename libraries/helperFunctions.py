@@ -85,6 +85,7 @@ def add_to_embed(embed:discord.Embed or str or None, message:str or list, chars:
     message = f'{current_fields}\n{message}'
 
     dummy_embed = discord.Embed(title=chr(0xffa0))
+    dummy_embed.color = discord.Colour(imgutils.randomSaturatedColor())
     try: dummy_embed.author = embed.author
     except: pass
     try: dummy_embed.footer = embed.footer
