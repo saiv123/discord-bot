@@ -409,7 +409,7 @@ async def rps(ctx, *, level=1):
 
     # Get user choice
     def check(m):
-        return m.author is ctx.message.author and m.channel == ctx.message.channel
+        return m.author == ctx.message.author and m.channel == ctx.message.channel
 
     try:
         msg = await bot.wait_for('message', check=check,timeout=30)
