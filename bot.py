@@ -409,8 +409,10 @@ async def rps(ctx, *, level=1):
     matrix = gen_rps_matrix(level)
 
     # Ask for user choice
+    color = None
     for embed in add_to_embed(f'{ctx.message.author.name}\'s RPS','Pick an option:\nrules'+'\n'.join(symbol_names[:level*2+1])):
-            await ctx.send(embed)
+        color = embed.color
+        await ctx.send(embed)
     
 
     # Get user choice
@@ -426,12 +428,11 @@ async def rps(ctx, *, level=1):
 
     # Process winner
     mlo = getClosestFromList(['rules']+symbol_names,freeform)
+    output = ''
     if 'rules' in mlo:
-        for embed in add_to_embed(f'{ctx.message.author.name}\'s RPS',' \n'.join(format_matrix(matrix, symbol_names))):
-            await ctx.send(embed)
+        output = ' \n'.join(format_matrix(matrix, symbol_names))
     elif distance(freeform, mlo) >= len(freeform)*0.3: #If the most likely option is more than 30% wrong, hassle
-        for embed in add_to_embed(f'{ctx.message.author.name}\'s RPS','No option recognized! Your choices are: '+'\n'.join(['rules']+symbol_names[:level*2+1])):
-            await ctx.send(embed)
+        output = 'No option recognized! Your choices are: '+'\n'.join(['rules']+symbol_names[:level*2+1])):
     else:
         choice = symbol_names.index(getClosestFromList(symbol_names, freeform))
         computer_choice = random.randint(0, len(matrix[0])-1)
@@ -444,7 +445,10 @@ async def rps(ctx, *, level=1):
         elif winner == 2:
             output = "I win ;) Better luck next time"
         output = output+"\n\nYou chose "+ symbol_names[choice]+"\nI chose "+symbol_names[computer_choice]
-        await ctx.send(add_to_embed(f'{ctx.message.author.name}\'s RPS',output))
+    
+    for embed in add_to_embed(f'{ctx.message.author.name}\'s RPS', output):
+        if color != None: embed.color = color
+        await ctx.send(embed)
 
 
 
@@ -461,9 +465,8 @@ async def rpsc(ctx, user:discord.User, *, level=1):
     # Generate matrix
     matrix = gen_rps_matrix(level)
 
-    msg = 'You are challending '+user.name+' to rock-paper-scissors'
-    if level > 1:
-        msg = msg+'-'+str(level*2+1)
+    msg = 'You are challenging '+user.name+' to rock-paper-scissors'
+    if level > 1: msg = msg+'-'+str(level*2+1)
     await ctx.send(msg+'\nCheck your DMs!')
 
     def get_check(user):
