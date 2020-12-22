@@ -85,8 +85,9 @@ def add_to_embed(embed:discord.Embed or str or None, message:str or list, chars:
     message = f'{current_fields}\n{message}'
 
     dummy_embed = discord.Embed(title=chr(0xffa0))
-    dummy_embed.author = embed.author; dummy_embed.footer = embed.footer
-    dummy_embed.provider = embed.provider
+    if embed.author != None: dummy_embed.author = embed.author
+    if embed.footer != None: dummy_embed.footer = embed.footer
+    if embed.provider != None: dummy_embed.provider = embed.provider
 
     # each embed can hold 6000 chars
     message = splitLongStrings(message, chars=5000, preferred_char='\n')
