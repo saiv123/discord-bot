@@ -109,7 +109,7 @@ async def on_command_error(ctx, error):
         else:
             msgSend = "Sorry but that is not a valid command\nYou can add suggestions at <https://github.com/saiv123/discord-bot/issues/new/choose>"
     
-    embeds = add_to_embed('Error','Command Entered: {}\n{}'.format(ctx.message, msgSend))
+    embeds = add_to_embed('Error','Command Entered: {}\n{}'.format(ctx.message.content, msgSend))
     for embed in embeds:
         embed.set_footer(text='Command Broken by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
         await ctx.send(embed=embed)
