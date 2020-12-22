@@ -520,7 +520,7 @@ async def rpsc(ctx, user:discord.User, *, level=1):
     await ctx.message.author.send(add_to_embed(f'Your challenge to {user.name}',f'You chose {symbol_names[your_choice]}'))
 
     # Get other person's response
-    await user.send(add_to_embed(None, f'{ctx.message.author.name} has challenged you to rock-paper-scissors-'+str(level*2+1) if level > 1 else '')))
+    await user.send(add_to_embed(None, f'{ctx.message.author.name} has challenged you to rock-paper-scissors-'+str(level*2+1) if level > 1 else '')[0])
     enemy_choice = get_response(user, title=f'{ctx.message.author.name}\'s challenge')
     if enemy_choice == -1:
         embed = add_to_embed(f'{ctx.message.author.name}\'s challenge', 'Challenge cancelled!')[0]
