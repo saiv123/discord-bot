@@ -570,10 +570,10 @@ async def color(ctx, *, inputColor:str):
 @bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(1, 30, commands.BucketType.user)
 async def ping(ctx):
-    msg = await ctx.send('Latency: {0}ms'.format(round(bot.latency*1000, 1)))
+    msg = await ctx.send(add_to_embed('Ping','Latency: {0}ms\nRound Trip Time: ??ms'.format(round(bot.latency*1000, 1))))
     t = (msg.created_at - ctx.message.created_at).total_seconds() * 1000
 
-    embed = discord.Embed(title='Ping', description='{}\nRound Trip Time: {}ms'.format(msg.content, round(t, 1)))
+    embed = add_to_embed('Ping','Latency: {}ms\nRound Trip Time: {}ms'.format(round(bot.latency*1000, 1), round(t, 1)))
     embed.set_footer(text='Ping Measured by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
     await msg.edit(content=None, embed=embed)
 
