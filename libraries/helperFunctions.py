@@ -75,8 +75,12 @@ def splitLongStrings(str, chars=1500, preferred_char=' '):
 
 # split a string or a list of strings into subfields of an embed
 def add_to_embed(embed:discord.Embed or str or None, message:str or list, chars:int=1000, use_description:bool=True):
-    if embed == None: embed = discord.Embed(title=chr(0xffa0))
-    elif isinstance(embed, str): embed = discord.Embed(title=embed)
+    if embed == None:
+        embed = discord.Embed(title=chr(0xffa0))
+        embed.color = discord.Colour(imgutils.randomSaturatedColor())
+    elif isinstance(embed, str):
+        embed = discord.Embed(title=embed)
+        embed.color = discord.Colour(imgutils.randomSaturatedColor())
 
     if chars > 2000: chars = 2000
 
