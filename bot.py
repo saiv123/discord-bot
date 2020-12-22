@@ -518,25 +518,26 @@ async def rpsc(ctx, user:discord.User, *, level=1):
     
     # Get your response
     your_choice = await get_response(ctx.message.author, title=f'Your challenge to {user.name}')
+    print(symbol_names)
+    print(your_choice)
     print('sus3')
-    your_choice = symbol_names.index(your_choice)
     if your_choice == -1:
         await ctx.message.author.send(embed=add_to_embed(f'Your challenge to {user.name}', 'Challenge cancelled!')[0])
         await ctx.send(embed=add_to_embed(f'{ctx.message.author.name}\'s challenge', 'Challenge cancelled!')[0])
         return
+    your_choice = symbol_names.index(your_choice)
     await ctx.message.author.send(embed=add_to_embed(f'Your challenge to {user.name}',f'You chose {symbol_names[your_choice]}'))
 
     # Get other person's response
     await user.send(embed=add_to_embed(None, f'{ctx.message.author.name} has challenged you to rock-paper-scissors-'+str(level*2+1) if level > 1 else '')[0])
     enemy_choice = await get_response(user, title=f'{ctx.message.author.name}\'s challenge')
-    enemy_choice = symbol_names.index(enemy_choice)
     if enemy_choice == -1:
         embed = add_to_embed(f'{ctx.message.author.name}\'s challenge', 'Challenge cancelled!')[0]
         await user.send(embed=embed)
         await ctx.send(embed=embed)
         await ctx.message.author.send(embed=add_to_embed(f'Your challenge to {user.name}', 'Challenge cancelled by opponent')[0])
         return
-
+    enemy_choice = symbol_names.index(enemy_choice)
     await user.send(embed=add_to_embed(f'{ctx.message.author.name}\'s challenge', f'You chose {symbol_names[enemy_choice]}')[0])
 
     msg = ""
