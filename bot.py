@@ -522,10 +522,13 @@ async def rpsc(ctx, user:discord.User, *, level=1):
     print(your_choice)
     print('sus3')
     if your_choice == -1:
+        print('sus4')
         await ctx.message.author.send(embed=add_to_embed(f'Your challenge to {user.name}', 'Challenge cancelled!')[0])
+        print('sus5')
         await ctx.send(embed=add_to_embed(f'{ctx.message.author.name}\'s challenge', 'Challenge cancelled!')[0])
         return
     your_choice = symbol_names.index(your_choice)
+    print('sus6')
     await ctx.message.author.send(embed=add_to_embed(f'Your challenge to {user.name}',f'You chose {symbol_names[your_choice]}'))
 
     # Get other person's response
