@@ -499,7 +499,7 @@ async def rpsc(ctx, user:discord.User, *, level=1):
             
             response = msg.content.lower().replace(' ','_').replace('\n','')
             choice = getClosestFromList(['abort','rules']+symbol_names,response.lower())
-
+            print('sus1')
             if distance(response, choice) >= len(response)*0.3:
                 await _user.send(embed=add_to_embed(choice, 'No option recognized, try again'))
 
@@ -512,11 +512,13 @@ async def rpsc(ctx, user:discord.User, *, level=1):
                 i -= 1
             else: # If neither rules or abort, it is correct
                 break
+        print('sus2')
         return choice
 
     
     # Get your response
     your_choice = await get_response(ctx.message.author, title=f'Your challenge to {user.name}')
+    print('sus3')
     your_choice = symbol_names.index(your_choice)
     if your_choice == -1:
         await ctx.message.author.send(embed=add_to_embed(f'Your challenge to {user.name}', 'Challenge cancelled!')[0])
