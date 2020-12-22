@@ -431,7 +431,7 @@ async def rps(ctx, *, level=1):
     if 'rules' in mlo:
         output = ' \n'.join(format_matrix(matrix, symbol_names))
     elif distance(freeform, mlo) >= len(freeform)*0.3: #If the most likely option is more than 30% wrong, hassle
-        output = 'No option recognized! Your choices are: '+'\n'.join(['rules']+symbol_names[:level*2+1])):
+        output = 'No option recognized! Your choices are: '+'\n'.join(['rules']+symbol_names[:level*2+1])
     else:
         choice = symbol_names.index(getClosestFromList(symbol_names, freeform))
         computer_choice = random.randint(0, len(matrix[0])-1)
