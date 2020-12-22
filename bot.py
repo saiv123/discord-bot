@@ -512,10 +512,11 @@ async def rpsc(ctx, user:discord.User, *, level=1):
                 i -= 1
             else: # If neither rules or abort, it is correct
                 break
-        return symbol_names.index(choice)
+        return choice
     
     # Get your response
     your_choice = await get_response(ctx.message.author, title=f'Your challenge to {user.name}')
+    your_choice = symbol_names.index(your_choice)
     if your_choice == -1:
         await ctx.message.author.send(embed=add_to_embed(f'Your challenge to {user.name}', 'Challenge cancelled!')[0])
         await ctx.send(embed=add_to_embed(f'{ctx.message.author.name}\'s challenge', 'Challenge cancelled!')[0])
@@ -525,6 +526,7 @@ async def rpsc(ctx, user:discord.User, *, level=1):
     # Get other person's response
     await user.send(embed=add_to_embed(None, f'{ctx.message.author.name} has challenged you to rock-paper-scissors-'+str(level*2+1) if level > 1 else '')[0])
     enemy_choice = await get_response(user, title=f'{ctx.message.author.name}\'s challenge')
+    enemy_choice = symbol_names.index(enemy_choice)
     if enemy_choice == -1:
         embed = add_to_embed(f'{ctx.message.author.name}\'s challenge', 'Challenge cancelled!')[0]
         await user.send(embed=embed)
