@@ -513,6 +513,7 @@ async def rpsc(ctx, user:discord.User, *, level=1):
             else: # If neither rules or abort, it is correct
                 break
         return choice
+
     
     # Get your response
     your_choice = await get_response(ctx.message.author, title=f'Your challenge to {user.name}')
