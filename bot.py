@@ -105,9 +105,9 @@ async def on_command_error(ctx, error):
         cmd_list = [cmd.name for cmd in bot.commands]
         mlo = getClosestFromList(cmd_list, cmd)
         if distance(cmd, mlo) <= 0.6*len(cmd):
-            msgSend= f"Sorry, but that is not a valid command. Did you mean {mlo}?\n\nYou can add suggestions at <https://github.com/saiv123/discord-bot/issues/new/choose>"
+            msgSend= f"Sorry, but that is not a valid command. Did you mean {mlo}?\n\nYou can add suggestions at [suggestions Website](https://github.com/saiv123/discord-bot/issues/new/choose)"
         else:
-            msgSend = "Sorry but that is not a valid command\nYou can add suggestions at <https://github.com/saiv123/discord-bot/issues/new/choose>"
+            msgSend = "Sorry but that is not a valid command\nYou can add suggestions at [suggestions Website](https://github.com/saiv123/discord-bot/issues/new/choose)"
 
     embeds = add_to_embed('Error','Command Entered: {}\n{}'.format(ctx.message, msgSend))
     for embed in embeds:
@@ -128,7 +128,7 @@ async def help(ctx):
 
     embed.set_author(name='Help')
     embed.set_thumbnail(url='https://cdn.discordapp.com/avatars/314578387031162882/e4b98a4a9ca3315ca699ffe5cba5b8f1.png?size=1024')
-    embed.add_field(name='Commands will be found on the website.',value='[Link to website](https://saiv123.github.io/discord-bot/website/>)', inline=False)
+    embed.add_field(name='Commands will be found on the website.',value='[Link to website](https://saiv123.github.io/discord-bot/website/)', inline=False)
     embed.add_field(name='Please invite me to other Discords',value='[Invite bot to server](https://discord.com/api/oauth2/authorize?client_id=314578387031162882&permissions=8&scope=bot)', inline=False)
 
     embed.set_footer(text='Help Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
@@ -590,6 +590,16 @@ async def ping(ctx):
     embed = add_to_embed('Ping','Latency: {}ms\nRound Trip Time: {}ms'.format(round(bot.latency*1000, 1), round(t, 1)))[0]
     embed.set_footer(text='Ping Measured by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
     await msg.edit(content=None, embed=embed)
+
+@bot.command(cls=OwnersIgnoreCooldown)
+@commands.cooldown(3, 15, commands.BucketType.user)
+async def roll(ctx, *, dice:str):
+    '''
+    base cases -> roll d6 time 1 - when no input is given for roll
+    if one number is given roll d6 time number input limit to 20
+    if d# then roll once of for the dice size of #
+    anyother case through an exception
+    '''
 
 ###########################
 ###Server Admin Commands###
