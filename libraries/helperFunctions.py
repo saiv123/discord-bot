@@ -37,7 +37,7 @@ class OwnersIgnoreCooldown(commands.Command):
             return await super().prepare(ctx)
         except commands.CommandOnCooldown as e:
             if isOwner(ctx):
-                return await super().prepare(ctx)
+                return
             else:
                 raise e
 
