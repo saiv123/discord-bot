@@ -108,8 +108,8 @@ async def on_command_error(ctx, error):
             msgSend= f"Sorry, but that is not a valid command. Did you mean {mlo}?\n\nYou can add suggestions at <https://github.com/saiv123/discord-bot/issues/new/choose>"
         else:
             msgSend = "Sorry but that is not a valid command\nYou can add suggestions at <https://github.com/saiv123/discord-bot/issues/new/choose>"
-    
-    embeds = add_to_embed('Error','Command Entered: {}\n{}'.format(ctx.message.content, msgSend))
+
+    embeds = add_to_embed('Error','Command Entered: {}\n{}'.format(ctx.message, msgSend))
     for embed in embeds:
         embed.set_footer(text='Command Broken by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
         await ctx.send(embed=embed)
@@ -398,7 +398,7 @@ async def rps(ctx, *, level=1):
             msg.set_footer(text='RPS Played by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
             await ctx.send(embed=msg)
         return
-    
+
     symbol_names = ['rock','paper','scissors','spock','lizard','alien','well','generic','karen','heat','lemonade']
     # Extend symbol names if necessary
     for i in range(len(symbol_names), level*2+5):
@@ -412,7 +412,7 @@ async def rps(ctx, *, level=1):
     for embed in add_to_embed(f'{ctx.message.author.name}\'s RPS','Pick an option:\nrules'+'\n'.join(symbol_names[:level*2+1])):
         color = embed.color
         await ctx.send(embed=embed)
-    
+
 
     # Get user choice
     def check(m):
@@ -446,7 +446,7 @@ async def rps(ctx, *, level=1):
         elif winner == 2:
             output = "I win ;) Better luck next time"
         output = output+"\n\nYou chose "+ symbol_names[choice]+"\nI chose "+symbol_names[computer_choice]
-    
+
     for embed in add_to_embed(f'{ctx.message.author.name}\'s RPS', output):
         if color != None: embed.color = color
         embed.set_footer(text='RPS Played by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
@@ -465,44 +465,41 @@ async def rpsc(ctx, user:discord.User, *, level=1):
         return
 
     symbol_names = ['rock','paper','scissors','spock','lizard','alien','well','generic','karen','heat','lemonade']
-    
+
     # Extend symbol names if necessary
     for i in range(len(symbol_names),level*2+5):
         symbol_names.append('item'+str(i))
-    
+
     # Generate matrix
     matrix = gen_rps_matrix(level)
 
     msg = 'You are challenging '+user.name+' to rock-paper-scissors'
     if level > 1:
         msg = msg+'-'+str(level*2+1)
-    
-    for embed in add_to_embed(f'Your challenge to {user.name}',msg+'\nCheck your DMs!'):
-        embed.set_footer(text='Challenge sent by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
-        await ctx.send(embed=embed)
+    await ctx.send(embed=add_to_embed(f'Your challenge to {user.name}',msg+'\nCheck your DMs!')[0])
 
     def get_check(user):
         def check(msg):
             return msg.author == user and msg.channel == user.dm_channel
         return check
 
-    async def get_response(_user, title='RPSC', timeout=10*60, opener=''):
+    async def get_response(_user, title='RPSC', timeout=10*60):
         choice = symbol_names[0]
         i = 0
         while i < 3:
             i += 1
-            for msg in add_to_embed(title, f'{opener}Your choices are '+', '.join(symbol_names[:2*level+1]+['rules','abort'])):
+            for msg in add_to_embed(title, 'Your choices are '+', '.join(symbol_names[:2*level+1]+['rules','abort'])):
                 await _user.send(embed=msg)
-            opener = ''
 
             try:
                 msg = await bot.wait_for('message', check=get_check(_user),timeout=timeout)
             except:
                 await _user.send(embed=add_to_embed(title, f'Awww, {_user.name} don\'t leave me hangin\'')[0])
                 return -1 # Abort challenge if you don't send an answer
-            
+
             response = msg.content.lower().replace(' ','_').replace('\n','')
             choice = getClosestFromList(['abort','rules']+symbol_names,response.lower())
+            print('sus1')
             if distance(response, choice) >= len(response)*0.3:
                 await _user.send(embed=add_to_embed(choice, 'No option recognized, try again'))
 
@@ -515,21 +512,28 @@ async def rpsc(ctx, user:discord.User, *, level=1):
                 i -= 1
             else: # If neither rules or abort, it is correct
                 break
+        print('sus2')
         return choice
 
-    
+
     # Get your response
     your_choice = await get_response(ctx.message.author, title=f'Your challenge to {user.name}')
+    print(symbol_names)
+    print(your_choice)
+    print('sus3')
     if your_choice == -1:
+        print('sus4')
         await ctx.message.author.send(embed=add_to_embed(f'Your challenge to {user.name}', 'Challenge cancelled!')[0])
+        print('sus5')
         await ctx.send(embed=add_to_embed(f'{ctx.message.author.name}\'s challenge', 'Challenge cancelled!')[0])
         return
     your_choice = symbol_names.index(your_choice)
-    await ctx.message.author.send(embed=add_to_embed(f'Your challenge to {user.name}',f'You chose {symbol_names[your_choice]}')[0])
+    print('sus6')
+    await ctx.message.author.send(embed=add_to_embed(f'Your challenge to {user.name}',f'You chose {symbol_names[your_choice]}'))
 
     # Get other person's response
-    #await user.send(embed=add_to_embed('Rock-Paper-Scissors Challenge!', f'{ctx.message.author.name} has challenged you to rock-paper-scissors-'+str(level*2+1) if level > 1 else '')[0])
-    enemy_choice = await get_response(user, title=f'{ctx.message.author.name}\'s challenge', opener=f'{ctx.message.author.name} has challenged you to rock-paper-scissors-'+str(level*2+1) if level > 1 else '')
+    await user.send(embed=add_to_embed(None, f'{ctx.message.author.name} has challenged you to rock-paper-scissors-'+str(level*2+1) if level > 1 else '')[0])
+    enemy_choice = await get_response(user, title=f'{ctx.message.author.name}\'s challenge')
     if enemy_choice == -1:
         embed = add_to_embed(f'{ctx.message.author.name}\'s challenge', 'Challenge cancelled!')[0]
         await user.send(embed=embed)
@@ -542,8 +546,8 @@ async def rpsc(ctx, user:discord.User, *, level=1):
     msg = ""
 
     # Display results
-    msg = f'{ctx.message.author.name} chose {symbol_names[your_choice]}'
-    msg += f'\n{user.name} chose {symbol_names[enemy_choice]}'
+    msg = f'{ctx.message.author.name} chose {your_choice}'
+    msg += f'\n{user.name} chose {enemy_choice}'
 
     winner = matrix[enemy_choice][your_choice]
     if winner == 0:
@@ -558,7 +562,7 @@ async def rpsc(ctx, user:discord.User, *, level=1):
         await ctx.message.author.send(embed=add_to_embed(f'Your challenge to {user.name}', msg.replace(ctx.message.author.name,'You')+'\nYou lost')[0])
         await user.send(embed=add_to_embed(f'{ctx.message.author.name}\'s challenge', msg.replace(user.name,'You')+'\nYou won 🥳')[0])
         msg += f'\n{user.name} won. Nice job. 🥳'
-    
+
     for embed in add_to_embed(f'{ctx.message.author.name}\'s challenge', msg):
         embed.set_footer(text='RPS Played by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
         await ctx.send(embed=embed)
