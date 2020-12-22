@@ -396,7 +396,7 @@ async def rps(ctx, *, level=1):
         msgs = add_to_embed('Level too high!', f'Sorry, but even though the code for it exists, why would you ever want to play rps-{level*2+1}???')
         for msg in msgs:
             msg.set_footer(text='RPS Played by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
-            await ctx.send(msg)
+            await ctx.send(embed=msg)
         return
     
     symbol_names = ['rock','paper','scissors','spock','lizard','alien','well','generic','karen','heat','lemonade']
@@ -546,13 +546,13 @@ async def rpsc(ctx, user:discord.User, *, level=1):
         await user.send(embed=add_to_embed(f'{ctx.message.author.name}\'s challenge', msg.replace(user.name,'You')+'\nThe bout ended in a draw')[0])
         msg += '\nThe bout ended in a draw'
     elif winner == 1:
-        await ctx.message.author.send(embed=add_to_embed(f'Your challenge to {user.name}', msg.replace(ctx.message.author.name,'You')+'\nYou won :partying_face:')[0])
+        await ctx.message.author.send(embed=add_to_embed(f'Your challenge to {user.name}', msg.replace(ctx.message.author.name,'You')+'\nYou won 🥳')[0])
         await user.send(embed=add_to_embed(f'{ctx.message.author.name}\'s challenge', msg.replace(user.name,'You')+'\nYou lost.')[0])
-        msg += f'\n{ctx.message.author.name} won! :partying_face:'
+        msg += f'\n{ctx.message.author.name} won! 🥳'
     elif winner == 2:
-        msg += f'\n{user.name} won. Nice job. :partying_face:'
         await ctx.message.author.send(embed=add_to_embed(f'Your challenge to {user.name}', msg.replace(ctx.message.author.name,'You')+'\nYou lost')[0])
-        await user.send(embed=add_to_embed(f'{ctx.message.author.name}\'s challenge', msg.replace(user.name,'You')+'\nYou won :partying_face:')[0])
+        await user.send(embed=add_to_embed(f'{ctx.message.author.name}\'s challenge', msg.replace(user.name,'You')+'\nYou won 🥳')[0])
+        msg += f'\n{user.name} won. Nice job. 🥳'
     
     for embed in add_to_embed(f'{ctx.message.author.name}\'s challenge', msg):
         embed.set_footer(text='RPS Played by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
@@ -573,7 +573,9 @@ async def color(ctx, *, inputColor:str):
 @bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(1, 30, commands.BucketType.user)
 async def ping(ctx):
-    msg = await ctx.send(embed=add_to_embed('Ping','Latency: {0}ms\nRound Trip Time: ??ms'.format(round(bot.latency*1000, 1)))[0])
+    embed = add_to_embed('Ping','Latency: {0}ms\nRound Trip Time: ??ms'.format(round(bot.latency*1000, 1)))[0]
+    embed.set_footer(text='Ping Measured by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+    msg = await ctx.send(embed=embed)
     t = (msg.created_at - ctx.message.created_at).total_seconds() * 1000
 
     embed = add_to_embed('Ping','Latency: {}ms\nRound Trip Time: {}ms'.format(round(bot.latency*1000, 1), round(t, 1)))[0]
