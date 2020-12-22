@@ -412,7 +412,7 @@ async def rps(ctx, *, level=1):
         return m.author == ctx.message.author and m.channel == ctx.message.channel
 
     try:
-        msg = await bot.wait_for('message', check=check,timeout=30)
+        msg = await bot.wait_for('message', check=check,timeout=1*60)
     except:
         await ctx.send('Awww, '+user+' don\'t leave me hangin\'')
         return
@@ -438,6 +438,7 @@ async def rps(ctx, *, level=1):
         elif winner == 2:
             output = "I win ;) Better luck next time"
         output = output+"\n\nYou chose "+ symbol_names[choice]+"\nI chose "+symbol_names[computer_choice]
+        await ctx.send(output)
 
 
 
