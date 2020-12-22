@@ -476,20 +476,24 @@ async def rpsc(ctx, user:discord.User, *, level=1):
     msg = 'You are challenging '+user.name+' to rock-paper-scissors'
     if level > 1:
         msg = msg+'-'+str(level*2+1)
-    await ctx.send(embed=add_to_embed(f'Your challenge to {user.name}',msg+'\nCheck your DMs!')[0])
+
+    for embed in add_to_embed(f'Your challenge to {user.name}',msg+'\nCheck your DMs!'):
+        embed.set_footer(text='Challenge sent by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+        await ctx.send(embed=embed)
 
     def get_check(user):
         def check(msg):
             return msg.author == user and msg.channel == user.dm_channel
         return check
 
-    async def get_response(_user, title='RPSC', timeout=10*60):
+    async def get_response(_user, title='RPSC', timeout=10*60, opener=''):
         choice = symbol_names[0]
         i = 0
         while i < 3:
             i += 1
-            for msg in add_to_embed(title, 'Your choices are '+', '.join(symbol_names[:2*level+1]+['rules','abort'])):
+            for msg in add_to_embed(title, f'{opener}Your choices are '+', '.join(symbol_names[:2*level+1]+['rules','abort'])):
                 await _user.send(embed=msg)
+            opener = ''
 
             try:
                 msg = await bot.wait_for('message', check=get_check(_user),timeout=timeout)
@@ -499,7 +503,6 @@ async def rpsc(ctx, user:discord.User, *, level=1):
 
             response = msg.content.lower().replace(' ','_').replace('\n','')
             choice = getClosestFromList(['abort','rules']+symbol_names,response.lower())
-            print('sus1')
             if distance(response, choice) >= len(response)*0.3:
                 await _user.send(embed=add_to_embed(choice, 'No option recognized, try again'))
 
@@ -512,28 +515,21 @@ async def rpsc(ctx, user:discord.User, *, level=1):
                 i -= 1
             else: # If neither rules or abort, it is correct
                 break
-        print('sus2')
         return choice
 
 
     # Get your response
     your_choice = await get_response(ctx.message.author, title=f'Your challenge to {user.name}')
-    print(symbol_names)
-    print(your_choice)
-    print('sus3')
     if your_choice == -1:
-        print('sus4')
         await ctx.message.author.send(embed=add_to_embed(f'Your challenge to {user.name}', 'Challenge cancelled!')[0])
-        print('sus5')
         await ctx.send(embed=add_to_embed(f'{ctx.message.author.name}\'s challenge', 'Challenge cancelled!')[0])
         return
     your_choice = symbol_names.index(your_choice)
-    print('sus6')
-    await ctx.message.author.send(embed=add_to_embed(f'Your challenge to {user.name}',f'You chose {symbol_names[your_choice]}'))
+    await ctx.message.author.send(embed=add_to_embed(f'Your challenge to {user.name}',f'You chose {symbol_names[your_choice]}')[0])
 
     # Get other person's response
-    await user.send(embed=add_to_embed(None, f'{ctx.message.author.name} has challenged you to rock-paper-scissors-'+str(level*2+1) if level > 1 else '')[0])
-    enemy_choice = await get_response(user, title=f'{ctx.message.author.name}\'s challenge')
+    #await user.send(embed=add_to_embed('Rock-Paper-Scissors Challenge!', f'{ctx.message.author.name} has challenged you to rock-paper-scissors-'+str(level*2+1) if level > 1 else '')[0])
+    enemy_choice = await get_response(user, title=f'{ctx.message.author.name}\'s challenge', opener=f'{ctx.message.author.name} has challenged you to rock-paper-scissors-'+str(level*2+1) if level > 1 else '')
     if enemy_choice == -1:
         embed = add_to_embed(f'{ctx.message.author.name}\'s challenge', 'Challenge cancelled!')[0]
         await user.send(embed=embed)
@@ -546,8 +542,8 @@ async def rpsc(ctx, user:discord.User, *, level=1):
     msg = ""
 
     # Display results
-    msg = f'{ctx.message.author.name} chose {your_choice}'
-    msg += f'\n{user.name} chose {enemy_choice}'
+    msg = f'{ctx.message.author.name} chose {symbol_names[your_choice]}'
+    msg += f'\n{user.name} chose {symbol_names[enemy_choice]}'
 
     winner = matrix[enemy_choice][your_choice]
     if winner == 0:
