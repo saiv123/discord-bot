@@ -411,7 +411,7 @@ async def rps(ctx, *, level=1):
     color = None
     for embed in add_to_embed(f'{ctx.message.author.name}\'s RPS','Pick an option:\nrules'+'\n'.join(symbol_names[:level*2+1])):
         color = embed.color
-        await ctx.send(embed)
+        await ctx.send(embed=embed)
     
 
     # Get user choice
