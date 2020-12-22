@@ -582,7 +582,7 @@ async def ping(ctx):
 ###########################
 
 #give information on the user
-@bot.command(aliases="userinfo")
+@bot.command(aliases=["userinfo"])
 async def userinfo(ctx):
     if ctx.author.guild_permissions.administrator:
         x = ctx.guild.members
