@@ -476,7 +476,10 @@ async def rpsc(ctx, user:discord.User, *, level=1):
     msg = 'You are challenging '+user.name+' to rock-paper-scissors'
     if level > 1:
         msg = msg+'-'+str(level*2+1)
-    await ctx.send(embed=add_to_embed(f'Your challenge to {user.name}',msg+'\nCheck your DMs!')[0])
+    
+    for embed in add_to_embed(f'Your challenge to {user.name}',msg+'\nCheck your DMs!')
+        embed.set_footer(text='Challenge sent by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+        await ctx.send(embed=embed)
 
     def get_check(user):
         def check(msg):
