@@ -719,7 +719,7 @@ async def sad(ctx):
             await channel.connect()
 
             #sends muic
-            embed = add_to_embed('Time to unsad yourself','Music you can listen too:\n[Sad playlist 1](https://www.youtube.com/playlist?list=PLzSGJo-pe00ka90V3cFrEjCCJKROnHCMj)\n[Sad Playlist 2](https://www.youtube.com/playlist?list=PLzSGJo-pe00nNRlyDb8eJ4zSRXnAtevO6)\nHope you feel better from Sai.'')
+            embed = add_to_embed('Time to unsad yourself','Music you can listen too:\n[Sad playlist 1](https://www.youtube.com/playlist?list=PLzSGJo-pe00ka90V3cFrEjCCJKROnHCMj)\n[Sad Playlist 2](https://www.youtube.com/playlist?list=PLzSGJo-pe00nNRlyDb8eJ4zSRXnAtevO6)\nHope you feel better from Sai.')[0]
             embed.set_footer(text='Unsading ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
             await ctx.send(embed=embed)
             await ctx.send("https://tenor.com/view/hug-virtual-hug-hug-sent-gif-5026057")
