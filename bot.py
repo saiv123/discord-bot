@@ -594,7 +594,7 @@ async def roll(ctx, *, dice="1d6"):
     rolls = 1
     sides = 6
     print(dice)
-    if(dice.find("D") != -1):
+    if(dice.find("D") == -1):
         try:
             rolls = int(dice)
         except ValueError as e:
