@@ -590,7 +590,7 @@ async def ping(ctx):
 @bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(3, 15, commands.BucketType.user)
 async def roll(ctx, *, dice="1d6"):
-    dice.upper()
+    dice = dice.upper()
     rolls = 1
     sides = 6
     print(dice)
