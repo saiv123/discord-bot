@@ -589,13 +589,39 @@ async def ping(ctx):
 
 @bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(3, 15, commands.BucketType.user)
-async def roll(ctx, *, dice:str):
+async def roll(ctx, *, dice="1d6"):
+    dice.upper()
+    rolls = 1
+    sides = 6
+
+    if(dice.find("D") != -1):
+        try:
+            rolls = int(dice)
+        except ValueError as e:
+            await ctx.send("Invalid Input")
+            return
+    else:
+        try:
+            rolls = int(dice[:dice.index("D")])
+            sides = int(dice[dice.index("D")+1:])
+        except ValueError as e:
+            await ctx.send("Invalid Input")
+            return
+
+    if(rolls <= 20 and rolls > 0 and sides > 1 and sides <= 100):
+        randValues = []
+        for i in range(rolls):
+            randValues.append(random.randint(1,sides))
+    else:
+        await ctx.send("Sorry your inputs are invalid.\nPlease make sure you are rolling less than 20 times and have a dice that is lower than 100.")
+
     '''
     base cases -> roll d6 time 1 - when no input is given for roll
     if one number is given roll d6 time number input limit to 20
     if d# then roll once of for the dice size of #
     anyother case through an exception
     '''
+
 
 ###########################
 ###Server Admin Commands###
