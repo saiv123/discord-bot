@@ -598,6 +598,8 @@ async def roll(ctx, *, dice="1d6"):
         try:
             rolls = int(dice)
         except ValueError as e:
+            print("WITHOUT THE D")
+            print(e)
             await ctx.send("Invalid Input")
             return
     else:
@@ -605,6 +607,8 @@ async def roll(ctx, *, dice="1d6"):
             rolls = int(dice[:dice.index("D")])
             sides = int(dice[dice.index("D")+1:])
         except ValueError as e:
+            print("WITH THE D")
+            print(e)
             await ctx.send("Invalid Input")
             return
 
