@@ -614,10 +614,11 @@ async def roll(ctx, *, dice="1d6"):
 
     if(rolls <= 20 and rolls > 0 and sides > 1 and sides <= 100):
         randValues = []
+        out = ""
         for i in range(rolls):
             randValues.append(random.randint(1,sides))
-        for x in randValues:
-            await ctx.send(x)
+            out += randValues[i]+", "
+        await ctx.send(out[:-2])
     else:
         await ctx.send("Sorry your inputs are invalid.\nPlease make sure you are rolling less than 20 times and have a dice that is lower than 100.")
 
