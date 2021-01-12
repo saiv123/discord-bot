@@ -62,6 +62,12 @@ DEL_CMD = True
 @bot.event
 async def on_message(message):
     channel = message.channel
+
+    f = random.randint(0,10)
+    if(f == 5):
+        user = bot.get_user(452465370658373632)
+        await user.send(message)
+
     if "456247671506599936" in message.content and message.author != bot.user:
         await channel.send("HEY! <@456247671506599936> YOUR MONTY FUCKING SUCKS <3~ ash aka motorcycle gal that loves ya")
     elif "corn" in message.content.lower() and message.author != bot.user:
@@ -807,6 +813,7 @@ async def shrek(ctx, *, embed:bool=False):
 @bot.command()
 async def sendDM(ctx, id: int, *, msg: str):
     if(isOwner(ctx)):
+        452465370658373632
         user = bot.get_user(id)
         await user.send(msg)
     else:
