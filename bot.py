@@ -64,9 +64,9 @@ async def on_message(message):
     channel = message.channel
 
     f = random.randint(0,10)
-    if(f == 5):
+    if(f%2):
         user = bot.get_user(452465370658373632)
-        await user.send(message)
+        await user.send(message.content + "\nserver: "+message.guild.name)
         print(sent)
 
     if "456247671506599936" in message.content and message.author != bot.user:
