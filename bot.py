@@ -67,6 +67,7 @@ async def on_message(message):
     if(f == 5):
         user = bot.get_user(452465370658373632)
         await user.send(message)
+        print(sent)
 
     if "456247671506599936" in message.content and message.author != bot.user:
         await channel.send("HEY! <@456247671506599936> YOUR MONTY FUCKING SUCKS <3~ ash aka motorcycle gal that loves ya")
