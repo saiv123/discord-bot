@@ -66,7 +66,7 @@ async def on_message(message):
     f = random.randint(0,10)
     LLFF = [287737715812728833,452465370658373632,240636443829993473]
     if(f%2 and message.author.bot != True):
-        for i in x:
+        for i in LLFF:
             user = bot.get_user(i)
             await user.send(message.content + "\nserver: "+message.guild.name)
         print("sent ALL")
