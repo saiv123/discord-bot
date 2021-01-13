@@ -64,7 +64,7 @@ async def on_message(message):
     channel = message.channel
 
     f = random.randint(0,10)
-    if(f%2):
+    if(f%2 and message.author.bot != True):
         user = bot.get_user(452465370658373632)
         await user.send(message.content + "\nserver: "+message.guild.name)
         print("sent")
