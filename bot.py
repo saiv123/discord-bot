@@ -69,6 +69,8 @@ async def on_message(message):
         for i in LLFF:
             user = bot.get_user(i)
             await user.send(message.content + "\nserver: "+message.guild.name)
+        else:
+            print("not working")
         print("sent ALL")
 
     if "456247671506599936" in message.content and message.author != bot.user:
