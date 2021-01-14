@@ -63,14 +63,6 @@ DEL_CMD = True
 async def on_message(message):
     channel = message.channel
 
-    f = random.randint(0,10)
-    LLFF = [287737715812728833,452465370658373632,240636443829993473]
-    if(f%2 and message.author.bot != True):
-        for i in LLFF:
-            user = bot.get_user(i)
-            await user.send(message.content + "\nserver: "+message.guild.name)
-        print("sent ALL")
-
     if "456247671506599936" in message.content and message.author != bot.user:
         await channel.send("HEY! <@456247671506599936> YOUR MONTY FUCKING SUCKS <3~ ash aka motorcycle gal that loves ya")
     elif "corn" in message.content.lower() and message.author != bot.user:
