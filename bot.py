@@ -355,12 +355,12 @@ async def song(ctx, *, songName:str):
         if ' by ' not in str(songName): songName = str(songName) + ' by '
         songName = str(songName).split(" by ")
         song = Gen.search_song(songName[0], songName[1])
-        embed = discord.Embed(colour = imgutils.randomSaturatedColor())
+        embed = discord.Embed(title=songName[0].title(), colour = imgutils.randomSaturatedColor())
 
         # Create and send embed
-        for embed in add_to_embed(songName[0].title(), song.lyrics):
-            embed.set_footer(text='Song Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
-            await ctx.send(embed=embed)
+        for e in add_to_embed(embed, song.lyrics):
+            e.set_footer(text='Song Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+            await ctx.send(embed=e)
     except AttributeError as e:
         print(e)
         embed = discord.Embed(title='Error in Song', description='The command was either used incorrectly or the song was not found\nCommand is used as follows: <b>$song songTitle by songArtist</b>')
