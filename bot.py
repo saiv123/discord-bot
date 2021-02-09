@@ -357,8 +357,11 @@ async def song(ctx, *, songName:str):
         song = Gen.search_song(songName[0], songName[1])
         embed = discord.Embed(title=songName[0].title(), colour = imgutils.randomSaturatedColor())
 
+        print('cp1')
+
         # Create and send embed
         for e in add_to_embed(embed, song.lyrics):
+            print('cp2 ' + repr(e))
             e.set_footer(text='Song Requested by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
             await ctx.send(embed=e)
     except AttributeError as e:
