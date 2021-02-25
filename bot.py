@@ -621,9 +621,8 @@ async def roll(ctx, *, dice="1d6"):
         for i in range(rolls):
             randValues.append(random.randint(1,sides))
             out += str(randValues[i])+", "
-        await ctx.send(out[:-2])
         embed = discord.Embed(title=dice, description=out[:-2])
-        embed.set_footer(text='a '+dice+' was rolled by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+        embed.set_footer(text='A '+dice+' was rolled by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
         await ctx.send(embed=embed)
     else:
         embed = discord.Embed(title='Input was Invalid', description='Please make sure you are rolling less than '+MAXROLES+' times and have a dice that is lower than '+MAXSIDES+'.')
