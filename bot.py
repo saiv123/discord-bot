@@ -621,7 +621,7 @@ async def roll(ctx, *, dice="1d6"):
         for i in range(rolls):
             randValues.append(random.randint(1,sides))
             out += str(randValues[i])+", "
-        embed = discord.Embed(title=dice, description=out[:-2])
+        embed = discord.Embed(title=dice, description=out[:-2], colour=imgutils.randomSaturatedColor())
         embed.set_footer(text='A '+dice+' was rolled by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
         await ctx.send(embed=embed)
     else:
