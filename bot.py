@@ -591,6 +591,8 @@ async def ping(ctx):
 @bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(3, 15, commands.BucketType.user)
 async def roll(ctx, *, dice="1d6"):
+    MAXROLES = 20
+    MAXSIDES = 100
     dice = dice.upper()
     rolls = 1
     sides = 6
@@ -599,37 +601,34 @@ async def roll(ctx, *, dice="1d6"):
         try:
             rolls = int(dice)
         except ValueError as e:
-            print("WITHOUT THE D")
-            print(e)
-            await ctx.send("Invalid Input")
+            embed = discord.Embed(title='Input was Invalid', description='The command was used incorrectly it is used like `$roll` or `$roll 2d4`')
+            embed.set_footer(text='Command used inproperly by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+            await ctx.send(embed=embed)
             return
     else:
         try:
             rolls = int(dice[:dice.index("D")])
             sides = int(dice[dice.index("D")+1:])
         except ValueError as e:
-            print("WITH THE D")
-            print(e)
-            await ctx.send("Invalid Input")
+            embed = discord.Embed(title='Input was Invalid', description='The command was used incorrectly it is used like `$roll` or `$roll 2d4`')
+            embed.set_footer(text='Command used inproperly by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+            await ctx.send(embed=embed)
             return
 
-    if(rolls <= 20 and rolls > 0 and sides > 1 and sides <= 100):
+    if(rolls <= MAXROLES and rolls > 0 and sides > 1 and sides <= MAXSIDES):
         randValues = []
         out = ""
         for i in range(rolls):
             randValues.append(random.randint(1,sides))
             out += str(randValues[i])+", "
         await ctx.send(out[:-2])
+        embed = discord.Embed(title=dice, description=out[:-2])
+        embed.set_footer(text='a '+dice+' was rolled by': ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+        await ctx.send(embed=embed)
     else:
-        await ctx.send("Sorry your inputs are invalid.\nPlease make sure you are rolling less than 20 times and have a dice that is lower than 100.")
-
-    '''
-    base cases -> roll d6 time 1 - when no input is given for roll
-    if one number is given roll d6 time number input limit to 20
-    if d# then roll once of for the dice size of #
-    anyother case through an exception
-    '''
-
+        embed = discord.Embed(title='Input was Invalid', description='Please make sure you are rolling less than '+MAXROLES+' times and have a dice that is lower than '+MAXSIDES+'.')
+        embed.set_footer(text='Command used inproperly by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+        await ctx.send(embed=embed)
 
 ###########################
 ###Server Admin Commands###
