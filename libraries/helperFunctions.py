@@ -73,6 +73,10 @@ def splitLongStrings(str, chars=1500, preferred_char=' '):
         messages.append(message[1:])
     return messages
 
+def gen_invis(i:int=1):
+    if i < 0: i = 0
+    return str(chr(0xffa0)) * (i+1) + ' ' + str(chr(0x1cbc)) * 4
+
 # split a string or a list of strings into subfields of an embed
 def add_to_embed(embed:discord.Embed or str or None, message:str or list, chars:int=1000, use_description:bool=True):
     if embed == None:
@@ -81,6 +85,7 @@ def add_to_embed(embed:discord.Embed or str or None, message:str or list, chars:
     elif isinstance(embed, str):
         embed = discord.Embed(title=embed)
         embed.color = discord.Colour(imgutils.randomSaturatedColor())
+    assert isinstance(embed, discord.Embed), 'add_to_embed embed input not parseable to discord.Embed'
 
     if chars > 2000: chars = 2000
 
@@ -100,12 +105,12 @@ def add_to_embed(embed:discord.Embed or str or None, message:str or list, chars:
     # each embed can hold 6000 chars
     message = splitLongStrings(message, chars=5000, preferred_char='\n')
 
-    embeds = [embed] + [dummy_embed] * (len(message)-1)
+    embeds = [embed] + [dummy_embed.copy() for x in range(len(message)-1)]
     for i in range(len(message)):
         msg_txt = splitLongStrings(message[i], chars=chars, preferred_char='\n' if message[i].count('\n') >= len(message[i])/(1.5*chars) else ' ')
         if use_description: embeds[i].description = f'{embeds[i].description}\n{msg_txt.pop(0)}' if len(embeds[i].description) else msg_txt.pop(0)
         for j in range(len(msg_txt)):
-            embed[i].add_field(name=str(chr(0xffa0))*j, value=msg_txt[j], inline=False)
+            embeds[i].add_field(name=gen_invis(i=j), value=msg_txt[j], inline=False)
     return embeds
 
 # Gets embed responses from a library of links
