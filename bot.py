@@ -599,8 +599,8 @@ async def roll(ctx, *, dice="1d6"):
 
     print(dice)
     
-    async def senderr():
-        embed = discord.Embed(title='Input was Invalid', description='The command was used incorrectly it is used like `$roll` or `$roll 2d4`')
+    async def senderr(msg=''):
+        embed = discord.Embed(title='Input was Invalid', description=f'The command was used incorrectly it is used like `$roll` or `$roll 2d4`{ f'\n{msg}' if len(msg) > 0 else '' }')
         embed.set_footer(text='Command used inproperly by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
         await ctx.send(embed=embed)
     
@@ -636,7 +636,7 @@ async def roll(ctx, *, dice="1d6"):
         embed.set_footer(text='A '+dice+' was rolled by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
         await ctx.send(embed=embed)
     else:
-        await senderr()
+        await senderr(f'You have reached the limits. Make sure you roll less than {rolls} dice and each dice has less than {MAXSIDES} sides')
         return
 
 ###########################
