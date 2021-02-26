@@ -597,7 +597,7 @@ async def roll(ctx, *, dice="1d6"):
     rolls = 1
     sides = 6
     print(dice)
-    if(dice.find("D") == -1):
+    if(str(dice).find("D") == -1):
         try:
             rolls = int(dice)
             print("HIt roll first try")
