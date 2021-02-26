@@ -602,7 +602,7 @@ async def roll(ctx, *, dice="1d6"):
     async def senderr(msg=''):
         msg = f'\n{msg}' if len(msg) > 0 else ''
         embed = discord.Embed(title='Input was Invalid', description=f'The command was used incorrectly it is used like `$roll` or `$roll 2d4`{msg}')
-        embed.set_footer(text='Command used inproperly by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+        embed.set_footer(text=f'Command used inproperly by: {ctx.message.author.name} (args: {dice})', icon_url=ctx.message.author.avatar_url)
         await ctx.send(embed=embed)
     
     def rollone(rolls, sides):
