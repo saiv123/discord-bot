@@ -600,6 +600,7 @@ async def roll(ctx, *, dice="1d6"):
     if(dice.find("D") == -1):
         try:
             rolls = int(dice)
+            Print("HIt roll first try")
             dice += "D6"
         except ValueError as e:
             embed = discord.Embed(title='Input was Invalid', description='The command was used incorrectly it is used like `$roll` or `$roll 2d4`')
@@ -610,6 +611,7 @@ async def roll(ctx, *, dice="1d6"):
         try:
             rolls = int(dice[:dice.index("D")])
             sides = int(dice[dice.index("D")+1:])
+            Print("HIt roll first try")
         except ValueError as e:
             embed = discord.Embed(title='Input was Invalid', description='The command was used incorrectly it is used like `$roll` or `$roll 2d4`')
             embed.set_footer(text='Command used inproperly by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
