@@ -596,42 +596,48 @@ async def roll(ctx, *, dice="1d6"):
     dice = dice.upper()
     rolls = 1
     sides = 6
+
     print(dice)
-    if(dice.find("D") == -1):
+    
+    async def senderr():
+        embed = discord.Embed(title='Input was Invalid', description='The command was used incorrectly it is used like `$roll` or `$roll 2d4`')
+        embed.set_footer(text='Command used inproperly by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+        await ctx.send(embed=embed)
+    
+    def rollone(rolls, sides):
+        total, txt = 0, ""
+        for i in range(rolls):
+            x = random.randint(1,sides)
+            txt += f'{x}, '
+            total += x
+        return total, txt[:-2] if rolls > 0 else ""
+    
+    if(dice.find('D') == -1):
         try:
             rolls = int(dice)
             print("HIt roll first try")
-        except ValueError as e:
-            dice = str(dice)
-            dice += "D6"
-            embed = discord.Embed(title='Input was Invalid', description='The command was used incorrectly it is used like `$roll` or `$roll 2d4`')
-            embed.set_footer(text='Command used inproperly by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
-            await ctx.send(embed=embed)
+        except ValueError:
+            await senderr()
             return
     else:
         try:
-            rolls = int(dice[:dice.index("D")])
-            sides = int(dice[dice.index("D")+1:])
+            rolls, sides = dice.split('D')[:2]
+            rolls = int(rolls)
+            sides = int(sides)
             print("HIt roll first try")
-        except ValueError as e:
-            embed = discord.Embed(title='Input was Invalid', description='The command was used incorrectly it is used like `$roll` or `$roll 2d4`')
-            embed.set_footer(text='Command used inproperly by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
-            await ctx.send(embed=embed)
+        except ValueError:
+            await senderr()
             return
 
     if(rolls <= MAXROLES and rolls > 0 and sides > 1 and sides <= MAXSIDES):
-        randValues = []
-        out = ""
-        for i in range(rolls):
-            randValues.append(random.randint(1,sides))
-            out += str(randValues[i])+", "
-        embed = discord.Embed(title=dice, description=out[:-2], colour=imgutils.randomSaturatedColor())
+        total, out = rollone(rolls, sides)
+
+        embed = discord.Embed(title=dice, description=f'{out[:-2]}\n\nTotal: {total}', colour=imgutils.randomSaturatedColor())
         embed.set_footer(text='A '+dice+' was rolled by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
         await ctx.send(embed=embed)
     else:
-        embed = discord.Embed(title='Input was Invalid', description='Please make sure you are rolling less than '+MAXROLES+' times and have a dice that is lower than '+MAXSIDES+'.')
-        embed.set_footer(text='Command used inproperly by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
-        await ctx.send(embed=embed)
+        await senderr()
+        return
 
 ###########################
 ###Server Admin Commands###
