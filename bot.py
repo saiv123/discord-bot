@@ -591,7 +591,7 @@ async def ping(ctx):
 @bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(3, 15, commands.BucketType.user)
 async def roll(ctx, *, dice="1d6"):
-    MAXROLES = 20
+    MAXROLLS = 20
     MAXSIDES = 100
     dice = dice.upper()
     rolls = 1
@@ -630,14 +630,14 @@ async def roll(ctx, *, dice="1d6"):
             await senderr()
             return
 
-    if(rolls <= MAXROLES and rolls > 0 and sides > 1 and sides <= MAXSIDES):
+    if(rolls <= MAXROLLS and rolls > 0 and sides > 1 and sides <= MAXSIDES):
         total, out = rollone(rolls, sides)
 
         embed = discord.Embed(title=dice, description=f'{out[:-2]}\n\nTotal: {total}', colour=imgutils.randomSaturatedColor())
         embed.set_footer(text='A '+dice+' was rolled by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
         await ctx.send(embed=embed)
     else:
-        await senderr(f'You have reached the limits. Make sure you roll less than {rolls} dice and each dice has less than {MAXSIDES} sides')
+        await senderr(f'You have reached the limits. Make sure you roll less than {MAXROLLS} dice and each dice has less than {MAXSIDES} sides')
         return
 
 ###########################
