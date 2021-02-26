@@ -594,8 +594,7 @@ async def roll(ctx, *, dice="1d6"):
     MAXROLLS = 20
     MAXSIDES = 100
     dice = dice.upper()
-    rolls = 1
-    sides = 6
+    r_data = []
 
     print(dice)
     
@@ -615,30 +614,44 @@ async def roll(ctx, *, dice="1d6"):
     
     if(dice.find('D') == -1):
         try:
-            rolls = int(dice)
-            print("HIt roll first try")
+            r_data = [int(dice), 6]
         except ValueError:
             await senderr()
             return
     else:
         try:
-            rolls, sides = dice.split('D')[:2]
-            rolls = int(rolls)
-            sides = int(sides)
-            print("HIt roll first try")
+            r_data = [int(x) for x in dice.split('D')]
         except ValueError:
             await senderr()
             return
 
-    if(rolls <= MAXROLLS and rolls > 0 and sides > 1 and sides <= MAXSIDES):
-        total, out = rollone(rolls, sides)
+    dice = 'd'.join([str(x) for x in r_data])
+    grand_total, msg = 0, ''
+    while len(r_data) > 1:
+        rolls, sides = r_data[:2]
 
-        embed = discord.Embed(title=dice, description=f'{out[:-2]}\n\nTotal: {total}', colour=imgutils.randomSaturatedColor())
-        embed.set_footer(text='A '+dice+' was rolled by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
-        await ctx.send(embed=embed)
-    else:
-        await senderr(f'You have reached the limits. Make sure you roll less than {MAXROLLS} dice and each dice has less than {MAXSIDES} sides')
-        return
+        if 0 < rolls <= MAXROLLS and 1 < sides <= MAXSIDES:
+            total, out = rollone(rolls, sides)
+            grand_total += total
+
+            out = f'{rolls}d{sides}: {out}'
+
+            # add dice total on if this isn't the last iteration
+            if len(r_data) > 2 and rolls > 1: out = f'{out} (total: {total})'
+
+            # add to msg with fenceposting
+            msg = f'{msg}\n{out}' if len(msg) > 0 else out
+
+            # shorten list
+            r_data.pop(0)
+            r_data[0] = total
+        else:
+            await senderr(f'{msg}\nYou have reached the limits. Make sure you roll less than {MAXROLLS} dice and each dice has less than {MAXSIDES} sides')
+            return        
+    
+    embed = discord.Embed(title=str(dice), description=f'{msg}\n\nTotal: {total}', colour=imgutils.randomSaturatedColor())
+    embed.set_footer(text=f'{dice} was rolled by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+    await ctx.send(embed=embed)
 
 ###########################
 ###Server Admin Commands###
