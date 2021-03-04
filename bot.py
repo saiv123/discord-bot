@@ -598,13 +598,13 @@ async def roll(ctx, *, dice="1d6"):
     r_data = []
 
     print(dice)
-    
+
     async def senderr(msg=''):
         msg = f'\n{msg}' if len(msg) > 0 else ''
         embed = discord.Embed(title='Input was Invalid', description=f'The command was used incorrectly it is used like `$roll` or `$roll 2d4`{msg}')
         embed.set_footer(text=f'Command used inproperly by: {ctx.message.author.name} (args: {dice})', icon_url=ctx.message.author.avatar_url)
         await ctx.send(embed=embed)
-    
+
     def rollone(rolls, sides):
         total, txt = 0, ""
         for i in range(rolls):
@@ -612,7 +612,7 @@ async def roll(ctx, *, dice="1d6"):
             txt += f'{x}, '
             total += x
         return total, txt[:-2] if rolls > 0 else ""
-    
+
     if(dice.find('D') == -1):
         try:
             r_data = [int(dice), 6]
@@ -648,8 +648,8 @@ async def roll(ctx, *, dice="1d6"):
             r_data[0] = total
         else:
             await senderr(f'{msg}\nYou have reached the limits. Make sure you roll less than {MAXROLLS} dice and each dice has less than {MAXSIDES} sides')
-            return        
-    
+            return
+
     embed = discord.Embed(title=str(dice), description=f'{msg}\n\nTotal: {total}', colour=imgutils.randomSaturatedColor())
     embed.set_footer(text=f'{dice} was rolled by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
     await ctx.send(embed=embed)
@@ -870,6 +870,18 @@ async def servers(ctx):
         await author.send(msg)
     else:
         await ctx.send(msgReturn("notOwner"))
+
+# turns off the bot and updates code and starts back up
+@bot.command()
+async def update(ctx):
+    if isOwner(ctx):
+        await ctx.send(msgReturn("offMsg"))
+        await ctx.send("Running updater")
+        await bot.close()
+
+        os.popen('sh update.sh')
+        print(":P hii this is toatlly not sai but hopefully it wakes up again")
+        sys.exit(0)
 
 # command will change offten to test out commands
 @bot.command()
