@@ -59,17 +59,18 @@ async def on_ready():
 
 # for every message it does these checks
 DEL_CMD = True
+AUTORESPOND = False
 @bot.event
 async def on_message(message):
     channel = message.channel
 
     if "456247671506599936" in message.content and message.author != bot.user:
         await channel.send("HEY! <@456247671506599936> YOUR MONTY FUCKING SUCKS <3~ ash aka motorcycle gal that loves ya")
-    elif "corn" in message.content.lower() and message.author != bot.user:
+    elif AUTORESPOND and "corn" in message.content.lower() and message.author != bot.user:
         await channel.send("https://cdn.discordapp.com/attachments/654783232969277453/738997605039603772/Corn_is_the_best_crop__wheat_is_worst.mp4")
-    elif "bird" in message.content.lower() and message.author != bot.user:
+    elif AUTORESPOND and "bird" in message.content.lower() and message.author != bot.user:
         await channel.send("The birds work for the bourgeoisie.")
-    elif "nut" in message.content.lower() and message.author != bot.user:
+    elif AUTORESPOND and "nut" in message.content.lower() and message.author != bot.user:
         if(message.guild is None and message.author != bot.user):
             print("dm nut")
         else:
@@ -77,7 +78,7 @@ async def on_message(message):
                 await channel.send("https://cdn.discordapp.com/attachments/606355593887744013/726970883884711956/video0_1-8.mp4")
             else:
                 print("not in nsfw channel")
-    elif "pog" in message.content.lower() and message.author != bot.user and message.guild.id == 759462211818225684:
+    elif AUTORESPOND and "pog" in message.content.lower() and message.author != bot.user and message.guild.id == 759462211818225684:
         await channel.send("https://tenor.com/view/oh-omg-fish-shookt-triggered-gif-9720855")
 
     # Respond to last command
@@ -591,17 +592,17 @@ async def ping(ctx):
 @bot.command(cls=OwnersIgnoreCooldown)
 @commands.cooldown(3, 15, commands.BucketType.user)
 async def roll(ctx, *, dice="1d6"):
-    MAXROLES = 20
+    MAXROLLS = 20
     MAXSIDES = 100
     dice = dice.upper()
-    rolls = 1
-    sides = 6
+    r_data = []
 
     print(dice)
     
-    async def senderr():
-        embed = discord.Embed(title='Input was Invalid', description='The command was used incorrectly it is used like `$roll` or `$roll 2d4`')
-        embed.set_footer(text='Command used inproperly by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+    async def senderr(msg=''):
+        msg = f'\n{msg}' if len(msg) > 0 else ''
+        embed = discord.Embed(title='Input was Invalid', description=f'The command was used incorrectly it is used like `$roll` or `$roll 2d4`{msg}')
+        embed.set_footer(text=f'Command used inproperly by: {ctx.message.author.name} (args: {dice})', icon_url=ctx.message.author.avatar_url)
         await ctx.send(embed=embed)
     
     def rollone(rolls, sides):
@@ -614,30 +615,44 @@ async def roll(ctx, *, dice="1d6"):
     
     if(dice.find('D') == -1):
         try:
-            rolls = int(dice)
-            print("HIt roll first try")
+            r_data = [int(dice), 6]
         except ValueError:
             await senderr()
             return
     else:
         try:
-            rolls, sides = dice.split('D')[:2]
-            rolls = int(rolls)
-            sides = int(sides)
-            print("HIt roll first try")
+            r_data = [int(x) for x in dice.split('D')]
         except ValueError:
             await senderr()
             return
 
-    if(rolls <= MAXROLES and rolls > 0 and sides > 1 and sides <= MAXSIDES):
-        total, out = rollone(rolls, sides)
+    dice = 'd'.join([str(x) for x in r_data])
+    grand_total, msg = 0, ''
+    while len(r_data) > 1:
+        rolls, sides = r_data[:2]
 
-        embed = discord.Embed(title=dice, description=f'{out[:-2]}\n\nTotal: {total}', colour=imgutils.randomSaturatedColor())
-        embed.set_footer(text='A '+dice+' was rolled by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
-        await ctx.send(embed=embed)
-    else:
-        await senderr()
-        return
+        if 0 < rolls <= MAXROLLS and 1 < sides <= MAXSIDES:
+            total, out = rollone(rolls, sides)
+            grand_total += total
+
+            out = f'{rolls}d{sides}: {out}'
+
+            # add dice total on if this isn't the last iteration
+            if len(r_data) > 2 and rolls > 1: out = f'{out} (total: {total})'
+
+            # add to msg with fenceposting
+            msg = f'{msg}\n{out}' if len(msg) > 0 else out
+
+            # shorten list
+            r_data.pop(0)
+            r_data[0] = total
+        else:
+            await senderr(f'{msg}\nYou have reached the limits. Make sure you roll less than {MAXROLLS} dice and each dice has less than {MAXSIDES} sides')
+            return        
+    
+    embed = discord.Embed(title=str(dice), description=f'{msg}\n\nTotal: {total}', colour=imgutils.randomSaturatedColor())
+    embed.set_footer(text=f'{dice} was rolled by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+    await ctx.send(embed=embed)
 
 ###########################
 ###Server Admin Commands###
