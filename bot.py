@@ -59,7 +59,7 @@ async def on_ready():
 
 # for every message it does these checks
 DEL_CMD = True
-AUTORESPOND = False
+AUTORESPOND = True
 @bot.event
 async def on_message(message):
     channel = message.channel
