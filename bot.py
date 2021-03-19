@@ -875,8 +875,8 @@ async def servers(ctx):
 @bot.command()
 async def test(ctx):
     if not isOwner(ctx): return
-    print(ctx.message)
-    await ctx.send(ctx.message)
+    print(ctx.message.content)
+    await ctx.send(ctx.message.content)
 
 # runs the bot after all the methods have been loaded to memory
 bot.run(TOKEN)
