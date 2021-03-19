@@ -80,6 +80,8 @@ async def on_message(message):
                 print("not in nsfw channel")
     elif AUTORESPOND and "pog" in message.content.lower() and message.author != bot.user and message.guild.id == 759462211818225684:
         await channel.send("https://tenor.com/view/oh-omg-fish-shookt-triggered-gif-9720855")
+    elif message.author == bot.user:
+        print('ITS MEE')
 
     # Respond to last command
     await bot.process_commands(message)
