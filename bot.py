@@ -871,25 +871,12 @@ async def servers(ctx):
     else:
         await ctx.send(msgReturn("notOwner"))
 
-# turns off the bot and updates code and starts back up
-@bot.command()
-async def update(ctx):
-    if isOwner(ctx):
-        await ctx.send(msgReturn("offMsg"))
-        await ctx.send("Running updater")
-        await bot.close()
-
-        os.popen('sh update.sh')
-        print(":P hii this is toatlly not sai but hopefully it wakes up again")
-        sys.exit(0)
-
 # command will change offten to test out commands
 @bot.command()
 async def test(ctx):
     if not isOwner(ctx): return
-    member = ctx.author
-    print(dict(bot.intents))
-    print(member.status)
+    print(ctx.message)
+    await ctx.send(ctx.message)
 
 # runs the bot after all the methods have been loaded to memory
 bot.run(TOKEN)
