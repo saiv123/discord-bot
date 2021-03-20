@@ -70,19 +70,7 @@ async def on_message(message):
         await channel.send("https://cdn.discordapp.com/attachments/654783232969277453/738997605039603772/Corn_is_the_best_crop__wheat_is_worst.mp4")
     elif AUTORESPOND and "bird" in message.content.lower() and message.author != bot.user:
         await channel.send("The birds work for the bourgeoisie.")
-    elif AUTORESPOND and "nut" in message.content.lower() and message.author != bot.user:
-        if(message.guild is None and message.author != bot.user):
-            print("dm nut")
-        else:
-            if(channel.is_nsfw()):  # checks if the channel the command was sent from is nsfw
-                await channel.send("https://cdn.discordapp.com/attachments/606355593887744013/726970883884711956/video0_1-8.mp4")
-            else:
-                print("not in nsfw channel")
-    elif AUTORESPOND and "pog" in message.content.lower() and message.author != bot.user and message.guild.id == 759462211818225684:
-        await channel.send("https://tenor.com/view/oh-omg-fish-shookt-triggered-gif-9720855")
-    elif message.author == bot.user:
-        print('ITS MEE')
-
+    
     # Respond to last command
     await bot.process_commands(message)
 
