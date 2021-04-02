@@ -1033,7 +1033,7 @@ async def sendDM(ctx, user:discord.User=None, message:str=''):
     ],
     guild_ids=guild_ids
 )
-async def status(ctx, type:str='', URL:str=''):
+async def status(ctx, type:str='', URL:str='https://twitch.tv/saiencevanadium/'):
     if not isOwner(ctx):
         await ctx.send(msgReturn('notOwner'))
         return
