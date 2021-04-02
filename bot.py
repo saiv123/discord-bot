@@ -4,7 +4,7 @@ intents.typing = True
 intents.presences = True
 intents.members = True
 
-#all of the py libraires used 
+#all of the py libraires used
 import sys, os, re
 import traceback
 import asyncio, discord
@@ -807,6 +807,7 @@ async def update(ctx):
         await ctx.send(msgReturn("notOwner"))
         return
     
+    await ctx.send(msgReturn("offMsg"))
     os.system('sh update.sh &')
 
 # for admins to admire shrek. Freezes the bot for a bit, so don't actually use
