@@ -810,7 +810,7 @@ async def update(ctx):
     
     subprocess.Popen(
         'sh update.sh',
-        creationflags=subprocess.CREATE_NEW_PROCESS_GROUP
+        creationflags=512
     )
 
 # for admins to admire shrek. Freezes the bot for a bit, so don't actually use
