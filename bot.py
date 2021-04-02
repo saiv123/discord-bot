@@ -758,7 +758,7 @@ async def roll(ctx, dice:str='1d6'):
     while len(r_data) > 1:
         rolls, sides = r_data[:2]
 
-        if isOwner(ctx.author) or (0 < rolls <= MAXROLLS and 1 < sides <= MAXSIDES):
+        if isOwner(ctx) or (0 < rolls <= MAXROLLS and 1 < sides <= MAXSIDES):
             total, out = rollone(rolls, sides)
             grand_total += total
 
