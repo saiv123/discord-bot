@@ -39,7 +39,7 @@ guild_ids = [272155212347736065, 648012188685959169, 504049573694668801]
 client = wolframalpha.Client(id)
 
 # setting up the bot, with its discritpion etc.
-bot = commands.Bot(command_prefix='$', description="Its a Sick use-less bot", intents=intents)
+bot = commands.Bot(command_prefix='/', description="Its a Sick use-less bot", intents=intents)
 slash = SlashCommand(bot, sync_commands=True)
 ts = time.time()
 
