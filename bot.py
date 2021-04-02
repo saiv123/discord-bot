@@ -695,6 +695,8 @@ async def color(ctx, input:str=''):
 
 @slash.slash(name='ping', description='What\'s my speed?', guild_ids=guild_ids)
 async def ping(ctx):
+    await ctx.respond()
+    
     embed = add_to_embed('Ping','Latency: {0}ms\nRound Trip Time: ??ms'.format(round(bot.latency*1000, 1)))[0]
     embed.set_footer(text='Ping Measured by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
     msg = await ctx.send(embed=embed)
