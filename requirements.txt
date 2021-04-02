@@ -4,3 +4,4 @@ wolframalpha
 requests
 nltk
 lyricsgenius
+discord-py-slash-command
