@@ -360,7 +360,7 @@ memePath = 'ClassWork/'
     guild_ids=guild_ids
 )
 async def meme(ctx, query:str=''):
-    embed = getEmbedsFromLibraryQuery(memePath, query)[0]:
+    embed = getEmbedsFromLibraryQuery(memePath, query)[0]
     embed.set_footer(text='Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
     await ctx.send(embed=embed)
 
@@ -538,7 +538,7 @@ async def rps(ctx, *, level=1):
             output = "I win ;) Better luck next time"
         output = output+"\n\nYou chose "+ symbol_names[choice]+"\nI chose "+symbol_names[computer_choice]
 
-    embed = add_to_embed(f'{ctx.author.name}\'s RPS', output)[0]:
+    embed = add_to_embed(f'{ctx.author.name}\'s RPS', output)[0]
     if color != None: embed.color = color
     embed.set_footer(text='RPS Played by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
     await ctx.send(embed=embed)
