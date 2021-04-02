@@ -1046,6 +1046,7 @@ async def status(ctx, type:str='', URL:str=''):
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=URL))
     elif(type.lower() == 'watching'):
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=URL))
+    await ctx.send('Status updated', hidden=True)
         
 
 # send you the servers the bot is in
