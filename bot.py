@@ -696,15 +696,15 @@ async def color(ctx, input:str=''):
 @slash.slash(name='ping', description='What\'s my speed?', guild_ids=guild_ids)
 async def ping(ctx):
     await ctx.respond()
-    
-    embed = add_to_embed('Ping','Latency: {0}ms\nRound Trip Time: ??ms'.format(round(bot.latency*1000, 1)))[0]
-    embed.set_footer(text='Ping Measured by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
-    msg = await ctx.send(embed=embed)
-    t = (msg.created_at - ctx.created_at).total_seconds() * 1000
 
-    embed = add_to_embed('Ping','Latency: {}ms\nRound Trip Time: {}ms'.format(round(bot.latency*1000, 1), round(t, 1)))[0]
+    embed = add_to_embed('Ping','Latency: {0}ms'.format(round(bot.latency*1000, 1)))[0]
     embed.set_footer(text='Ping Measured by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
-    await msg.edit(content=None, embed=embed)
+    await ctx.send(embed=embed)
+    
+    #t = (msg.created_at - ctx.created_at).total_seconds() * 1000
+    #embed = add_to_embed('Ping','Latency: {}ms\nRound Trip Time: {}ms'.format(round(bot.latency*1000, 1), round(t, 1)))[0]
+    #embed.set_footer(text='Ping Measured by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
+    #await msg.edit(content=None, embed=embed)
 
 @slash.slash(name='roll',
     description='Roll a dice',
