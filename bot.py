@@ -4,7 +4,7 @@ intents.typing = True
 intents.presences = True
 intents.members = True
 
-#all of the py libraires used
+#all of the py libraires used 
 import sys, os, re
 import traceback
 import asyncio, discord
