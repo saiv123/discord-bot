@@ -6,6 +6,7 @@ intents.members = True
 
 #all of the py libraires used
 import sys, os, re
+import subprocess
 import traceback
 import asyncio, discord
 import wolframalpha
@@ -800,6 +801,17 @@ async def off(ctx):
         sys.exit(0)
     else:
         await ctx.send(msgReturn("notOwner"))
+
+@bot.command()
+async def update(ctx):
+    if not isOwner(ctx):
+        await ctx.send(msgReturn("notOwner"))
+        return
+    
+    subprocess.Popen(
+        'sh update.sh',
+        creationflags=subprocess.CREATE_NEW_PROCESS_GROUP
+    )
 
 # for admins to admire shrek. Freezes the bot for a bit, so don't actually use
 @bot.command()
