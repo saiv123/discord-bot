@@ -421,13 +421,13 @@ async def contact(ctx):
 async def song(ctx, song:str=''):
     try:
         #splitting the stream to check if the input has a artist if not add by . to earch for the song name
-        if ' by ' not in str(songName): songName = str(songName) + ' by '
-        songName = str(songName).split(" by ")
-        song = Gen.search_song(songName[0], songName[1])
-        embed = discord.Embed(title=songName[0].title(), colour = imgutils.randomSaturatedColor())
+        if ' by ' not in str(song): song = str(song) + ' by '
+        song = str(song).split(" by ")
+        songInfo = Gen.search_song(song[0], song[1])
+        embed = discord.Embed(title=song[0].title(), colour = imgutils.randomSaturatedColor())
 
         # Create and send embed
-        for e in add_to_embed(embed, song.lyrics):
+        for e in add_to_embed(embed, songInfo.lyrics):
             e.set_footer(text='Song Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
             await ctx.send(embed=e)
     except AttributeError as e:
@@ -677,12 +677,12 @@ async def rpsc(ctx, user:discord.User=None, level:int=1):
             name='input',
             description='A color as hex, rgb, or cmyk',
             option_type=3,
-            required=False
+            required=True
         )
     ],
     guild_ids=guild_ids
 )
-async def color(ctx, input:str):
+async def color(ctx, input:str=''):
     try:
         color_dict = apis.getColor(input)
         embed = apis.colorDictToEmbed(color_dict)
