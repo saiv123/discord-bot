@@ -719,6 +719,8 @@ async def ping(ctx):
     guild_ids=guild_ids
 )
 async def roll(ctx, dice:str='1d6'):
+    if isOwner(ctx): ctx.defer() # I solemnly swear that I am up to no good
+
     MAXROLLS = 20
     MAXSIDES = 100
     dice = dice.upper()
