@@ -59,7 +59,7 @@ async def on_ready():
     print('user: ' + bot.user.name)
     print('id: ' + str(bot.user.id))
     # setst the activity for the bot
-    await bot.change_presence(activity=discord.Game(name='with his food | $help'))
+    await bot.change_presence(activity=discord.Game(name='with his food | /help'))
     print('current time - ' + str(ts))
     print('-----------')
 
@@ -83,13 +83,13 @@ async def on_message(message):
 #spits out the errors
 @bot.event
 async def on_command_error(ctx, error):
-    msgSend = "An internal error has occured. Use $contact to contact the owner if it persists"
+    msgSend = "An internal error has occured. Use /contact to contact the owner if it persists"
     if isinstance(error, commands.MissingRequiredArgument):
         e_msg = ', a '.join(str(error.param).replace('params','').split(':'))
-        msgSend = f'You did not use the command correctly\nYou\'re missing {e_msg}\n\nIf you don\'t know how to use the command, use the $help command to see how to use all commands.'
+        msgSend = f'You did not use the command correctly\nYou\'re missing {e_msg}\n\nIf you don\'t know how to use the command, use the /help command to see how to use all commands.'
     elif isinstance(error, commands.BadArgument):
         e_msg = ' and '.join(error.args)
-        msgSend = f'You did not use the command correctly\nYou\'re arguements are wrong: {e_msg}\n\nIf you don\'t know how to use the command, use the $help command to see how to use all commands.'
+        msgSend = f'You did not use the command correctly\nYou\'re arguements are wrong: {e_msg}\n\nIf you don\'t know how to use the command, use the /help command to see how to use all commands.'
     elif isinstance(error, commands.CommandOnCooldown):
         msgSend = 'You\'re on cooldown for '+ctx.invoked_with + '.\nPlease wait another '+str(round(error.retry_after))+' seconds'
     elif isinstance(error, commands.CommandNotFound):
@@ -149,8 +149,8 @@ async def invite(ctx):
 async def shouldI(ctx, *, msg:str):
     msg = " "+msg+" "
     # msg = ' '.join(msg)
-    phrases = ['Yes! Go $','No, it won\'t work.','Hmmm, $ might be a fine idea','Unclear, consider rewording "$"','I don\'t know, ask someone else about $']
-    embed = discord.Embed(title='Should I...', description='{}\n{}'.format(msg, random.choice(phrases).replace('$', msg)))
+    phrases = ['Yes! Go $','No, it won\'t work.','Hmmm, $ might be a fine idea','Unclear, consider rewording "/"','I don\'t know, ask someone else about $']
+    embed = discord.Embed(title='Should I...', description='{}\n{}'.format(msg, random.choice(phrases).replace('/', msg)))
     embed.set_footer(text='Asked by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
     await ctx.send(embed=embed)
 
@@ -389,7 +389,7 @@ async def nsfw(ctx, query:str=''):
             embed.set_footer(text='Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
             await ctx.send(embed=embed)
         else:
-            embed = discord.Embed(title='Sorry',description='I\'m sorry {}, $nsfw can only be used in an NSFW channel'.format(ctx.author.name))
+            embed = discord.Embed(title='Sorry',description='I\'m sorry {}, /nsfw can only be used in an NSFW channel'.format(ctx.author.name))
             embed.set_footer(text='Porn Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
             await ctx.send(embed=embed)
 
@@ -432,7 +432,7 @@ async def song(ctx, song:str=''):
             await ctx.send(embed=e)
     except AttributeError as e:
         print(e)
-        embed = discord.Embed(title='Error in Song', description='The command was either used incorrectly or the song was not found\nCommand is used as follows: <b>$song songTitle by songArtist</b>')
+        embed = discord.Embed(title='Error in Song', description='The command was either used incorrectly or the song was not found\nCommand is used as follows: <b>/song songTitle by songArtist</b>')
         embed.set_footer(text='Song Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
 
@@ -726,7 +726,7 @@ async def roll(ctx, dice:str='1d6'):
 
     async def senderr(msg=''):
         msg = f'\n{msg}' if len(msg) > 0 else ''
-        embed = discord.Embed(title='Input was Invalid', description=f'The command was used incorrectly it is used like `$roll` or `$roll 2d4`{msg}')
+        embed = discord.Embed(title='Input was Invalid', description=f'The command was used incorrectly it is used like `/roll` or `/roll 2d4`{msg}')
         embed.set_footer(text=f'Command used inproperly by: {ctx.author.name} (args: {dice})', icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
 
@@ -1041,7 +1041,7 @@ async def status(ctx, type:str='', URL:str=''):
     if(type.lower() == 'stream'):
         await bot.change_presence(activity=discord.Streaming(name='Watching my creator', url=URL))
     elif(type.lower() == 'help'):
-        await bot.change_presence(activity=discord.Game(name='with his food | $help'))
+        await bot.change_presence(activity=discord.Game(name='with his food | /help'))
     elif(type.lower() == 'music'):
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=URL))
     elif(type.lower() == 'watching'):
