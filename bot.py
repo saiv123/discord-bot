@@ -6,7 +6,6 @@ intents.members = True
 
 #all of the py libraires used
 import sys, os, re
-import subprocess
 import traceback
 import asyncio, discord
 import wolframalpha
@@ -808,10 +807,7 @@ async def update(ctx):
         await ctx.send(msgReturn("notOwner"))
         return
     
-    subprocess.Popen(
-        'sh update.sh',
-        creationflags=512
-    )
+    os.system('sh update.sh &')
 
 # for admins to admire shrek. Freezes the bot for a bit, so don't actually use
 @bot.command()
