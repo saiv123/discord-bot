@@ -114,7 +114,7 @@ async def on_command_error(ctx, error):
 
 # our curtom help command
 
-@slash.slash(name='help', description='Give you help', guild_ids=guild_ids)
+@slash.slash(name='help', description='Give you help' )
 async def help(ctx):
     # seting up an embed
     embed = discord.Embed(description="Info on the bot and how to use it",colour=discord.Colour.green())
@@ -128,14 +128,14 @@ async def help(ctx):
     await ctx.send(embed=embed)
 
 #Gives you the github website link
-@slash.slash(name='github', description='See the github!', guild_ids=guild_ids)
+@slash.slash(name='github', description='See the github!' )
 async def github(ctx):
     embed = discord.Embed(title= "GitHub Website for Bot",description="This is where you can see how the bot works",url="https://github.com/saiv123/discord-bot")
     embed.set_footer(text='Github Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
     await ctx.send(embed=embed)
 
 # will give you a link to invite the bot to other servers
-@slash.slash(name='invite', description='Add me to your server!', guild_ids=guild_ids)
+@slash.slash(name='invite', description='Add me to your server!' )
 async def invite(ctx):
     embed = discord.Embed(colour=discord.Colour.green())
     embed.set_author(name='Invite the Bot to another server')
@@ -155,14 +155,14 @@ async def shouldI(ctx, *, msg:str):
     await ctx.send(embed=embed)
 
 # says hello to your
-@slash.slash(name='hi', description='Am I here? Are you here? Is anyone really here?', guild_ids=guild_ids)
+@slash.slash(name='hi', description='Am I here? Are you here? Is anyone really here?' )
 async def hi(ctx):
     embed = discord.Embed(title='Hello', description='Hello {0}!!!'.format(ctx.author.mention))
     embed.set_footer(text='Sanity check by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
     await ctx.send(embed=embed)
 
 # for the user to see their notes
-@slash.slash(name='getnotes', description='Gets your notes', guild_ids=guild_ids)
+@slash.slash(name='getnotes', description='Gets your notes' )
 async def getnotes(ctx):
     try:
         notes = ""
@@ -190,7 +190,7 @@ async def getnotes(ctx):
     await ctx.send(embed=embed)
 
 # removes the personal files
-@slash.slash(name='deletenotes', description='Deletes your notes', guild_ids=guild_ids)
+@slash.slash(name='deletenotes', description='Deletes your notes' )
 async def deletenotes(ctx):
     nameNote = ('MyPorn/' + str(ctx.author.id) + '.txt')
     command = 'sudo rm -r ' + nameNote
@@ -221,7 +221,7 @@ async def notes(ctx, memory:str=''):
     await ctx.send('Your Note is recorded and locked up.', hidden=True) # hides the users message so others dont see what they saved
 
 # return the time the bot has been running
-@slash.slash(name='stats', description='What am I up to?', guild_ids=guild_ids)
+@slash.slash(name='stats', description='What am I up to?' )
 async def stats(ctx):
     quote = quotes.getQuoteApi()
     # temp = os.popen("vcgencmd measure_temp").readline()
@@ -302,7 +302,7 @@ async def wolfram(ctx, query:str=''):
     await ctx.send(embed=embed)
 
 # sends a warming quote
-@slash.slash(name='quote', description='Sends a heartwarming quote', guild_ids=guild_ids)
+@slash.slash(name='quote', description='Sends a heartwarming quote' )
 async def quote(ctx):
     quote = apis.quote_to_discord_embed(quotes.getQuoteJSON())
     quote.set_thumbnail(url='https://clipart.info/images/ccovers/1531011033heart-emoji.png')
@@ -311,7 +311,7 @@ async def quote(ctx):
 
 # sends a random quote
 # TODO: add cooldown of 60s for each 3 uses
-@slash.slash(name='randquote', description='Get a unique quote', guild_ids=guild_ids)
+@slash.slash(name='randquote', description='Get a unique quote' )
 async def randquote(ctx):
     quote = quotes.getQuoteApi()
     embed = apis.quote_to_discord_embed(quote)
@@ -320,7 +320,7 @@ async def randquote(ctx):
 
 # sends a random piece of advice
 # TODO: add cooldown of 60s for each 3 uses
-@slash.slash(name='advice', description='Sends a random piece of advice', guild_ids=guild_ids)
+@slash.slash(name='advice', description='Sends a random piece of advice' )
 async def advice(ctx):
     advice = apis.advice()
     embed = apis.quote_to_discord_embed(advice)
@@ -330,7 +330,7 @@ async def advice(ctx):
 # sends 2 stupid donald trump quotes and their contradiction score
 # TODO: add cooldown of 60s for each 3 uses
 # TODO: completely broken rn
-@slash.slash(name='tronalddump', description='Sends 2 stupid trump quotes and attemps to gauge the difference', guild_ids=guild_ids)
+@slash.slash(name='tronalddump', description='Sends 2 stupid trump quotes and attemps to gauge the difference' )
 async def tronalddump(ctx):
     t = time.time()
     contra_tuple = apis.get_trump_contradiction()
@@ -395,7 +395,7 @@ async def nsfw(ctx, query:str=''):
             await ctx.send(embed=embed)
 
 # Contact command
-@slash.slash(name='contact', description='Contact my father', guild_ids=guild_ids)
+@slash.slash(name='contact', description='Contact my father' )
 async def contact(ctx):
     msg = "Discord: Sai#3400\nDiscord server: <https://discord.gg/2zUTJ7j>\n"
     if(ctx.channel.id == 674120261691506688):  # channel specific to my discord server
@@ -695,7 +695,7 @@ async def color(ctx, input:str=''):
     except ValueError:
         await ctx.send("The given color is incorrect. Enter it in Hex, RGB, or CMYK form")
 
-@slash.slash(name='ping', description='What\'s my speed?', guild_ids=guild_ids)
+@slash.slash(name='ping', description='What\'s my speed?' )
 async def ping(ctx):
     await ctx.respond()
 
@@ -921,7 +921,7 @@ async def ban(ctx, user:discord.User=None):
 
 #up date to how the command will work, it will be limited to onnce ever 24 hours, but will always send the quote even if it does join the vc
 #play / do something depending on if the user is in a voice channel or not
-@slash.slash(name='sad', description='Makes you unsad', guild_ids=guild_ids)
+@slash.slash(name='sad', description='Makes you unsad' )
 async def sad(ctx):
     user = bot.get_user(ctx.author.id)
     await user.send("Hey i see you have used the sad command, you are loved just know that :heart:")
@@ -956,7 +956,7 @@ async def sad(ctx):
 ########################
 
 # for the admins to turn off the bot
-@slash.slash(name='off', description='Kills me. Owner only', guild_ids=guild_ids)
+@slash.slash(name='off', description='Kills me. Owner only' )
 async def off(ctx):
     if(isOwner(ctx)):
         await ctx.send(msgReturn("offMsg"))
@@ -976,7 +976,7 @@ async def off(ctx):
 #     os.system('sh update.sh &')
 
 # for admins to admire shrek. Freezes the bot for a bit, so don't actually use
-@slash.slash(name='shrek', description='WHAT ARE YOU DOING IN MY SWAMP. Owner only', guild_ids=guild_ids)
+@slash.slash(name='shrek', description='WHAT ARE YOU DOING IN MY SWAMP. Owner only' )
 async def shrek(ctx, *, embed:bool=False):
     if not isOwner(ctx):
         await ctx.send(msgReturn("notOwner"))
@@ -1055,7 +1055,7 @@ async def status(ctx, type:str='', URL:str='https://twitch.tv/saiencevanadium/')
 
 
 # send you the servers the bot is in
-@slash.slash(name='servers', description='Lists all joined servers. Owner only', guild_ids=guild_ids)
+@slash.slash(name='servers', description='Lists all joined servers. Owner only' )
 async def servers(ctx):
     #cheks if your owner
     if not isOwner(ctx):
@@ -1076,7 +1076,7 @@ async def servers(ctx):
 
 
 # command will change offten to test out commands
-@slash.slash(name='test', description='used to send small things. Owner only', guild_ids=guild_ids)
+@slash.slash(name='test', description='used to send small things. Owner only' )
 async def test(ctx):
     if not isOwner(ctx): return
     print(ctx.message.content)
