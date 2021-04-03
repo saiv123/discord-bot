@@ -75,7 +75,7 @@ async def on_message(message):
         await channel.send("https://cdn.discordapp.com/attachments/654783232969277453/738997605039603772/Corn_is_the_best_crop__wheat_is_worst.mp4")
     elif AUTORESPOND and "bird" in message.content.lower() and message.author != bot.user:
         await channel.send("The birds work for the bourgeoisie.")
-    
+
     # Respond to last command
     await bot.process_commands(message)
 
@@ -180,10 +180,11 @@ async def getnotes(ctx):
                 notes += str(temp[i])
         for message in splitLongStrings(notes):
             await ctx.author.send(message)
+            await ctx.send("check your DM's.")
     except IOError:  # edge case if the user does not have any notes / file
         print("File Not Found")
         await ctx.author.send("You do not have any notes")
-    
+
     embed = discord.Embed(title='Notes Retrieved')
     embed.set_footer(text='Notes used by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
     await ctx.send(embed=embed)
@@ -403,6 +404,7 @@ async def contact(ctx):
     # Making the dm channel
     user = bot.get_user(id)
     await user.send(msg)
+    await ctx.send("Check your DM's")
 
 #Get song lyrics
 # TODO: add cooldown of 30s for each 1 use
@@ -700,7 +702,7 @@ async def ping(ctx):
     embed = add_to_embed('Ping','Latency: {0}ms'.format(round(bot.latency*1000, 1)))[0]
     embed.set_footer(text='Ping Measured by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
     await ctx.send(embed=embed)
-    
+
     #t = (msg.created_at - ctx.created_at).total_seconds() * 1000
     #embed = add_to_embed('Ping','Latency: {}ms\nRound Trip Time: {}ms'.format(round(bot.latency*1000, 1), round(t, 1)))[0]
     #embed.set_footer(text='Ping Measured by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
@@ -825,7 +827,7 @@ async def userinfo(ctx, user:discord.User=None):
     for name, value, inline in fields:
         embed.add_field(name=name, value=value, inline=inline)
 
-    await ctx.send(embed=embed)        
+    await ctx.send(embed=embed)
 
 #kick command
 @slash.slash(name='kick',
@@ -964,14 +966,14 @@ async def off(ctx):
     else:
         await ctx.send(msgReturn("notOwner"))
 
-@slash.slash(name='update', description='Fixes me. Owner only', guild_ids=guild_ids)
-async def update(ctx):
-    if not isOwner(ctx):
-        await ctx.send(msgReturn("notOwner"))
-        return
-    
-    await ctx.send(msgReturn("offMsg"))
-    os.system('sh update.sh &')
+# @slash.slash(name='update', description='Fixes me. Owner only', guild_ids=guild_ids)
+# async def update(ctx):
+#     if not isOwner(ctx):
+#         await ctx.send(msgReturn("notOwner"))
+#         return
+#
+#     await ctx.send(msgReturn("offMsg"))
+#     os.system('sh update.sh &')
 
 # for admins to admire shrek. Freezes the bot for a bit, so don't actually use
 @slash.slash(name='shrek', description='WHAT ARE YOU DOING IN MY SWAMP. Owner only', guild_ids=guild_ids)
@@ -979,7 +981,7 @@ async def shrek(ctx, *, embed:bool=False):
     if not isOwner(ctx):
         await ctx.send(msgReturn("notOwner"))
         return
-    
+
     with open('Shrek.txt', 'r') as file:
         shrek = file.read()
         if embed:
@@ -1013,10 +1015,9 @@ async def sendDM(ctx, user:discord.User=None, message:str=''):
     if not isOwner(ctx):
         await ctx.send(msgReturn("notOwner"))
         return
-
-    452465370658373632
     await user.send(message)
-        
+    await ctx.send("Message has safely been sent.")
+
 
 # this allows the bot admins to change the status from the $help to something else
 @slash.slash(name='status',
@@ -1051,7 +1052,7 @@ async def status(ctx, type:str='', URL:str='https://twitch.tv/saiencevanadium/')
     elif(type.lower() == 'watching'):
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=URL))
     await ctx.send('Status updated', hidden=True)
-        
+
 
 # send you the servers the bot is in
 @slash.slash(name='servers', description='Lists all joined servers. Owner only', guild_ids=guild_ids)
@@ -1071,10 +1072,11 @@ async def servers(ctx):
     #creates a dm with user and dms it to them
     author = ctx.author
     await author.send(msg)
-        
+    await ctx.send("Please check your DM's")
+
 
 # command will change offten to test out commands
-@bot.command()
+@slash.slash(name='test', description='used to send small things. Owner only', guild_ids=guild_ids)
 async def test(ctx):
     if not isOwner(ctx): return
     print(ctx.message.content)
