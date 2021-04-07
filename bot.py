@@ -69,9 +69,9 @@ async def on_ready():
 async def on_member_update(before, after):
     if(before.id == 240636443829993473):
         print("streaming")
-        await ctx.send(after.status)
-        await ctx.send(after.activities)
-        await ctx.send(after.activity)
+        print(after.status)
+        print(after.activities)
+        print(after.activity)
         #check if sai is streaming
         #if sai' status is not streaming return to help
 
