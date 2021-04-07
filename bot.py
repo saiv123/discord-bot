@@ -1060,7 +1060,7 @@ async def status(ctx, type:str='', URL:str='https://twitch.tv/saiencevanadium/')
     elif(type.lower() == 'help'):
         await bot.change_presence(activity=discord.Game(name='with his food | /help'))
     elif(type.lower() == 'music'):
-        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=URL))
+        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=ctx.author.activities[1].title))
     elif(type.lower() == 'watching'):
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=URL))
     await ctx.send('Status updated', hidden=True)
