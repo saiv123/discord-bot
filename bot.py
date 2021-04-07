@@ -67,7 +67,7 @@ async def on_ready():
 #Atempt to change bot status when i stream
 @bot.event
 async def on_member_update(before, after):
-    if(before.id == libraires.helperFunctions.ownerId[1]):
+    if(before.id == 240636443829993473):
         print("streaming")
 
         #check if sai is streaming
