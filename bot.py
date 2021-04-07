@@ -63,21 +63,14 @@ async def on_ready():
     print('current time - ' + str(ts))
     print('-----------')
 
-
 #Atempt to change bot status when i stream
 @bot.event
 async def on_member_update(before, after):
     if(before.id == 240636443829993473):
-        await bot.change_presence(activity=discord.Game(name='with his food | /help'))
         if  after.activity.type is discord.ActivityType.streaming:
             await bot.change_presence(activity=discord.Streaming(name='Watching my creator', url=URL))
         else:
             await bot.change_presence(activity=discord.Game(name='with his food | /help'))
-        #check if sai is streaming
-        #if sai' status is not streaming return to help
-
-    else:return
-
 
 # for every message it does these checks
 AUTORESPOND = True
