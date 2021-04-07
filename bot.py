@@ -67,7 +67,7 @@ async def on_ready():
 @bot.event
 async def on_member_update(before, after):
     if(before.id == 240636443829993473):
-        if  after.activity.type is discord.ActivityType.streaming:
+        if  after.activities.type is discord.ActivityType.streaming:
             await bot.change_presence(activity=discord.Streaming(name='Watching my creator', url=URL))
         else:
             await bot.change_presence(activity=discord.Game(name='with his food | /help'))
