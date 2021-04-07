@@ -33,7 +33,7 @@ from libraries.prawn import getClosestFromList
 from Levenshtein import distance
 
 # The guild ID of the test server. Remove when done testing
-guild_ids = [272155212347736065, 648012188685959169, 504049573694668801]
+test_servers = [272155212347736065, 648012188685959169, 504049573694668801]
 
 # for the math stuff
 client = wolframalpha.Client(id)
@@ -208,7 +208,7 @@ async def deletenotes(ctx):
             required=True
         )
     ],
-    guild_ids=guild_ids
+
 )
 async def notes(ctx, memory:str=''):
     nameNote = ("MyPorn/" + str(ctx.author.id) + ".txt")
@@ -264,7 +264,7 @@ async def stats(ctx):
             required=True
         )
     ],
-    guild_ids=guild_ids
+
 )
 async def definte(ctx, a:int=0, b:int=0, func:str=''):
     # bunch of text formating to put into the api
@@ -283,7 +283,7 @@ async def definte(ctx, a:int=0, b:int=0, func:str=''):
             required=True
         )
     ],
-    guild_ids=guild_ids
+
 )
 async def wolfram(ctx, query:str=''):
     res = client.query(query)
@@ -358,7 +358,7 @@ memePath = 'ClassWork/'
             required=False
         )
     ],
-    guild_ids=guild_ids
+
 )
 async def meme(ctx, query:str=''):
     embed = getEmbedsFromLibraryQuery(memePath, query)[0]
@@ -378,7 +378,7 @@ prawnPath = 'MyHomework/'
             required=False
         )
     ],
-    guild_ids=guild_ids
+
 )
 async def nsfw(ctx, query:str=''):
     # checks of user is trying to get past the nsfw filter
@@ -418,7 +418,7 @@ async def contact(ctx):
             required=True
         )
     ],
-    guild_ids=guild_ids
+
 )
 async def song(ctx, song:str=''):
     try:
@@ -455,7 +455,7 @@ SPACE_LEN_HARD_CAP = 4000
             required=False
         ),
     ],
-    guild_ids=guild_ids
+
 )
 async def space(ctx, message:str='', amount:int=1):
     exp_len = (len(message)-1)*amount + len(message)
@@ -482,7 +482,7 @@ RPS_HARD_CAP = 6
             required=False
         )
     ],
-    guild_ids=guild_ids
+
 )
 async def rps(ctx, *, level=1):
     if level > RPS_HARD_CAP and not isOwner(ctx):
@@ -563,7 +563,7 @@ async def rps(ctx, *, level=1):
             required=False
         )
     ],
-    guild_ids=guild_ids
+
 )
 async def rpsc(ctx, user:discord.User=None, level:int=1):
     if level > RPS_HARD_CAP and not isOwner(ctx):
@@ -682,7 +682,7 @@ async def rpsc(ctx, user:discord.User=None, level:int=1):
             required=True
         )
     ],
-    guild_ids=guild_ids
+
 )
 async def color(ctx, input:str=''):
     try:
@@ -718,7 +718,7 @@ async def ping(ctx):
             required=False
         )
     ],
-    guild_ids=guild_ids
+
 )
 async def roll(ctx, dice:str='1d6'):
     if isOwner(ctx): ctx.defer() # I solemnly swear that I am up to no good
@@ -800,7 +800,7 @@ async def roll(ctx, dice:str='1d6'):
             required=True
         )
     ],
-    guild_ids=guild_ids
+
 )
 async def userinfo(ctx, user:discord.User=None):
     if not ctx.author.guild_permissions.administrator and not isOwner(ctx):
@@ -840,7 +840,7 @@ async def userinfo(ctx, user:discord.User=None):
             required=True
         )
     ],
-    guild_ids=guild_ids
+
 )
 async def kick(ctx, user:discord.User=None):
     perms = ctx.author.guild_permissions
@@ -883,7 +883,7 @@ async def kick(ctx, user:discord.User=None):
             required=True
         )
     ],
-    guild_ids=guild_ids
+
 )
 async def ban(ctx, user:discord.User=None):
     perms = ctx.author.guild_permissions
@@ -1009,7 +1009,7 @@ async def shrek(ctx, *, embed:bool=False):
             required=True
         )
     ],
-    guild_ids=guild_ids
+
 )
 async def sendDM(ctx, user:discord.User=None, message:str=''):
     if not isOwner(ctx):
@@ -1036,7 +1036,7 @@ async def sendDM(ctx, user:discord.User=None, message:str=''):
             required=False
         )
     ],
-    guild_ids=guild_ids
+
 )
 async def status(ctx, type:str='', URL:str='https://twitch.tv/saiencevanadium/'):
     if not isOwner(ctx):
