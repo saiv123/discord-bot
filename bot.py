@@ -66,14 +66,16 @@ async def on_ready():
 #Changes the bots status to my stream when Sai streams
 @bot.event
 async def on_member_update(before, after):
-    #check if the users update is sai and there is more than one activity
-    if(before.id == 240636443829993473 and len(after.activities) > 1):
+    #check if the users update is sai
+    if(before.id == 240636443829993473):
+        currActicity = after.activities
 
-        #compaires the current activity with streaming
-        if after.activities[1].type is discord.ActivityType.streaming:
-            await bot.change_presence(activity=discord.Streaming(name="Streaming"+after.activities[1].game+"!", url=after.activities[1].url))
-        else:
-            await bot.change_presence(activity=discord.Game(name='with his food | /help'))
+        #for activities that are more than 2 this for loop will fix a index out of range error it by looping through the tupple
+        for i in range(len(currActicity)):
+            if(after.activities[i].type is discord.ActivityType.streaming):
+                await bot.change_presence(activity=discord.Streaming(name="Streaming"+after.activities[1].game+"!", url=after.activities[1].url))
+            else:
+                await bot.change_presence(activity=discord.Game(name='with his food | /help'))
 
 # for every message it does these checks
 AUTORESPOND = True
@@ -1055,12 +1057,16 @@ async def status(ctx, type:str='', URL:str='https://twitch.tv/saiencevanadium/')
         await ctx.send(msgReturn('notOwner'))
         return
 
-    if(type.lower() == 'stream'):
-        await bot.change_presence(activity=discord.Streaming(name='Watching my creator', url=URL))
-    elif(type.lower() == 'help'):
+    if(type.lower() == 'help'):
         await bot.change_presence(activity=discord.Game(name='with his food | /help'))
     elif(type.lower() == 'music'):
-        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=ctx.author.activities[1].title))
+        currActicity = ctx.author.activities
+        #find where the activity is in the tuple
+        for i in range(len(currActicity)):
+            if(after.activities[i].type is discord.ActivityType.streaming):
+                await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=ctx.author.activities[i].title))
+            else:
+                await ctx.send("Sorry but you are not listening to music.", hidden=True)
     elif(type.lower() == 'watching'):
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=URL))
     await ctx.send('Status updated', hidden=True)
