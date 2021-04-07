@@ -67,11 +67,11 @@ async def on_ready():
 @bot.event
 async def on_member_update(before, after):
     if(before.id == 240636443829993473):
-        print(after.activities)
-        if  after.activities.type is discord.ActivityType.streaming:
-            await bot.change_presence(activity=discord.Streaming(name='Watching my creator', url=URL))
-        else:
-            await bot.change_presence(activity=discord.Game(name='with his food | /help'))
+        print(after.activities[1].type)
+        # if  after.activities[1].type is discord.ActivityType.streaming:
+        #     await bot.change_presence(activity=discord.Streaming(name='Watching my creator', url=URL))
+        # else:
+        #     await bot.change_presence(activity=discord.Game(name='with his food | /help'))
 
 # for every message it does these checks
 AUTORESPOND = True
