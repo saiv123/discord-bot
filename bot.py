@@ -68,15 +68,15 @@ async def on_ready():
 @bot.event
 async def on_member_update(before, after):
     if(before.id == 240636443829993473):
-        print("streaming")
-        print(after.status)
-        print(after.activities)
-        print(after.activity)
+        if(after.status == 'streaming'):
+            print("streaming")
+            await bot.change_presence(activity=discord.Streaming(name='Watching my creator', url=URL))
+        else:
+            await bot.change_presence(activity=discord.Game(name='with his food | /help'))
         #check if sai is streaming
         #if sai' status is not streaming return to help
 
-    else:
-        print("not streaming / may not be working")
+    else:return
 
 
 # for every message it does these checks
