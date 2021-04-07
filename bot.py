@@ -63,13 +63,15 @@ async def on_ready():
     print('current time - ' + str(ts))
     print('-----------')
 
-#Atempt to change bot status when i stream
+#Changes the bots status to my stream when Sai streams
 @bot.event
 async def on_member_update(before, after):
+    #check if the users update is sai and there is more than one activity
     if(before.id == 240636443829993473 and len(after.activities) > 1):
-        print(after.activities[1].type)
-        if  after.activities[1].type is discord.ActivityType.streaming:
-            await bot.change_presence(activity=discord.Streaming(name='Watching my creator', url="https://www.twitch.tv/saiencevanadium"))
+
+        #compaires the current activity with streaming
+        if after.activities[1].type is discord.ActivityType.streaming:
+            await bot.change_presence(activity=discord.Streaming(name="Streaming"+after.activities[1].game+"!", url=after.activities[1].url))
         else:
             await bot.change_presence(activity=discord.Game(name='with his food | /help'))
 
