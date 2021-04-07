@@ -63,6 +63,20 @@ async def on_ready():
     print('current time - ' + str(ts))
     print('-----------')
 
+
+#Atempt to change bot status when i stream
+@bot.event
+async def on_member_update(before, after):
+    if(before.id == libraires.helperFunctions.ownerId[1]):
+        print("streaming")
+
+        #check if sai is streaming
+        #if sai' status is not streaming return to help
+
+    else:
+        print("not streaming / may not be working")
+
+
 # for every message it does these checks
 AUTORESPOND = True
 @bot.event
@@ -1079,8 +1093,9 @@ async def servers(ctx):
 @slash.slash(name='test', description='used to send small things. Owner only' )
 async def test(ctx):
     if not isOwner(ctx): return
-    print(ctx.message.content)
-    await ctx.send(ctx.message.content)
+    await ctx.send(ctx.author.status)
+    await ctx.send(ctx.author.activities)
+    await ctx.send(ctx.author.activity)
 
 # runs the bot after all the methods have been loaded to memory
 bot.run(TOKEN)
