@@ -69,11 +69,10 @@ async def on_member_update(before, after):
     #check if the users update is sai
     if(before.id == 240636443829993473):
         currActicity = after.activities
-
         #for activities that are more than 2 this for loop will fix a index out of range error it by looping through the tupple
         for i in range(len(currActicity)):
             if(after.activities[i].type is discord.ActivityType.streaming):
-                await bot.change_presence(activity=discord.Streaming(name="Streaming"+after.activities[1].game+"!", url=after.activities[1].url))
+                await bot.change_presence(activity=discord.Streaming(name="Streaming"+after.activities[i].game+"!", url=after.activities[i].url))
             else:
                 await bot.change_presence(activity=discord.Game(name='with his food | /help'))
 
@@ -159,7 +158,7 @@ async def invite(ctx):
     await ctx.send(embed=embed)
 
 # magic 8 ball
-@bot.command()
+@slash.slash(name='shouldI', description='Ask my a should I question and i will tell you the answer.')
 async def shouldI(ctx, *, msg:str):
     msg = " "+msg+" "
     # msg = ' '.join(msg)
@@ -209,7 +208,9 @@ async def deletenotes(ctx):
     nameNote = ('MyPorn/' + str(ctx.author.id) + '.txt')
     command = 'sudo rm -r ' + nameNote
     os.system(command)
-    await ctx.send('Your Personal Notes have been destroyed')
+    embed = discord.Embed(title='Notes destroyed')
+    embed.set_footer(text='Notes destroyed by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
+    await ctx.send(embed=embed)
 
 # logic for saving their notes
 @slash.slash(name='note',
@@ -232,7 +233,9 @@ async def notes(ctx, memory:str=''):
         today = date.today()
         d1 = today.strftime("%d/%m/%Y")
         file.write(str(d1) + " -- " +memory + "\n")  # formating and saving to the file
-    await ctx.send('Your Note is recorded and locked up.', hidden=True) # hides the users message so others dont see what they saved
+        embed = discord.Embed(title='Your Note is recorded and locked up.')
+        embed.set_footer(text='Notes stored by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
+        await ctx.send(embed=embed, hidden=True)# hides the users message so others dont see what they saved
 
 # return the time the bot has been running
 @slash.slash(name='stats', description='What am I up to?' )
