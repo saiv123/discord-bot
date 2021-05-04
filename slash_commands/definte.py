@@ -20,7 +20,7 @@ class definte(commands.Cog):
             "name":"func",
             "description":"The function to integrate",
             "type":3,
-            "required"=True
+            "required":True
         },
         {
             "name":"a",
