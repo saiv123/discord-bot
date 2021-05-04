@@ -56,6 +56,16 @@ bot.remove_command('help')
 # Load all cogs
 bot.load_extension("slash_commands.help")
 bot.load_extension("slash_commands.notes")
+bot.load_extension("slash_commands.songs")
+bot.load_extension("slash_commands.github")
+bot.load_extension("slash_commands.invite")
+bot.load_extension("slash_commands.shouldI")
+bot.load_extension("slash_commands.shouldI")
+bot.load_extension("slash_commands.shouldI")
+bot.load_extension("slash_commands.shouldI")
+bot.load_extension("slash_commands.shouldI")
+bot.load_extension("slash_commands.shouldI")
+
 
 #what the bot does on boot
 @bot.event
@@ -128,60 +138,6 @@ async def on_command_error(ctx, error):
 ##############
 ###Commands###
 ##############
-
-#Gives you the github website link
-@slash.slash(name='github', description='See the github!' )
-async def github(ctx):
-    embed = discord.Embed(title= "GitHub Website for Bot",description="This is where you can see how the bot works",url="https://github.com/saiv123/discord-bot")
-    embed.set_footer(text='Github Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
-    await ctx.send(embed=embed)
-
-# will give you a link to invite the bot to other servers
-@slash.slash(name='invite', description='Add me to your server!' )
-async def invite(ctx):
-    embed = discord.Embed(colour=discord.Colour.green())
-    embed.set_author(name='Invite the Bot to another server')
-    embed.set_thumbnail(url='https://cdn.discordapp.com/avatars/314578387031162882/e4b98a4a9ca3315ca699ffe5cba5b8f1.png?size=1024')
-    embed.add_field(name='Please invite me to other Discords',value='[Invite bot to server](https://discord.com/api/oauth2/authorize?client_id=314578387031162882&permissions=8&scope=bot)', inline=False)
-    embed.set_footer(text='Invite Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
-    await ctx.send(embed=embed)
-
-# magic 8 ball
-@slash.slash(name='shouldI', description='Ask my a should I question and i will tell you the answer.')
-async def shouldI(ctx, *, msg:str):
-    msg = " "+msg+" "
-    # msg = ' '.join(msg)
-    phrases = ['Yes! Go $','No, it won\'t work.','Hmmm, $ might be a fine idea','Unclear, consider rewording "/"','I don\'t know, ask someone else about $']
-    embed = discord.Embed(title='Should I...', description='{}\n{}'.format(msg, random.choice(phrases).replace('/', msg)))
-    embed.set_footer(text='Asked by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
-    await ctx.send(embed=embed)
-
-# says hello to your
-@slash.slash(name='hi', description='Am I here? Are you here? Is anyone really here?' )
-async def hi(ctx):
-    embed = discord.Embed(title='Hello', description='Hello {0}!!!'.format(ctx.author.mention))
-    embed.set_footer(text='Sanity check by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
-    await ctx.send(embed=embed)
-
-# return the time the bot has been running
-@slash.slash(name='stats', description='What am I up to?' )
-async def stats(ctx):
-    quote = quotes.getQuoteApi()
-    # temp = os.popen("vcgencmd measure_temp").readline()
-
-    # calculating time bot has been on
-    tso = time.time()
-    msg = time.strftime("%H Hours %M Minutes %S Seconds",time.gmtime(tso - ts))
-    # seting up an embed
-    embed = discord.Embed(colour=imgutils.randomSaturatedColor())
-    # setting the clock image
-    embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png")
-    embed.add_field(name='I have been awake for:', value=msg, inline=True)
-    # embed.add_field(name='My core body temperature:',value=temp.replace("temp=", ""), inline=True)
-    embed.add_field(name='Quote cus I know you\'re bored:', value='"' +quote['quote'] + '"\n\t~' + quote['author'], inline=False)
-
-    embed.set_footer(text='Status Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
-    await ctx.send(embed=embed)
 
 # return the answers to defenet integrals
 # TODO: add cooldown of 60s every 3 commands
@@ -348,38 +304,6 @@ async def contact(ctx):
     user = bot.get_user(id)
     await user.send(msg)
     await ctx.send("Check your DM's")
-
-#Get song lyrics
-# TODO: add cooldown of 30s for each 1 use
-@slash.slash(name='song',
-    description='Grab a song\'s lyrics',
-    options=[
-        create_option(
-            name='song',
-            description='The title of the song',
-            option_type=3,
-            required=True
-        )
-    ],
-
-)
-async def song(ctx, song:str=''):
-    try:
-        #splitting the stream to check if the input has a artist if not add by . to earch for the song name
-        if ' by ' not in str(song): song = str(song) + ' by '
-        song = str(song).split(" by ")
-        songInfo = Gen.search_song(song[0], song[1])
-        embed = discord.Embed(title=song[0].title(), colour = imgutils.randomSaturatedColor())
-
-        # Create and send embed
-        for e in add_to_embed(embed, songInfo.lyrics):
-            e.set_footer(text='Song Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
-            await ctx.send(embed=e)
-    except AttributeError as e:
-        print(e)
-        embed = discord.Embed(title='Error in Song', description='The command was either used incorrectly or the song was not found\nCommand is used as follows: <b>/song songTitle by songArtist</b>')
-        embed.set_footer(text='Song Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
-        await ctx.send(embed=embed)
 
 SPACE_LEN_HARD_CAP = 4000
 @slash.slash(name='space',

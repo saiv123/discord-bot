@@ -19,6 +19,12 @@ class helpCommand(commands.Cog):
 
         embed.set_footer(text='Help Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
+    
+    @cog_ext.cog_slash(name='hi', description='Am I here? Are you here? Is anyone really here?', guild_ids=[648012188685959169])
+    async def hi(self, ctx: SlashContext):
+        embed = discord.Embed(title='Hello', description='Hello {0}!!!'.format(ctx.author.mention))
+        embed.set_footer(text='Sanity check by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
+        await ctx.send(embed=embed)
 
 def setup(bot):
     bot.add_cog(helpCommand(bot))
