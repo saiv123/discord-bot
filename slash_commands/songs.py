@@ -15,7 +15,8 @@ class songs(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     Gen = LyrGen.Genius(GenID)
-     song_options = [
+    
+    song_options = [
         {
             "name":"song",
             "description":"The title of the song",
