@@ -1,8 +1,11 @@
+import os
+import sys
 import discord
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
-import sys
-import os
+
+# external librearies
+from libraries.helperFunctions import splitLongStrings
 
 
 class notes(commands.Cog):
@@ -18,7 +21,7 @@ class notes(commands.Cog):
         }
     ]
 
-    @cog_ext.cog_slash(base="notes", name='make', options=make_notes_options, description='Take a note!', guild_ids=[648012188685959169])
+    @cog_ext.cog_subcommand(base="notes", name='make', options=make_notes_options, description='Take a note!', guild_ids=[648012188685959169])
     async def makeNotes(self, ctx: SlashContext, memory: str):
         nameNote = ("MyPorn/" + str(ctx.author.id) + ".txt")
 
@@ -31,7 +34,7 @@ class notes(commands.Cog):
             embed.set_footer(text='Notes stored by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
             await ctx.send(embed=embed, hidden=True)# hides the users message so others dont see what they saved
 
-    @cog_ext.cog_slash(base="notes", name='get', description='Gets your notes', guild_ids=[648012188685959169])
+    @cog_ext.cog_subcommand(base="notes", name='get', description='Gets your notes', guild_ids=[648012188685959169])
     async def getNotes(self, ctx: SlashContext):
         # for the user to see their notes
         try:
@@ -60,7 +63,7 @@ class notes(commands.Cog):
         await ctx.send(embed=embed)
 
 
-    @cog_ext.cog_slash(base="notes", name='delete', description='Deletes your notes.', guild_ids=[648012188685959169])
+    @cog_ext.cog_subcommand(base="notes", name='delete', description='Deletes your notes.', guild_ids=[648012188685959169])
     async def delNotes(self, ctx: SlashContext):
         # removes the personal files
         nameNote = ('MyPorn/' + str(ctx.author.id) + '.txt')
