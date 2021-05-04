@@ -20,7 +20,7 @@ class songs(commands.Cog):
         {
             "name":"song",
             "description":"The title of the song",
-            "option_type": 3,
+            "type": 3,
             "required": True
         }
     ]
