@@ -2,7 +2,7 @@ import discord
 import lyricsgenius as LyrGen
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
-from secrets import GenID
+from secret import GenID
 
 # external libraies
 import libraries.quotes as quotes

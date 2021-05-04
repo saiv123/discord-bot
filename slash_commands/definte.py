@@ -2,7 +2,7 @@ import discord
 import wolframalpha
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
-from secrets import id
+from secret import id
 
 
 # external libraies
