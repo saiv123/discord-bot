@@ -146,7 +146,7 @@ async def on_command_error(ctx, error):
         create_option(
             name='query',
             description='What should I ask?',
-            option_type=3,
+            type=3,
             required=True
         )
     ],
@@ -221,7 +221,7 @@ memePath = 'ClassWork/'
         create_option(
             name='query',
             description='Any special requests?',
-            option_type=3,
+            type=3,
             required=False
         )
     ],
@@ -241,7 +241,7 @@ prawnPath = 'MyHomework/'
         create_option(
             name='query',
             description='Any special requests?',
-            option_type=3,
+            type=3,
             required=False
         )
     ],
@@ -280,13 +280,13 @@ SPACE_LEN_HARD_CAP = 4000
         create_option(
             name='message',
             description='What\'s gotta be spread',
-            option_type=3,
+            type=3,
             required=True
         ),
         create_option(
             name='amount',
             description='What\'s gotta be spread',
-            option_type=4,
+            type=4,
             required=False
         ),
     ],
@@ -313,7 +313,7 @@ RPS_HARD_CAP = 6
         create_option(
             name='level',
             description='Add more symbols to the classic game',
-            option_type=4,
+            type=4,
             required=False
         )
     ],
@@ -388,13 +388,13 @@ async def rps(ctx, *, level=1):
         create_option(
             name='user',
             description='Ping who you want to challenge',
-            option_type=6,
+            type=6,
             required=False
         ),
         create_option(
             name='level',
             description='Add more symbols to the classic game',
-            option_type=4,
+            type=4,
             required=False
         )
     ],
@@ -513,7 +513,7 @@ async def rpsc(ctx, user:discord.User=None, level:int=1):
         create_option(
             name='input',
             description='A color as hex, rgb, or cmyk',
-            option_type=3,
+            type=3,
             required=True
         )
     ],
@@ -549,7 +549,7 @@ async def ping(ctx):
         create_option(
             name='dice',
             description='The type of dice or compound dice',
-            option_type=3,
+            type=3,
             required=False
         )
     ],
@@ -631,7 +631,7 @@ async def roll(ctx, dice:str='1d6'):
         create_option(
             name='user',
             description='Ping the person',
-            option_type=6,
+            type=6,
             required=True
         )
     ],
@@ -671,7 +671,7 @@ async def userinfo(ctx, user:discord.User=None):
         create_option(
             name='user',
             description='Ping the person',
-            option_type=6,
+            type=6,
             required=True
         )
     ],
@@ -714,7 +714,7 @@ async def kick(ctx, user:discord.User=None):
         create_option(
             name='user',
             description='Ping the person',
-            option_type=6,
+            type=6,
             required=True
         )
     ],
@@ -834,13 +834,13 @@ async def shrek(ctx, *, embed:bool=False):
         create_option(
             name='user',
             description='Ping the person',
-            option_type=6,
+            type=6,
             required=True
         ),
         create_option(
             name='message',
             description='What do you want to send?',
-            option_type=3,
+            type=3,
             required=True
         )
     ],
@@ -861,13 +861,13 @@ async def sendDM(ctx, user:discord.User=None, message:str=''):
         create_option(
             name='type',
             description='Type of status. Stream, help, music, or watching',
-            option_type=3,
+            type=3,
             required=True
         ),
         create_option(
             name='URL',
             description='Advanced presence URL',
-            option_type=3,
+            type=3,
             required=False
         )
     ],
