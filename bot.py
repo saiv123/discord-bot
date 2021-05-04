@@ -61,10 +61,10 @@ bot.load_extension("slash_commands.github")
 bot.load_extension("slash_commands.invite")
 bot.load_extension("slash_commands.shouldI")
 bot.load_extension("slash_commands.definte")
-bot.load_extension("slash_commands.shouldI")
-bot.load_extension("slash_commands.shouldI")
-bot.load_extension("slash_commands.shouldI")
-bot.load_extension("slash_commands.shouldI")
+# bot.load_extension("slash_commands.shouldI")
+# bot.load_extension("slash_commands.shouldI")
+# bot.load_extension("slash_commands.shouldI")
+# bot.load_extension("slash_commands.shouldI")
 
 
 #what the bot does on boot
