@@ -39,7 +39,7 @@ test_servers = [272155212347736065, 648012188685959169, 504049573694668801]
 client = wolframalpha.Client(id)
 
 # setting up the bot, with its discritpion etc.
-bot = commands.Bot(command_prefix='/', description="Its a Sick use-less bot", intents=intents)
+bot = commands.Bot(command_prefix='/', intents=intents)
 slash = SlashCommand(bot, sync_commands=True)
 ts = time.time()
 
@@ -52,6 +52,10 @@ bot.remove_command('help')
 ######################################
 ###Inizalization of bot DO NOT EDIT###
 ######################################
+
+# Load all cogs
+bot.load_extension("slash_commands.help")
+bot.load_extension("slash_commands.notes")
 
 #what the bot does on boot
 @bot.event
@@ -125,21 +129,6 @@ async def on_command_error(ctx, error):
 ###Commands###
 ##############
 
-# our curtom help command
-
-@slash.slash(name='help', description='Give you help' )
-async def help(ctx):
-    # seting up an embed
-    embed = discord.Embed(description="Info on the bot and how to use it",colour=discord.Colour.green())
-
-    embed.set_author(name='Help')
-    embed.set_thumbnail(url='https://cdn.discordapp.com/avatars/314578387031162882/e4b98a4a9ca3315ca699ffe5cba5b8f1.png?size=1024')
-    embed.add_field(name='Commands will be found on the website.',value='[Link to website](https://saiv123.github.io/discord-bot/website/)', inline=False)
-    embed.add_field(name='Please invite me to other Discords',value='[Invite bot to server](https://discord.com/api/oauth2/authorize?client_id=314578387031162882&permissions=8&scope=bot%20applications.commands)', inline=False)
-
-    embed.set_footer(text='Help Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
-    await ctx.send(embed=embed)
-
 #Gives you the github website link
 @slash.slash(name='github', description='See the github!' )
 async def github(ctx):
@@ -173,69 +162,6 @@ async def hi(ctx):
     embed = discord.Embed(title='Hello', description='Hello {0}!!!'.format(ctx.author.mention))
     embed.set_footer(text='Sanity check by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
     await ctx.send(embed=embed)
-
-# for the user to see their notes
-@slash.slash(name='getnotes', description='Gets your notes' )
-async def getnotes(ctx):
-    try:
-        notes = ""
-        nameNote = ("MyPorn/" + str(ctx.author.id) + ".txt")
-        f = open(nameNote, "r")
-        temp = f.readlines()
-        lineNums = len(temp)
-
-        # will loop and get the last 5 notes saved
-        if(lineNums <= 5):
-            for i in temp:
-                notes += str(i)
-        else:
-            for i in range(lineNums - 5, lineNums):
-                notes += str(temp[i])
-        for message in splitLongStrings(notes):
-            await ctx.author.send(message)
-            await ctx.send("check your DM's.")
-    except IOError:  # edge case if the user does not have any notes / file
-        print("File Not Found")
-        await ctx.author.send("You do not have any notes")
-
-    embed = discord.Embed(title='Notes Retrieved')
-    embed.set_footer(text='Notes used by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
-    await ctx.send(embed=embed)
-
-# removes the personal files
-@slash.slash(name='deletenotes', description='Deletes your notes' )
-async def deletenotes(ctx):
-    nameNote = ('MyPorn/' + str(ctx.author.id) + '.txt')
-    command = 'sudo rm -r ' + nameNote
-    os.system(command)
-    embed = discord.Embed(title='Notes destroyed')
-    embed.set_footer(text='Notes destroyed by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
-    await ctx.send(embed=embed)
-
-# logic for saving their notes
-@slash.slash(name='note',
-    description='Take a note!',
-    options=[
-        create_option(
-            name='memory',
-            description='What I will record',
-            option_type=3,
-            required=True
-        )
-    ],
-
-)
-async def notes(ctx, memory:str=''):
-    nameNote = ("MyPorn/" + str(ctx.author.id) + ".txt")
-
-    # opens the file if the users file in there otherwise it will make it
-    with open(nameNote, 'a') as file:
-        today = date.today()
-        d1 = today.strftime("%d/%m/%Y")
-        file.write(str(d1) + " -- " +memory + "\n")  # formating and saving to the file
-        embed = discord.Embed(title='Your Note is recorded and locked up.')
-        embed.set_footer(text='Notes stored by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
-        await ctx.send(embed=embed, hidden=True)# hides the users message so others dont see what they saved
 
 # return the time the bot has been running
 @slash.slash(name='stats', description='What am I up to?' )
