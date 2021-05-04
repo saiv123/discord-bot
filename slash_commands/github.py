@@ -2,6 +2,12 @@ import discord
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 
+# external libraies
+import libraries.quotes as quotes
+import libraries.helperFunctions as helperFunctions
+import libraries.bonusapis as apis
+import libraries.imgutils as imgutils
+
 
 class github(commands.Cog):
     def __init__(self, bot):

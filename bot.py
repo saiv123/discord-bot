@@ -60,7 +60,7 @@ bot.load_extension("slash_commands.songs")
 bot.load_extension("slash_commands.github")
 bot.load_extension("slash_commands.invite")
 bot.load_extension("slash_commands.shouldI")
-bot.load_extension("slash_commands.shouldI")
+bot.load_extension("slash_commands.definte")
 bot.load_extension("slash_commands.shouldI")
 bot.load_extension("slash_commands.shouldI")
 bot.load_extension("slash_commands.shouldI")
@@ -138,38 +138,6 @@ async def on_command_error(ctx, error):
 ##############
 ###Commands###
 ##############
-
-# return the answers to defenet integrals
-# TODO: add cooldown of 60s every 3 commands
-@slash.slash(name='definte',
-    description='Calculate a definite integral',
-    options=[
-        create_option(
-            name='func',
-            description='The function to integrate',
-            option_type=3,
-            required=True
-        ),
-        create_option(
-            name='a',
-            description='Integral lower bound',
-            option_type=3,
-            required=True
-        ),
-        create_option(
-            name='b',
-            description='Integral upper bound',
-            option_type=3,
-            required=True
-        )
-    ],
-
-)
-async def definte(ctx, a:int=0, b:int=0, func:str=''):
-    # bunch of text formating to put into the api
-    res = client.query('integrate ' + func + ' from ' +str(a) + ' to ' + str(b))
-    # getting the answer from the api and parsing
-    await ctx.send(next(res.results).text)
 
 # TODO: add cooldown of 60s every 3 commands
 @slash.slash(name='wolfram',

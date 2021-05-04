@@ -1,11 +1,20 @@
 import discord
+import lyricsgenius as LyrGen
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
+from secrets import GenID
+
+# external libraies
+import libraries.quotes as quotes
+import libraries.helperFunctions as helperFunctions
+import libraries.bonusapis as apis
+import libraries.imgutils as imgutils
 
 
 class songs(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+    Gen = LyrGen.Genius(GenID)
      song_options = [
         {
             "name":"song",
