@@ -1,6 +1,6 @@
 # Discord-Bot
 # About The Bot
-[Invite bot to server](https://discord.com/api/oauth2/authorize?client_id=314578387031162882&permissions=8&scope=bot)
+[Invite bot to server](https://discord.com/api/oauth2/authorize?client_id=314578387031162882&permissions=8&scope=bot%20applications.commands)
 The bot is a slow working progress, a side project of mine.
 if the bot is not functioning properly please make a issue request on [GitHub Issues](https://github.com/saiv123/discord-bot/issues/new?assignees=&labels=&template=bug_report.md&title=)
 1) click the New Issues button
