@@ -1,5 +1,6 @@
 import discord
 import lyricsgenius as LyrGen
+from azlyrics import artists, songs, artists
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 from secret import GenID
@@ -32,7 +33,7 @@ class songs(commands.Cog):
             #splitting the stream to check if the input has a artist if not add by . to earch for the song name
             if ' by ' not in str(song): song = str(song) + ' by '
             song = str(song).split(" by ")
-            songInfo = Gen.search_song(song[0], song[1])
+            songInfo = lyrics(song[0], song[1])
             embed = discord.Embed(title=song[0].title(), colour = imgutils.randomSaturatedColor())
 
             # Create and send embed
