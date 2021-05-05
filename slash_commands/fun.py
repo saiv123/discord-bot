@@ -8,7 +8,7 @@ from libraries.helperFunctions import checkAuthSerers
 from libraries.helperFunctions import RgbToHex, HexToRgb
 
 def setup(bot):
-    bot.add_cog(help_command(bot))
+    bot.add_cog(fun_commands(bot))
 
 class fun_commands(commands.Cog):
     SPACE_LEN_HARD_CAP = 4000
