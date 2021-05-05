@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext, create_option
 
+from libraries.helperFunctions import isOwner, msgReturn
+
 def setup(bot):
     bot.add_cog(admin_commands(bot))
 
@@ -9,7 +11,7 @@ class admin_commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot 
     
-    @slash.slash(name='userinfo',
+    @cog_ext.cog_slash(name='userinfo',
         description='Pull a user\'s info. Admin only',
         options=[
             create_option(
@@ -48,7 +50,7 @@ class admin_commands(commands.Cog):
         await ctx.send(embed=embed)
 
     #kick command
-    @slash.slash(name='kick',
+    @cog_ext.cog_slash(name='kick',
         description='Kicks someone. Admin only',
         options=[
             create_option(
@@ -91,7 +93,7 @@ class admin_commands(commands.Cog):
         await user.kick()
 
     #banning command
-    @slash.slash(name='ban',
+    @cog_ext.cog_slash(name='ban',
         description='Bans someone. Admin only',
         options=[
             create_option(

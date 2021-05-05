@@ -5,7 +5,7 @@ from discord_slash import cog_ext, SlashContext, create_option
 import asyncio
 
 from libraries.prawn import getFileList, getClosestFromList
-from libraries.helperFunctions import msgReturn, isOwner
+from libraries.helperFunctions import msgReturn, isOwner, add_to_embed
 
 def setup(bot):
     bot.add_cog(owner_commands(bot))
@@ -15,7 +15,7 @@ class owner_commands(commands.Cog):
         self.bot = bot 
 
     # for the admins to turn off the bot
-    @slash.slash(name='off', description='Kills me. Owner only' )
+    @cog_ext.cog_slash(name='off', description='Kills me. Owner only' )
     async def off(ctx):
         if not isOwner(ctx):
             await ctx.send(msgReturn("notOwner"))
@@ -26,7 +26,7 @@ class owner_commands(commands.Cog):
         quit(0)
     
     '''
-    @slash.slash(name='update', description='Fixes me. Owner only', guild_ids=guild_ids)
+    @cog_ext.cog_slash(name='update', description='Fixes me. Owner only', guild_ids=guild_ids)
     async def update(ctx):
         if not isOwner(ctx):
             await ctx.send(msgReturn("notOwner"))
@@ -36,7 +36,7 @@ class owner_commands(commands.Cog):
     '''
 
     # for admins to admire shrek. Freezes the bot for a bit, so don't actually use
-    @slash.slash(
+    @cog_ext.cog_slash(
         name='movie',
         description='WHAT ARE YOU DOING IN MY SWAMP. Owner only',
         options=[
@@ -75,7 +75,7 @@ class owner_commands(commands.Cog):
                     await asyncio.sleep(0.2)
 
     # this allows the admins of the bot to send a message to ANY discord user
-    @slash.slash(name='courier',
+    @cog_ext.cog_slash(name='courier',
         description='Sends a courier message to someone. Owner only',
         options=[
             create_option(
@@ -102,7 +102,7 @@ class owner_commands(commands.Cog):
 
 
     # this allows the bot admins to change the status from the $help to something else
-    @slash.slash(name='status',
+    @cog_ext.cog_slash(name='status',
         description='Updates the bot\'s status. Owner only',
         options=[
             create_option(
@@ -141,7 +141,7 @@ class owner_commands(commands.Cog):
 
 
     # send you the servers the bot is in
-    @slash.slash(name='servers', description='Lists all joined servers. Owner only' )
+    @cog_ext.cog_slash(name='servers', description='Lists all joined servers. Owner only' )
     async def servers(ctx):
         #cheks if your owner
         if not isOwner(ctx):
@@ -159,7 +159,7 @@ class owner_commands(commands.Cog):
 
 
     # command will change offten to test out commands
-    @slash.slash(name='test', description='used to send small things. Owner only' )
+    @cog_ext.cog_slash(name='test', description='used to send small things. Owner only' )
     async def test(ctx):
         if not isOwner(ctx): return
         await ctx.send(ctx.author.status)

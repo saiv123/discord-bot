@@ -12,8 +12,6 @@ def areSimilar(s1, s2):
     return dist < (len(s1) * 0.4)  # Can be 40% wrong
 
 # Gets a random question
-
-
 def getQuestion(difficulty=0, category=0):
     urlPath = getQuestionUrl(difficulty=difficulty, category=category)
     with urllib.request.urlopen(urlPath) as url:

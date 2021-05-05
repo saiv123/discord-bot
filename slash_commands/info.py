@@ -63,7 +63,7 @@ class help_command(commands.Cog):
         embed.set_footer(text='Status Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
     
-    @slash.slash(name='contact', description='Contact my father' )
+    @cog_ext.cog_slash(name='contact', description='Contact my father' )
     async def contact(ctx):
         msg = "Discord: Sai#3400\nDiscord server: <https://discord.gg/2zUTJ7j>\n"
         if(ctx.channel.id == 674120261691506688):  # channel specific to my discord server
@@ -72,3 +72,16 @@ class help_command(commands.Cog):
         
         #TODO: send in embed
         await ctx.send(msg, hidden=True)
+    
+    @cog_ext.cog_slash(name='ping', description='What\'s my speed?' )
+    async def ping(ctx):
+        await ctx.respond()
+
+        embed = add_to_embed('Ping','Latency: {0}ms'.format(round(bot.latency*1000, 1)))[0]
+        embed.set_footer(text='Ping Measured by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
+        await ctx.send(embed=embed)
+
+        #t = (msg.created_at - ctx.created_at).total_seconds() * 1000
+        #embed = add_to_embed('Ping','Latency: {}ms\nRound Trip Time: {}ms'.format(round(bot.latency*1000, 1), round(t, 1)))[0]
+        #embed.set_footer(text='Ping Measured by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
+        #await msg.edit(content=None, embed=embed)

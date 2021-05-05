@@ -2,15 +2,19 @@ import discord
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 
+from libraries.prawn import getEmbedsFromLibraryQuery
+
 def setup(bot):
     bot.add_cog(memes_command(bot))
 
 # TODO: autorun updateReddit.sh when command is ran
 class reddit_commands(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot 
     memePath = 'ClassWork/'
     prawnPath = 'MyHomework/'
 
-    @slash.slash(name='meme',
+    @cog_ext.cog_slash(name='meme',
         description='Get a meme!',
         options=[
             create_option(
@@ -27,7 +31,7 @@ class reddit_commands(commands.Cog):
         await ctx.send(embed=embed)
 
     # TODO: add cooldown of 60s for each 3 uses
-    @slash.slash(name='nsfw',
+    @cog_ext.cog_slash(name='nsfw',
         description='Get some nono pics',
         options=[
             create_option(

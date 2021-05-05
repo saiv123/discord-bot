@@ -1,9 +1,7 @@
 import discord
-import lyricsgenius as LyrGen
 from PyLyrics import *
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
-from bot import Gen
 
 # external libraies
 import libraries.quotes as quotes
@@ -11,7 +9,6 @@ import libraries.helperFunctions as helperFunctions
 import libraries.bonusapis as apis
 import libraries.imgutils as imgutils
 from libraries.helperFunctions import add_to_embed
-
 
 class songs(commands.Cog):
     def __init__(self, bot):
