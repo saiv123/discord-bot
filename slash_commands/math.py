@@ -29,7 +29,7 @@ class math(commands.Cog):
                 description =  "Integral lower bound",
                 option_type =  3,
                 required =  True
-            )
+            ),
             create_option(
                 name = "b",
                 description = "Integral upper bound",

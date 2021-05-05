@@ -4,9 +4,9 @@ from discord_slash import cog_ext, SlashContext
 
 from secret import cont
 def setup(bot):
-    bot.add_cog(help_command(bot))
+    bot.add_cog(info_commands(bot))
 
-class help_command(commands.Cog):
+class info_commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot 
 
