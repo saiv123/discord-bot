@@ -5,10 +5,12 @@ from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 from discord_slash.utils.manage_commands import create_option
 
-
-client = wolframalpha.Client(id)
+def setup(bot):
+    bot.add_cog(math(bot))
 
 class math(commands.Cog):
+    client = wolframalpha.Client(id)
+
     def __init__(self, bot):
         self.bot = bot
 
@@ -69,5 +71,3 @@ class math(commands.Cog):
 
         embed.set_footer(text='Answer Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
-def setup(bot):
-    bot.add_cog(math(bot))
