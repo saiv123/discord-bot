@@ -25,7 +25,7 @@ class songs(commands.Cog):
         }
     ]
     @cog_ext.cog_slash(name='song', description='Get song lyrics', options=song_options, guild_ids=[648012188685959169])
-    async def songs(self, ctx: SlashContext):
+    async def songs(self, ctx: SlashContext, song:str=''):
         ctx.defer()
         try:
             #splitting the stream to check if the input has a artist if not add by . to earch for the song name
