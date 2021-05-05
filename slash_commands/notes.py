@@ -16,6 +16,8 @@ import libraries.bonusapis as apis
 import libraries.imgutils as imgutils
 from libraries.helperFunctions import splitLongStrings
 
+def setup(bot):
+    bot.add_cog(notes(bot))
 
 class notes(commands.Cog):
     def __init__(self, bot):
@@ -80,7 +82,3 @@ class notes(commands.Cog):
         embed = discord.Embed(title='Notes destroyed')
         embed.set_footer(text='Notes destroyed by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
-
-
-def setup(bot):
-    bot.add_cog(notes(bot))

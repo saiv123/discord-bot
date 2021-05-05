@@ -18,26 +18,26 @@ class math(commands.Cog):
         description='Calculate a definite integral.',
         options=[
             create_option(
-                name: "func",
-                description: "The function to integrate",
-                option_type: 3,
-                required: True
+                name = "func",
+                description =  "The function to integrate",
+                option_type =  3,
+                required =  True
             ),
             create_option(
-                name: "a",
-                description: "Integral lower bound",
-                option_type: 3,
-                required: True
+                name =  "a",
+                description =  "Integral lower bound",
+                option_type =  3,
+                required =  True
             )
             create_option(
-                name: "b",
-                description: "Integral upper bound",
-                option_type: 3,
-                required: True
+                name = "b",
+                description = "Integral upper bound",
+                option_type = 3,
+                required = True
             )
         ]
     )
-    async def definte(self, ctx: SlashContext, a:int=0, b:int=0, func:str=''):
+    async def definte(self, ctx= SlashContext, a:int=0, b:int=0, func:str=''):
         # bunch of text formating to put into the api
         res = client.query('integrate ' + func + ' from ' +str(a) + ' to ' + str(b))
         # getting the answer from the api and parsing
@@ -48,13 +48,12 @@ class math(commands.Cog):
         description='Calculate anything!',
         options=[
             create_option(
-                name : "query",
-                description: "What should i ask?",
-                option_type: 3,
-                required: True
+                name = "query",
+                description = "What should i ask?",
+                option_type = 3,
+                required = True
             )
         ],
-        guild_ids=[648012188685959169]
     )
     async def wolfram(self, ctx: SlashContext, query:str=''):
         res = client.query(query)

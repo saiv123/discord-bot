@@ -8,8 +8,10 @@ import libraries.helperFunctions as helperFunctions
 import libraries.bonusapis as apis
 import libraries.imgutils as imgutils
 
+def setup(bot):
+    bot.add_cog(quote_commands(bot))
 
-class quotes(commands.Cog):
+class quote_commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot 
     
@@ -48,6 +50,3 @@ class quotes(commands.Cog):
         for embed in embeds:
             await ctx.send(embed=embed)
         await ctx.send('Contradiction Score:\n'+contra_meter+'\nScore: '+str(contra_tuple[0]))
-
-def setup(bot):
-    bot.add_cog(quotes(bot))
