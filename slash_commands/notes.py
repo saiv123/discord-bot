@@ -3,6 +3,9 @@ import sys
 import discord
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
+import time, datetime
+from datetime import date
+from datetime import datetime
 
 # external libraies
 import libraries.quotes as quotes
