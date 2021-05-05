@@ -42,16 +42,16 @@ class owner_commands(commands.Cog):
         description='WHAT ARE YOU DOING IN MY SWAMP. Owner only',
         options=[
             create_option(
-                name : "name",
-                description: "You want shrek, or are you picky?",
-                option_type: 3,
-                required: False
+                name = "name",
+                description = "You want shrek, or are you picky?",
+                option_type = 3,
+                required = False
             ),
             create_option(
-                name : "embed",
-                description: "Embeds look good, no?",
-                option_type: 5,
-                required: False
+                name = "embed",
+                description = "Embeds look good, no?",
+                option_type = 5,
+                required = False
             )
         ]
     )
@@ -63,7 +63,7 @@ class owner_commands(commands.Cog):
         movies = prawn.getFileList('./scripts/')
         print(movies)
         print(getClosestFromList(movies, name))
-        with open(getClosestFromList(movies, name), 'r') as file:
+        with open('./scripts/' + getClosestFromList(movies, name), 'r') as file:
             shrek = file.read()
             if embed:
                 for embed in add_to_embed('Shrek is love, Shrek is life', shrek.replace('\n\n','\n')):
@@ -80,16 +80,16 @@ class owner_commands(commands.Cog):
         description='Sends a courier message to someone. Owner only',
         options=[
             create_option(
-                name='user',
-                description='Ping the person',
-                option_type=6,
-                required=True
+                name = 'user',
+                description = 'Ping the person',
+                option_type = 6,
+                required = True
             ),
             create_option(
-                name='message',
-                description='What do you want to send?',
-                option_type=3,
-                required=True
+                name = 'message',
+                description = 'What do you want to send?',
+                option_type = 3,
+                required = True
             )
         ],
 
@@ -107,16 +107,16 @@ class owner_commands(commands.Cog):
         description='Updates the bot\'s status. Owner only',
         options=[
             create_option(
-                name='type',
-                description='Type of status. Stream, help, music, or watching',
-                option_type=3,
-                required=True
+                name =' type',
+                description = 'Type of status. Stream, help, music, or watching',
+                option_type = 3,
+                required = True
             ),
             create_option(
-                name='URL',
-                description='Advanced presence URL',
-                option_type=3,
-                required=False
+                name = 'URL',
+                description = 'Advanced presence URL',
+                option_type = 3,
+                required = False
             )
         ],
     )
