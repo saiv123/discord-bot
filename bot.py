@@ -19,7 +19,6 @@ test_servers = [272155212347736065, 648012188685959169, 504049573694668801]
 
 # setting up the bot, with its discritpion etc.
 bot = commands.Bot(command_prefix='/', intents=intents)
-slash = SlashCommand(bot, sync_commands=True)
 ts = time.time()
 
 # deleting default help comand
