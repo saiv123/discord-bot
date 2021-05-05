@@ -15,6 +15,7 @@ import libraries.imgutils as imgutils
 class stats(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+    ts = time.time()
 
     @cog_ext.cog_slash(name='stats', description='What am I up to?', guild_ids=[648012188685959169])
     async def stats(self, ctx: SlashContext):
