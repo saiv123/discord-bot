@@ -14,8 +14,9 @@ class math(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @cog_ext.cog_slash(name='definte'
-        description='Calculate a definite integral.',
+    @cog_ext.cog_slash(
+        name='definte',
+        description ='Calculate a definite integral.',
         options=[
             create_option(
                 name = "func",
@@ -53,7 +54,7 @@ class math(commands.Cog):
                 option_type = 3,
                 required = True
             )
-        ],
+        ]
     )
     async def wolfram(self, ctx: SlashContext, query:str=''):
         res = client.query(query)
