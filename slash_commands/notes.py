@@ -74,8 +74,7 @@ class notes(commands.Cog):
     async def delNotes(self, ctx: SlashContext):
         # removes the personal files
         nameNote = ('MyPorn/' + str(ctx.author.id) + '.txt')
-        command = 'sudo rm -r ' + nameNote
-        os.system(command)
+        os.system(f'sudo rm -r {nameNote}')
         embed = discord.Embed(title='Notes destroyed')
         embed.set_footer(text='Notes destroyed by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)

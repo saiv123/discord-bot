@@ -4,6 +4,7 @@ from discord_slash import cog_ext, SlashContext
 import time, datetime
 from datetime import date
 from datetime import datetime
+from bot import ts
 
 # external libraies
 import libraries.quotes as quotes
@@ -18,7 +19,6 @@ class stats(commands.Cog):
 
     @cog_ext.cog_slash(name='stats', description='What am I up to?', guild_ids=[648012188685959169])
     async def stats(self, ctx: SlashContext):
-        ts = time.time()
         quote = quotes.getQuoteApi()
         # temp = os.popen("vcgencmd measure_temp").readline()
 
