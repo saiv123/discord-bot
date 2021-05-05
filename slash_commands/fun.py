@@ -25,7 +25,7 @@ class fun_commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot 
     
-    @cog_ext.slash(name='space',
+    @cog_ext.cog_slash(name='space',
         description='Spread a message',
         options=[
             create_option(
@@ -53,7 +53,7 @@ class fun_commands(commands.Cog):
             await ctx.send(message)
 
     # TODO: add cooldown of 60s after 3 calls
-    @cog_ext.slash(name='color',
+    @cog_ext.cog_slash(name='color',
         description='Get information about a color',
         options=[
             create_option(
@@ -75,7 +75,7 @@ class fun_commands(commands.Cog):
         except ValueError:
             await ctx.send("The given color is incorrect. Enter it in Hex, RGB, or CMYK form")
 
-    @cog_ext.slash(name='roll',
+    @cog_ext.cog_slash(name='roll',
         description='Roll a dice',
         options=[
             create_option(
@@ -156,7 +156,7 @@ class fun_commands(commands.Cog):
 
     #up date to how the command will work, it will be limited to onnce ever 24 hours, but will always send the quote even if it does join the vc
     #play / do something depending on if the user is in a voice channel or not
-    @cog_ext.slash(name='sad', description='Makes you unsad' )
+    @cog_ext.cog_slash(name='sad', description='Makes you unsad' )
     async def sad(ctx):
         user = bot.get_user(ctx.author.id)
         await user.send("Hey i see you have used the sad command, you are loved just know that :heart:")
