@@ -7,6 +7,7 @@ import libraries.quotes as quotes
 import libraries.helperFunctions as helperFunctions
 import libraries.bonusapis as apis
 import libraries.imgutils as imgutils
+import random
 
 
 class shouldI(commands.Cog):
