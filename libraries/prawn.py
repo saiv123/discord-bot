@@ -5,7 +5,6 @@ from Levenshtein import distance
 
 prawnPath = 'MyHomework/'
 
-
 def getFileList(path):
     filelist = []
     for root, dirs, files in os.walk(path):
@@ -13,7 +12,6 @@ def getFileList(path):
             if str(file).endswith('.txt'):
                 filelist.append(file)
     return filelist
-
 
 def getClosestFromList(list, query):
     minDist = 10000000  # 9223372036854775807
@@ -26,8 +24,6 @@ def getClosestFromList(list, query):
     return minValue
 
 # Will infinite-loop if a file is only a single blank line
-
-
 def getRandomLineFromFile(path):
     line = ''
     with open(path, mode='r') as file:

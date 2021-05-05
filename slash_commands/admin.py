@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from discord_slash import cog_ext, SlashContext
+from discord_slash import cog_ext, SlashContext, create_option
 
 def setup(bot):
     bot.add_cog(admin_commands(bot))
@@ -20,7 +20,7 @@ class admin_commands(commands.Cog):
             )
         ],
     )
-    async def userinfo(self, ctx, user:discord.User=None):
+    async def userinfo(self, ctx: SlashContext, user:discord.User=None):
         if not ctx.author.guild_permissions.administrator and not isOwner(ctx):
             await ctx.send(f'You must be an owner or a server administrator', hidden=True)
             return
@@ -60,7 +60,7 @@ class admin_commands(commands.Cog):
         ],
 
     )
-    async def kick(self, ctx, user:discord.User=None):
+    async def kick(self, ctx: SlashContext, user:discord.User=None):
         perms = ctx.author.guild_permissions
         if not (perms.administrator or perms.kick_members):
             await ctx.send("*One of us* doesn't have the permissions to do that...")
@@ -77,7 +77,7 @@ class admin_commands(commands.Cog):
         canKick = True # I can't stand all these `if`s
         canKick = canKick and user.roles[-1] < ctx.author.roles[-1] # require a lesser role
         canKick = canKick and (not user.guild_permissions.administrator or user.bot) # can't kick admins (but can kick bot admins)
-        if ctx.author.id == ctx.guild.owner_id: canKick = True # can't say no to the owners
+        if ctx.author.id == ctx.guild.owner_id: canKick = True # can't say no to the ownersv
         canKick = canKick and user.id != ctx.author.id # you can't kick yourself (even as an owner)
 
         if not canKick:
@@ -103,7 +103,7 @@ class admin_commands(commands.Cog):
         ],
 
     )
-    async def ban(self, ctx, user:discord.User=None):
+    async def ban(self, ctx: SlashContext, user:discord.User=None):
         perms = ctx.author.guild_permissions
         if not (perms.administrator or perms.ban_members):
             await ctx.send("*One of us* doesn't have the permissions to do that...")

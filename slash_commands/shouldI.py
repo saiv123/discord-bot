@@ -23,7 +23,7 @@ class shouldI(commands.Cog):
         }
     ]
 
-    @cog_ext.cog_slash(name='shouldI', description='Ask my a should I question and i will tell you the answer.', options=shouldI_options, guild_ids=[648012188685959169])
+    @cog_ext.cog_slash(name='shouldI', description='Ask my a should I question and i will tell you the answer.', options=shouldI_options)
     async def shouldI(self, ctx: SlashContext, msg: str):
         msg = " "+msg+" "
         # msg = ' '.join(msg)

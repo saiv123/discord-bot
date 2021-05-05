@@ -25,7 +25,7 @@ class songs(commands.Cog):
             "required": True
         }
     ]
-    @cog_ext.cog_slash(name='song', description='Get song lyrics', options=song_options, guild_ids=[648012188685959169])
+    @cog_ext.cog_slash(name='song', description='Get song lyrics', options=song_options)
     async def songs(self, ctx: SlashContext, song:str=''):
         ctx.defer()
         try:

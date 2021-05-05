@@ -36,9 +36,6 @@ from Levenshtein import distance
 AUTORESPOND = True
 test_servers = [272155212347736065, 648012188685959169, 504049573694668801]
 
-# for the math stuff
-client = wolframalpha.Client(id)
-
 # setting up the bot, with its discritpion etc.
 bot = commands.Bot(command_prefix='/', intents=intents)
 slash = SlashCommand(bot, sync_commands=True)
@@ -55,14 +52,11 @@ bot.remove_command('help')
 ######################################
 
 # Load all cogs
-bot.load_extension("slash_commands.help")
+bot.load_extension("slash_commands.info")
 bot.load_extension("slash_commands.notes")
 bot.load_extension("slash_commands.songs")
-bot.load_extension("slash_commands.github")
-bot.load_extension("slash_commands.invite")
 bot.load_extension("slash_commands.shouldI")
 bot.load_extension("slash_commands.math")
-bot.load_extension("slash_commands.stats")
 bot.load_extension("slash_commands.quotes")
 bot.load_extension("slash_commands.admin")
 # bot.load_extension("slash_commands.shouldI")
@@ -112,116 +106,37 @@ async def on_message(message):
     await bot.process_commands(message)
 
 # Currently does not work due to slash commands
-#spits out the errors
-@bot.event
-async def on_command_error(ctx, error):
-    msgSend = "An internal error has occured. Use /contact to contact the owner if it persists"
-    if isinstance(error, commands.MissingRequiredArgument):
-        e_msg = ', a '.join(str(error.param).replace('params','').split(':'))
-        msgSend = f'You did not use the command correctly\nYou\'re missing {e_msg}\n\nIf you don\'t know how to use the command, use the /help command to see how to use all commands.'
-    elif isinstance(error, commands.BadArgument):
-        e_msg = ' and '.join(error.args)
-        msgSend = f'You did not use the command correctly\nYou\'re arguements are wrong: {e_msg}\n\nIf you don\'t know how to use the command, use the /help command to see how to use all commands.'
-    elif isinstance(error, commands.CommandOnCooldown):
-        msgSend = 'You\'re on cooldown for '+ctx.invoked_with + '.\nPlease wait another '+str(round(error.retry_after))+' seconds'
-    elif isinstance(error, commands.CommandNotFound):
-        cmd = str(ctx.invoked_with)
-        cmd_list = [cmd.name for cmd in bot.commands]
-        mlo = getClosestFromList(cmd_list, cmd)
-        if distance(cmd, mlo) <= 0.6*len(cmd):
-            msgSend= f"Sorry, but that is not a valid command. Did you mean {mlo}?\n\nYou can add suggestions at [suggestions Website](https://github.com/saiv123/discord-bot/issues/new/choose)"
-        else:
-            msgSend = "Sorry but that is not a valid command\nYou can add suggestions at [suggestions Website](https://github.com/saiv123/discord-bot/issues/new/choose)"
+# useless with slash commands, but kept around in case we move back
+# @bot.event
+# async def on_command_error(ctx, error):
+#     msgSend = "An internal error has occured. Use /contact to contact the owner if it persists"
+#     if isinstance(error, commands.MissingRequiredArgument):
+#         e_msg = ', a '.join(str(error.param).replace('params','').split(':'))
+#         msgSend = f'You did not use the command correctly\nYou\'re missing {e_msg}\n\nIf you don\'t know how to use the command, use the /help command to see how to use all commands.'
+#     elif isinstance(error, commands.BadArgument):
+#         e_msg = ' and '.join(error.args)
+#         msgSend = f'You did not use the command correctly\nYou\'re arguements are wrong: {e_msg}\n\nIf you don\'t know how to use the command, use the /help command to see how to use all commands.'
+#     elif isinstance(error, commands.CommandOnCooldown):
+#         msgSend = 'You\'re on cooldown for '+ctx.invoked_with + '.\nPlease wait another '+str(round(error.retry_after))+' seconds'
+#     elif isinstance(error, commands.CommandNotFound): 
+#         cmd = str(ctx.invoked_with)
+#         cmd_list = [cmd.name for cmd in bot.commands]
+#         mlo = getClosestFromList(cmd_list, cmd)
+#         if distance(cmd, mlo) <= 0.6*len(cmd):
+#             msgSend= f"Sorry, but that is not a valid command. Did you mean {mlo}?\n\nYou can add suggestions at [suggestions Website](https://github.com/saiv123/discord-bot/issues/new/choose)"
+#         else:
+#             msgSend = "Sorry but that is not a valid command\nYou can add suggestions at [suggestions Website](https://github.com/saiv123/discord-bot/issues/new/choose)"
 
-    embeds = add_to_embed('Error','Command Entered: {}\n{}'.format(ctx.message.content, msgSend))
-    for embed in embeds:
-        embed.set_footer(text='Command Broken by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
-        await ctx.send(embed=embed)
-    print(error)
-    print(traceback.format_exc()) # Attempt to print exception
+#     embeds = add_to_embed('Error','Command Entered: {}\n{}'.format(ctx.message.content, msgSend))
+#     for embed in embeds:
+#         embed.set_footer(text='Command Broken by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+#         await ctx.send(embed=embed)
+#     print(error)
+#     print(traceback.format_exc()) # Attempt to print exception
 
 ##############
 ###Commands###
 ##############
-
-# sends 2 stupid donald trump quotes and their contradiction score
-# TODO: add cooldown of 60s for each 3 uses
-# TODO: completely broken rn
-@slash.slash(name='tronalddump', description='Sends 2 stupid trump quotes and attemps to gauge the difference' )
-async def tronalddump(ctx):
-    t = time.time()
-    contra_tuple = apis.get_trump_contradiction()
-    embeds = [apis.quote_to_discord_embed(i) for i in contra_tuple[1:]]
-
-    nearest_contra_score = str(int(min(10,contra_tuple[0])))
-
-    contra_meter = '0       1       2       3       4       5       6       7       8       9       10'.replace(nearest_contra_score, apis.number_to_discord_emote(nearest_contra_score))
-
-    await ctx.send('For educational and mockery purposes only!')
-    for embed in embeds:
-        await ctx.send(embed=embed)
-    await ctx.send('Contradiction Score:\n'+contra_meter+'\nScore: '+str(contra_tuple[0]))
-
-# For getting memes from the library
-memePath = 'ClassWork/'
-# TODO: add cooldown of 60s for each 3 uses
-@slash.slash(name='meme',
-    description='Get a meme!',
-    options=[
-        create_option(
-            name='query',
-            description='Any special requests?',
-            option_type=3,
-            required=False
-        )
-    ],
-
-)
-async def meme(ctx, query:str=''):
-    embed = getEmbedsFromLibraryQuery(memePath, query)[0]
-    embed.set_footer(text='Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
-    await ctx.send(embed=embed)
-
-# for getting nsfw images from the library
-prawnPath = 'MyHomework/'
-# TODO: add cooldown of 60s for each 3 uses
-@slash.slash(name='nsfw',
-    description='Get some nono pics',
-    options=[
-        create_option(
-            name='query',
-            description='Any special requests?',
-            option_type=3,
-            required=False
-        )
-    ],
-
-)
-async def nsfw(ctx, query:str=''):
-    # checks of user is trying to get past the nsfw filter
-    if(ctx.guild is None and ctx.author != bot.user):
-        await ctx.send("You Dumb stupid you are not allowed to use this command in dms")
-    else:
-        if(ctx.channel.is_nsfw()):  # checks if the channel the command was sent from is nsfw
-            embed = getEmbedsFromLibraryQuery(prawnPath, query)[0]
-            embed.set_footer(text='Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
-            await ctx.send(embed=embed)
-        else:
-            embed = discord.Embed(title='Sorry',description='I\'m sorry {}, /nsfw can only be used in an NSFW channel'.format(ctx.author.name))
-            embed.set_footer(text='Porn Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
-            await ctx.send(embed=embed)
-
-# Contact command
-@slash.slash(name='contact', description='Contact my father' )
-async def contact(ctx):
-    msg = "Discord: Sai#3400\nDiscord server: <https://discord.gg/2zUTJ7j>\n"
-    if(ctx.channel.id == 674120261691506688):  # channel specific to my discord server
-        msg += cont
-    id = ctx.author.id
-    # Making the dm channel
-    user = bot.get_user(id)
-    await user.send(msg)
-    await ctx.send("Check your DM's")
 
 SPACE_LEN_HARD_CAP = 4000
 @slash.slash(name='space',
@@ -608,142 +523,6 @@ async def sad(ctx):
         quote = apis.quote_to_discord_embed(quotes.getQuoteJSON())
         quote.set_thumbnail(url='https://clipart.info/images/ccovers/1531011033heart-emoji.png')
         await ctx.send(embed=quote)
-
-########################
-###Bot Admin Commands###
-########################
-
-# for the admins to turn off the bot
-@slash.slash(name='off', description='Kills me. Owner only' )
-async def off(ctx):
-    if(isOwner(ctx)):
-        await ctx.send(msgReturn("offMsg"))
-        await bot.close()
-
-        sys.exit(0)
-    else:
-        await ctx.send(msgReturn("notOwner"))
-
-# @slash.slash(name='update', description='Fixes me. Owner only', guild_ids=guild_ids)
-# async def update(ctx):
-#     if not isOwner(ctx):
-#         await ctx.send(msgReturn("notOwner"))
-#         return
-#
-#     await ctx.send(msgReturn("offMsg"))
-#     os.system('sh update.sh &')
-
-# for admins to admire shrek. Freezes the bot for a bit, so don't actually use
-@slash.slash(name='shrek', description='WHAT ARE YOU DOING IN MY SWAMP. Owner only' )
-async def shrek(ctx, *, embed:bool=False):
-    if not isOwner(ctx):
-        await ctx.send(msgReturn("notOwner"))
-        return
-
-    with open('Shrek.txt', 'r') as file:
-        shrek = file.read()
-        if embed:
-            for embed in add_to_embed('Shrek is love, Shrek is life', shrek.replace('\n\n','\n')):
-                embed.color = discord.Colour(imgutils.randomSaturatedColor())
-                await ctx.send(embed=embed)
-        else:
-            for message in splitLongStrings(shrek):
-                await ctx.send(message.replace('\n\n','\n'))
-
-# this allows the admins of the bot to send a message to ANY discord user
-@slash.slash(name='courier',
-    description='Sends a courier message to someone. Owner only',
-    options=[
-        create_option(
-            name='user',
-            description='Ping the person',
-            option_type=6,
-            required=True
-        ),
-        create_option(
-            name='message',
-            description='What do you want to send?',
-            option_type=3,
-            required=True
-        )
-    ],
-
-)
-async def sendDM(ctx, user:discord.User=None, message:str=''):
-    if not isOwner(ctx):
-        await ctx.send(msgReturn("notOwner"))
-        return
-    await user.send(message)
-    await ctx.send("Message has safely been sent.")
-
-
-# this allows the bot admins to change the status from the $help to something else
-@slash.slash(name='status',
-    description='Updates the bot\'s status. Owner only',
-    options=[
-        create_option(
-            name='type',
-            description='Type of status. Stream, help, music, or watching',
-            option_type=3,
-            required=True
-        ),
-        create_option(
-            name='URL',
-            description='Advanced presence URL',
-            option_type=3,
-            required=False
-        )
-    ],
-
-)
-async def status(ctx, type:str='', URL:str='https://twitch.tv/saiencevanadium/'):
-    if not isOwner(ctx):
-        await ctx.send(msgReturn('notOwner'))
-        return
-
-    if(type.lower() == 'help'):
-        await bot.change_presence(activity=discord.Game(name='with his food | /help'))
-    elif(type.lower() == 'music'):
-        currActicity = ctx.author.activities
-        #find where the activity is in the tuple
-        for i in range(len(currActicity)):
-            if(after.activities[i].type is discord.ActivityType.streaming):
-                await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=ctx.author.activities[i].title))
-            else:
-                await ctx.send("Sorry but you are not listening to music.", hidden=True)
-    elif(type.lower() == 'watching'):
-        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=URL))
-    await ctx.send('Status updated', hidden=True)
-
-
-# send you the servers the bot is in
-@slash.slash(name='servers', description='Lists all joined servers. Owner only' )
-async def servers(ctx):
-    #cheks if your owner
-    if not isOwner(ctx):
-        await ctx.send(msgReturn('notOwner'))
-        return
-    msg = ''
-    #gets all the servers from bot object
-    guilds = await bot.fetch_guilds(limit=150).flatten()
-    msg = str(len(guilds)) + '\n'
-    #loops through them and puts them in a string
-    for i in guilds:
-        msg += i.name + '\n'
-
-    #creates a dm with user and dms it to them
-    author = ctx.author
-    await author.send(msg)
-    await ctx.send("Please check your DM's")
-
-
-# command will change offten to test out commands
-@slash.slash(name='test', description='used to send small things. Owner only' )
-async def test(ctx):
-    if not isOwner(ctx): return
-    await ctx.send(ctx.author.status)
-    await ctx.send(ctx.author.activities)
-    await ctx.send(ctx.author.activity)
 
 # runs the bot after all the methods have been loaded to memory
 bot.run(TOKEN)

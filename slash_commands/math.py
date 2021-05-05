@@ -1,57 +1,57 @@
 import discord
 import wolframalpha
-from discord.ext import commands
-from discord_slash import cog_ext, SlashContext
-from bot import client
 
-# external libraies
-import libraries.quotes as quotes
-import libraries.helperFunctions as helperFunctions
-import libraries.bonusapis as apis
-import libraries.imgutils as imgutils
+from discord.ext import commands
+from discord_slash import cog_ext, SlashContext, create_option
+
+client = wolframalpha.Client(id)
 
 class math(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-    definte_options = [
-        {
-            "name":"func",
-            "description":"The function to integrate",
-            "type":3,
-            "required":True
-        },
-        {
-            "name":"a",
-            "description":"Integral lower bound",
-            "type":3,
-            "required":True
-        },
-        {
-            "name":"b",
-            "description":"Integral upper bound",
-            "type":3,
-            "required":True
-        
-        }
-    ]
 
-    wolfram_options = [
-        {
-            "name":"query",
-            "description":"What should i ask?"
-            "type":3
-            "required":True
-        }
-    ]
-
-    @cog_ext.cog_slash(name='definte', description='Calculate a definite integral.', options=definte_options, guild_ids=[648012188685959169])
+    @cog_ext.cog_slash(name='definte'
+        description='Calculate a definite integral.',
+        options=[
+            create_option(
+                name: "func",
+                description: "The function to integrate",
+                option_type: 3,
+                required: True
+            ),
+            create_option(
+                name: "a",
+                description: "Integral lower bound",
+                option_type: 3,
+                required: True
+            )
+            create_option(
+                name: "b",
+                description: "Integral upper bound",
+                option_type: 3,
+                required: True
+            )
+        ]
+    )
     async def definte(self, ctx: SlashContext, a:int=0, b:int=0, func:str=''):
         # bunch of text formating to put into the api
         res = client.query('integrate ' + func + ' from ' +str(a) + ' to ' + str(b))
         # getting the answer from the api and parsing
         await ctx.send(next(res.results).text)
     
-    @cog_ext.cog_slash(name='wolfram', description='Calculate anything!', options=wolfram_options, guild_ids=[648012188685959169])
+    @cog_ext.cog_slash(
+        name='wolfram',
+        description='Calculate anything!',
+        options=[
+            create_option(
+                name : "query",
+                description: "What should i ask?",
+                option_type: 3,
+                required: True
+            )
+        ],
+        guild_ids=[648012188685959169]
+    )
     async def wolfram(self, ctx: SlashContext, query:str=''):
         res = client.query(query)
         res = list(res.results)

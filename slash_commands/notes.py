@@ -21,7 +21,7 @@ class notes(commands.Cog):
 
     make_notes_options = [
         {
-            "name":"memory",
+            "name": "memory",
             "description": "What I will record",
             "type": 3,
             "required": True
