@@ -14,7 +14,6 @@ import libraries.imgutils as imgutils
 class definte(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-    client = wolframalpha.Client(id)
     definte_options = [
         {
             "name":"func",
@@ -39,6 +38,7 @@ class definte(commands.Cog):
 
     @cog_ext.cog_slash(name='definte', description='Calculate a definite integral.', options=definte_options, guild_ids=[648012188685959169])
     async def definte(self, ctx: SlashContext,a:int=0, b:int=0, func:str=''):
+        client = wolframalpha.Client(id)
         # bunch of text formating to put into the api
         res = client.query('integrate ' + func + ' from ' +str(a) + ' to ' + str(b))
         # getting the answer from the api and parsing
