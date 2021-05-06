@@ -15,10 +15,11 @@ from secret import TOKEN
 
 # The guild ID of the test server. Remove when done testing
 AUTORESPOND = True
-test_servers = [272155212347736065, 648012188685959169, 504049573694668801]
+# test_servers = [272155212347736065, 648012188685959169, 504049573694668801]
 
 # setting up the bot, with its discritpion etc.
 bot = commands.Bot(command_prefix='/', intents=intents)
+slash = SlashCommand(bot, sync_commands=True)
 ts = time.time()
 
 # deleting default help comand
@@ -48,7 +49,13 @@ async def on_ready():
     # setst the activity for the bot
     await bot.change_presence(activity=discord.Game(name='with his food | /help'))
     print('current time - ' + str(ts))
-    print('-----------')
+    print('-----------\n')
+    commands = slash.commands
+    print(" Commands ".center(14, "~"))
+    for key in commands:
+        print(commands[key].name)
+    print("⸻⸻⸻")
+
 
 #Changes the bots status to my stream when Sai streams
 @bot.event
