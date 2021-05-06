@@ -17,7 +17,7 @@ class owner_commands(commands.Cog):
 
     # for the admins to turn off the bot
     @cog_ext.cog_slash(name='off', description='Kills me. Owner only' )
-    async def off(ctx):
+    async def off(self, ctx: SlashContext):
         if not isOwner(ctx):
             await ctx.send(msgReturn("notOwner"))
             return
@@ -55,7 +55,7 @@ class owner_commands(commands.Cog):
             )
         ]
     )
-    async def movie(ctx, name:str='shrek', embed:bool=False):
+    async def movie(self, ctx: SlashContext, name:str='shrek', embed:bool=False):
         if not isOwner(ctx):
             await ctx.send(msgReturn("notOwner"))
             return
@@ -94,7 +94,7 @@ class owner_commands(commands.Cog):
         ],
 
     )
-    async def sendDM(ctx, user:discord.User=None, message:str=''):
+    async def sendDM(self, ctx: SlashContext, user:discord.User=None, message:str=''):
         if not isOwner(ctx):
             await ctx.send(msgReturn("notOwner"))
             return
@@ -120,7 +120,7 @@ class owner_commands(commands.Cog):
             )
         ],
     )
-    async def status(ctx, type:str='', URL:str='https://twitch.tv/saiencevanadium/'):
+    async def status(self, ctx: SlashContext, type:str='', URL:str='https://twitch.tv/saiencevanadium/'):
         if not isOwner(ctx):
             await ctx.send(msgReturn('notOwner'))
             return
@@ -143,7 +143,7 @@ class owner_commands(commands.Cog):
 
     # send you the servers the bot is in
     @cog_ext.cog_slash(name='servers', description='Lists all joined servers. Owner only' )
-    async def servers(ctx):
+    async def servers(self, ctx: SlashContext):
         #cheks if your owner
         if not isOwner(ctx):
             await ctx.send(msgReturn('notOwner'))
@@ -161,7 +161,7 @@ class owner_commands(commands.Cog):
 
     # command will change offten to test out commands
     @cog_ext.cog_slash(name='test', description='used to send small things. Owner only' )
-    async def test(ctx):
+    async def test(self, ctx: SlashContext):
         if not isOwner(ctx): return
         await ctx.send(ctx.author.status)
         await ctx.send(ctx.author.activities)
