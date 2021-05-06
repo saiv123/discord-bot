@@ -50,11 +50,11 @@ async def on_ready():
     await bot.change_presence(activity=discord.Game(name='with his food | /help'))
     print('current time - ' + str(ts))
     print('-----------\n')
-    commands = slash.commands
-    print(" Commands ".center(14, "~"))
-    for key in commands:
-        print(commands[key].name)
-    print("⸻⸻⸻")
+    # commands = slash.commands
+    # print(" Commands ".center(14, "~"))
+    # for key in commands:
+    #     print(commands[key].name)
+    # print("-----------")
 
 
 #Changes the bots status to my stream when Sai streams
