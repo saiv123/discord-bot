@@ -9,7 +9,7 @@ import time, datetime
 from datetime import date
 from datetime import datetime
 from discord.ext import commands
-from discord.ext.commands import Bot
+from discord_slash import SlashCommand
 
 from secret import TOKEN
 
