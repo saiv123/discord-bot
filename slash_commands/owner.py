@@ -22,7 +22,7 @@ class owner_commands(commands.Cog):
             await ctx.send(msgReturn("notOwner"))
             return
         await ctx.send(msgReturn("offMsg"))
-        await bot.logout()
+        await self.bot.logout()
 
         quit(0)
     
@@ -126,17 +126,17 @@ class owner_commands(commands.Cog):
             return
 
         if(type.lower() == 'help'):
-            await bot.change_presence(activity=discord.Game(name='with his food | /help'))
+            await self.bot.change_presence(activity=discord.Game(name='with his food | /help'))
         elif(type.lower() == 'music'):
             currActicity = ctx.author.activities
             #find where the activity is in the tuple
             for i in range(len(currActicity)):
                 if(after.activities[i].type is discord.ActivityType.streaming):
-                    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=ctx.author.activities[i].title))
+                    await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=ctx.author.activities[i].title))
                 else:
                     await ctx.send("Sorry but you are not listening to music.", hidden=True)
         elif(type.lower() == 'watching'):
-            await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=URL))
+            await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=URL))
         
         await ctx.send('Status updated', hidden=True)
 
@@ -150,7 +150,7 @@ class owner_commands(commands.Cog):
             return
         msg = ''
         #gets all the servers from bot object
-        guilds = await bot.fetch_guilds(limit=150).flatten()
+        guilds = await self.bot.fetch_guilds(limit=150).flatten()
         msg = str(len(guilds)) + '\n'
         #loops through them and puts them in a string
         for i in guilds:
