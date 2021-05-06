@@ -50,7 +50,7 @@ async def on_ready():
     await bot.change_presence(activity=discord.Game(name='with his food | /help'))
     print('current time - ' + str(ts))
     print('-----------\n')
-    # commands = slash.commands
+    commands = slash.commands
     # print(" Commands ".center(14, "~"))
     # for key in commands:
     #     print(commands[key].name)
