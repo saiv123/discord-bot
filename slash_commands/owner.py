@@ -22,7 +22,7 @@ class owner_commands(commands.Cog):
             await ctx.send(msgReturn("notOwner"))
             return
         await ctx.send(msgReturn("offMsg"))
-        await bot.close()
+        await bot.logout()
 
         quit(0)
     
