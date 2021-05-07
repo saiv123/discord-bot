@@ -26,7 +26,7 @@ class reddit_commands(commands.Cog):
             )
         ]
     )
-    async def meme(ctx, query:str=''):
+    async def meme(self, ctx: SlashContext, query:str=''):
         embed = getEmbedsFromLibraryQuery(memePath, query)[0]
         embed.set_footer(text='Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
@@ -43,7 +43,7 @@ class reddit_commands(commands.Cog):
             )
         ]
     )
-    async def nsfw(ctx, query:str=''):
+    async def nsfw(self, ctx: SlashContext, query:str=''):
         # checks of user is trying to get past the nsfw filter
         if(ctx.guild is None and ctx.author != bot.user):
             await ctx.send("You Dumb stupid you are not allowed to use this command in dms")

@@ -27,7 +27,7 @@ class rps_commands(commands.Cog):
             )
         ]
     )
-    async def rps(ctx, *, level=1):
+    async def rps(self, ctx: SlashContext, *, level=1):
         if level > RPS_HARD_CAP and not isOwner(ctx):
             msg = add_to_embed('Level too high!', f'Sorry, but even though the code for it exists, why would you ever want to play rps-{level*2+1}???')[0]
             msg.set_footer(text='RPS Played by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
@@ -108,7 +108,7 @@ class rps_commands(commands.Cog):
         ],
 
     )
-    async def rpsc(ctx, user:discord.User=None, level:int=1):
+    async def rpsc(self, ctx: SlashContext, user:discord.User=None, level:int=1):
         if level > RPS_HARD_CAP and not isOwner(ctx):
             msg = add_to_embed('Level too high!', f'Sorry, but even though the code for it exists, why would you ever want to play rps-{level*2+1}???')[0]
             msg.set_footer(text='RPS Played by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)

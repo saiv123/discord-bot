@@ -64,7 +64,7 @@ class info_commands(commands.Cog):
         await ctx.send(embed=embed)
     
     @cog_ext.cog_slash(name='contact', description='Contact my father' )
-    async def contact(ctx):
+    async def contact(self, ctx: SlashContext):
         msg = "Discord: Sai#3400\nDiscord server: <https://discord.gg/2zUTJ7j>\n"
         if(ctx.channel.id == 674120261691506688):  # channel specific to my discord server
             msg += cont
@@ -74,7 +74,7 @@ class info_commands(commands.Cog):
         await ctx.send(msg, hidden=True)
     
     @cog_ext.cog_slash(name='ping', description='What\'s my speed?' )
-    async def ping(ctx):
+    async def ping(self, ctx: SlashContext):
         await ctx.respond()
 
         embed = add_to_embed('Ping','Latency: {0}ms'.format(round(bot.latency*1000, 1)))[0]

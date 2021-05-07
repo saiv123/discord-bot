@@ -42,7 +42,7 @@ class fun_commands(commands.Cog):
             ),
         ]
     )
-    async def space(ctx, message:str='', amount:int=1):
+    async def space(self, ctx: SlashContext, message:str='', amount:int=1):
         exp_len = (len(message)-1)*amount + len(message)
         if not isOwner(ctx) and exp_len >= SPACE_LEN_HARD_CAP:
             await ctx.send('That message would be {0} characters, waaaay higher than the limit of {1}. Chill.'.format(exp_len, SPACE_LEN_HARD_CAP))
@@ -64,7 +64,7 @@ class fun_commands(commands.Cog):
             )
         ],
     )
-    async def color(ctx, input:str=''):
+    async def color(self, ctx: SlashContext, input:str=''):
         try:
             color_dict = apis.getColor(input)
             embed = apis.colorDictToEmbed(color_dict)
@@ -87,7 +87,7 @@ class fun_commands(commands.Cog):
         ],
 
     )
-    async def roll(ctx, dice:str='1d6'):
+    async def roll(self, ctx: SlashContext, dice:str='1d6'):
         if isOwner(ctx): ctx.defer() # I solemnly swear that I am up to no good
 
         dice = dice.upper()
@@ -157,7 +157,7 @@ class fun_commands(commands.Cog):
     #up date to how the command will work, it will be limited to onnce ever 24 hours, but will always send the quote even if it does join the vc
     #play / do something depending on if the user is in a voice channel or not
     @cog_ext.cog_slash(name='sad', description='Makes you unsad' )
-    async def sad(ctx):
+    async def sad(self, ctx: SlashContext):
         user = bot.get_user(ctx.author.id)
         await user.send("Hey i see you have used the sad command, you are loved just know that :heart:")
         if checkAuthSerers(ctx):
