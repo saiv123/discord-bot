@@ -103,15 +103,6 @@ class owner_commands(commands.Cog):
 
 
     # this allows the bot admins to change the status from the $help to something else
-    status_options = [
-        {
-            "name": "type,
-            "description": 'Type of status. Stream, help, music, or watching',
-            "type" = 3,
-            "required" = True
-        }
-    ]
-
     @cog_ext.cog_slash(name='status',
         description='Updates the bot\'s status. Owner only',
         options=[
