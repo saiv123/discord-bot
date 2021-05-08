@@ -6,6 +6,7 @@ from discord_slash.utils.manage_commands import create_option
 from libraries.helperFunctions import isOwner, splitLongStrings, add_to_embed
 from libraries.helperFunctions import checkAuthSerers
 from libraries.helperFunctions import RgbToHex, HexToRgb
+import random
 import libraries.bonusapis as apis
 import libraries.imgutils as imgutils
 

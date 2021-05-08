@@ -6,6 +6,7 @@ intents.members = True
 
 import asyncio, discord
 import time, datetime
+import wolframalpha
 from datetime import date
 from datetime import datetime
 from discord.ext import commands
@@ -24,6 +25,8 @@ ts = time.time()
 
 # deleting default help comand
 bot.remove_command('help')
+
+client = wolframalpha.Client(id)
 
 ######################################
 ###Inizalization of bot DO NOT EDIT###

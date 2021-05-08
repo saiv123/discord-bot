@@ -4,12 +4,12 @@ import wolframalpha
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 from discord_slash.utils.manage_commands import create_option
+from bot import client
 
 def setup(bot):
     bot.add_cog(math(bot))
 
 class math(commands.Cog):
-    client = wolframalpha.Client(id)
 
     def __init__(self, bot):
         self.bot = bot
