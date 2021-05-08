@@ -12,7 +12,7 @@ from datetime import datetime
 from discord.ext import commands
 from discord_slash import SlashCommand
 
-from secret import TOKEN
+from secret import TOKEN, id
 
 # The guild ID of the test server. Remove when done testing
 AUTORESPOND = True
