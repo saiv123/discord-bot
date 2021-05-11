@@ -76,7 +76,9 @@ class fun_commands(commands.Cog):
 
             await ctx.send(embed=embed)
         except ValueError:
-            await ctx.send("The given color is incorrect. Enter it in Hex, RGB, or CMYK form")
+            embed = discord.Embed(title="Error in your input",description="The given color is incorrect. Enter it in Hex, RGB, or CMYK form" ,colour= 0xFF0000)
+            embed.set_footer(text='Color picked by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
+            await ctx.send(embed=embed)
 
     @cog_ext.cog_slash(name='roll',
         description='Roll a dice',
@@ -161,7 +163,8 @@ class fun_commands(commands.Cog):
     #play / do something depending on if the user is in a voice channel or not
     @cog_ext.cog_slash(name='sad', description='Makes you unsad' )
     async def sad(self, ctx: SlashContext):
-        user = bot.get_user(ctx.author.id)
+        user = self.get_user(ctx.author.id)
+        
         await user.send("Hey i see you have used the sad command, you are loved just know that :heart:")
         if checkAuthSerers(ctx):
             try:

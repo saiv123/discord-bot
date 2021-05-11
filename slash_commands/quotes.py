@@ -8,6 +8,10 @@ import libraries.helperFunctions as helperFunctions
 import libraries.bonusapis as apis
 import libraries.imgutils as imgutils
 
+import time, datetime
+from datetime import date
+from datetime import datetime
+
 def setup(bot):
     bot.add_cog(quote_commands(bot))
 

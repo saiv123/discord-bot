@@ -68,15 +68,14 @@ class info_commands(commands.Cog):
         msg = "Discord: Sai#3400\nDiscord server: <https://discord.gg/2zUTJ7j>\n"
         if(ctx.channel.id == 674120261691506688):  # channel specific to my discord server
             msg += cont
+        embed = discord.Embed(title="Sai's contact infor", discription=msg)
         id = ctx.author.id
         
         #TODO: send in embed
-        await ctx.send(msg, hidden=True)
+        await ctx.send(embed=embed, hidden=True)
     
     @cog_ext.cog_slash(name='ping', description='What\'s my speed?' )
     async def ping(self, ctx: SlashContext):
-        await ctx.respond()
-
         embed = add_to_embed('Ping','Latency: {0}ms'.format(round(bot.latency*1000, 1)))[0]
         embed.set_footer(text='Ping Measured by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
