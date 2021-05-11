@@ -163,7 +163,7 @@ class fun_commands(commands.Cog):
     #play / do something depending on if the user is in a voice channel or not
     @cog_ext.cog_slash(name='sad', description='Makes you unsad' )
     async def sad(self, ctx: SlashContext):
-        user = self.get_user(ctx.author.id)
+        user = self.bot.get_user(ctx.author.id)
         
         await user.send("Hey i see you have used the sad command, you are loved just know that :heart:")
         if checkAuthSerers(ctx):
