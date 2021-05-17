@@ -179,7 +179,6 @@ class fun_commands(commands.Cog):
 
                 #leaving the voice channel
                 await ctx.voice_client.disconnect()
-
             except AttributeError as e:
                 #this is what it will do if user is not in vc
                 print("user is not in a voice channel, reverting to text for unsadening user")
