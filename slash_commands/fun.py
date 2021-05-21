@@ -192,7 +192,7 @@ class fun_commands(commands.Cog):
             await ctx.send(embed=quote)
 
     @cog_ext.cog_slash(
-        name='shouldI',
+        name='shouldi',
         description='Ask my a should I question and i will tell you the answer.',
         options=[
             create_option(
@@ -203,7 +203,7 @@ class fun_commands(commands.Cog):
             )
         ]
     )
-    async def shouldI(self, ctx: SlashContext, msg: str):
+    async def shouldi(self, ctx: SlashContext, msg: str):
         msg = " "+msg+" "
         # msg = ' '.join(msg)
         phrases = ['Yes! Go $','No, it won\'t work.','Hmmm, $ might be a fine idea','Unclear, consider rewording "/"','I don\'t know, ask someone else about $']
