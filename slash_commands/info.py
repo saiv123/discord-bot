@@ -2,6 +2,15 @@ import discord
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 
+import libraries.quotes as quotes
+import libraries.helperFunctions as helperFunctions
+import libraries.bonusapis as apis
+import libraries.imgutils as imgutils
+
+import time, datetime
+from datetime import date
+from datetime import datetime
+
 from secret import cont
 def setup(bot):
     bot.add_cog(info_commands(bot))
