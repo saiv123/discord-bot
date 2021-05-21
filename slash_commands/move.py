@@ -6,7 +6,7 @@ from secret import cont
 def setup(bot):
     bot.add_cog(move(bot))
 
-class info_commands(commands.Cog):
+class move(commands.Cog):
     def __init__(self, bot):
         self.bot = bot 
 
