@@ -26,15 +26,15 @@ class owner_commands(commands.Cog):
 
         quit(0)
     
-    '''
-    @cog_ext.cog_slash(name='update', description='Fixes me. Owner only', guild_ids=guild_ids)
-    async def update(ctx):
-        if not isOwner(ctx):
-            await ctx.send(msgReturn("notOwner"))
-            return
-        await ctx.send(msgReturn("offMsg"))
-        os.system('sh update.sh &')
-    '''
+    # '''
+    # @cog_ext.cog_slash(name='update', description='Fixes me. Owner only', guild_ids=guild_ids)
+    # async def update(ctx):
+    #     if not isOwner(ctx):
+    #         await ctx.send(msgReturn("notOwner"))
+    #         return
+    #     await ctx.send(msgReturn("offMsg"))
+    #     os.system('sh update.sh &')
+    # '''
 
     # for admins to admire shrek. Freezes the bot for a bit, so don't actually use
     @cog_ext.cog_slash(

@@ -2,9 +2,6 @@ import discord
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 
-from secret import cont
-
-
 class move(commands.Cog):
     def __init__(self, bot):
         self.bot = bot 

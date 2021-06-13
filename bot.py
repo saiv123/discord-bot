@@ -84,7 +84,7 @@ async def on_message(message):
     await bot.process_commands(message)
 bot.run(TOKEN)
 
-# Currently does not work due to slash commands
+# Currently does not work due to slash commands   :{
 # useless with slash commands, but kept around in case we move back
 # import traceback
 # from libraries.prawn import getClosestFromList
