@@ -16,7 +16,7 @@ class owner_commands(commands.Cog):
         self.bot = bot 
 
     # for the admins to turn off the bot
-    @cog_ext.cog_slash(name='off', description='Kills me. Owner only' )
+    @cog_ext.cog_slash(name='off', description='Kills me. Owner only')
     async def off(self, ctx: SlashContext):
         if not isOwner(ctx):
             await ctx.send(msgReturn("notOwner"))
@@ -113,7 +113,7 @@ class owner_commands(commands.Cog):
                 required = True
             ),
             create_option(
-                name = 'URL',
+                name = 'url',
                 description = 'Advanced presence URL',
                 option_type = 3,
                 required = False
