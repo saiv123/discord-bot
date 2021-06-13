@@ -77,9 +77,9 @@ class info_commands(commands.Cog):
         msg = "Discord: Sai#3400\nDiscord server: <https://discord.gg/2zUTJ7j>\n"
         if(ctx.channel.id == 674120261691506688):  # channel specific to my discord server
             msg += cont
-        embed = discord.Embed(title="Sai's contact infor", discription=msg)
+        embed = discord.Embed(title="Sai's contact info")
+        embed.add_field(name=msg)
         id = ctx.author.id
-        
         #TODO: send in embed
         await ctx.send(embed=embed, hidden=True)
     
