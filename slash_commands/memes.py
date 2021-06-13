@@ -53,6 +53,6 @@ class reddit_commands(commands.Cog):
                 embed.set_footer(text='Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
                 await ctx.send(embed=embed)
             else:
-                embed = discord.Embed(title='Sorry',description='I\'m sorry {}, /nsfw can only be used in an NSFW channel'.format(ctx.author.name))
-                embed.set_footer(text='Porn Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
+                embed = discord.Embed(title='Sorry',description=f"I'm sorry {ctx.author.name}, /nsfw can only be used in an NSFW channel")
+                embed.set_footer(text=f'Porn Requested by: {ctx.author.name}', icon_url=ctx.author.avatar_url)
                 await ctx.send(embed=embed)

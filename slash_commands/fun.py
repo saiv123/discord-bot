@@ -19,10 +19,10 @@ class fun_commands(commands.Cog):
     MAXSIDES = 100
     SHOULDI_PHRASES = [
         'Yes! Go $',
-        'No, it won\'t work.',
+        "No, it won't work.",
         'Hmmm, $ might be a fine idea',
         'Unclear, consider rewording "/"',
-        'I don\'t know, ask someone else about $'
+        "I don't know, ask someone else about $"
     ]
 
     def __init__(self, bot):
@@ -33,13 +33,13 @@ class fun_commands(commands.Cog):
         options=[
             create_option(
                 name='message',
-                description='What\'s gotta be spread',
+                description="What's gotta be spread",
                 option_type=3,
                 required=True
             ),
             create_option(
                 name='amount',
-                description='What\'s gotta be spread',
+                description="What's gotta be spread",
                 option_type=4,
                 required=False
             ),
@@ -206,7 +206,7 @@ class fun_commands(commands.Cog):
     async def shouldi(self, ctx: SlashContext, msg: str):
         msg = " "+msg+" "
         # msg = ' '.join(msg)
-        phrases = ['Yes! Go $','No, it won\'t work.','Hmmm, $ might be a fine idea','Unclear, consider rewording "/"','I don\'t know, ask someone else about $']
+        phrases = ['Yes! Go $',"No, it won't work.",'Hmmm, $ might be a fine idea','Unclear, consider rewording "/"',"I don't know, ask someone else about $"]
         embed = discord.Embed(title='Should I...', description='{}\n{}'.format(msg, random.choice(phrases).replace('/', msg)))
         embed.set_footer(text='Asked by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)

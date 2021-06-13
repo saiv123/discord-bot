@@ -67,7 +67,7 @@ class info_commands(commands.Cog):
         embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png")
         embed.add_field(name='I have been awake for:', value=msg, inline=True)
         # embed.add_field(name='My core body temperature:',value=temp.replace("temp=", ""), inline=True)
-        embed.add_field(name='Quote cus I know you\'re bored:', value='"' +quote['quote'] + '"\n\t~' + quote['author'], inline=False)
+        embed.add_field(name="Quote cus I know you're bored:", value='"' +quote['quote'] + '"\n\t~' + quote['author'], inline=False)
 
         embed.set_footer(text='Status Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
@@ -83,7 +83,7 @@ class info_commands(commands.Cog):
         #TODO: send in embed
         await ctx.send(embed=embed, hidden=True)
     
-    @cog_ext.cog_slash(name='ping', description='What\'s my speed?' )
+    @cog_ext.cog_slash(name='ping', description="What's my speed?")
     async def ping(self, ctx: SlashContext):
         embed = add_to_embed('Ping','Latency: {0}ms'.format(round(bot.latency*1000, 1)))[0]
         embed.set_footer(text='Ping Measured by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
