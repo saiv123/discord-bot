@@ -36,7 +36,7 @@ client = wolframalpha.Client(id)
 
 bot.load_extension("slash_commands.admin")
 bot.load_extension("slash_commands.fun")
-bot.load_extension("slash_commands.info")
+#bot.load_extension("slash_commands.info")
 bot.load_extension("slash_commands.math")
 # bot.load_extension("slash_commands.memes")
 # bot.load_extension("slash_commands.notes")
