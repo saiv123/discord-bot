@@ -89,12 +89,6 @@ class info_commands(commands.Cog):
         embed.set_footer(text='Ping Measured by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
     
-    @cog_ext.cog_slash(name='boop', description='Boop the comander', guild_ids=[601247340887670792])
+    @cog_ext.cog_slash(name='boop', description='Boop the comander', guild_ids=[648012188685959169])
     async def boop(self, ctx: SlashContext):
         await ctx.send(ctx.author.mention+" Has Booped <@361275648033030144>")
-
-
-        #t = (msg.created_at - ctx.created_at).total_seconds() * 1000
-        #embed = add_to_embed('Ping','Latency: {}ms\nRound Trip Time: {}ms'.format(round(bot.latency*1000, 1), round(t, 1)))[0]
-        #embed.set_footer(text='Ping Measured by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
-        #await msg.edit(content=None, embed=embed)
