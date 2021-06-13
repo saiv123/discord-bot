@@ -17,7 +17,7 @@ class admin_commands(commands.Cog):
         self.bot = bot 
     
     @cog_ext.cog_slash(name='userinfo',
-        description='Pull a user\'s info. Admin only',
+        description="Pull a user's info. Admin only",
         options=[
             create_option(
                 name='user',
