@@ -42,7 +42,6 @@ bot.load_extension("slash_commands.notes")
 bot.load_extension("slash_commands.owner")
 bot.load_extension("slash_commands.quotes")
 bot.load_extension("slash_commands.rps")
-bot.load_extension("slash_commands.songs")
 bot.load_extension("slash_commands.move")
 
 #what the bot does on boot
