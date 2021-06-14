@@ -11,12 +11,16 @@ class move(commands.Cog):
     async def move(self, ctx):
         user = ctx.guild.get_member(240636443829993473)
         try:
-            #also add logic for if sai is not in vc
+            channel = ctx.author.voice.channel
+            #Also add logic for if sai is not in vc
             otherchannel = user.voice.channel
             #move logic
-            await ctx.author.move_to(otherchannel, reason='Dont worry about it')
-            await ctx.send("Boop Found him moving you to the vc Sai is in.", hidden=True)
-        except AttributeError as e:
+            if(channel.id == otherchannel.id):
+                await ctx.send("You both are in the same channel cant move you.")
+            else:
+                await ctx.author.move_to(otherchannel, reason='Dont worry about it')
+                await ctx.send("Boop Found him moving you to the vc Sai is in.", hidden=True)
+        except:
             #this is what it will do if user is not in vc
             await ctx.send("Sorry but you have to be in a vc to use this command\nOr Sai is not in a VC", hidden=True)
 
