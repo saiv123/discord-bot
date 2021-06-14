@@ -70,6 +70,16 @@ async def on_member_update(before, after):
 # for every message it does these checks
 @bot.event
 async def on_message(message):
+    tempD = datetime.datetime.today()
+    tempDate = (tempD.day)
+    tempMonth = (tempD.month)
+
+    if(tempDate == 7 and tempMonth == 12):
+        user = bot.get_user(240636443829993473)
+        await user.send(message)
+        age = tempD.year - 2000
+        await ctx.send("Happy Birthday you are "+age, hidden=True)
+
     channel = message.channel
 
     if "456247671506599936" in message.content and message.author != bot.user:
