@@ -12,6 +12,8 @@ from datetime import date
 from datetime import datetime
 
 from secret import cont
+
+from bot import ts
 def setup(bot):
     bot.add_cog(info_commands(bot))
 
