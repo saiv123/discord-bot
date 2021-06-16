@@ -21,7 +21,7 @@ class owner_commands(commands.Cog):
         if not isOwner(ctx):
             await ctx.send(msgReturn("notOwner"))
             return
-        await ctx.send(msgReturn("offMsg"))
+        await ctx.send(msgReturn("offMsg"), hidden=True)
         await self.bot.logout()
 
         quit(0)
