@@ -73,12 +73,12 @@ async def on_message(message):
     tempD = datetime.today()
     tempDate = (tempD.day)
     tempMonth = (tempD.month)
+    print("currDay: "+tempDate+"\ncurrMonth: "+tempMonth)
     user = bot.get_user(240636443829993473)
 
     if(tempDate == 7 and tempMonth == 12):
-        await user.send(message)
         age = tempD.year - 2000
-        await ctx.send("Happy Birthday you are "+age, hidden=True)
+        await user.send("Happy Birthday you are "+age, hidden=True)
 
     channel = message.channel
 
@@ -90,9 +90,8 @@ async def on_message(message):
         await channel.send("The birds work for the bourgeoisie.")
     elif AUTORESPOND and " sai " in message.content.lower() and message.author != bot.user: #I solemnly swear that I am up to no good
         emoji = [':cowboy:',':shushing_face:']
-        message.add_reaction(emoji)
-        await user.send(message)
-        await ctx.send(message.content)
+        await message.add_reaction(emoji)
+        await user.send(message.content)
 
     # Respond to last command
     await bot.process_commands(message)
