@@ -19,7 +19,6 @@ class move(commands.Cog):
             user = ctx.guild.get_member(240636443829993473)
             try:
                 channel = ctx.author.voice.channel
-                #Also add logic for if sai is not in vc
                 otherchannel = user.voice.channel
                 #move logic
                 if(channel.id == otherchannel.id):
