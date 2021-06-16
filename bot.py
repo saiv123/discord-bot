@@ -73,7 +73,7 @@ async def on_message(message):
     tempD = datetime.today()
     tempDate = (tempD.day)
     tempMonth = (tempD.month)
-    print("currDay: "+tempDate+"\ncurrMonth: "+tempMonth)
+    print("currDay: "+str(tempDate)+"\ncurrMonth: "+str(tempMonth))
     user = bot.get_user(240636443829993473)
 
     if(tempDate == 7 and tempMonth == 12):
@@ -88,7 +88,7 @@ async def on_message(message):
         await channel.send("https://cdn.discordapp.com/attachments/654783232969277453/738997605039603772/Corn_is_the_best_crop__wheat_is_worst.mp4")
     elif AUTORESPOND and "bird" in message.content.lower() and message.author != bot.user:
         await channel.send("The birds work for the bourgeoisie.")
-    elif AUTORESPOND and " sai " in message.content.lower() and message.author != bot.user: #I solemnly swear that I am up to no good
+    elif AUTORESPOND and "sai" in message.content.lower() and message.author != bot.user: #I solemnly swear that I am up to no good
         emoji = [':cowboy:',':shushing_face:']
         await message.add_reaction(emoji)
         await user.send(message.content)
