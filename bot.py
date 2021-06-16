@@ -88,7 +88,7 @@ async def on_message(message):
     elif AUTORESPOND and "bird" in message.content.lower() and message.author != bot.user:
         await channel.send("The birds work for the bourgeoisie.")
     elif AUTORESPOND and "sai" in message.content.lower() and message.author != bot.user: #I solemnly swear that I am up to no good
-        emojis = [':cowboy:',':shushing_face:']
+        emojis = ['🤠','🤫']
         for emoji in emojis:
             await message.add_reaction(emoji)
         await user.send(message.content)
