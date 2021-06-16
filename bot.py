@@ -70,7 +70,7 @@ async def on_member_update(before, after):
 # for every message it does these checks
 @bot.event
 async def on_message(message):
-    tempD = datetime.datetime.today()
+    tempD = datetime.today()
     tempDate = (tempD.day)
     tempMonth = (tempD.month)
     user = bot.get_user(240636443829993473)
