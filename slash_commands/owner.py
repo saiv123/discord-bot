@@ -91,7 +91,6 @@ class owner_commands(commands.Cog):
                 required = True
             )
         ],
-
     )
     async def senddm(self, ctx: SlashContext, user:discord.User=None, message:str=''):
         if not isOwner(ctx):
