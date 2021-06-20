@@ -9,3 +9,4 @@ MyPorn/
 ClassWork/
 photos/
 *.db
+!msg.db

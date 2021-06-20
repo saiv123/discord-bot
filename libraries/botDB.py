@@ -1,6 +1,17 @@
 import sqlite3
+import json
 
 DB_NAME = 'botDB.db'
+
+def move_json():
+    with BotDB(db_name="msg.db") as db:
+        data = json.load(open("..\msg.json"))
+        for key in data: 
+            db.execute(f'CREATE TABLE IF NOT EXISTS {key} (list TEXT PRIMARY KEY NOT NULL)')
+            typeM = data[key]
+            db.execute(f'DELETE FROM {key}') #deletes all rows from table
+            for msg in typeM:
+                db.execute(f'INSERT INTO {key} VALUES (?)',(str(msg),))
 
 class BotDB():
     def __init__(self, db_name=DB_NAME):
@@ -16,9 +27,9 @@ class BotDB():
         del self.cursor, self.connection
 
 if __name__ == '__main__':
+    move_json()
     # Use the context manager to list all tables
     with BotDB() as db:
         db.execute('''SELECT name FROM sqlite_master WHERE type IN ('table','view') AND name NOT LIKE 'sqlite_%' ''')
         print('Tables:\n'+'\n'.join([x[0] for x in db.fetchall()]))
     # Very convenient
-    
