@@ -59,7 +59,7 @@ def force_use_cmd(user:discord.User or str, command:str):
     # Get and parse user info from table
     cursor.execute(f'SELECT * FROM COOLDOWNS WHERE user = (?)',(str(user),))
     user_rows = cursor.fetchall()
-    user_info = ast.literal_eval(user_rows[0][1]) if len(user_rows) > 0 else dict()
+    user_info = ast.literal_eval(user_rows[0][2]) if len(user_rows) > 0 else dict()
 
     if not isinstance(user_info, dict): raise Exception(f'Incorrect entry in COOLDOWNS table for user {user}')
     if command in user_info:
@@ -85,7 +85,7 @@ def use_cmd(user:discord.User or str, command:str, cooldown:float, uses=1, use_f
     # Get and parse user info from table
     cursor.execute(f'SELECT * FROM COOLDOWNS WHERE user = (?) ',(str(user),))
     user_rows = cursor.fetchall()
-    user_info = ast.literal_eval(user_rows[0][1]) if len(user_rows) > 0 else dict()
+    user_info = ast.literal_eval(user_rows[0][2]) if len(user_rows) > 0 else dict()
 
     if not isinstance(user_info, dict): raise Exception(f'Incorrect entry in COOLDOWNS table for user {user}')
     if command in user_info:
