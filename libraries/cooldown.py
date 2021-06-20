@@ -114,6 +114,8 @@ def has_cooldown(cooldown:float, times:int=1, category:str='', use_first_use:boo
     def wrapper(func):
         cmd_name = category if len(category) == 0 else func.__name__
         def wrap(*args, **kwargs):
+            print(args)
+            print(args[0])
             user = args[0].author
             if (isOwner(user) and owner_exempt) or (user.guild_permissions.administrator and admin_exempt):
                 force_use_cmd(user, cmd_name)

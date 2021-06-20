@@ -56,8 +56,8 @@ class info_commands(commands.Cog):
         embed.set_footer(text='Invite Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
     
-    @cog_ext.cog_slash(name='stats', description='What am I up to?')
     @has_cooldown(10)
+    @cog_ext.cog_slash(name='stats', description='What am I up to?')
     async def stats(self, ctx: SlashContext):
         quote = quotes.getQuoteApi()
         # temp = os.popen("vcgencmd measure_temp").readline()
