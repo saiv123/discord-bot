@@ -26,8 +26,9 @@ def checkAuthSerers(ctx):
 
 # used as a check for some command so only the people that are allowed to use it can use it
 def isOwner(ctx):
-    for i in ownerId:
-        if(ctx.author.id == i):
+    authid = ctx.id if isinstance(ctx, discord.User) else ctx.author.id
+    for id in ownerId:
+        if(authid == id):
             return True
     return False
 
