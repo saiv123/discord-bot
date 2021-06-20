@@ -2,8 +2,8 @@ import discord
 import ast, time
 import sqlite3
 
-import botDB
-from helperFunctions import isOwner
+import libraries.botDB
+from libraries.helperFunctions import isOwner
 
 # Create table in database
 with botDB.BotDB() as db:

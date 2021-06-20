@@ -6,6 +6,7 @@ import libraries.quotes as quotes
 import libraries.helperFunctions as helperFunctions
 import libraries.bonusapis as apis
 import libraries.imgutils as imgutils
+from libraries.cooldown import has_cooldown
 
 import time, datetime
 from datetime import date
@@ -56,6 +57,7 @@ class info_commands(commands.Cog):
         await ctx.send(embed=embed)
     
     @cog_ext.cog_slash(name='stats', description='What am I up to?')
+    @has_cooldown(10)
     async def stats(self, ctx: SlashContext):
         quote = quotes.getQuoteApi()
         # temp = os.popen("vcgencmd measure_temp").readline()
