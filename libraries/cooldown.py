@@ -8,7 +8,7 @@ from helperFunctions import isOwner
 
 # Create table in database
 with botDB.BotDB() as db:
-    db.execute('''CREATE TABLE IF NOT EXISTS COOLDOWNS ([user] TEXT PRIMARY KEY NOT NULL, [lastused] date NOT NULL, [data] TEXT NOT NULL)''')
+    db.execute('''CREATE TABLE IF NOT EXISTS COOLDOWNS ([user] TEXT PRIMARY KEY NOT NULL, [lastused] REAL NOT NULL, [data] TEXT NOT NULL)''')
 
 class UserCooldownException(Exception):
     # User: the discord.User or other way to keep track of the user
@@ -45,16 +45,15 @@ class UserCooldownException(Exception):
         return self.get_msg()
 
 def clean(days=30): # If you don't use a command with a cooldown in 30 days, you get purged
-    conn = sqlite3.connect(botDB.DB_NAME); cursor = conn.cursor()
-    cursor.execute(f'''DELETE FROM COOLDOWNS WHERE lastused < date('now','-{days}days')''')
-    conn.commit(); cursor.close(); conn.close()
+    with botDB.BotDB() as db:
+        cursor.execute(f'''DELETE FROM COOLDOWNS WHERE lastused < {time.time()-24*3600*days}''')
 
 def force_use_cmd(user:discord.User or str, command:str):
     '''
     Uses a command. Ignores all cooldown, but records information
     '''
     if isinstance(user, discord.User): user = user.id; user = str(user)
-    conn = sqlite3.connect('botDB.db'); cursor = conn.cursor()
+    conn = sqlite3.connect(botDB.DB_NAME); cursor = conn.cursor()
 
     # Get and parse user info from table
     cursor.execute(f'SELECT * FROM COOLDOWNS WHERE user = (?)',(str(user),))
@@ -72,7 +71,7 @@ def force_use_cmd(user:discord.User or str, command:str):
             'first_use': int(time.time())
         }
 
-    cursor.execute('''REPLACE INTO COOLDOWNS VALUES (?, date('now'), ?)''', (str(user), str(user_info)))
+    cursor.execute('''REPLACE INTO COOLDOWNS VALUES (?, ?, ?)''', (str(user), time.time(), str(user_info)))
     conn.commit(); cursor.close(); conn.close()
 
 def use_cmd(user:discord.User or str, command:str, cooldown:float, uses=1, use_first_use:bool=False):
@@ -107,7 +106,7 @@ def use_cmd(user:discord.User or str, command:str, cooldown:float, uses=1, use_f
             'first_use': int(time.time())
         }
 
-    cursor.execute('''REPLACE INTO COOLDOWNS VALUES (?, date('now'), ?)''', (str(user), str(user_info)))
+    cursor.execute('''REPLACE INTO COOLDOWNS VALUES (?, ?, ?)''', (str(user), time.time(), str(user_info)))
     conn.commit(); cursor.close(); conn.close()
 
 # Use this wrapper to add cooldowns
