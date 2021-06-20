@@ -1,6 +1,7 @@
 import discord
 import ast, time
 import sqlite3
+import inspect
 
 import botDB
 from helperFunctions import isOwner
@@ -56,7 +57,7 @@ def force_use_cmd(user:discord.User or str, command:str):
     conn = sqlite3.connect('botDB.db'); cursor = conn.cursor()
 
     # Get and parse user info from table
-    cursor.execute(f'SELECT * FROM COOLDOWNS WHERE user = ?',(user,))
+    cursor.execute(f'SELECT * FROM COOLDOWNS WHERE user = (?)',(str(user),))
     user_rows = cursor.fetchall()
     user_info = ast.literal_eval(user_rows[0][1]) if len(user_rows) > 0 else dict()
 
@@ -71,7 +72,7 @@ def force_use_cmd(user:discord.User or str, command:str):
             'first_use': int(time.time())
         }
 
-    cursor.execute('''REPLACE INTO COOLDOWNS VALUES (?, date('now'), ?)''', (user, str(user_info)))
+    cursor.execute('''REPLACE INTO COOLDOWNS VALUES (?, date('now'), ?)''', (str(user), str(user_info)))
     conn.commit(); cursor.close(); conn.close()
 
 def use_cmd(user:discord.User or str, command:str, cooldown:float, uses=1, use_first_use:bool=False):
@@ -82,7 +83,7 @@ def use_cmd(user:discord.User or str, command:str, cooldown:float, uses=1, use_f
     conn = sqlite3.connect(botDB.DB_NAME); cursor = conn.cursor()
 
     # Get and parse user info from table
-    cursor.execute(f'SELECT * FROM COOLDOWNS WHERE user = ?',(user,))
+    cursor.execute(f'SELECT * FROM COOLDOWNS WHERE user = (?) ',(str(user),))
     user_rows = cursor.fetchall()
     user_info = ast.literal_eval(user_rows[0][1]) if len(user_rows) > 0 else dict()
 
@@ -106,7 +107,7 @@ def use_cmd(user:discord.User or str, command:str, cooldown:float, uses=1, use_f
             'first_use': int(time.time())
         }
 
-    cursor.execute('''REPLACE INTO COOLDOWNS VALUES (?, date('now'), ?)''', (user, str(user_info)))
+    cursor.execute('''REPLACE INTO COOLDOWNS VALUES (?, date('now'), ?)''', (str(user), str(user_info)))
     conn.commit(); cursor.close(); conn.close()
 
 # Use this wrapper to add cooldowns
