@@ -25,6 +25,15 @@ class fun_commands(commands.Cog):
         "I don't know, ask someone else about $"
     ]
 
+    hug_options = [
+        {
+            "name": "user",
+            "description": "Ping the person",
+            "type": 6,
+            "required": True
+        }
+    ]
+
     def __init__(self, bot):
         self.bot = bot 
     
@@ -153,12 +162,6 @@ class fun_commands(commands.Cog):
         embed.set_footer(text=f'{dice} was rolled by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
 
-    ################################
-    ###Commands to make you unsad###
-    ################################
-
-    #up date to how the command will work, it will be limited to onnce ever 24 hours, but will always send the quote even if it does join the vc
-    #play / do something depending on if the user is in a voice channel or not
     @cog_ext.cog_slash(name='sad', description='Makes you unsad' )
     async def sad(self, ctx: SlashContext):
         user = self.bot.get_user(ctx.author.id)
@@ -208,3 +211,11 @@ class fun_commands(commands.Cog):
         embed = discord.Embed(title='Should I...', description='{}\n{}'.format(msg, random.choice(phrases).replace('/', msg)))
         embed.set_footer(text='Asked by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
+    
+    @cog_ext.cog_slash(name='boop', description='Boop the comander', guild_ids=[601247340887670792])
+    async def boop(self, ctx: SlashContext):
+        await ctx.send(ctx.author.mention+" has Booped <@361275648033030144>")
+    
+    @cog_ext.cog_slash(name='hug', options=hug_options, description='Hug someone')
+    async def hug(self, ctx: SlashContext, user:discord.User=None):
+        await ctx.send(ctx.author.mention+" has hugged "+user.mention+"!! :hugging:")
