@@ -2,14 +2,12 @@ import discord
 import ast, time
 import sqlite3
 
-from libraries.helperFunctions import isOwner
+import botDB
+from helperFunctions import isOwner
 
-# NOTE: the creation of the connection needs to be changed as we create botDB.py
 # Create table in database
-conn = sqlite3.connect('botDB.db'); cursor = conn.cursor()
-cursor.execute('''CREATE TABLE IF NOT EXISTS COOLDOWNS ([user] TEXT PRIMARY KEY NOT NULL, [lastused] date NOT NULL, [data] TEXT NOT NULL)''')
-conn.commit(); cursor.close(); conn.close()
-del conn, cursor
+with botDB.BotDB() as db:
+    db.execute('''CREATE TABLE IF NOT EXISTS COOLDOWNS ([user] TEXT PRIMARY KEY NOT NULL, [lastused] date NOT NULL, [data] TEXT NOT NULL)''')
 
 class UserCooldownException(Exception):
     # User: the discord.User or other way to keep track of the user
@@ -46,7 +44,7 @@ class UserCooldownException(Exception):
         return self.get_msg()
 
 def clean(days=30): # If you don't use a command with a cooldown in 30 days, you get purged
-    conn = sqlite3.connect('botDB.db'); cursor = conn.cursor()
+    conn = sqlite3.connect(botDB.DB_NAME); cursor = conn.cursor()
     cursor.execute(f'''DELETE FROM COOLDOWNS WHERE lastused < date('now','-{days}days')''')
     conn.commit(); cursor.close(); conn.close()
 
@@ -81,7 +79,7 @@ def use_cmd(user:discord.User or str, command:str, cooldown:float, uses=1, use_f
     Uses a command, raising an exception if it is on cooldown
     '''
     if isinstance(user, discord.User): user = user.id; user = str(user)
-    conn = sqlite3.connect('botDB.db'); cursor = conn.cursor()
+    conn = sqlite3.connect(botDB.DB_NAME); cursor = conn.cursor()
 
     # Get and parse user info from table
     cursor.execute(f'SELECT * FROM COOLDOWNS WHERE user = ?',(user,))
