@@ -121,3 +121,4 @@ def has_cooldown(cooldown:float, times:int=1, category:str='', use_first_use:boo
                 use_cmd(user, cmd_name, cooldown, uses=times, use_first_use=use_first_use)
             return func(*args,**kwargs)
         return wrap
+    return wrapper
