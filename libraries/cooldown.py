@@ -111,9 +111,10 @@ def use_cmd(user:discord.User or str, command:str, cooldown:float, uses=1, use_f
     conn.commit(); cursor.close(); conn.close()
 
 # Use this wrapper to add cooldowns
-def has_cooldown(cooldown:float, times:int=1, category:str='', use_first_use:bool=False, admin_exempt:bool=False, owner_exempt:bool=False, has_kwargs:bool=True):
+def has_cooldown(cooldown:float, times:int=1, category:str='', use_first_use:bool=False, admin_exempt:bool=False, owner_exempt:bool=False):
     def wrapper(func):
         cmd_name = category if len(category) == 0 else func.__name__
+        has_kwargs = not '=' in str(inspect.signature(func))
         
         def wrap(*args, **kwargs):
             user = args[1].author
