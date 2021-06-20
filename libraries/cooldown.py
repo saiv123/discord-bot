@@ -110,17 +110,21 @@ def use_cmd(user:discord.User or str, command:str, cooldown:float, uses=1, use_f
     conn.commit(); cursor.close(); conn.close()
 
 # Use this wrapper to add cooldowns
-def has_cooldown(cooldown:float, times:int=1, category:str='', use_first_use:bool=False, admin_exempt:bool=False, owner_exempt:bool=False):
+def has_cooldown(cooldown:float, times:int=1, category:str='', use_first_use:bool=False, admin_exempt:bool=False, owner_exempt:bool=False, has_kwargs:bool=True):
     def wrapper(func):
         cmd_name = category if len(category) == 0 else func.__name__
+        
         def wrap(*args, **kwargs):
-            print(args)
-            print(args[0])
-            user = args[0].author
+            user = args[1].author
             if (isOwner(user) and owner_exempt) or (user.guild_permissions.administrator and admin_exempt):
                 force_use_cmd(user, cmd_name)
             else:
                 use_cmd(user, cmd_name, cooldown, uses=times, use_first_use=use_first_use)
             return func(*args,**kwargs)
+        
+        if not has_kwargs:
+            def wrap_(*args):
+                return wrap(*args)
+            return wrap_
         return wrap
     return wrapper

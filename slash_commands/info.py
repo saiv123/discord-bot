@@ -57,7 +57,7 @@ class info_commands(commands.Cog):
         await ctx.send(embed=embed)
     
     @cog_ext.cog_slash(name='stats', description='What am I up to?')
-    @has_cooldown(10)
+    @has_cooldown(10, has_kwargs=False)
     async def stats(self, ctx: SlashContext):
         quote = quotes.getQuoteApi()
         # temp = os.popen("vcgencmd measure_temp").readline()
