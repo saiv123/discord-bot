@@ -7,11 +7,20 @@ def move_json():
     with BotDB(db_name="msg.db") as db:
         data = json.load(open("..\msg.json"))
         for key in data: 
-            db.execute(f'CREATE TABLE IF NOT EXISTS {key} (list TEXT PRIMARY KEY NOT NULL)')
+            db.execute(f'CREATE TABLE IF NOT EXISTS (?) (list TEXT PRIMARY KEY NOT NULL)',(key,))
             typeM = data[key]
-            db.execute(f'DELETE FROM {key}') #deletes all rows from table
+            db.execute(f'DELETE FROM (?)',(key,)) #deletes all rows from table
             for msg in typeM:
-                db.execute(f'INSERT INTO {key} VALUES (?)',(str(msg),))
+                db.execute(f'INSERT INTO (?) VALUES (?)',(key,str(msg),))
+
+def add_to_table(key: str, DBname: str, value: str):
+    with botDB(db_name=DBname) as db:
+        db.execute(f'CREATE TABLE IF NOT EXISTS (?) (value TEXT PRIMARY KEY NOT NULL)',(key,))
+        db.execute(f'INSERT INTO (?) VALUES (?)',(key, value,))
+
+def del_table_rows(key: str, DBname: str):
+    with botDB(db_name=DBname) as db:
+        db.execute(f'DELETE FROM (?)',(key,))
 
 class BotDB():
     def __init__(self, db_name=DB_NAME):
