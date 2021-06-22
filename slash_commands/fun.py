@@ -220,12 +220,9 @@ class fun_commands(commands.Cog):
         embed.set_footer(text='Asked by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
     
-    @cog_ext.cog_slash(name='boop', options=boop_options, description='Boop the comander', guild_ids=[601247340887670792])
-    async def boop(self, ctx: SlashContext, user:discord.User=None):
-        try user.id:
-            await ctx.send(ctx.author.mention+" has Booped <@361275648033030144>")
-        except:
-            await ctx.send(ctx.author.mention+" has Booped "+user.mention)
+    @cog_ext.cog_slash(name='boop', description='Boop the comander', guild_ids=[601247340887670792])
+    async def boop(self, ctx: SlashContext):
+        await ctx.send(ctx.author.mention+" has Booped <@361275648033030144>")
         
     
     @cog_ext.cog_slash(name='hug', options=hug_options, description='Hug someone')
