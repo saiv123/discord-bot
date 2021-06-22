@@ -222,7 +222,7 @@ class fun_commands(commands.Cog):
     
     @cog_ext.cog_slash(name='boop', options=boop_options, description='Boop the comander', guild_ids=[601247340887670792])
     async def boop(self, ctx: SlashContext, user:discord.User=None):
-        try user == None:
+        try user.id:
             await ctx.send(ctx.author.mention+" has Booped <@361275648033030144>")
         except:
             await ctx.send(ctx.author.mention+" has Booped "+user.mention)
