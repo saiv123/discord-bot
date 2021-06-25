@@ -236,6 +236,6 @@ class fun_commands(commands.Cog):
     @cog_ext.cog_slash(name='ben', description='Something to troll ben with.', guild_ids=[429418039377657866])
     async def ben(self, ctx: SlashContext):
         embed = discord.Embed(Title='A Picture of Ben')
-        embed.set_image(url="429418039377657866")
+        embed.set_image(url="https://cdn.discordapp.com/attachments/663238321052319757/857763809895383050/image0.png")
         embed.set_footer(text='Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
