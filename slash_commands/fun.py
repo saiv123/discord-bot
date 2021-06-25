@@ -232,3 +232,10 @@ class fun_commands(commands.Cog):
             await ctx.send("Sorry but you can't hug your self!! sorry you are so lonely")
         else:
             await ctx.send(ctx.author.mention+" has hugged "+user.mention+"!! :hugging:")
+    
+    @cog_ext.cog_slash(name='ben', description='Something to troll ben with.', guild_ids=[429418039377657866])
+    async def ben(self, ctx: SlashContext):
+        embed = discord.Embed(Title='A Picture of Ben')
+        embed.set_image(url="429418039377657866")
+        embed.set_footer(text='Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
+        await ctx.send(embed=embed)
