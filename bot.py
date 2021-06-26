@@ -86,12 +86,7 @@ async def on_message(message):
         await channel.send("https://cdn.discordapp.com/attachments/654783232969277453/738997605039603772/Corn_is_the_best_crop__wheat_is_worst.mp4")
     elif AUTORESPOND and "bird" in message.content.lower() and message.author != bot.user:
         await channel.send("The birds work for the bourgeoisie.")
-    elif AUTORESPOND and "sai" in message.content.lower() and message.author != bot.user: #I solemnly swear that I am up to no good
-        emojis = ['🤠','🤫']
-        for emoji in emojis:
-            await message.add_reaction(emoji)
-        await user.send(message.content)
-
+    
     # Respond to last command
     await bot.process_commands(message)
 bot.run(TOKEN)
