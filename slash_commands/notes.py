@@ -39,7 +39,7 @@ class notes(commands.Cog):
         today = date.today()
         d1 = today.strftime("%d/%m/%Y")
         alt_mem = str(d1) + " -- " + memory
-        add_to_table(str(ctx.authro.id), "botDB.db", alt_mem)
+        add_to_table(str(ctx.author.id), "botDB.db", alt_mem)
         
         # nameNote = ("MyPorn/" + str(ctx.author.id) + ".txt")
 
