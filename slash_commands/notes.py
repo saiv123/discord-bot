@@ -15,8 +15,6 @@ import libraries.helperFunctions as helperFunctions
 import libraries.bonusapis as apis
 import libraries.imgutils as imgutils
 from libraries.helperFunctions import splitLongStrings
-from libraries.botDB import add_to_table, del_table_rows
-
 
 def setup(bot):
     bot.add_cog(notes(bot))
@@ -36,20 +34,16 @@ class notes(commands.Cog):
 
     @cog_ext.cog_subcommand(base="notes", name='make', options=make_notes_options, description='Take a note!')
     async def makeNotes(self, ctx: SlashContext, memory: str):
-        today = date.today()
-        d1 = today.strftime("%d/%m/%Y")
-        alt_mem = str(d1) + " -- " + memory
-        add_to_table(str(ctx.author.id), "botDB.db", alt_mem)
-        
-        # nameNote = ("MyPorn/" + str(ctx.author.id) + ".txt")
+        nameNote = ("MyPorn/" + str(ctx.author.id) + ".txt")
 
-        # # opens the file if the users file in there otherwise it will make it
-        # with open(nameNote, 'a') as file:
-            
-        #     file.write( + "\n")  # formating and saving to the file
-        embed = discord.Embed(title='Your Note is recorded and locked up.')
-        embed.set_footer(text='Notes stored by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
-        await ctx.send(embed=embed, hidden=True)# hides the users message so others dont see what they saved
+        # opens the file if the users file in there otherwise it will make it
+        with open(nameNote, 'a') as file:
+            today = date.today()
+            d1 = today.strftime("%d/%m/%Y")
+            file.write(str(d1) + " -- " + memory + "\n")  # formating and saving to the file
+            embed = discord.Embed(title='Your Note is recorded and locked up.')
+            embed.set_footer(text='Notes stored by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
+            await ctx.send(embed=embed, hidden=True)# hides the users message so others dont see what they saved
 
     @cog_ext.cog_subcommand(base="notes", name='get', description='Gets your notes')
     async def getNotes(self, ctx: SlashContext):
@@ -83,9 +77,8 @@ class notes(commands.Cog):
     @cog_ext.cog_subcommand(base="notes", name='delete', description='Deletes your notes.')
     async def delNotes(self, ctx: SlashContext):
         # removes the personal files
-        # nameNote = ('MyPorn/' + str(ctx.author.id) + '.txt')
-        # os.system(f'sudo rm -r {nameNote}')
-        del_table_rows(ctx.author.id, "botDB.db")
+        nameNote = ('MyPorn/' + str(ctx.author.id) + '.txt')
+        os.system(f'sudo rm -r {nameNote}')
         embed = discord.Embed(title='Notes destroyed')
         embed.set_footer(text='Notes destroyed by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
