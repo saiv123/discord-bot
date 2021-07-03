@@ -22,13 +22,15 @@ class move(commands.Cog):
                 otherchannel = user.voice.channel
                 #move logic
                 if(channel.id == otherchannel.id):
-                    await ctx.send("You both are in the same channel cant move you.")
+                    await ctx.send("You both are in the same channel cant move you.", hidden=True)
                 else:
                     await ctx.author.move_to(otherchannel, reason='Dont worry about it')
                     await ctx.send("Boop Found him moving you to the vc Sai is in.", hidden=True)
-            except:
+            except e:
                 #this is what it will do if user is not in vc
                 await ctx.send("Sorry but you have to be in a vc to use this command\nOr Sai is not in a VC", hidden=True)
+        else:
+            await ctx.send("You are not permitted to use this command!!", hidden=True)
 
 
 def setup(bot):
