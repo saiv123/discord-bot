@@ -230,5 +230,7 @@ class fun_commands(commands.Cog):
     async def hug(self, ctx: SlashContext, user:discord.User=None):
         if ctx.author.id == user.id:
             await ctx.send(self.bot.user.mention+" has hugged "+user.mention+"!! :hugging:")
+        elif ctx.author.id == 288861358555136000:
+            await ctx.send("Sorry but you can't hug your self!! sorry you are so lonely")
         else:
             await ctx.send(ctx.author.mention+" has hugged "+user.mention+"!! :hugging:")
