@@ -228,9 +228,9 @@ class fun_commands(commands.Cog):
          
     @cog_ext.cog_slash(name='hug', options=hug_options, description='Hug someone')
     async def hug(self, ctx: SlashContext, user:discord.User=None):
-        if ctx.author.id == user.id:
-            await ctx.send(self.bot.user.mention+" has hugged "+user.mention+"!! :hugging:")
-        elif ctx.author.id == 288861358555136000:
+        if ctx.author.id == user.id and ctx.author.id == 288861358555136000:
             await ctx.send("Sorry but you can't hug your self!! sorry you are so lonely")
+        elif ctx.author.id == user.id:
+            await ctx.send(self.bot.user.mention+" has hugged "+user.mention+"!! :hugging:")
         else:
             await ctx.send(ctx.author.mention+" has hugged "+user.mention+"!! :hugging:")
