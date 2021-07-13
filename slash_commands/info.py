@@ -3,7 +3,7 @@ from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 
 import libraries.quotes as quotes
-import libraries.helperFunctions as helperFunctions
+import libraries.helperFunctions as helperFunctions, add_to_embed
 import libraries.bonusapis as apis
 import libraries.imgutils as imgutils
 from libraries.cooldown import has_cooldown
