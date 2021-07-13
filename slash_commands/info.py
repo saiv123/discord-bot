@@ -3,7 +3,7 @@ from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 
 import libraries.quotes as quotes
-import libraries.helperFunctions as helperFunctions, add_to_embed
+import libraries.helperFunctions as helperFunctions
 import libraries.bonusapis as apis
 import libraries.imgutils as imgutils
 from libraries.cooldown import has_cooldown
@@ -11,6 +11,7 @@ from libraries.cooldown import has_cooldown
 import time, datetime
 from datetime import date
 from datetime import datetime
+from helperFunctions import add_to_embed
 
 from secret import cont
 
