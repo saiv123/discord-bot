@@ -38,7 +38,7 @@ class info_commands(commands.Cog):
     
     @cog_ext.cog_slash(name='hi', description='Am I here? Are you here? Is anyone really here?')
     async def hi(self, ctx: SlashContext):
-        embed = discord.Embed(title='Hello', description='Hello {0}!!!'.format(ctx.author.mention))
+        embed = discord.Embed(title='Hello', description='Hello {0}!!!'.format(ctx.author.mention), colour=imgutils.randomSaturatedColor())
         embed.set_footer(text='Sanity check by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
     
