@@ -228,7 +228,7 @@ class fun_commands(commands.Cog):
     
     @cog_ext.cog_slash(name='boop', description='Boop the comander', guild_ids=[601247340887670792])
     async def boop(self, ctx: SlashContext):
-        await ctx.send("<@361029057640529921> has Booped "+user.mention)
+        await ctx.send(ctx.author.mention+" has Booped <@361029057640529921>")
          
     @cog_ext.cog_slash(name='hug', options=hug_options, description='Hug someone')
     async def hug(self, ctx: SlashContext, user:discord.User=None):
