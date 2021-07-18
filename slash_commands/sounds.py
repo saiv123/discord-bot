@@ -11,7 +11,7 @@ class sound_commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot 
     
-    @cog_ext.cog_slash(name='aqua', description='Makes you baby noises', guild_ids=[601247340887670792, 648012188685959169])
+    @cog_ext.cog_slash(name='aqua', description='Makes baby noises', guild_ids=[601247340887670792, 648012188685959169])
     async def aqua(self, ctx: SlashContext):
         try:
             channel = ctx.author.voice.channel
@@ -19,6 +19,6 @@ class sound_commands(commands.Cog):
             source = FFmpegPCMAudio('./sounds/good_child.mp3')
             player = voice.play(source)
             await ctx.send("DONE", hidden=True)
-            await ctx.voice_client.disconnect()
+            await ctx.guild.voice_client.disconnect()
         except AttributeError as e:
             await ctx.send("OOF you cant run this command or your not in vc ;(", hidden=True)
