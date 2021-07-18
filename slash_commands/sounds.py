@@ -16,7 +16,7 @@ class sound_commands(commands.Cog):
         if(ctx.author.voice){
             channel = ctx.message.author.voice.channel
             voice = await channel.connect()
-            source = FFmpegPCMAudio('')
+            source = FFmpegPCMAudio('./sounds/good_child.mp3')
             player = voice.play(source)
             await ctx.send("DONE", hidden=True)
         }else{
