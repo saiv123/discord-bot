@@ -19,10 +19,9 @@ class sound_commands(commands.Cog):
             source = FFmpegPCMAudio('./sounds/good_child.mp3')
             player = voice.play(source)
             await ctx.send("DONE", hidden=True)
-            print(voice.is_playing())
-            while(voice.is_playing() == False):
-                await asyncio.sleep(1)
+            await asyncio.sleep(10)
             ctx.guild.voice_client.cleanup()
             await ctx.guild.voice_client.disconnect()
         except AttributeError as e:
+            print(e)
             await ctx.send("OOF you cant run this command or your not in vc ;(", hidden=True)
