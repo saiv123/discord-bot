@@ -19,7 +19,7 @@ class sound_commands(commands.Cog):
             source = FFmpegPCMAudio('./sounds/good_child.mp3')
             player = voice.play(source)
             await ctx.send("DONE", hidden=True)
-            await asyncio.sleep(5)
+            await asyncio.sleep(10)
             await ctx.guild.voice_client.disconnect()
         except AttributeError as e:
             print(e)
