@@ -57,6 +57,7 @@ class sound_commands(commands.Cog):
         files = os.listdir(path)
         temp = ''
         for f in files:
-            temp += f+"\n"
             i = temp.index('.')
-        await ctx.send(temp[:i], hidden=True)
+            f = f[:i]
+            temp += f+"\n"
+        await ctx.send(temp, hidden=True)
