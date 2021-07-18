@@ -19,6 +19,7 @@ class sound_commands(commands.Cog):
             source = FFmpegPCMAudio('./sounds/good_child.mp3')
             player = voice.play(source)
             await ctx.send("DONE", hidden=True)
+            print(voice.is_playing())
             while(voice.is_playing() == False):
                 ctx.guild.voice_client.cleanup()
                 await ctx.guild.voice_client.disconnect()
