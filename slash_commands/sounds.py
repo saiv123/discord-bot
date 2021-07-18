@@ -21,7 +21,8 @@ class sound_commands(commands.Cog):
             await ctx.send("DONE", hidden=True)
             print(voice.is_playing())
             while(voice.is_playing() == False):
-                ctx.guild.voice_client.cleanup()
-                await ctx.guild.voice_client.disconnect()
+                await asyncio.sleep(1)
+            ctx.guild.voice_client.cleanup()
+            await ctx.guild.voice_client.disconnect()
         except AttributeError as e:
             await ctx.send("OOF you cant run this command or your not in vc ;(", hidden=True)
