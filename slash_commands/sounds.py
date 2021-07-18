@@ -19,5 +19,6 @@ class sound_commands(commands.Cog):
             source = FFmpegPCMAudio('./sounds/good_child.mp3')
             player = voice.play(source)
             await ctx.send("DONE", hidden=True)
+            await ctx.voice_client.disconnect()
         except AttributeError as e:
             await ctx.send("OOF you cant run this command or your not in vc ;(", hidden=True)
