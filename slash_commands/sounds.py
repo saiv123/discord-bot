@@ -75,7 +75,7 @@ class sound_commands(commands.Cog):
     async def alex(self, ctx: SlashContext, sound: str):
         path = './sounds/alex/'+sound+'.mp3'
         try:
-            trust = [288861358555136000, 240636443829993473, 361275648033030144]
+            trust = [401181826145845249, 181488013627490305, 255930764154109952, 118996359616397312, 150485718534324224, 240636443829993473]
             if ctx.author.id in trust:
                 channel = ctx.author.voice.channel
                 voice = await channel.connect()
