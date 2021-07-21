@@ -18,6 +18,15 @@ class sound_commands(commands.Cog):
             "required": True
         }
     ]
+
+    alex_options = [
+        {
+            "name": "sound",
+            "description": "what sound you want to use. If you dont know the file name use /alexsound",
+            "type": 3,
+            "required": True
+        }
+    ]
     def __init__(self, bot):
         self.bot = bot 
     
@@ -54,6 +63,44 @@ class sound_commands(commands.Cog):
             await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
             return
         path = './sounds/aqua'
+        files = os.listdir(path)
+        temp = ''
+        for f in files:
+            i = f.index('.')
+            f = f[:i]
+            temp += f+"\n"
+        await ctx.send(temp, hidden=True)
+
+    @cog_ext.cog_slash(name='alex', options=alex_options, description='Makes sounds', guild_ids=[531614305733574666, 648012188685959169])
+    async def alex(self, ctx: SlashContext, sound: str):
+        path = './sounds/alex/'+sound+'.mp3'
+        try:
+            trust = [288861358555136000, 240636443829993473, 361275648033030144]
+            if ctx.author.id in trust:
+                channel = ctx.author.voice.channel
+                voice = await channel.connect()
+                source = FFmpegPCMAudio(path)
+                player = voice.play(source)
+                await ctx.send("DONE", hidden=True)
+                await asyncio.sleep(10)
+                await ctx.guild.voice_client.disconnect()
+            else:
+                await ctx.send("i solemnly swear i am up to no good")
+                raise NotTrusted('Dont worry about it')
+        except AttributeError as e:
+            print(e)
+            await ctx.send("your not in vc ;(", hidden=True)
+        except NotTrusted as e:
+            print(e)
+            await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
+    
+    @cog_ext.cog_slash(name='alexsound', description='List of sounds', guild_ids=[531614305733574666, 648012188685959169])
+    async def alexsound(self, ctx: SlashContext):
+        trust = [401181826145845249, 181488013627490305, 255930764154109952, 118996359616397312, 150485718534324224, 240636443829993473]
+        if ctx.author.id not in trust:
+            await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
+            return
+        path = './sounds/alex'
         files = os.listdir(path)
         temp = ''
         for f in files:
