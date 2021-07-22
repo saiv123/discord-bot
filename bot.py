@@ -121,4 +121,5 @@ async def on_slash_command_error(ctx, error):
         embed.set_footer(text='Command Broken by: ' + ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
         await ctx.send(embed=embed)
     print(error)
+    print("----------------> "+ctx.guild.name)
     print(traceback.format_exc()) # Attempt to print exception
