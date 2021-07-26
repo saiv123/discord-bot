@@ -90,6 +90,6 @@ class info_commands(commands.Cog):
     
     @cog_ext.cog_slash(name='ping', description="What's my speed?")
     async def ping(self, ctx: SlashContext):
-        embed = add_to_embed('Ping','Latency: {0}ms'.format(round(bot.latency*1000, 1)))[0]
+        embed = add_to_embed('Ping','Latency: {0}ms'.format(round(self.bot.latency*1000, 1)))[0]
         embed.set_footer(text='Ping Measured by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
