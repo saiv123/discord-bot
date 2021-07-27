@@ -19,39 +19,9 @@ import json
 from secret import cont
 from bot import ts
 
-def convertInt(string):
-    string = string.replace('G','*1073741824').replace('M','*1048576').replace('K','*1024')
-    num = float(eval(string))
-    return num
-
-def getCPUStats():
-    raw = subprocess.Popen(['mpstat', '-u', '-o', 'JSON'], stdout = subprocess.PIPE)
-    data = json.loads(raw.communicate()[0])
-    user = data["sysstat"]["hosts"][0]["statistics"][0]["cpu-load"][0]["usr"]
-    system = data["sysstat"]["hosts"][0]["statistics"][0]["cpu-load"][0]["sys"]
-    return user+system
 
 def setup(bot):
     bot.add_cog(info_commands(bot))
-
-class BotHolidays(holidays.UnitedStates):
-    def _populate(self, year):
-        holidays.UnitedStates._populate(self, year)
-
-        if year >= 2000: self[date(year, 12, 7)] = 'My Father\'s Birthday'
-        
-        if year > 2020: self[date(year, 4, 12)] = f'My {year-2020}{self.st(year-2020)} Birthday'
-        elif year == 2020: self[date(year, 4, 12)] = f'My Birthday'
-        
-        self[date(year, 4, 20)] = 'Dope Day'
-        # TODO: add palindrome days
-
-    def st(self, i:int):
-        if i >= 20: i = int(str(int(i))[-1])
-        if i == 1: return 'st'
-        elif i == 2: return 'nd'
-        elif i == 3: return 'rd'
-        else: return 'th'
 
 class info_commands(commands.Cog):
     def __init__(self, bot):
@@ -131,35 +101,34 @@ class info_commands(commands.Cog):
             except:
                 upcoming_str = 'Error parsing date! Try again as month/day/year or search for a US holiday!'
         
+        # Create and send embed
         embed = add_to_embed('Days Until', upcoming_str)
         embed.set_thumbnail(url='https://cdn.pixabay.com/photo/2017/06/10/06/39/calender-2389150_960_720.png')
-        embed.set_footer(text='Ping Measured by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
+        embed.set_footer(text='Day Awaited by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
 
     @cog_ext.cog_slash(name='stats', description='What am I up to?')
-    #@has_cooldown(10)
     async def stats(self, ctx: SlashContext):
-        #get the memory stats of the computer
+        # Get the memory stats
         raw = subprocess.Popen(['free', '-h'], stdout = subprocess.PIPE)
         output = str(raw.communicate()).split('\\n')
-        temp = output[1].split(" ")
-        while '' in temp: temp.remove('')
-        percent = convertInt(temp[2]) / convertInt(temp[1])
-        memory = temp[2]+"/"+temp[1]+"-"+str(percent)+"%"
+        temp = [x for x in output[1].split(" ") if x != '']
+        percent = memstrToNum(temp[2]) / memstrToNum(temp[1])
+        memory = f'{temp[2]}/{temp[1]} - {percent}%'
 
-        #get the cpu stats of the computer
-        cpu_percent = getCPUStats()
-        CPU = str(cpu_percent)+"%"
+        # Get CPU stats
+        cpu_percent = f'{getCPUStats()}%'
+
         # calculating time bot has been on
         tso = time.time()
         msg = time.strftime("%H Hours %M Minutes %S Seconds",time.gmtime(tso - ts))
-        # seting up an embed
-        embed = discord.Embed(colour=imgutils.randomSaturatedColor())
-        # setting the clock image
-        embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png")
+        
+        # Set up and send embed
+        embed = add_to_embed('Status')
+        embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png") # set the clock image
         embed.add_field(name='I have been awake for:', value=msg, inline=False)
-        embed.add_field(name='Memory:',value=memory,inline=True)
-        embed.add_field(name='CPU:',value=CPU,inline=True)
+        embed.add_field(name='Memory:', value=memory, inline=True)
+        embed.add_field(name='CPU:', value=cpu_percent, inline=True)
         embed.set_footer(text='Status Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
     
@@ -168,14 +137,45 @@ class info_commands(commands.Cog):
         msg = "Discord: Sai#3400\nDiscord server: <http://discord.gg/dKWV3hS>\n"
         if(ctx.channel.id == 674120261691506688):  # channel specific to my discord server
             msg += cont
-        embed = discord.Embed(title="Sai's contact info")
-        embed.add_field(name=msg, value=":heart: take care!!", inline=False)
-        id = ctx.author.id
-        #TODO: send in embed
+        
+        embed = add_to_embed('♥ Take Care', msg)
+        
         await ctx.send(embed=embed, hidden=True)
     
     @cog_ext.cog_slash(name='ping', description="What's my speed?")
+    @has_cooldown(10)
     async def ping(self, ctx: SlashContext):
         embed = add_to_embed('Ping','Latency: {0}ms'.format(round(self.bot.latency*1000, 1)))[0]
         embed.set_footer(text='Ping Measured by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
+
+class BotHolidays(holidays.UnitedStates):
+    def _populate(self, year):
+        holidays.UnitedStates._populate(self, year)
+
+        if year >= 2000: self[date(year, 12, 7)] = 'My Father\'s Birthday'
+        
+        if year > 2020: self[date(year, 4, 12)] = f'My {year-2020}{self.st(year-2020)} Birthday'
+        elif year == 2020: self[date(year, 4, 12)] = f'My Birthday'
+        
+        self[date(year, 4, 20)] = 'Dope Day'
+        # TODO: add palindrome days
+
+    def st(self, i:int):
+        if i >= 20: i = int(str(int(i))[-1])
+        if i == 1: return 'st'
+        elif i == 2: return 'nd'
+        elif i == 3: return 'rd'
+        else: return 'th'
+
+def memstrToNum(string):
+    string = string.replace('G','*1073741824').replace('M','*1048576').replace('K','*1024')
+    num = float(eval(string))
+    return num
+
+def getCPUStats():
+    raw = subprocess.Popen(['mpstat', '-u', '-o', 'JSON'], stdout = subprocess.PIPE)
+    data = json.loads(raw.communicate()[0])
+    user = data["sysstat"]["hosts"][0]["statistics"][0]["cpu-load"][0]["usr"]
+    system = data["sysstat"]["hosts"][0]["statistics"][0]["cpu-load"][0]["sys"]
+    return user+system
