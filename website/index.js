@@ -47,7 +47,7 @@ function closecontact() {
 }
 
 function AsDownload() {
-  window.open("https://discord.gg/gYhRdk7", "_blank");
+  window.open("http://discord.gg/dKWV3hS", "_blank");
 };
 setTimeout(function() {
   $("#loading").addClass("animated fadeOut");

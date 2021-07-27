@@ -87,7 +87,7 @@ class info_commands(commands.Cog):
     
     @cog_ext.cog_slash(name='contact', description='Contact my father' )
     async def contact(self, ctx: SlashContext):
-        msg = "Discord: Sai#3400\nDiscord server: <https://discord.gg/2zUTJ7j>\n"
+        msg = "Discord: Sai#3400\nDiscord server: <http://discord.gg/dKWV3hS>\n"
         if(ctx.channel.id == 674120261691506688):  # channel specific to my discord server
             msg += cont
         embed = discord.Embed(title="Sai's contact info")
