@@ -52,7 +52,8 @@ def force_use_cmd(user:discord.User or str, command:str):
     '''
     Uses a command. Ignores all cooldown, but records information
     '''
-    if isinstance(user, discord.User): user = user.id; user = str(user)
+    if isinstance(user, discord.User): user = user.id
+    user = str(user)
     conn = sqlite3.connect(botDB.DB_NAME); cursor = conn.cursor()
 
     # Get and parse user info from table
@@ -78,12 +79,14 @@ def use_cmd(user:discord.User or str, command:str, cooldown:float, uses=1, use_f
     '''
     Uses a command, raising an exception if it is on cooldown
     '''
-    if isinstance(user, discord.User): user = user.id; user = str(user)
+    if isinstance(user, discord.User): user = user.id
+    user = str(user)
     conn = sqlite3.connect(botDB.DB_NAME); cursor = conn.cursor()
 
     # Get and parse user info from table
     cursor.execute(f'SELECT * FROM COOLDOWNS WHERE user = (?) ',(str(user),))
     user_rows = cursor.fetchall()
+    print('Cooldown User Rows:\n', user_rows)
     user_info = ast.literal_eval(user_rows[0][2]) if len(user_rows) > 0 else dict()
 
     if not isinstance(user_info, dict): raise Exception(f'Incorrect entry in COOLDOWNS table for user {user}')
@@ -106,6 +109,7 @@ def use_cmd(user:discord.User or str, command:str, cooldown:float, uses=1, use_f
             'first_use': int(time.time())
         }
 
+    print('Cooldown\'s info:\n', user_info)
     cursor.execute('''REPLACE INTO COOLDOWNS VALUES (?, ?, ?)''', (str(user), time.time(), str(user_info)))
     conn.commit(); cursor.close(); conn.close()
 
@@ -118,8 +122,10 @@ def has_cooldown(cooldown:float, times:int=1, category:str='', use_first_use:boo
         def wrap(*args, **kwargs):
             user = args[1].author
             if (isOwner(user) and owner_exempt) or (user.guild_permissions.administrator and admin_exempt):
+                print(f'Cooldown cmd {cmd_name} used by owner/admin')
                 force_use_cmd(user, cmd_name)
             else:
+                print(f'Cooldown cmd {cmd_name} used by nonowner')
                 use_cmd(user, cmd_name, cooldown, uses=times, use_first_use=use_first_use)
             return func(*args,**kwargs)
         

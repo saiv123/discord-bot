@@ -98,7 +98,7 @@ class sound_commands(commands.Cog):
         path = './sounds/alex'
         await ctx.send(getFiles(path), hidden=True)
 
-    def getFiles(path):
+    def getFiles(path:str):
         files = os.listdir(path)
         temp = ''
         for f in files:
