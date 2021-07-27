@@ -17,6 +17,19 @@ import os, subprocess, re
 from secret import cont
 
 from bot import ts
+
+def convertInt(string):
+    string = string.replace('G','*1073741824').replace('M','*1048576').replace('K','*1024')
+    num = float(eval(string))
+    return num
+
+def getCPUStats():
+    raw = subprocess.Popen(['mpstat', '-u', '-o', 'JSON'], stdout = subprocess.PIPE)
+    data = json.loads(raw.communicate()[0])
+    user = data["sysstat"]["hosts"][0]["statistics"][0]["cpu-load"][0]["usr"]
+    system = data["sysstat"]["hosts"][0]["statistics"][0]["cpu-load"][0]["sys"]
+    return user+system
+
 def setup(bot):
     bot.add_cog(info_commands(bot))
 
@@ -101,15 +114,3 @@ class info_commands(commands.Cog):
         embed = add_to_embed('Ping','Latency: {0}ms'.format(round(self.bot.latency*1000, 1)))[0]
         embed.set_footer(text='Ping Measured by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
-    
-    def convertInt(string):
-        string = string.replace('G','*1073741824').replace('M','*1048576').replace('K','*1024')
-        num = float(eval(string))
-        return num
-    
-    def getCPUStats():
-        raw = subprocess.Popen(['mpstat', '-u', '-o', 'JSON'], stdout = subprocess.PIPE)
-        data = json.loads(raw.communicate()[0])
-        user = data["sysstat"]["hosts"][0]["statistics"][0]["cpu-load"][0]["usr"]
-        system = data["sysstat"]["hosts"][0]["statistics"][0]["cpu-load"][0]["sys"]
-        return user+system
