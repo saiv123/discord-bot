@@ -8,5 +8,6 @@ __pycache__/
 MyPorn/
 ClassWork/
 photos/
+sounds/
 *.db
 !msg.db
