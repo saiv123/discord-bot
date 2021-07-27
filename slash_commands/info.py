@@ -79,12 +79,9 @@ class info_commands(commands.Cog):
         embed = discord.Embed(colour=imgutils.randomSaturatedColor())
         # setting the clock image
         embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png")
-        embed.add_field(name='I have been awake for:', value=msg, inline=True)
+        embed.add_field(name='I have been awake for:', value=msg, inline=False)
         embed.add_field(name='Memory:',value=memory,inline=True)
         embed.add_field(name='CPU:',value=CPU,inline=True)
-        # embed.add_field(name='My core body temperature:',value=temp.replace("temp=", ""), inline=True)
-        # embed.add_field(name="Quote cus I know you're bored:", value='"' +quote['quote'] + '"\n\t~' + quote['author'], inline=False)
-
         embed.set_footer(text='Status Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
     
