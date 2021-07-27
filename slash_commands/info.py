@@ -63,7 +63,7 @@ class info_commands(commands.Cog):
     async def stats(self, ctx: SlashContext):
         quote = quotes.getQuoteApi()
         raw = subprocess.Popen(['free', '-h'], stdout = subprocess.PIPE)
-        output = str(temp.communicate()).split('\\n')
+        output = str(raw.communicate()).split('\\n')
         temp = output[1].split(" ")
         while '' in temp: temp.remove('')
         percent = convertInt(temp[2]) / convertInt(temp[1])
