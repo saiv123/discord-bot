@@ -110,6 +110,7 @@ def use_cmd(user:discord.User or str, command:str, cooldown:float, uses=1, use_f
         }
 
     print('Cooldown\'s info:\n', user_info)
+    print('Current Time:',time.time())
     cursor.execute('''REPLACE INTO COOLDOWNS VALUES (?, ?, ?)''', (str(user), time.time(), str(user_info)))
     conn.commit(); cursor.close(); conn.close()
 
