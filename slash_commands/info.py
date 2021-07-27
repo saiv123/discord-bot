@@ -72,7 +72,7 @@ class info_commands(commands.Cog):
         await ctx.send(embed=embed)
     
     @cog_ext.cog_slash(name='stats', description='What am I up to?')
-    @has_cooldown(10)
+    #@has_cooldown(10)
     async def stats(self, ctx: SlashContext):
         #get the memory stats of the computer
         raw = subprocess.Popen(['free', '-h'], stdout = subprocess.PIPE)
