@@ -12,6 +12,7 @@ import time, datetime
 from datetime import date
 from datetime import datetime
 from helperFunctions import add_to_embed
+import os, subprocess, re
 
 from secret import cont
 
@@ -61,8 +62,12 @@ class info_commands(commands.Cog):
     @has_cooldown(10)
     async def stats(self, ctx: SlashContext):
         quote = quotes.getQuoteApi()
-        # temp = os.popen("vcgencmd measure_temp").readline()
-
+        raw = subprocess.Popen(['free', '-h'], stdout = subprocess.PIPE)
+        output = str(temp.communicate()).split('\\n')
+        temp = output[1].split(" ")
+        while '' in temp: temp.remove('')
+        percent = convertInt(temp[2]) / convertInt(temp[1])
+        memory = temp[2]+"/"+temp[1]+"-"+percent+"%"
         # calculating time bot has been on
         tso = time.time()
         msg = time.strftime("%H Hours %M Minutes %S Seconds",time.gmtime(tso - ts))
@@ -71,6 +76,8 @@ class info_commands(commands.Cog):
         # setting the clock image
         embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png")
         embed.add_field(name='I have been awake for:', value=msg, inline=True)
+        embed.add_field(name='Memory:',value=memory,inline=True)
+        embed.add_field(name='CPU:',value="N/A",inline=True)
         # embed.add_field(name='My core body temperature:',value=temp.replace("temp=", ""), inline=True)
         # embed.add_field(name="Quote cus I know you're bored:", value='"' +quote['quote'] + '"\n\t~' + quote['author'], inline=False)
 
@@ -93,3 +100,9 @@ class info_commands(commands.Cog):
         embed = add_to_embed('Ping','Latency: {0}ms'.format(round(self.bot.latency*1000, 1)))[0]
         embed.set_footer(text='Ping Measured by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
+    
+    def convertInt(string):
+        string = string.replace('G','*1073741824').replace('M','*1048576').replace('K','*1024')
+        num = float(eval(string))
+        return num
+
