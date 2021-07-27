@@ -6,6 +6,9 @@ from discord import FFmpegPCMAudio
 
 import os
 
+class NotTrusted(Exception):
+    pass
+
 def setup(bot):
     bot.add_cog(sound_commands(bot))
 
@@ -29,9 +32,6 @@ class sound_commands(commands.Cog):
     ]
     def __init__(self, bot):
         self.bot = bot 
-    
-    class NotTrusted(Exception):
-        pass
 
     @cog_ext.cog_slash(name='aqua', options=aqua_options, description='Makes baby noises', guild_ids=[601247340887670792, 648012188685959169])
     async def aqua(self, ctx: SlashContext, sound: str):
@@ -86,7 +86,7 @@ class sound_commands(commands.Cog):
                 await ctx.guild.voice_client.disconnect()
             else:
                 await ctx.send("i solemnly swear i am up to no good")
-                raise NotTrusted('Dont worry about it')
+                raise NotTrusted('Don\'t worry about it')
         except AttributeError as e:
             print(e)
             await ctx.send("your not in vc ;(", hidden=True)
