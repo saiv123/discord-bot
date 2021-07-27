@@ -19,6 +19,18 @@ from dateutil import parser
 from secret import cont
 from bot import ts
 
+def convertInt(string):
+    string = string.replace('G','*1073741824').replace('M','*1048576').replace('K','*1024')
+    num = float(eval(string))
+    return num
+
+def getCPUStats():
+    raw = subprocess.Popen(['mpstat', '-u', '-o', 'JSON'], stdout = subprocess.PIPE)
+    data = json.loads(raw.communicate()[0])
+    user = data["sysstat"]["hosts"][0]["statistics"][0]["cpu-load"][0]["usr"]
+    system = data["sysstat"]["hosts"][0]["statistics"][0]["cpu-load"][0]["sys"]
+    return user+system
+
 def setup(bot):
     bot.add_cog(info_commands(bot))
 
@@ -125,11 +137,19 @@ class info_commands(commands.Cog):
         await ctx.send(embed=embed)
 
     @cog_ext.cog_slash(name='stats', description='What am I up to?')
-    @has_cooldown(10)
+    #@has_cooldown(10)
     async def stats(self, ctx: SlashContext):
-        quote = quotes.getQuoteApi()
-        # temp = os.popen("vcgencmd measure_temp").readline()
+        #get the memory stats of the computer
+        raw = subprocess.Popen(['free', '-h'], stdout = subprocess.PIPE)
+        output = str(raw.communicate()).split('\\n')
+        temp = output[1].split(" ")
+        while '' in temp: temp.remove('')
+        percent = convertInt(temp[2]) / convertInt(temp[1])
+        memory = temp[2]+"/"+temp[1]+"-"+str(percent)+"%"
 
+        #get the cpu stats of the computer
+        cpu_percent = getCPUStats()
+        CPU = str(cpu_percent)+"%"
         # calculating time bot has been on
         tso = time.time()
         msg = time.strftime("%H Hours %M Minutes %S Seconds",time.gmtime(tso - ts))
@@ -137,16 +157,15 @@ class info_commands(commands.Cog):
         embed = discord.Embed(colour=imgutils.randomSaturatedColor())
         # setting the clock image
         embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png")
-        embed.add_field(name='I have been awake for:', value=msg, inline=True)
-        # embed.add_field(name='My core body temperature:',value=temp.replace("temp=", ""), inline=True)
-        # embed.add_field(name="Quote cus I know you're bored:", value='"' +quote['quote'] + '"\n\t~' + quote['author'], inline=False)
-
+        embed.add_field(name='I have been awake for:', value=msg, inline=False)
+        embed.add_field(name='Memory:',value=memory,inline=True)
+        embed.add_field(name='CPU:',value=CPU,inline=True)
         embed.set_footer(text='Status Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
     
     @cog_ext.cog_slash(name='contact', description='Contact my father' )
     async def contact(self, ctx: SlashContext):
-        msg = "Discord: Sai#3400\nDiscord server: <https://discord.gg/2zUTJ7j>\n"
+        msg = "Discord: Sai#3400\nDiscord server: <http://discord.gg/dKWV3hS>\n"
         if(ctx.channel.id == 674120261691506688):  # channel specific to my discord server
             msg += cont
         embed = discord.Embed(title="Sai's contact info")

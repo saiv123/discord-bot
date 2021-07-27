@@ -5,7 +5,14 @@ from discord_slash.utils.manage_commands import create_option
 from discord import FFmpegPCMAudio
 
 import os
-
+def getFiles(path:str):
+    files = os.listdir(path)
+    temp = ''
+    for f in files:
+        i = f.index('.')
+        f = f[:i]
+        temp += f+"\n"
+    return temp
 class NotTrusted(Exception):
     pass
 
@@ -97,12 +104,3 @@ class sound_commands(commands.Cog):
             return
         path = './sounds/alex'
         await ctx.send(getFiles(path), hidden=True)
-
-    def getFiles(path:str):
-        files = os.listdir(path)
-        temp = ''
-        for f in files:
-            i = f.index('.')
-            f = f[:i]
-            temp += f+"\n"
-        return temp
