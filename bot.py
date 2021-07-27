@@ -29,7 +29,7 @@ bot.remove_command('help')
 client = wolframalpha.Client(id)
 
 ######################################
-###Inizalization of bot DO NOT EDIT###
+###Initialization of bot DO NOT EDIT###
 ######################################
 
 # Load all cogs
@@ -80,12 +80,6 @@ async def on_message(message):
         age = tempD.year - 2000
         await user.send("Happy Birthday you are "+age, hidden=True)
     channel = message.channel
-
-    if "456247671506599936" in message.content and message.author != bot.user:
-        await channel.send("HEY! <@456247671506599936> YOUR MONTY FUCKING SUCKS <3~ ash aka motorcycle gal that loves ya")
-    elif AUTORESPOND and "bird" in message.content.lower() and message.author != bot.user:
-        await channel.send("The birds work for the bourgeoisie.")
-    
     # Respond to last command
     await bot.process_commands(message)
 bot.run(TOKEN)
@@ -98,13 +92,13 @@ from Levenshtein import distance
 
 @bot.event
 async def on_slash_command_error(ctx, error):
-    msgSend = "An internal error has occured. Use /contact to contact the owner if it persists"
+    msgSend = "An internal error has occurred. Use /contact to contact the owner if it persists"
     if isinstance(error, commands.MissingRequiredArgument):
         e_msg = ', a '.join(str(error.param).replace('params','').split(':'))
         msgSend = f'You did not use the command correctly\nYou\'re missing {e_msg}\n\nIf you don\'t know how to use the command, use the /help command to see how to use all commands.'
     elif isinstance(error, commands.BadArgument):
         e_msg = ' and '.join(error.args)
-        msgSend = f'You did not use the command correctly\nYou\'re arguements are wrong: {e_msg}\n\nIf you don\'t know how to use the command, use the /help command to see how to use all commands.'
+        msgSend = f'You did not use the command correctly\nYou\'re arguments are wrong: {e_msg}\n\nIf you don\'t know how to use the command, use the /help command to see how to use all commands.'
     elif isinstance(error, commands.CommandOnCooldown):
         msgSend = 'You\'re on cooldown for '+ctx.invoked_with + '.\nPlease wait another '+str(round(error.retry_after))+' seconds'
     elif isinstance(error, commands.CommandNotFound): 
