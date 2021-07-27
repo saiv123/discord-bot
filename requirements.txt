@@ -5,3 +5,5 @@ requests
 nltk
 lyricsgenius
 discord-py-slash-command
+holidays
+python-dateutils
