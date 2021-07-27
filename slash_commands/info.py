@@ -4,9 +4,6 @@ from discord_slash import cog_ext, SlashContext
 from discord_slash.utils.manage_commands import create_option
 from helperFunctions import add_to_embed
 
-import libraries.quotes as quotes
-import libraries.helperFunctions as helperFunctions
-import libraries.bonusapis as apis
 import libraries.imgutils as imgutils
 from libraries.prawn import getClosestFromList
 from libraries.cooldown import has_cooldown
@@ -15,6 +12,9 @@ import time
 import holidays
 from datetime import date, datetime
 from dateutil import parser
+
+import subprocess
+import json
 
 from secret import cont
 from bot import ts
