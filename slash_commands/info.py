@@ -1,23 +1,45 @@
 import discord
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
+from discord_slash.utils.manage_commands import create_option
+from helperFunctions import add_to_embed
 
 import libraries.quotes as quotes
 import libraries.helperFunctions as helperFunctions
 import libraries.bonusapis as apis
 import libraries.imgutils as imgutils
+from libraries.prawn import getClosestFromList
 from libraries.cooldown import has_cooldown
 
-import time, datetime
-from datetime import date
-from datetime import datetime
-from helperFunctions import add_to_embed
+import time
+import holidays
+from datetime import date, datetime
+from dateutil import parser
 
 from secret import cont
-
 from bot import ts
+
 def setup(bot):
     bot.add_cog(info_commands(bot))
+
+class BotHolidays(holidays.UnitedStates):
+    def _populate(self, year):
+        holidays.UnitedStates._populate(self, year)
+
+        if year >= 2000: self[date(year, 12, 7)] = 'My Father\'s Birthday'
+        
+        if year > 2020: self[date(year, 4, 12)] = f'My {year-2020}{self.st(year-2020)} Birthday'
+        elif year == 2020: self[date(year, 4, 12)] = f'My Birthday'
+        
+        self[date(year, 4, 20)] = 'Dope Day'
+        # TODO: add palindrome days
+
+    def st(self, i:int):
+        if i >= 20: i = int(str(int(i))[-1])
+        if i == 1: return 'st'
+        elif i == 2: return 'nd'
+        elif i == 3: return 'rd'
+        else: return 'th'
 
 class info_commands(commands.Cog):
     def __init__(self, bot):
@@ -57,6 +79,51 @@ class info_commands(commands.Cog):
         embed.set_footer(text='Invite Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
     
+    @cog_ext.cog_slash(
+        name='daystill',
+        description='Countdown towards the holidays',
+        options=[
+            create_option(
+                name = "holiday",
+                description =  "Which holiday?",
+                option_type =  3,
+                required =  False
+            )
+        ]
+    )
+    async def daystill(self, ctx:SlashContext, holiday:str=''):
+        now = datetime.now()
+        upcoming =  sorted( # Sort the list by most recent first
+                        filter(
+                            lambda x: now.date() < x[0] and (now.date().replace(year=now.year+1)) > x[0] and '(Observed)' not in x[1],   # If holiday is upcoming and within a year and not a shitty (Observed) marking
+                            (BotHolidays(years=range(now.year-1, now.year+2))).items()                                                   # Check all holidays last year and next year
+                        )
+                    )
+
+        # If no holidays given, give all upcoming ones
+        if holiday.strip() == '': 
+            upcoming_str = '\n'.join([f'{(x[0]-now.date()).days} days until {x[1]} ({x[0].strftime("%m/%d/%Y")})' for x in upcoming])
+        
+        # Else, if the holiday is a name, perform search
+        elif not ('/' in holiday or '-' in holiday or ' ' in holiday.strip):
+            closest_holiday = getClosestFromList([x[1] for x in upcoming], holiday)
+            closest_holiday = [x for x in upcoming if x[1] == closest_holiday][0]
+            upcoming_str = f'{(closest_holiday[0]-now.date()).days} days until {closest_holiday[1]} ({closest_holiday[0].strftime("%m/%d/%Y")})'
+        
+        # Else try to parse
+        else:
+            try:
+                holiday_date = parser.parse(holiday)
+                if holiday_date < now: holiday_date = holiday_date.replace(year=now.year+1)
+                upcoming_str = f'{(holiday_date.date()-now.date()).days} days until {holiday}'
+            except:
+                upcoming_str = 'Error parsing date! Try again as month/day/year or search for a US holiday!'
+        
+        embed = add_to_embed('Days Until', upcoming_str)
+        embed.set_thumbnail(url='https://cdn.pixabay.com/photo/2017/06/10/06/39/calender-2389150_960_720.png')
+        embed.set_footer(text='Ping Measured by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
+        await ctx.send(embed=embed)
+
     @cog_ext.cog_slash(name='stats', description='What am I up to?')
     @has_cooldown(10)
     async def stats(self, ctx: SlashContext):
