@@ -80,7 +80,7 @@ class info_commands(commands.Cog):
         temp = output[1].split(" ")
         while '' in temp: temp.remove('')
         percent = convertInt(temp[2]) / convertInt(temp[1])
-        memory = temp[2]+"/"+temp[1]+"-"+percent+"%"
+        memory = temp[2]+"/"+temp[1]+"-"+str(percent)+"%"
 
         #get the cpu stats of the computer
         cpu_percent = getCPUStats()
