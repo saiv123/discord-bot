@@ -11,6 +11,7 @@ import libraries.imgutils as imgutils
 from libraries.prawn import getClosestFromList
 from libraries.cooldown import has_cooldown
 
+import json
 import time
 import holidays
 from datetime import date, datetime
