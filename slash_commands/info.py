@@ -180,4 +180,4 @@ def getCPUStats():
     data = json.loads(raw.communicate()[0])
     user = data["sysstat"]["hosts"][0]["statistics"][0]["cpu-load"][0]["usr"]
     system = data["sysstat"]["hosts"][0]["statistics"][0]["cpu-load"][0]["sys"]
-    return user+system
+    return float("{:.2f}".format(user+system))
