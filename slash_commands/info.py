@@ -88,7 +88,7 @@ class info_commands(commands.Cog):
             upcoming_str = '\n'.join([f'{(x[0]-now.date()).days} days until {x[1]} ({x[0].strftime("%m/%d/%Y")})' for x in upcoming])
         
         # Else, if the holiday is a name, perform search
-        elif not ('/' in holiday or '-' in holiday or ' ' in holiday.strip()):
+        elif not ('/' in holiday or '-' in holiday or ':' in holiday):
             closest_holiday = getClosestFromList([x[1] for x in upcoming], holiday)
             closest_holiday = [x for x in upcoming if x[1] == closest_holiday][0]
             upcoming_str = f'{(closest_holiday[0]-now.date()).days} days until {closest_holiday[1]} ({closest_holiday[0].strftime("%m/%d/%Y")})'
