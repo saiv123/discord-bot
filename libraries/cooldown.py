@@ -94,6 +94,7 @@ def use_cmd(user:discord.User or str, command:str, cooldown:float, uses=1, use_f
         # Check for cooldown
         last_for_cooldown_purposes = user_info[command]['first_use'] if use_first_use else user_info[command]['times_used']
         if time.time() < cooldown + last_for_cooldown_purposes and user_info[command]['times_used'] >= uses:
+            print(f'Cooldown command {command} on cooldown')
             raise UserCooldownException(user, command, tl=cooldown-(time.time()-last_for_cooldown_purposes), mt=cooldown, x=uses)
         
         # If we've ellapse the entire cooldown since last use, reset first use
