@@ -125,7 +125,7 @@ class info_commands(commands.Cog):
         msg = time.strftime("%H Hours %M Minutes %S Seconds",time.gmtime(tso - ts))
         
         # Set up and send embed
-        embed = add_to_embed('Status')
+        embed = discord.Embed(title="Status",colour=imgutils.randomSaturatedColor())
         embed.set_thumbnail(url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png") # set the clock image
         embed.add_field(name='I have been awake for:', value=msg, inline=False)
         embed.add_field(name='Memory:', value=memory, inline=True)
