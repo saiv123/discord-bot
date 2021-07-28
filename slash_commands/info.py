@@ -103,10 +103,11 @@ class info_commands(commands.Cog):
                 upcoming_str = 'Error parsing date! Try again as month/day/year or search for a US holiday!'
         
         # Create and send embed
-        embed = add_to_embed('Days Until', upcoming_str)
-        embed.set_thumbnail(url='https://cdn.pixabay.com/photo/2017/06/10/06/39/calender-2389150_960_720.png')
-        embed.set_footer(text='Day Awaited by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
-        await ctx.send(embed=embed)
+        embeds = add_to_embed('Days Until', upcoming_str)
+        for embed in embeds:
+            embed.set_thumbnail(url='https://cdn.pixabay.com/photo/2017/06/10/06/39/calender-2389150_960_720.png')
+            embed.set_footer(text='Day Awaited by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
+            await ctx.send(embed=embed)
 
     @cog_ext.cog_slash(name='stats', description='What am I up to?')
     async def stats(self, ctx: SlashContext):
