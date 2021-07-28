@@ -97,8 +97,9 @@ class info_commands(commands.Cog):
         else:
             try:
                 holiday_date = parser.parse(holiday)
-                if holiday_date < now: holiday_date = holiday_date.replace(year=now.year+1)
-                upcoming_str = f'{(holiday_date.date()-now.date()).days} days until {holiday}'
+                if holiday_date < now and holiday_date.year == now.year: holiday_date = holiday_date.replace(year=now.year+1)
+                ago_until = '{d} until {h}' if holiday_date.date() > now.date() else '{h} was {d} ago'
+                upcoming_str = ago_until.replace('{d}', abs((holiday_date.date()-now.date()).days)).replace('{h}', holiday)
             except:
                 upcoming_str = 'Error parsing date! Try again as month/day/year or search for a US holiday!'
         
