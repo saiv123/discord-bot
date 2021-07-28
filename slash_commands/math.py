@@ -67,7 +67,8 @@ class math(commands.Cog):
         for i in range(len(res)):
             opener = True
             for msg in splitLongStrings(res[i].text, chars=1024):
-                embed.add_field(name=f'Answer {i+1}:' if opener and len(res) > 1 else str(chr(0xffa0)*i+1), value=str(msg), inline=False)
+                name = f'Answer {i+1}:' if opener and len(res) > 1 else str(chr(0xffa0)*(i+1))
+                embed.add_field(name=str(name), value=str(msg), inline=False)
                 opener = False
 
         embed.set_footer(text=f'Answer Requested by: {ctx.author.name}', icon_url=ctx.author.avatar_url)
