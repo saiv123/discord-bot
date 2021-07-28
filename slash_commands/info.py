@@ -12,7 +12,7 @@ import json
 import time
 import holidays
 from datetime import date, datetime
-from dateutil import parser
+from dateutil import parser, easter
 
 import subprocess
 import json
@@ -162,8 +162,40 @@ class BotHolidays(holidays.UnitedStates):
         if year > 2020: self[date(year, 4, 12)] = f'My {year-2020}{self.st(year-2020)} Birthday'
         elif year == 2020: self[date(year, 4, 12)] = f'My Birthday'
         
+        self[easter(year)] = 'Easter'
         self[date(year, 4, 20)] = 'Dope Day'
-        # TODO: add palindrome days
+        self[date(year, 3, 14)] = 'Pi Day'
+        
+        # Add palindrome days
+        # For 2-digit years:
+        # 1. mm/d/yy OR 2. mm/dd/yy OR 3. m/dd/yy
+        # Palindrome days occur when
+        # 1. month == year (last 2) IF month is double digit, day is single digit
+        # 2. month + day(1) == year(l2) IF month and day are double digit. Requires 3 parts of the year
+        # 3. month + day(1) == year(l2) IF month is single and day is double
+        
+        # Case 1 only occurs if the last 2 of year are 01, 11, or 21
+        if int(str(year)[-2:]) in (1, 11, 21): 
+            for d in range(1, 10): # Case 1 occurs in spurts of 10x (as long as the day is 1 digit)
+                self[date(year, int(str(year)[-2:][::-1]), d)] = f'Palindrome Week! ({str(year)[-2:][::-1]}/{d}/{str(year)[-2:]})'
+        
+        # Case 3 can occur every year as long as neither day nor year are 0
+        if int(str(year)[-1]) * int(str(year)[-2]) != 0:
+            self[date(year, int(str(year)[-1]), int(str(year)[-2]))] = f'Palindrome Day! {str(year)[-2]}/{str(year)[-1]}/{str(year)[-2:]}'
+        
+        # We ignore case 2, as it is overlooked since it requires mm/dd/yyy
+
+        # Now for 4 digit year dates:
+        # Simply reverse the date, first 2 become month, last 2 become day
+        # leading 0s are okay, but days must be valid
+        # mm/dd/yyyy has no center (luckily)
+        # another benefit: each year will only have 1
+        month = int(str(year)[::-1][:2])
+        day = int(str(year)[::-1][2:4])
+        attempted_date = date(year, month, day)
+        if attempted_date.month == month and attempted_date.day == day and attempted_date.year == year:
+            self[attempted_date] = f'Palindrome Day! {str(year)[::-1][:2]}/{str(year)[::-1][2:4]}/{year}'
+
 
     def st(self, i:int):
         if i >= 20: i = int(str(int(i))[-1])
