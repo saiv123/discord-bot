@@ -5,6 +5,9 @@ from discord_slash.utils.manage_commands import create_option
 from discord import FFmpegPCMAudio
 
 import os
+import subprocess
+import math
+
 def getFiles(path:str):
     files = os.listdir(path)
     temp = ''
@@ -13,6 +16,14 @@ def getFiles(path:str):
         f = f[:i]
         temp += f+"\n"
     return temp
+
+def getFileTime(name:str):
+    raw = subprocess.Popen(['soxi', '-D', name], stdout = subprocess.PIPE)
+    output = str(raw.communicate()[0]).split('\\n')
+    rawTime = output[0].split('\'')
+    rawTime = float(math.ceil(float(rawTime[1])))
+    return rawTime
+
 class NotTrusted(Exception):
     pass
 
@@ -51,8 +62,9 @@ class sound_commands(commands.Cog):
                 voice = await channel.connect()
                 source = FFmpegPCMAudio(path)
                 player = voice.play(source)
+                time = getFileTime(sound+'.mp3')
                 await ctx.send("DONE", hidden=True)
-                await asyncio.sleep(10)
+                await asyncio.sleep(time)
                 await ctx.guild.voice_client.disconnect()
             else:
                 await ctx.send("i solemnly swear i am up to no good")
@@ -83,8 +95,9 @@ class sound_commands(commands.Cog):
                 voice = await channel.connect()
                 source = FFmpegPCMAudio(path)
                 player = voice.play(source)
+                time = getFileTime(sound+'.mp3')
                 await ctx.send("DONE", hidden=True)
-                await asyncio.sleep(10)
+                await asyncio.sleep(time)
                 await ctx.guild.voice_client.disconnect()
             else:
                 await ctx.send("i solemnly swear i am up to no good")
