@@ -57,7 +57,7 @@ class rps_commands(commands.Cog):
             return m.author == ctx.author and m.channel == ctx.channel
 
         try:
-            msg = await bot.wait_for('message', check=check,timeout=1*60)
+            msg = await bot.wait_for('message', check=check,timeout=60)
         except:
             embed = add_to_embed(f'{ctx.author.name}\'s RPS','Awww, don\'t leave me hangin\'')[0]
             embed.set_footer(text='RPS Played by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
