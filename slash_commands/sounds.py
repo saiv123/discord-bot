@@ -21,7 +21,9 @@ def getFileTime(name:str):
     raw = subprocess.Popen(['soxi', '-D', name], stdout = subprocess.PIPE)
     output = str(raw.communicate()[0]).split('\\n')
     rawTime = output[0].split('\'')
-    rawTime = float(math.ceil(float(rawTime[1])))
+    Float = float(rawTime[1])
+    MathRound = math.ceil(Float)
+    rawTime = float(MathRound)
     return rawTime
 
 class NotTrusted(Exception):
