@@ -17,13 +17,11 @@ def getFiles(path:str):
         temp += f+"\n"
     return temp
 
-def getFileTime(name:str):
+def getFileTime(path:str):
     raw = subprocess.Popen(['soxi', '-D', name], stdout = subprocess.PIPE)
     output = str(raw.communicate()[0]).split('\\n')
     rawTime = output[0].split('\'')
-    Float = float(str(rawTime[1]))
-    MathRound = math.ceil(Float)
-    rawTime = float(MathRound)
+    rawTime = float(math.ceil(float(rawTime[1])))
     return rawTime
 
 class NotTrusted(Exception):
@@ -64,7 +62,7 @@ class sound_commands(commands.Cog):
                 voice = await channel.connect()
                 source = FFmpegPCMAudio(path)
                 player = voice.play(source)
-                time = getFileTime(sound+'.mp3')
+                time = getFileTime(path)
                 await ctx.send("DONE", hidden=True)
                 await asyncio.sleep(time)
                 await ctx.guild.voice_client.disconnect()
@@ -97,7 +95,7 @@ class sound_commands(commands.Cog):
                 voice = await channel.connect()
                 source = FFmpegPCMAudio(path)
                 player = voice.play(source)
-                time = getFileTime(sound+'.mp3')
+                time = getFileTime(path)
                 await ctx.send("DONE", hidden=True)
                 await asyncio.sleep(time)
                 await ctx.guild.voice_client.disconnect()
