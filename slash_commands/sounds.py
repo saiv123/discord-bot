@@ -55,7 +55,7 @@ class sound_commands(commands.Cog):
     @cog_ext.cog_slash(name='aqua', options=aqua_options, description='Makes baby noises', guild_ids=[601247340887670792, 648012188685959169])
     async def aqua(self, ctx: SlashContext, sound: str):
         path = './sounds/aqua/'+sound+'.mp3'
-        try:
+        try: 
             trust = [288861358555136000, 240636443829993473, 361275648033030144]
             if ctx.author.id in trust:
                 channel = ctx.author.voice.channel
