@@ -18,7 +18,7 @@ def getFiles(path:str):
     return temp
 
 def getFileTime(path:str):
-    raw = subprocess.Popen(['soxi', '-D', name], stdout = subprocess.PIPE)
+    raw = subprocess.Popen(['soxi', '-D', path], stdout = subprocess.PIPE)
     output = str(raw.communicate()[0]).split('\\n')
     rawTime = output[0].split('\'')
     rawTime = float(math.ceil(float(rawTime[1])))
