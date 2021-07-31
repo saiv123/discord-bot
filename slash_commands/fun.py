@@ -14,7 +14,6 @@ def setup(bot):
     bot.add_cog(fun_commands(bot))
 
 class fun_commands(commands.Cog):
-    SPACE_LEN_HARD_CAP = 4000
     SHOULDI_PHRASES = [
         'Yes! Go $',
         "No, it won't work.",
@@ -109,6 +108,8 @@ class fun_commands(commands.Cog):
 
     )
     async def roll(self, ctx: SlashContext, dice:str='1d6'):
+        MAXROLLS = 20
+        MAXSIDES = 100
         dice = dice.upper()
         r_data = []
 
@@ -121,8 +122,6 @@ class fun_commands(commands.Cog):
             await ctx.send(embed=embed)
 
         def rollone(rolls, sides):
-            MAXROLLS = 20
-            MAXSIDES = 100
             total, txt = 0, ""
             for i in range(rolls):
                 x = random.randint(1,sides)

@@ -7,6 +7,8 @@ from helperFunctions import add_to_embed
 import libraries.imgutils as imgutils
 from libraries.prawn import getClosestFromList
 from libraries.cooldown import has_cooldown
+import libraries.quotes as quotes
+
 
 import json
 import time
