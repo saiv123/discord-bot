@@ -15,8 +15,6 @@ def setup(bot):
 
 class fun_commands(commands.Cog):
     SPACE_LEN_HARD_CAP = 4000
-    MAXROLLS = 20
-    MAXSIDES = 100
     SHOULDI_PHRASES = [
         'Yes! Go $',
         "No, it won't work.",
@@ -63,6 +61,7 @@ class fun_commands(commands.Cog):
         ]
     )
     async def space(self, ctx: SlashContext, message:str='', amount:int=1):
+        SPACE_LEN_HARD_CAP = 4000
         exp_len = (len(message)-1)*amount + len(message)
         if not isOwner(ctx) and exp_len >= SPACE_LEN_HARD_CAP:
             await ctx.send('That message would be {0} characters, waaaay higher than the limit of {1}. Chill.'.format(exp_len, SPACE_LEN_HARD_CAP))
@@ -122,6 +121,8 @@ class fun_commands(commands.Cog):
             await ctx.send(embed=embed)
 
         def rollone(rolls, sides):
+            MAXROLLS = 20
+            MAXSIDES = 100
             total, txt = 0, ""
             for i in range(rolls):
                 x = random.randint(1,sides)
