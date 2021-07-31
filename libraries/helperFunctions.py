@@ -20,7 +20,7 @@ servers = [648012188685959169, 749047084275204166, 297919267620388864]
 #checking for server for sad command
 def checkAuthSerers(ctx):
     for i in servers:
-        if ctx.message.guild.id == i:
+        if ctx.guild.id == i:
             return True
     return False
 
