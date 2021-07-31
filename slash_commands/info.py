@@ -118,7 +118,7 @@ class info_commands(commands.Cog):
         temp = [x for x in output[1].split(" ") if x != '']
         percent = memstrToNum(temp[2]) / memstrToNum(temp[1])
         percent = float("{:.2f}".format(percent))
-        memory = f'{temp[2]}/{temp[1]} - {percent}%'
+        memory = f'{temp[2]}/{temp[1]} - {percent*100.0}%'
 
         # Get CPU stats
         cpu_percent = f'{getCPUStats()}%'
