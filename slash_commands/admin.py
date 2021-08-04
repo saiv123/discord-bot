@@ -5,6 +5,7 @@ from discord_slash.utils.manage_commands import create_option
 
 import asyncio
 
+import libraries.prawn
 from libraries.helperFunctions import isOwner, msgReturn, add_to_embed
 from libraries.prawn import getFileList, getClosestFromList
 
@@ -143,7 +144,7 @@ class admin_commands(commands.Cog):
         print('Banning')
         await user.ban()
 
-        
+
     ####################################################
     ################ OWNER COMMANDS ####################
     ####################################################
