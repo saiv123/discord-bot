@@ -51,7 +51,6 @@ class rps_commands(commands.Cog):
         color = embed.color
         await ctx.send(embed=embed)
 
-
         # Get user choice
         def check(m):
             return m.author == ctx.author and m.channel == ctx.channel
