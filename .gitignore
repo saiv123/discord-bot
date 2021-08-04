@@ -1,4 +1,5 @@
 *.sh
+updateReddit.sh
 dmLogs.txt
 secret.py
 MyHomework/
