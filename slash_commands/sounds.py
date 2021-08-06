@@ -22,7 +22,7 @@ def getFileTime(path:str):
     output = str(raw.communicate()[0]).split('\\n')
     rawTime = output[0].split('\'')
     rawTime = float(math.ceil(float(rawTime[1])))
-    return rawTime
+    return rawTime+1.0
 
 class NotTrusted(Exception):
     pass

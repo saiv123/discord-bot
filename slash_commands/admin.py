@@ -70,7 +70,6 @@ class admin_commands(commands.Cog):
                 required=True
             )
         ],
-
     )
     async def kick(self, ctx: SlashContext, user:discord.User=None):
         perms = ctx.author.guild_permissions
