@@ -16,12 +16,19 @@ async def play(ctx, path):
     voice = await channel.connect()
     source = FFmpegPCMAudio(path)
     player = voice.play(source)
-    time = getFileTime(path)
+    time = files.getTime(path)
     await ctx.send("DONE", hidden=True)
     await asyncio.sleep(time)
     await ctx.guild.voice_client.disconnect()
 
-def getFiles(path:str):
+class NotTrusted(Exception):
+    pass
+
+def setup(bot):
+    bot.add_cog(sound_commands(bot))
+
+class files():
+    def get(path:str):
     files = os.listdir(path)
     temp = ''
     for f in files:
@@ -30,18 +37,12 @@ def getFiles(path:str):
         temp += f+"\n"
     return temp
 
-def getFileTime(path:str):
-    raw = subprocess.Popen(['soxi', '-D', path], stdout = subprocess.PIPE)
-    output = str(raw.communicate()[0]).split('\\n')
-    rawTime = output[0].split('\'')
-    rawTime = float(math.ceil(float(rawTime[1])))
-    return rawTime+1.0
-
-class NotTrusted(Exception):
-    pass
-
-def setup(bot):
-    bot.add_cog(sound_commands(bot))
+    def getTime(path:str):
+        raw = subprocess.Popen(['soxi', '-D', path], stdout = subprocess.PIPE)
+        output = str(raw.communicate()[0]).split('\\n')
+        rawTime = output[0].split('\'')
+        rawTime = float(math.ceil(float(rawTime[1])))
+        return rawTime+1.0
 
 class sound_commands(commands.Cog):
     aqua_options = [
@@ -87,7 +88,7 @@ class sound_commands(commands.Cog):
             await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
             return
         path = './sounds/aqua'
-        await ctx.send(getFiles(path), hidden=True)
+        await ctx.send(files.get(path), hidden=True)
 
     @cog_ext.cog_slash(name='alex', options=alex_options, description='Makes sounds', guild_ids=[531614305733574666, 648012188685959169])
     async def alex(self, ctx: SlashContext, sound: str):
@@ -111,4 +112,4 @@ class sound_commands(commands.Cog):
             await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
             return
         path = './sounds/alex'
-        await ctx.send(getFiles(path), hidden=True)
+        await ctx.send(files.get(path), hidden=True)
