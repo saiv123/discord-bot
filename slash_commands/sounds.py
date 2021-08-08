@@ -29,12 +29,12 @@ def setup(bot):
 
 class files():
     def get(path:str):
-    files = os.listdir(path)
-    temp = ''
-    for f in files:
-        i = f.index('.')
-        f = f[:i]
-        temp += f+"\n"
+        files = os.listdir(path)
+        temp = ''
+        for f in files:
+            i = f.index('.')
+            f = f[:i]
+            temp += f+"\n"
     return temp
 
     def getTime(path:str):
