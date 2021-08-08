@@ -28,9 +28,9 @@ bot.remove_command('help')
 
 client = wolframalpha.Client(id)
 
-######################################
+#######################################
 ###Initialization of bot DO NOT EDIT###
-######################################
+#######################################
 
 # Load all cogs
 bot.load_extension("slash_commands.admin")
@@ -66,10 +66,13 @@ async def on_member_update(before, after):
                 await bot.change_presence(activity=discord.Streaming(name="Streaming"+after.activities[i].game+"!", url=after.activities[i].url))
             else:
                 await bot.change_presence(activity=discord.Game(name='with his food | /help'))
+    else:
+        return
 
 # for every message it does these checks
 @bot.event
 async def on_message(message):
+    channel = message.channel
     tempD = datetime.today()
     tempDate = (tempD.day)
     tempMonth = (tempD.month)
@@ -78,7 +81,6 @@ async def on_message(message):
     if(tempDate == 7 and tempMonth == 12):
         age = tempD.year - 2000
         await user.send("Happy Birthday you are "+age, hidden=True)
-    channel = message.channel
     # Respond to last command
     await bot.process_commands(message)
 bot.run(TOKEN)

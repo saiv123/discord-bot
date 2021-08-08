@@ -10,10 +10,6 @@ from datetime import date
 from datetime import datetime
 
 # external libraies
-import libraries.quotes as quotes
-import libraries.helperFunctions as helperFunctions
-import libraries.bonusapis as apis
-import libraries.imgutils as imgutils
 from libraries.helperFunctions import splitLongStrings
 
 def setup(bot):
