@@ -35,7 +35,7 @@ class files():
             i = f.index('.')
             f = f[:i]
             temp += f+"\n"
-    return temp
+        return temp
 
     def getTime(path:str):
         raw = subprocess.Popen(['soxi', '-D', path], stdout = subprocess.PIPE)
