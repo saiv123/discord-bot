@@ -28,13 +28,13 @@ def setup(bot):
     bot.add_cog(sound_commands(bot))
 
 def getFile(path:str):
-files = os.listdir(path)
-temp = ''
-for f in files:
-    i = f.index('.')
-    f = f[:i]
-    temp += f+"\n"
-return temp
+    files = os.listdir(path)
+    temp = ''
+    for f in files:
+        i = f.index('.')
+        f = f[:i]
+        temp += f+"\n"
+    return temp
 
 def getTime(path:str):
     raw = subprocess.Popen(['soxi', '-D', path], stdout = subprocess.PIPE)
