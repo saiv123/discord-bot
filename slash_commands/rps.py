@@ -56,7 +56,7 @@ class rps_commands(commands.Cog):
             return m.author == ctx.author and m.channel == ctx.channel
 
         try:
-            msg = await bot.wait_for('message', check=check,timeout=60)
+            msg = await self.bot.wait_for('message', check=check, timeout=60)
         except:
             embed = add_to_embed(f'{ctx.author.name}\'s RPS','Awww, don\'t leave me hangin\'')[0]
             embed.set_footer(text='RPS Played by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
@@ -147,7 +147,7 @@ class rps_commands(commands.Cog):
                 opener = ''
 
                 try:
-                    msg = await bot.wait_for('message', check=get_check(_user),timeout=timeout)
+                    msg = await self.bot.wait_for('message', check=get_check(_user),timeout=timeout)
                 except:
                     await _user.send(embed=add_to_embed(title, f'Awww, {_user.name} don\'t leave me hangin\'')[0])
                     return -1 # Abort challenge if you don't send an answer
