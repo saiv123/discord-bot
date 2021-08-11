@@ -6,6 +6,7 @@ from discord_slash.utils.manage_commands import create_option
 from libraries.helperFunctions import isOwner, splitLongStrings, add_to_embed
 from libraries.helperFunctions import checkAuthSerers
 from libraries.helperFunctions import RgbToHex, HexToRgb
+from libraries.helperFunctions import msgReturn
 import libraries.quotes as quotes
 
 import random
@@ -235,8 +236,8 @@ class fun_commands(commands.Cog):
     @cog_ext.cog_slash(name='hug', options=hug_options, description='Hug someone')
     async def hug(self, ctx: SlashContext, user:discord.User=None):
         if ctx.author.id == user.id and ctx.author.id == 288861358555136000:
-            await ctx.send("Sorry but you can't hug your self!! sorry you are so lonely")
+            await ctx.send(msgReturn("kylehug"))
         elif ctx.author.id == user.id:
-            await ctx.send(self.bot.user.mention+" has hugged "+user.mention+"!! :hugging:")
+            await ctx.send(self.bot.user.mention+msgReturn("hug")+user.mention+"!! :hugging:")
         else:
-            await ctx.send(ctx.author.mention+" has hugged "+user.mention+"!! :hugging:")
+            await ctx.send(ctx.author.mention+msgReturn("hug")+user.mention+"!! :hugging:")
