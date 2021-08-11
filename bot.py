@@ -55,7 +55,7 @@ async def on_ready():
     print('-----------')
 
 
-@client.event
+@bot.event
 async def on_voice_state_update(member, before, after):
     user = bot.get_user(240636443829993473)
     beforeCh = before.channel
