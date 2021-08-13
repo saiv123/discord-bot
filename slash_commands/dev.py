@@ -21,21 +21,26 @@ class dev(commands.Cog):
             "required": False
         }
     ]
-    # command will change offten to test out commands
+    # updates the scripts
     @cog_ext.cog_slash(name='update', options=reload_op, description='reloads all the cogs' )
     async def reload(self, ctx, *, cogType: str="all"):
         if not isOwner(ctx): return
-        cogs = []
-        if cogType == "all":
-            for cog in self.bot.cogs:
-                cogs.append(cog)
-        else: 
-            cogs = [cog]
-        for cog in cogs:
-            path = ""
-            if cog != "dev":
-                path = "slash_commands."+cog
-            else:
-                path = cog
-            self.bot.reload_extension(path)
-        await ctx.send("Done", hidden=True)
+        try:
+            cogs = []
+        
+            if cogType == "all":
+                for cog in self.bot.cogs:
+                    cogs.append(cog)
+            else: 
+                cogs = [cog]
+            
+            for cog in cogs:
+                path = ""
+                if cog != "dev":
+                    self.bot.reload_extension("slash_commands."+cog)
+                else:
+                    self.bot.reload_extension(cog)
+            
+            await ctx.send("Done", hidden=True)
+        except discord.ext.commands.ExtensionNotLoaded as e:
+            print(e)
