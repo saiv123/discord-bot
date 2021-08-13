@@ -31,5 +31,5 @@ class dev(commands.Cog):
                 cogs.append(cog)
         else: 
             cogs = [cog]
-        response = reload_cogs(self.bot, cogs)
+        response = self.bot.reload_extension(self.bot, cogs)
         await ctx.send(response, hidden=True)
