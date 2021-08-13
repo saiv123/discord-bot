@@ -35,7 +35,6 @@ class dev(commands.Cog):
                 cogs = [cog]
             
             for cog in cogs:
-                path = ""
                 self.bot.reload_extension("slash_commands."+cog)
 
             
