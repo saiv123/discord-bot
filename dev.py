@@ -23,14 +23,14 @@ class dev(commands.Cog):
     ]
     # command will change offten to test out commands
     @cog_ext.cog_slash(name='update', options=reload_op, description='reloads all the cogs' )
-    async def reload(self, ctx, *, cog: str="all"):
+    async def reload(self, ctx, *, cogType: str="all"):
         if not isOwner(ctx): return
-        if cog == "all":
-            cogs = []
+        cogs = []
+        if cogType == "all":
             for cog in self.bot.cogs:
                 cogs.append(cog)
         else: 
             cogs = [cog]
         for cog in cogs:
-            self.bot.reload_extension(cogs)
+            self.bot.reload_extension(cog)
         await ctx.send("Done", hidden=True)
