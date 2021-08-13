@@ -32,5 +32,10 @@ class dev(commands.Cog):
         else: 
             cogs = [cog]
         for cog in cogs:
-            self.bot.reload_extension("slash_commands."+cog)
+            path = ""
+            if cog != "dev":
+                path = "slash_commands."+cog
+            else:
+                path = cog
+            self.bot.reload_extension(path)
         await ctx.send("Done", hidden=True)
