@@ -194,6 +194,7 @@ class BotHolidays(holidays.UnitedStates):
         # mm/dd/yyyy has no center (luckily)
         # another benefit: each year will only have 1
         month = int(str(year)[::-1][:2])
+        print(month)
         day = int(str(year)[::-1][2:4])
         attempted_date = date(year, month, day)
         if attempted_date.month == month and attempted_date.day == day and attempted_date.year == year:
