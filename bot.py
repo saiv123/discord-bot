@@ -35,7 +35,6 @@ client = wolframalpha.Client(id)
 #######################################
 
 # Load all cogs
-bot.load_extension("dev")
 for root, dirs, files in os.walk('./slash_commands'):
         for filename in files:
             if not filename.startswith("X-") and filename.endswith(".py"):
