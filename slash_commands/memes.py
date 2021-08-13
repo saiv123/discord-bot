@@ -6,10 +6,10 @@ from discord_slash.utils.manage_commands import create_option
 from libraries.helperFunctions import getEmbedsFromLibraryQuery
 
 def setup(bot):
-    bot.add_cog(reddit_commands(bot))
+    bot.add_cog(memes(bot))
 
 # TODO: autorun updateReddit.sh when command is ran
-class reddit_commands(commands.Cog):
+class memes(commands.Cog):
     def __init__(self, bot):
         self.bot = bot 
 

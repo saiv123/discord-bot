@@ -25,9 +25,9 @@ from bot import ts
 
 
 def setup(bot):
-    bot.add_cog(info_commands(bot))
+    bot.add_cog(info(bot))
 
-class info_commands(commands.Cog):
+class info(commands.Cog):
     def __init__(self, bot):
         self.bot = bot 
 

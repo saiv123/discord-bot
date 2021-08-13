@@ -26,7 +26,7 @@ class NotTrusted(Exception):
     pass
 
 def setup(bot):
-    bot.add_cog(sound_commands(bot))
+    bot.add_cog(sounds(bot))
 
 class files():
     def get(path:str):
@@ -45,7 +45,7 @@ class files():
         rawTime = float(math.ceil(float(rawTime[1])))
         return rawTime+1.0
 
-class sound_commands(commands.Cog):
+class sounds(commands.Cog):
     aqua_options = [
         {
             "name": "sound",

@@ -14,9 +14,9 @@ import libraries.bonusapis as apis
 import libraries.imgutils as imgutils
 
 def setup(bot):
-    bot.add_cog(fun_commands(bot))
+    bot.add_cog(fun(bot))
 
-class fun_commands(commands.Cog):
+class fun(commands.Cog):
     SHOULDI_PHRASES = [
         'Yes! Go $',
         "No, it won't work.",

@@ -10,9 +10,9 @@ from libraries.helperFunctions import gen_rps_matrix, format_matrix, list_god
 RPS_HARD_CAP = 6
 
 def setup(bot):
-    bot.add_cog(rps_commands(bot))
+    bot.add_cog(rps(bot))
 
-class rps_commands(commands.Cog):
+class rps(commands.Cog):
     def __init__(self, bot):
         self.bot = bot 
     

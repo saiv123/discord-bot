@@ -15,9 +15,9 @@ from datetime import date
 from datetime import datetime
 
 def setup(bot):
-    bot.add_cog(admin_commands(bot))
+    bot.add_cog(admin(bot))
 
-class admin_commands(commands.Cog):
+class admin(commands.Cog):
     def __init__(self, bot):
         self.bot = bot 
     

@@ -13,9 +13,9 @@ from datetime import date
 from datetime import datetime
 
 def setup(bot):
-    bot.add_cog(quote_commands(bot))
+    bot.add_cog(quotes(bot))
 
-class quote_commands(commands.Cog):
+class quotes(commands.Cog):
     def __init__(self, bot):
         self.bot = bot 
     
