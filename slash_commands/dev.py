@@ -36,10 +36,8 @@ class dev(commands.Cog):
             
             for cog in cogs:
                 path = ""
-                if cog != "dev":
-                    self.bot.reload_extension("slash_commands."+cog)
-                else:
-                    self.bot.reload_extension(cog)
+                self.bot.reload_extension("slash_commands."+cog)
+
             
             await ctx.send("Done", hidden=True)
         except discord.ext.commands.ExtensionNotLoaded as e:
