@@ -12,6 +12,8 @@ from datetime import datetime
 from discord.ext import commands
 from discord_slash import SlashCommand
 
+import os
+
 from secret import TOKEN, id
 
 # The guild ID of the test server. Remove when done testing
@@ -33,16 +35,12 @@ client = wolframalpha.Client(id)
 #######################################
 
 # Load all cogs
-bot.load_extension("slash_commands.admin")
-bot.load_extension("slash_commands.fun")
-bot.load_extension("slash_commands.info")
-bot.load_extension("slash_commands.math")
-bot.load_extension("slash_commands.memes")
-bot.load_extension("slash_commands.notes")
-bot.load_extension("slash_commands.quotes")
-bot.load_extension("slash_commands.rps")
-bot.load_extension("slash_commands.move")
-bot.load_extension("slash_commands.sounds")
+bot.load_extension("dev")
+for root, dirs, files in os.walk('./slash_commands'):
+        for filename in files:
+            if not filename.startswith("X-") and filename.endswith(".py"):
+                command = (root[2:].replace("/", ".") + "." + filename[:-3]) # gets cog path
+                bot.load_extension(command)
 
 #what the bot does on boot
 @bot.event

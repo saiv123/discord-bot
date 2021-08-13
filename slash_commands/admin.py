@@ -289,8 +289,7 @@ class admin_commands(commands.Cog):
             msg += i.name + '\n'
         
         await ctx.send(msg, hidden=True)
-
-
+    
     # command will change offten to test out commands
     @cog_ext.cog_slash(name='test', description='used to send small things. Owner only' )
     async def test(self, ctx: SlashContext):
