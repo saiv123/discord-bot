@@ -37,10 +37,8 @@ class files():
         temp = ''
         for f in files:
             if ".mp3" in f:
-                print("file: "+f)
                 i = f.index('.')
                 f = f[:i]
-                print(str(i)+" "+f)
                 temp += f+"\n"
         return temp
 
