@@ -96,7 +96,6 @@ class sounds(commands.Cog):
     #list command
     @cog_ext.cog_subcommand(base="sound", name='list', description='Lists sounds', guild_ids=trustServ)
     async def listAll(self, ctx: SlashContext):
-        folder = folder.lower()
         path = "./sounds/"
         if(ctx.author.id == saiID and ctx.guild.id == saiServ):
             await ctx.send("Aqua\n"+files.get(path+"aqua")+"\n\n", hidden=True)
