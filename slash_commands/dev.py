@@ -11,8 +11,6 @@ import time, datetime
 from datetime import date
 from datetime import datetime
 
-isHidden = not (ctx.guild.id in trust)
-
 def setup(bot):
     bot.add_cog(dev(bot))
 
@@ -33,6 +31,7 @@ class dev(commands.Cog):
     async def reload(self, ctx, cogType: str="all"):
         trust = [648012188685959169, 272155212347736065]
         if not isOwner(ctx): return
+        isHidden = not (ctx.guild.id in trust)
         print(isHidden)
         embed = discord.Embed(title="Updating the bot...", colour=discord.Color.gold(), timestamp= datetime.fromtimestamp(time.time()))
         embed.set_footer(text='bot updated by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
@@ -68,6 +67,7 @@ class dev(commands.Cog):
     async def load(self, ctx, cogType: str="all"):
         #checks if new .py files is in loaded cogs
         if not isOwner(ctx): return
+        isHidden = not (ctx.guild.id in trust)
         embed = discord.Embed(title="Loading cogs", colour=discord.Color.gold(), timestamp= datetime.fromtimestamp(time.time()))
         embed.set_footer(text='loaded by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
 
