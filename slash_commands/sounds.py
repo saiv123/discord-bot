@@ -8,9 +8,12 @@ import os
 import subprocess
 import math
 
-sai = 240636443829993473
-aquatrust = [288861358555136000, sai, 361275648033030144]
-derptrust = [401181826145845249, 181488013627490305, 255930764154109952, 118996359616397312, 150485718534324224, sai]
+saiID = 240636443829993473
+saiServ = 648012188685959169
+aquatrust = [288861358555136000, saiID, 361275648033030144]
+derptrust = [401181826145845249, 181488013627490305, 255930764154109952, 118996359616397312, 150485718534324224, saiID]
+
+trustServ = [601247340887670792, 531614305733574666, saiServ]
 
 async def play(ctx, path):
     channel = ctx.author.voice.channel
@@ -82,14 +85,6 @@ class sounds(commands.Cog):
         except NotTrusted as e:
             print(e)
             await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
-    
-    @cog_ext.cog_subcommand(base="sound", name='aquasound', description='List of sounds', guild_ids=[601247340887670792, 648012188685959169])
-    async def aquasound(self, ctx: SlashContext):
-        if ctx.author.id not in aquatrust:
-            await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
-            return
-        path = './sounds/aqua'
-        await ctx.send(files.get(path), hidden=True)
 
     @cog_ext.cog_subcommand(base="sound", name='alex', options=alex_options, description='Makes sounds', guild_ids=[531614305733574666, 648012188685959169])
     async def alex(self, ctx: SlashContext, sound: str):
@@ -107,7 +102,42 @@ class sounds(commands.Cog):
             print(e)
             await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
     
-    @cog_ext.cog_subcommand(base="sound", name='alexsound', description='List of sounds', guild_ids=[531614305733574666, 648012188685959169])
+    @cog_ext.cog_subcommand(base="sound", name='list', description='Lists sounds', guild_ids=trustServ)
+    async def list(self, ctx: SlashCommand, folder: str):
+        folder = folder.lower()
+        path = './sounds/'
+        if(ctx.author.id == saiID and ctx.guild.id == saiServ):
+            if folder == "aqua":
+                path.append('aqua')
+            elif folder == "alex":
+                path.append('alex')
+            else:
+                path = "ERROR"
+        elif ctx.guild.id == 601247340887670792:
+            if ctx.author.id not in aquatrust:
+                await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
+                return
+            path.append('aqua')
+        elif ctx.guild.id == 531614305733574666:
+                if ctx.author.id not in derptrust:
+                    await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
+                    return
+            path.append('alex')
+        
+        if(path == "ERROR"): return
+        else:
+            await ctx.send(files.get(path), hidden=True)
+
+    #all list commands
+    @cog_ext.cog_subcommand(base="sound", name='aquaSounds', description='List of sounds', guild_ids=[601247340887670792, 648012188685959169])
+    async def aquasound(self, ctx: SlashContext):
+        if ctx.author.id not in aquatrust:
+            await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
+            return
+        path = './sounds/aqua'
+        await ctx.send(files.get(path), hidden=True)
+
+    @cog_ext.cog_subcommand(base="sound", name='alexSounds', description='List of sounds', guild_ids=[531614305733574666, 648012188685959169])
     async def alexsound(self, ctx: SlashContext):
         if ctx.author.id not in derptrust:
             await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
