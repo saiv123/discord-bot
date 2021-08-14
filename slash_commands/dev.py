@@ -11,6 +11,8 @@ import time, datetime
 from datetime import date
 from datetime import datetime
 
+isHidden = not (ctx.guild.id in trust)
+
 def setup(bot):
     bot.add_cog(dev(bot))
 
@@ -31,7 +33,6 @@ class dev(commands.Cog):
     async def reload(self, ctx, cogType: str="all"):
         trust = [648012188685959169, 272155212347736065]
         if not isOwner(ctx): return
-        isHidden = not (ctx.guild.id in trust)
         print(isHidden)
         embed = discord.Embed(title="Updating the bot...", colour=discord.Color.gold(), timestamp= datetime.fromtimestamp(time.time()))
         embed.set_footer(text='bot updated by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
@@ -84,10 +85,13 @@ class dev(commands.Cog):
                 embed.add_field(name="ERROR", value=cogType+" not in files!!!!", inline=True)
                 await ctx.send(embed=embed, hidden=isHidden)
                 return
+            
+            if len(notLoaded) != 0:
+                for unLoad in notLoaded:
+                    self.bot.load_extension(unLoad)
+            else:
+                notLoaded.append("No Cogs to load All are loaded rn.")
 
-            for unLoad in notLoaded:
-                self.bot.load_extension(unLoad)
-                
             embed.add_field(name="Cogs loaded", value=notLoaded, inline=True)
             await ctx.send(embed=embed, hidden=isHidden)
         except discord.ext.commands.ExtensionNotLoaded as e:
