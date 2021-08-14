@@ -53,3 +53,6 @@ class dev(commands.Cog):
             embed.add_field(name="Error", value=e, inline=True)
             await ctx.send(embed=embed, hidden=True)
             print(e)
+        except:
+            embed.add_field(name="Error", value=sys.exc_info()[0], inline=True)
+            await ctx.send(embed=embed, hidden=True)
