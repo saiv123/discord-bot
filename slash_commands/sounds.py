@@ -119,9 +119,9 @@ class sounds(commands.Cog):
                 return
             path.append('aqua')
         elif ctx.guild.id == 531614305733574666:
-                if ctx.author.id not in derptrust:
-                    await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
-                    return
+            if ctx.author.id not in derptrust:
+                await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
+                return
             path.append('alex')
         
         if(path == "ERROR"): return
