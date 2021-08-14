@@ -36,11 +36,12 @@ class files():
         files = os.listdir(path)
         temp = ''
         for f in files:
-            print("file: "+f)
-            i = f.index('.')
-            f = f[:i]
-            print(str(i)+" "+f)
-            temp += f+"\n"
+            if ".mp3" in f:
+                print("file: "+f)
+                i = f.index('.')
+                f = f[:i]
+                print(str(i)+" "+f)
+                temp += f+"\n"
         return temp
 
     def getTime(path:str):
