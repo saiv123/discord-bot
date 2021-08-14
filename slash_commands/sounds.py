@@ -147,18 +147,18 @@ class sounds(commands.Cog):
             await ctx.send(files.get(path), hidden=True)
 
     #all list commands
-    @cog_ext.cog_subcommand(base="sound", name='aquaSounds', description='List of sounds', guild_ids=[601247340887670792, 648012188685959169])
-    async def aquasound(self, ctx: SlashContext):
-        if ctx.author.id not in aquatrust:
-            await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
-            return
-        path = './sounds/aqua'
-        await ctx.send(files.get(path), hidden=True)
+    # @cog_ext.cog_subcommand(base="sound", name='aquaSounds', description='List of sounds', guild_ids=[601247340887670792, 648012188685959169])
+    # async def aquasound(self, ctx: SlashContext):
+    #     if ctx.author.id not in aquatrust:
+    #         await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
+    #         return
+    #     path = './sounds/aqua'
+    #     await ctx.send(files.get(path), hidden=True)
 
-    @cog_ext.cog_subcommand(base="sound", name='alexSounds', description='List of sounds', guild_ids=[531614305733574666, 648012188685959169])
-    async def alexsound(self, ctx: SlashContext):
-        if ctx.author.id not in derptrust:
-            await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
-            return
-        path = './sounds/alex'
-        await ctx.send(files.get(path), hidden=True)
+    # @cog_ext.cog_subcommand(base="sound", name='alexSounds', description='List of sounds', guild_ids=[531614305733574666, 648012188685959169])
+    # async def alexsound(self, ctx: SlashContext):
+    #     if ctx.author.id not in derptrust:
+    #         await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
+    #         return
+    #     path = './sounds/alex'
+    #     await ctx.send(files.get(path), hidden=True)
