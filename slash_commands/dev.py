@@ -11,6 +11,8 @@ import time, datetime
 from datetime import date
 from datetime import datetime
 
+trust = [648012188685959169, 272155212347736065]
+
 def setup(bot):
     bot.add_cog(dev(bot))
 
@@ -29,7 +31,6 @@ class dev(commands.Cog):
     # updates the scripts
     @cog_ext.cog_subcommand(base="dev", name='update', options=reload_op, description='reloads all the cogs' )
     async def reload(self, ctx, cogType: str="all"):
-        trust = [648012188685959169, 272155212347736065]
         if not isOwner(ctx): return
         isHidden = not (ctx.guild.id in trust)
         print(isHidden)
