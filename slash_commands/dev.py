@@ -40,4 +40,5 @@ class dev(commands.Cog):
             
             await ctx.send("Done", hidden=True)
         except discord.ext.commands.ExtensionNotLoaded as e:
+            await ctx.send(e, hidden=True)
             print(e)
