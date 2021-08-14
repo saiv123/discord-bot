@@ -117,21 +117,21 @@ class sounds(commands.Cog):
         path = './sounds/'
         if(ctx.author.id == saiID and ctx.guild.id == saiServ):
             if folder == "aqua":
-                path.append('aqua')
+                path+='aqua'
             elif folder == "alex":
-                path.append('alex')
+                path+='alex'
             else:
                 path = "ERROR"
         elif ctx.guild.id == 601247340887670792:
             if ctx.author.id not in aquatrust:
                 await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
                 return
-            path.append('aqua')
+            path+='aqua'
         elif ctx.guild.id == 531614305733574666:
             if ctx.author.id not in derptrust:
                 await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
                 return
-            path.append('alex')
+            path+='alex'
         
         if(path == "ERROR"): return
         else:
