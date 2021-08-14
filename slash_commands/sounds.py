@@ -58,16 +58,6 @@ class sounds(commands.Cog):
         }
     ]
 
-
-    list_options = [
-        {
-            "name": "file",
-            "description": "For Sai only",
-            "type": 3,
-            "required": False
-        }
-    ]
-
     def __init__(self, bot):
         self.bot = bot 
 
@@ -104,17 +94,13 @@ class sounds(commands.Cog):
             await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
     
     #list command
-    @cog_ext.cog_subcommand(base="sound", name='list', options=list_options, description='Lists sounds', guild_ids=trustServ)
-    async def listAll(self, ctx: SlashContext, folder:str="None"):
+    @cog_ext.cog_subcommand(base="sound", name='list' description='Lists sounds', guild_ids=trustServ)
+    async def listAll(self, ctx: SlashContext):
         folder = folder.lower()
         path = "./sounds/"
         if(ctx.author.id == saiID and ctx.guild.id == saiServ):
-            if folder == "aqua":
-                path=path+"aqua"
-            elif folder == "alex":
-                path=path+"alex"
-            else:
-                path = "ERROR"
+            await ctx.send("Aqua\n"+files.get(path+"aqua")+"\n\n", hidden=True)
+            await ctx.send("alex\n"+files.get(path+"alex")+"\n\n", hidden=True)
         elif ctx.guild.id == saiServ:
             if ctx.author.id in aquatrust:
                 path=path+"aqua"
