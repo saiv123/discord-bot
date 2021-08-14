@@ -99,8 +99,9 @@ class sounds(commands.Cog):
     async def listAll(self, ctx: SlashContext):
         path = "./sounds/"
         if(ctx.author.id == saiID and ctx.guild.id == saiServ):
-            await ctx.send(files.get(path+"aqua/"), hidden=True)
-            await ctx.send(files.get(path+"alex/"), hidden=True)
+            aquaTxt = files.get(path+"aqua/") + "\n\n"
+            alexTxt = files.get(path+"alex/")
+            await ctx.send(aquaTxt+alexTxt, hidden=True)
         elif ctx.guild.id == saiServ:
             if ctx.author.id in aquatrust:
                 path=path+"aqua"
