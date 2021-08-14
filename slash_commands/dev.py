@@ -27,7 +27,7 @@ class dev(commands.Cog):
     ]
     # updates the scripts
     @cog_ext.cog_slash(name='update', options=reload_op, description='reloads all the cogs' )
-    async def reload(self, ctx, *, cogType: str="all"):
+    async def reload(self, ctx, cogType: str="all"):
         if not isOwner(ctx): return
         embed = discord.Embed(title="Updating the bot...", colour=discord.Color.gold(), timestamp= datetime.fromtimestamp(time.time()))
         embed.set_footer(text='bot updated by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
