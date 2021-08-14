@@ -6,7 +6,7 @@ from discord_slash.utils.manage_commands import create_option
 from libraries.helperFunctions import isOwner
 
 import asyncio
-import os
+import os, sys
 import time, datetime
 from datetime import date
 from datetime import datetime
