@@ -60,5 +60,5 @@ class dev(commands.Cog):
         except:
             embed.add_field(name="Error", value=sys.exc_info()[0], inline=True)
             await ctx.send(embed=embed, hidden=isHidden)
-            for i in sys.exe_info():
+            for i in sys.exc_info():
                 print(i)
