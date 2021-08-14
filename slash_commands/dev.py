@@ -31,7 +31,7 @@ class dev(commands.Cog):
     async def reload(self, ctx, cogType: str="all"):
         trust = [648012188685959169, 272155212347736065]
         if not isOwner(ctx): return
-        isHidden = (ctx.guild.id in trust)
+        isHidden = not (ctx.guild.id in trust)
         print(isHidden)
         embed = discord.Embed(title="Updating the bot...", colour=discord.Color.gold(), timestamp= datetime.fromtimestamp(time.time()))
         embed.set_footer(text='bot updated by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
