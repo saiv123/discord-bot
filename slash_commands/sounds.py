@@ -49,23 +49,15 @@ class files():
         return rawTime+1.0
 
 class sounds(commands.Cog):
-    aqua_options = [
+    play_options = [
         {
             "name": "sound",
-            "description": "what sound you want to use. If you dont know the file name use /aquasound",
+            "description": "what sound you want to use. If you dont know the file name use /sound list",
             "type": 3,
             "required": True
         }
     ]
 
-    alex_options = [
-        {
-            "name": "sound",
-            "description": "what sound you want to use. If you dont know the file name use /alexsound",
-            "type": 3,
-            "required": True
-        }
-    ]
 
     list_options = [
         {
@@ -79,7 +71,7 @@ class sounds(commands.Cog):
     def __init__(self, bot):
         self.bot = bot 
 
-    @cog_ext.cog_subcommand(base="sound", name='aqua', options=aqua_options, description='Makes baby noises', guild_ids=[601247340887670792, 648012188685959169])
+    @cog_ext.cog_subcommand(base="sound", name='aqua', options=play_options, description='Makes baby noises', guild_ids=[601247340887670792, 648012188685959169])
     async def aqua(self, ctx: SlashContext, sound: str):
         path = './sounds/aqua/'+sound+'.mp3'
         try: 
@@ -95,7 +87,7 @@ class sounds(commands.Cog):
             print(e)
             await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
 
-    @cog_ext.cog_subcommand(base="sound", name='alex', options=alex_options, description='Makes sounds', guild_ids=[531614305733574666, 648012188685959169])
+    @cog_ext.cog_subcommand(base="sound", name='alex', options=play_options, description='Makes sounds', guild_ids=[531614305733574666, 648012188685959169])
     async def alex(self, ctx: SlashContext, sound: str):
         path = './sounds/alex/'+sound+'.mp3'
         try:
