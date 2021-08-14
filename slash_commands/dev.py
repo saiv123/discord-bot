@@ -66,4 +66,36 @@ class dev(commands.Cog):
     @cog_ext.cog_subcommand(base="dev", name='load', options=reload_op, description='loads new cogs' )
     async def load(self, ctx, cogType: str="all"):
         #checks if new .py files is in loaded cogs
-        print(os.listdir('./'))
+        if not isOwner(ctx): return
+        embed = discord.Embed(title="Loading cogs", colour=discord.Color.gold(), timestamp= datetime.fromtimestamp(time.time()))
+        embed.set_footer(text='loaded by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
+
+        try:
+            notLoaded = []
+            slashCommandsList = os.listdir('./slash_commands')
+            if cogType.lower() == "all":
+                for cog in self.bot.cogs:
+                    pyCog = cog+".py"
+                    if pyCog not in slashCommandsList:
+                        notLoaded.append("slash_commands."+cog)
+            elif cogType+".py" in slashCommandsList:
+                notLoaded.append("slash_commands."+cog)
+            else:
+                embed.add_field(name="ERROR", value=cogType+" not in files!!!!", inline=True)
+                await ctx.send(embed=embed, hidden=isHidden)
+                return
+
+            for unLoad in notLoaded:
+                self.bot.load_extension(unLoad)
+                
+            embed.add_field(name="Cogs loaded", value=notLoaded, inline=True)
+            await ctx.send(embed=embed, hidden=isHidden)
+        except discord.ext.commands.ExtensionNotLoaded as e:
+            embed.add_field(name="Error", value=e, inline=True)
+            await ctx.send(embed=embed, hidden=isHidden)
+            print(e)
+        except:
+            embed.add_field(name="Error", value=sys.exc_info()[0], inline=True)
+            await ctx.send(embed=embed, hidden=isHidden)
+            for i in sys.exc_info():
+                print(i)
