@@ -41,7 +41,7 @@ class quotes(commands.Cog):
         await ctx.send(embed=embed)
     
     @cog_ext.cog_slash(name='tronalddump', description='Sends 2 stupid trump quotes and attemps to gauge the difference')
-    async def help(self, ctx: SlashContext):
+    async def tronalddump(self, ctx: SlashContext):
         t = time.time()
         contra_tuple = apis.get_trump_contradiction()
         embeds = [apis.quote_to_discord_embed(i) for i in contra_tuple[1:]]

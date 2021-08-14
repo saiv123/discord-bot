@@ -105,7 +105,7 @@ class sounds(commands.Cog):
     
     #list command
     @cog_ext.cog_subcommand(base="sound", name='list', options=list_options, description='Lists sounds', guild_ids=trustServ)
-    async def list(self, ctx: SlashContext, folder:str="None"):
+    async def listAll(self, ctx: SlashContext, folder:str="None"):
         folder = folder.lower()
         path = "./sounds/"
         if(ctx.author.id == saiID and ctx.guild.id == saiServ):
