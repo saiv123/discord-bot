@@ -25,6 +25,7 @@ class dev(commands.Cog):
             "required": False
         }
     ]
+    
     # updates the scripts
     @cog_ext.cog_slash(name='update', options=reload_op, description='reloads all the cogs' )
     async def reload(self, ctx, cogType: str="all"):
