@@ -112,7 +112,7 @@ class sounds(commands.Cog):
             await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
     
     @cog_ext.cog_subcommand(base="sound", name='list', options=list_options, description='Lists sounds', guild_ids=trustServ)
-    async def list(self, ctx: SlashCommand, folder: str):
+    async def list(self, ctx: SlashContext, folder: str):
         folder = folder.lower()
         path = './sounds/'
         if(ctx.author.id == saiID and ctx.guild.id == saiServ):
