@@ -6,6 +6,7 @@ from discord_slash.utils.manage_commands import create_option
 from libraries.helperFunctions import isOwner
 
 import asyncio
+import os
 
 def setup(bot):
     bot.add_cog(dev(bot))
@@ -25,6 +26,12 @@ class dev(commands.Cog):
     @cog_ext.cog_slash(name='update', options=reload_op, description='reloads all the cogs' )
     async def reload(self, ctx, *, cogType: str="all"):
         if not isOwner(ctx): return
+        embed = discord.Embed(title="Updating the bot...", colour=discord.Color.gold(), timestamp= datetime.fromtimestamp(time.time()))
+        embed.set_footer(text='bot updated by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
+
+        stream = os.popen('git pull')
+        output = stream.read()
+        embed.add_field(name="Git Stats", value=output, inline=True)
         try:
             cogs = []
         
@@ -37,8 +44,9 @@ class dev(commands.Cog):
             for cog in cogs:
                 self.bot.reload_extension("slash_commands."+cog)
 
-            
-            await ctx.send("Done", hidden=True)
+            embed.add_field(name="Update Cogs", value="Done :white_check_mark:", inline=True)
+            await ctx.send(embed=embed, hidden=True)
         except discord.ext.commands.ExtensionNotLoaded as e:
-            await ctx.send(e, hidden=True)
+            embed.add_field(name="Error", value=e, inline=True)
+            await ctx.send(embed=embed, hidden=True)
             print(e)
