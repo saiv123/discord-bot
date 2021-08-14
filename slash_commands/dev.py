@@ -42,7 +42,7 @@ class dev(commands.Cog):
                 for cog in self.bot.cogs:
                     cogs.append(cog)
             else: 
-                cogs = [cog]
+                cogs = [cogType]
             
             for cog in cogs:
                 self.bot.reload_extension("slash_commands."+cog)
