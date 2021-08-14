@@ -111,6 +111,7 @@ class sounds(commands.Cog):
             print(e)
             await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
     
+    #list command
     @cog_ext.cog_subcommand(base="sound", name='list', options=list_options, description='Lists sounds', guild_ids=trustServ)
     async def list(self, ctx: SlashContext, folder:str="None"):
         folder = folder.lower()
