@@ -38,7 +38,7 @@ class files():
         for f in files:
             i = f.index('.')
             f = f[:i]
-            print(i+" "+f)
+            print(str(i)+" "+f)
             temp += f+"\n"
         return temp
 
