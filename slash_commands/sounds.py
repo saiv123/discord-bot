@@ -133,7 +133,8 @@ class sounds(commands.Cog):
                 return
             path+='alex'
         
-        if(path == "ERROR"): return
+        if(path == "ERROR"):
+            await ctx.send("ERROR Please put a file path!!", hidden=True)
         else:
             await ctx.send(files.get(path), hidden=True)
 
