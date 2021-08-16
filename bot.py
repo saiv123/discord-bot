@@ -51,21 +51,6 @@ async def on_ready():
     print('current time - ' + str(ts))
     print('-----------')
 
-
-@bot.event
-async def on_voice_state_update(member, before, after):
-    user = bot.get_user(240636443829993473)
-    beforeCh = before.channel
-    afterCh = after.channel
-
-    if(beforeCh is None or afterCh is None):
-        return
-    elif(beforeCh.id == 768854139463532634 and beforeCh.guild.id == 648012188685959169 and member.id != 240636443829993473):
-        await user.send("PING PONG "+member.name+" joined the vc")
-    else:
-        return
-
-
 #Changes the bots status to my stream when Sai streams
 @bot.event
 async def on_member_update(before, after):
