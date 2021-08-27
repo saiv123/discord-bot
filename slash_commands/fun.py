@@ -223,7 +223,7 @@ class fun(commands.Cog):
         embed.set_footer(text='Asked by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
     
-    @cog_ext.cog_slash(name='boop', options=boop_options, description='Boop the comander', guild_ids=[601247340887670792])
+    @cog_ext.cog_slash(name='boop', options=boop_options, description='Boop the comander', guild_ids=[601247340887670792, 648012188685959169])
     async def boop(self, ctx: SlashContext, user:discord.User=None):
         if user is None:
             user = self.bot.get_user(361275648033030144)
