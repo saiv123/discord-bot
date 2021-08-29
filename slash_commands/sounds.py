@@ -5,6 +5,7 @@ from discord_slash.utils.manage_commands import create_option
 from discord import FFmpegPCMAudio
 
 import os
+from os import path
 import subprocess
 import math
 
@@ -67,7 +68,10 @@ class sounds(commands.Cog):
         path = './sounds/aqua/'+sound+'.mp3'
         try: 
             if ctx.author.id in aquatrust:
-                await play(ctx, path)
+                if path.exists(path):
+                    await play(ctx, path)
+                else:
+                    await ctx.send("There is no sound called "+sound)
             else:
                 await ctx.send("i solemnly swear i am up to no good")
                 raise NotTrusted('Don\'t worry about it')
@@ -83,7 +87,10 @@ class sounds(commands.Cog):
         path = './sounds/alex/'+sound+'.mp3'
         try:
             if ctx.author.id in derptrust:
-                await play(ctx, path)
+                if path.exists(path):
+                    await play(ctx, path)
+                else:
+                    await ctx.send("There is no sound called "+sound)
             else:
                 await ctx.send("i solemnly swear i am up to no good")
                 raise NotTrusted('Don\'t worry about it')
