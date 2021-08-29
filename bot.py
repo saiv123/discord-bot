@@ -4,7 +4,7 @@ intents.typing = True
 intents.presences = True
 intents.members = True
 
-import asyncio, discord
+import asyncio
 import time, datetime
 import wolframalpha
 from datetime import date
@@ -46,7 +46,7 @@ for root, dirs, files in os.walk('./slash_commands'):
 async def on_ready():
     print('user: ' + bot.user.name)
     print('id: ' + str(bot.user.id))
-    # setst the activity for the bot
+    # set the activity for the bot
     await bot.change_presence(activity=discord.Game(name='with his food | /help'))
     print('current time - ' + str(ts))
     print('-----------')
@@ -78,6 +78,7 @@ async def on_message(message):
     if(tempDate == 7 and tempMonth == 12):
         age = tempD.year - 2000
         await user.send("Happy Birthday you are "+age, hidden=True)
+    
     # Respond to last command
     await bot.process_commands(message)
 bot.run(TOKEN)

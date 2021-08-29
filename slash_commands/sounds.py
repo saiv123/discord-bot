@@ -62,16 +62,24 @@ class sounds(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot 
-
+    
+    #play command
+    @cog_ext.cog_subcommand(base="sound", name='play', options=play_options, description='Plays sounds files', guild_ids=trustServ)
+    async def play(self, ctx: SlashContext, sound: str):
+        fileName = sound+".mp3"
+        path = './sounds/'
+        os.chdir(path)
+        for root, dirs, files in os.walk("."):
+            for name in files:
+                if name == fileName:
+                    path+=os.path.join(root, name)
+                    
     @cog_ext.cog_subcommand(base="sound", name='aqua', options=play_options, description='Makes baby noises', guild_ids=[601247340887670792, 648012188685959169])
     async def aqua(self, ctx: SlashContext, sound: str):
         path = './sounds/aqua/'+sound+'.mp3'
         try: 
             if ctx.author.id in aquatrust:
-                if path.exists(path):
-                    await play(ctx, path)
-                else:
-                    await ctx.send("There is no sound called "+sound)
+                await play(ctx, path)
             else:
                 await ctx.send("i solemnly swear i am up to no good")
                 raise NotTrusted('Don\'t worry about it')

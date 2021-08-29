@@ -68,7 +68,6 @@ class fun(commands.Cog):
         if not isOwner(ctx) and exp_len >= SPACE_LEN_HARD_CAP:
             await ctx.send('That message would be {0} characters, waaaay higher than the limit of {1}. Chill.'.format(exp_len, SPACE_LEN_HARD_CAP))
             return
-
         to_send = (' '*max(1, amount)).join(message)
         for message in splitLongStrings(to_send):
             await ctx.send(message)
