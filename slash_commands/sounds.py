@@ -71,7 +71,7 @@ class sounds(commands.Cog):
         for root, dirs, files in os.walk(path):
             for name in files:
                 if name == fileName:
-                    path+=os.path.join(root, name)
+                    path=os.path.join(root, name)
         try:
             if(ctx.author.id == saiID and ctx.guild.id == saiServ):
                 await play(ctx, path)
