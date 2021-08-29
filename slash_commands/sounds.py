@@ -67,12 +67,15 @@ class sounds(commands.Cog):
     @cog_ext.cog_subcommand(base="sound", name='play', options=play_options, description='Plays sounds files', guild_ids=trustServ)
     async def play(self, ctx: SlashContext, sound: str):
         fileName = sound+".mp3"
-        path = './sounds/'
-        for root, dirs, files in os.walk(path):
+        path = 'error'
+        for root, dirs, files in os.walk('./sounds/'):
             for name in files:
                 if name == fileName:
                     path=os.path.join(root, name)
         try:
+            if path == "error":
+                await ctx.send("No such sound exists")
+                return
             if(ctx.author.id == saiID and ctx.guild.id == saiServ):
                 await play(ctx, path)
             elif ctx.guild.id == saiServ:
