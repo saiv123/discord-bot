@@ -74,7 +74,7 @@ class sounds(commands.Cog):
                     path=os.path.join(root, name)
         try:
             if path == "error":
-                await ctx.send("No such sound exists")
+                await ctx.send("No such sound exists", hidden=True)
                 return
             if(ctx.author.id == saiID and ctx.guild.id == saiServ):
                 await play(ctx, path)
