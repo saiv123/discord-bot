@@ -112,7 +112,6 @@ class admin(commands.Cog):
                 required=True
             )
         ],
-
     )
     async def ban(self, ctx: SlashContext, user:discord.User=None):
         perms = ctx.author.guild_permissions
@@ -158,17 +157,6 @@ class admin(commands.Cog):
         await ctx.send(msgReturn("offMsg"), hidden=True)
         await self.bot.logout()
         quit(0)
-    
-    # '''
-    # @cog_ext.cog_slash(name='update', description='Fixes me. Owner only', guild_ids=guild_ids)
-    # async def update(ctx):
-    #     if not isOwner(ctx):
-    #         await ctx.send(msgReturn("notOwner"))
-    #         return
-    #     await ctx.send(msgReturn("offMsg"))
-    #     os.system('sh update.sh &')
-    # '''
-
     # for admins to admire shrek. Freezes the bot for a bit, so don't actually use
     @cog_ext.cog_slash(
         name='movie',
@@ -202,11 +190,11 @@ class admin(commands.Cog):
                 for embed in add_to_embed('Shrek is love, Shrek is life', shrek.replace('\n\n','\n')):
                     embed.color = discord.Colour(imgutils.randomSaturatedColor())
                     await ctx.send(embed=embed)
-                    await asyncio.sleep(0.2)
+                    await asyncio.sleep(0.5)
             else:
                 for message in splitLongStrings(shrek):
                     await ctx.send(message.replace('\n\n','\n'))
-                    await asyncio.sleep(0.2)
+                    await asyncio.sleep(0.5)
 
     # this allows the admins of the bot to send a message to ANY discord user
     @cog_ext.cog_slash(name='courier',
@@ -271,7 +259,6 @@ class admin(commands.Cog):
             await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=URL))
         
         await ctx.send('Status updated', hidden=True)
-
 
     # send you the servers the bot is in
     @cog_ext.cog_slash(name='servers', description='Lists all joined servers. Owner only' )
