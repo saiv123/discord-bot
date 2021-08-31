@@ -31,15 +31,20 @@ class dev(commands.Cog):
     # updates the scripts
     @cog_ext.cog_subcommand(base="dev", name='update', options=reload_op, description='reloads all the cogs' )
     async def reload(self, ctx, cogType: str="all"):
-        if not isOwner(ctx): return
-        isHidden = not (ctx.guild.id in trust)
-        print(isHidden)
+        if not isOwner(ctx): return #not owner
+
+        isHidden = not (ctx.guild.id in trust)#checks for if to hide the message or not
+        print(isHidden) #sanity check
+
+        #creating the embed
         embed = discord.Embed(title="Updating the bot...", colour=discord.Color.gold(), timestamp= datetime.fromtimestamp(time.time()))
         embed.set_footer(text='bot updated by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
 
+        #uses popen to run gin and its output
         stream = os.popen('git pull')
         output = stream.read()
         embed.add_field(name="Git Stats", value=output, inline=True)
+
         try:
             cogs = []
         
@@ -54,11 +59,11 @@ class dev(commands.Cog):
 
             embed.add_field(name="Update Cogs", value="Done :white_check_mark:", inline=True)
             await ctx.send(embed=embed, hidden=isHidden)
-        except discord.ext.commands.ExtensionNotLoaded as e:
+        except discord.ext.commands.ExtensionNotLoaded as e: #error with extention loading
             embed.add_field(name="Error", value=e, inline=True)
             await ctx.send(embed=embed, hidden=isHidden)
             print(e)
-        except:
+        except: #all other errors
             embed.add_field(name="Error", value=sys.exc_info()[0], inline=True)
             await ctx.send(embed=embed, hidden=isHidden)
             for i in sys.exc_info():
