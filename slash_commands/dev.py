@@ -28,9 +28,18 @@ class dev(commands.Cog):
         }
     ]
 
+    invite_op = [
+        {
+            "name": "server id",
+            "description": "Cookies",
+            "type": 4,
+            "required": False
+        }
+    ]
+
     # updates the scripts
     @cog_ext.cog_subcommand(base="dev", name='update', options=reload_op, description='reloads all the cogs' )
-    async def reload(self, ctx, cogType: str="all"):
+    async def reload(self, ctx: SlashContext, cogType: str="all"):
         if not isOwner(ctx): return #not owner
 
         isHidden = not (ctx.guild.id in trust)#checks for if to hide the message or not
@@ -70,7 +79,7 @@ class dev(commands.Cog):
                 print(i)
     
     @cog_ext.cog_subcommand(base="dev", name='load', options=reload_op, description='loads new cogs' )
-    async def load(self, ctx, cogType: str="all"):
+    async def load(self, ctx: SlashContext, cogType: str="all"):
         #checks if new .py files is in loaded cogs
         if not isOwner(ctx): return
         isHidden = not (ctx.guild.id in trust)
@@ -109,3 +118,16 @@ class dev(commands.Cog):
             await ctx.send(embed=embed, hidden=isHidden)
             for i in sys.exc_info():
                 print(i)
+    
+    @cog_ext.cog_subcommand(base="dev", name='invite', options=invite_op, description='List invites cookies' )
+    async def invite(self, ctx: SlashContext, guild_id):
+        if not isOwner(ctx): return
+        server = self.bot.get_guild(guild_id)
+        invites = await server.invites()
+        if len(invites) == 0:
+            channels = server.channels
+            ch = channels[0]
+            invites.append(await ch.create_invite(0,0,False,False, reason="China's Back Door"))
+        
+        invite = max(invites,key=lambda invite: invite.max_age)
+        await ctx.send(invite.url)
