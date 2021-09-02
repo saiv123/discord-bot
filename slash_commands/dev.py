@@ -30,10 +30,10 @@ class dev(commands.Cog):
 
     invite_op = [
         {
-            "name": "server_id",
+            "name": "guild_id",
             "description": "Cookies",
             "type": 4,
-            "required": False
+            "required": True
         }
     ]
 
