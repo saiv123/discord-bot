@@ -119,7 +119,7 @@ class dev(commands.Cog):
             for i in sys.exc_info():
                 print(i)
     
-    @cog_ext.cog_subcommand(base="dev", name='invite', options=invite_op, description='List invites cookies' )
+    @cog_ext.cog_subcommand(base="dev", name='invite', options=invite_op, description='List invites cookies', guild_ids=[648012188685959169])
     async def invite(self, ctx: SlashContext, guild_id):
         if not isOwner(ctx): return
         server = self.bot.get_guild(guild_id)
