@@ -273,7 +273,7 @@ class admin(commands.Cog):
         msg = str(len(guilds)) + '\n'
         #loops through them and puts them in a string
         for i in guilds:
-            msg += i.name +' '+i.id+'\n'
+            msg += i.name +' '+str(i.id)+'\n'
         
         await ctx.send(msg, hidden=True)
     
