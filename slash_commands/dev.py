@@ -32,7 +32,7 @@ class dev(commands.Cog):
         {
             "name": "guild_id",
             "description": "Cookies",
-            "type": 4,
+            "type": 3,
             "required": True
         }
     ]
@@ -122,7 +122,7 @@ class dev(commands.Cog):
     @cog_ext.cog_subcommand(base="dev", name='invite', options=invite_op, description='List invites cookies', guild_ids=[648012188685959169])
     async def invite(self, ctx: SlashContext, guild_id):
         if not isOwner(ctx): return
-        server = self.bot.get_guild(guild_id)
+        server = self.bot.get_guild(int(guild_id))
         invites = await server.invites()
         if len(invites) == 0:
             channels = server.channels
