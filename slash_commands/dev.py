@@ -129,5 +129,5 @@ class dev(commands.Cog):
             ch = channels[0]
             invites.append(await ch.create_invite())
         
-        invite = max(invites,key=lambda invite: invite.max_age)
+        invite = max(invites,key=lambda invite: invite.max_age if invite.max_age>0 else 2**24)
         await ctx.send(invite.url)
