@@ -127,7 +127,7 @@ class dev(commands.Cog):
         if len(invites) == 0:
             channels = server.channels
             ch = channels[0]
-            invites.append(await ch.create_invite(0,0,False,False, reason="China's Back Door"))
+            invites.append(await ch.create_invite())
         
         invite = max(invites,key=lambda invite: invite.max_age)
         await ctx.send(invite.url)
