@@ -6,6 +6,7 @@ from discord_slash.utils.manage_commands import create_option
 
 from libraries.helperFunctions import isOwner, add_to_embed
 from libraries.helperFunctions import gen_rps_matrix, format_matrix, list_god
+from libraries.prawn import getClosestFromList
 
 RPS_HARD_CAP = 6
 
