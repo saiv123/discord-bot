@@ -99,7 +99,7 @@ class rps(commands.Cog):
                 name='user',
                 description='Ping who you want to challenge',
                 option_type=6,
-                required=False
+                required=True
             ),
             create_option(
                 name='level',
