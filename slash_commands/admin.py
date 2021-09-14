@@ -81,7 +81,7 @@ class admin(commands.Cog):
             await ctx.send("You need to ping someone from this server to kick")
             return
 
-        if not ctx.guild.get_member(bot.user.id).permissions_in(ctx.channel).kick_members or  ctx.guild.get_member(bot.user.id).roles[-1] <=  user.roles[-1]:
+        if not ctx.guild.get_member(bot.user.id).permissions_in(ctx.channel).kick_members or  ctx.guild.get_member(self.bot.user.id).roles[-1] <=  user.roles[-1]:
             await ctx.send("I don't have enough power to do that.")
             return
 
@@ -123,7 +123,7 @@ class admin(commands.Cog):
             await ctx.send("You need to ping someone from this server to ban")
             return
 
-        if not ctx.guild.get_member(bot.user.id).permissions_in(ctx.channel).kick_members or  ctx.guild.get_member(bot.user.id).roles[-1] <=  user.roles[-1]:
+        if not ctx.guild.get_member(self.bot.user.id).permissions_in(ctx.channel).kick_members or  ctx.guild.get_member(bot.user.id).roles[-1] <=  user.roles[-1]:
             await ctx.send("I don't have enough power to do that.")
             return
 
