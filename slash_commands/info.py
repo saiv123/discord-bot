@@ -120,8 +120,8 @@ class info(commands.Cog):
         output = str(raw.communicate()).split('\\n')
         temp = [x for x in output[1].split(" ") if x != '']
         percent = memstrToNum(temp[2]) / memstrToNum(temp[1])
-        percent = float("{:.2f}".format(percent))
-        memory = f'{temp[2]}/{temp[1]} - {percent*100.0}%'
+        percent = "{:.2f}".format(percent*100.0)
+        memory = f'{temp[2]}/{temp[1]} - {percent}%'
 
         # Get CPU stats
         cpu_percent = f'{getCPUStats()}%'
