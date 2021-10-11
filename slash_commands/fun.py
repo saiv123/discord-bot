@@ -7,7 +7,7 @@ from libraries.helperFunctions import isOwner, splitLongStrings, add_to_embed
 from libraries.helperFunctions import checkAuthSerers
 from libraries.helperFunctions import RgbToHex, HexToRgb
 from libraries.helperFunctions import msgReturn
-import libraries.quotes as quotes
+import libraries.quotesLib as quotes
 
 import random
 import libraries.bonusapis as apis
