@@ -3,7 +3,7 @@ from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 
 # external libraies
-import libraries.quotes as quotes
+import libraries.quotesLib as quotes
 import libraries.helperFunctions as helperFunctions
 import libraries.bonusapis as apis
 import libraries.imgutils as imgutils
@@ -20,7 +20,7 @@ class quotes(commands.Cog):
         self.bot = bot 
     
     @cog_ext.cog_subcommand(base="quote", name='HeartWarming', description='Sends a heartwarming quote')
-    async def quote(self, ctx: SlashContext):
+    async def heartWarming(self, ctx: SlashContext):
         quote = apis.quote_to_discord_embed(quotes.getQuoteJSON())
         quote.set_thumbnail(url='https://clipart.info/images/ccovers/1531011033heart-emoji.png')
         quote.set_footer(text='Quote Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
