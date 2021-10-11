@@ -3,7 +3,7 @@ from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 
 # external libraies
-import libraries.quotesLib as quotes
+import libraries.quotesLib as quoteLib
 import libraries.helperFunctions as helperFunctions
 import libraries.bonusapis as apis
 import libraries.imgutils as imgutils
@@ -21,14 +21,14 @@ class quotes(commands.Cog):
     
     @cog_ext.cog_subcommand(base="quote", name='HeartWarming', description='Sends a heartwarming quote')
     async def heartWarming(self, ctx: SlashContext):
-        quote = apis.quote_to_discord_embed(quotes.getQuoteJSON())
+        quote = apis.quote_to_discord_embed(quoteLib.getQuoteJSON())
         quote.set_thumbnail(url='https://clipart.info/images/ccovers/1531011033heart-emoji.png')
         quote.set_footer(text='Quote Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=quote)
 
     @cog_ext.cog_subcommand(base="quote", name='randquote', description='Get a unique quote')
     async def randquote(self, ctx: SlashContext):
-        quote = quotes.getQuoteApi()
+        quote = quoteLib.getQuoteApi()
         embed = apis.quote_to_discord_embed(quote)
         embed.set_footer(text='Quote Requested by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
