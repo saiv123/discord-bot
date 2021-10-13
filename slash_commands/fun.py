@@ -217,7 +217,7 @@ class fun(commands.Cog):
     async def shouldi(self, ctx: SlashContext, msg: str):
         msg = " "+msg+" "
         # msg = ' '.join(msg)
-        phrases = ['Yes! Go $',"No, it won't work.",'Hmmm, $ might be a fine idea','Unclear, consider rewording "/"',"I don't know, ask someone else about $"]
+        phrases = ['Yes! Go /',"No, it won't work.",'Hmmm, / might be a fine idea','Unclear, consider rewording "/"',"I don't know, ask someone else about /"]
         embed = discord.Embed(title='Should I...', description='{}\n{}'.format(msg, random.choice(phrases).replace('/', msg)))
         embed.set_footer(text='Asked by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
