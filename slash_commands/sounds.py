@@ -12,9 +12,17 @@ import math
 saiID = 240636443829993473
 saiServ = 648012188685959169
 aquatrust = [288861358555136000, saiID, 361275648033030144]
-derptrust = [401181826145845249, 181488013627490305, 255930764154109952, 118996359616397312, 150485718534324224, saiID]
+derptrust = [
+    401181826145845249,
+    181488013627490305,
+    255930764154109952,
+    118996359616397312,
+    150485718534324224,
+    saiID,
+]
 
 trustServ = [601247340887670792, 531614305733574666, saiServ]
+
 
 async def play(ctx, path):
     channel = ctx.author.voice.channel
@@ -26,29 +34,33 @@ async def play(ctx, path):
     await asyncio.sleep(time)
     await ctx.guild.voice_client.disconnect()
 
+
 class NotTrusted(Exception):
     pass
+
 
 def setup(bot):
     bot.add_cog(sounds(bot))
 
-class files():
-    def get(path:str):
+
+class files:
+    def get(path: str):
         files = os.listdir(path)
-        temp = ''
+        temp = ""
         for f in files:
             if ".mp3" in f:
-                i = f.index('.')
+                i = f.index(".")
                 f = f[:i]
-                temp += f+"\n"
+                temp += f + "\n"
         return temp
 
-    def getTime(path:str):
-        raw = subprocess.Popen(['soxi', '-D', path], stdout = subprocess.PIPE)
-        output = str(raw.communicate()[0]).split('\\n')
-        rawTime = output[0].split('\'')
+    def getTime(path: str):
+        raw = subprocess.Popen(["soxi", "-D", path], stdout=subprocess.PIPE)
+        output = str(raw.communicate()[0]).split("\\n")
+        rawTime = output[0].split("'")
         rawTime = float(math.ceil(float(rawTime[1])))
-        return rawTime+1.0
+        return rawTime + 1.0
+
 
 class sounds(commands.Cog):
     play_options = [
@@ -56,27 +68,33 @@ class sounds(commands.Cog):
             "name": "sound",
             "description": "what sound you want to use. If you dont know the file name use /sound list",
             "type": 3,
-            "required": True
+            "required": True,
         }
     ]
 
     def __init__(self, bot):
-        self.bot = bot 
-    
-    #play command
-    @cog_ext.cog_subcommand(base="sound", name='play', options=play_options, description='Plays sounds files', guild_ids=trustServ)
+        self.bot = bot
+
+    # play command
+    @cog_ext.cog_subcommand(
+        base="sound",
+        name="play",
+        options=play_options,
+        description="Plays sounds files",
+        guild_ids=trustServ,
+    )
     async def play(self, ctx: SlashContext, sound: str):
-        fileName = sound+".mp3"
-        path = 'error'
-        for root, dirs, files in os.walk('./sounds/'):
+        fileName = sound + ".mp3"
+        path = "error"
+        for root, dirs, files in os.walk("./sounds/"):
             for name in files:
                 if name == fileName:
-                    path=os.path.join(root, name)
+                    path = os.path.join(root, name)
         try:
             if path == "error":
                 await ctx.send("No such sound exists", hidden=True)
                 return
-            if(ctx.author.id == saiID and ctx.guild.id == saiServ):
+            if ctx.author.id == saiID and ctx.guild.id == saiServ:
                 await play(ctx, path)
             elif ctx.guild.id == saiServ:
                 if ctx.author.id in aquatrust:
@@ -85,54 +103,64 @@ class sounds(commands.Cog):
                     await play(ctx, path)
                 else:
                     await ctx.send("i solemnly swear i am up to no good")
-                    raise NotTrusted('Don\'t worry about it')
+                    raise NotTrusted("Don't worry about it")
             elif ctx.guild.id == 601247340887670792:
                 if ctx.author.id in aquatrust:
                     await play(ctx, path)
                 else:
                     await ctx.send("i solemnly swear i am up to no good")
-                    raise NotTrusted('Don\'t worry about it')
+                    raise NotTrusted("Don't worry about it")
             elif ctx.guild.id == 531614305733574666:
                 if ctx.author.id in derptrust:
                     await play(ctx, path)
                 else:
                     await ctx.send("i solemnly swear i am up to no good")
-                    raise NotTrusted('Don\'t worry about it')
+                    raise NotTrusted("Don't worry about it")
         except AttributeError as e:
             print(e)
             await ctx.send("your not in vc ;(", hidden=True)
         except NotTrusted as e:
             print(e)
-            await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
-    
-    #list command
-    @cog_ext.cog_subcommand(base="sound", name='list', description='Lists sounds', guild_ids=trustServ)
+            await ctx.send(
+                "OOF you dont have permitions to run this command.", hidden=True
+            )
+
+    # list command
+    @cog_ext.cog_subcommand(
+        base="sound", name="list", description="Lists sounds", guild_ids=trustServ
+    )
     async def listAll(self, ctx: SlashContext):
         path = "./sounds/"
-        if(ctx.author.id == saiID and ctx.guild.id == saiServ):
-            aquaTxt = files.get(path+"aqua/")+"\n"
-            alexTxt = files.get(path+"alex/")
-            await ctx.send(aquaTxt+alexTxt, hidden=True)
+        if ctx.author.id == saiID and ctx.guild.id == saiServ:
+            aquaTxt = files.get(path + "aqua/") + "\n"
+            alexTxt = files.get(path + "alex/")
+            await ctx.send(aquaTxt + alexTxt, hidden=True)
         elif ctx.guild.id == saiServ:
             if ctx.author.id in aquatrust:
-                path=path+"aqua"
+                path = path + "aqua"
             elif ctx.author.id in derptrust:
-                path=path+"alex"
+                path = path + "alex"
             else:
-                await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
+                await ctx.send(
+                    "OOF you dont have permitions to run this command.", hidden=True
+                )
                 return
         elif ctx.guild.id == 601247340887670792:
             if ctx.author.id not in aquatrust:
-                await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
+                await ctx.send(
+                    "OOF you dont have permitions to run this command.", hidden=True
+                )
                 return
-            path=path+"aqua"
+            path = path + "aqua"
         elif ctx.guild.id == 531614305733574666:
             if ctx.author.id not in derptrust:
-                await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
+                await ctx.send(
+                    "OOF you dont have permitions to run this command.", hidden=True
+                )
                 return
-            path=path+"alex"
-        
-        if(path == "error"):
+            path = path + "alex"
+
+        if path == "error":
             await ctx.send("ERROR Please put a file path!!", hidden=True)
         else:
             await ctx.send(files.get(path), hidden=True)
@@ -140,7 +168,7 @@ class sounds(commands.Cog):
     # @cog_ext.cog_subcommand(base="sound", name='aqua', options=play_options, description='Makes baby noises', guild_ids=[601247340887670792, 648012188685959169])
     # async def aqua(self, ctx: SlashContext, sound: str):
     #     path = './sounds/aqua/'+sound+'.mp3'
-    #     try: 
+    #     try:
     #         if ctx.author.id in aquatrust:
     #             await play(ctx, path)
     #         else:
@@ -169,7 +197,7 @@ class sounds(commands.Cog):
     #         print(e)
     #         await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
 
-    #all list commands
+    # all list commands
     # @cog_ext.cog_subcommand(base="sound", name='aquaSounds', description='List of sounds', guild_ids=[601247340887670792, 648012188685959169])
     # async def aquasound(self, ctx: SlashContext):
     #     if ctx.author.id not in aquatrust:
