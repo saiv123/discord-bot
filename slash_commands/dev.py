@@ -13,94 +13,116 @@ from datetime import datetime
 
 trust = [648012188685959169, 272155212347736065]
 
+
 def setup(bot):
     bot.add_cog(dev(bot))
+
 
 class dev(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+
     reload_op = [
         {
             "name": "update",
             "description": "reloads all the cogs",
             "type": 3,
-            "required": False
+            "required": False,
         }
     ]
 
     invite_op = [
-        {
-            "name": "guild_id",
-            "description": "Cookies",
-            "type": 3,
-            "required": True
-        }
+        {"name": "guild_id", "description": "Cookies", "type": 3, "required": True}
     ]
 
     # updates the scripts
-    @cog_ext.cog_subcommand(base="dev", name='update', options=reload_op, description='reloads all the cogs' )
-    async def reload(self, ctx: SlashContext, cogType: str="all"):
-        if not isOwner(ctx): return #not owner
+    @cog_ext.cog_subcommand(
+        base="dev", name="update", options=reload_op, description="reloads all the cogs"
+    )
+    async def reload(self, ctx: SlashContext, cogType: str = "all"):
+        if not isOwner(ctx):
+            return  # not owner
 
-        isHidden = not (ctx.guild.id in trust)#checks for if to hide the message or not
-        print(isHidden) #sanity check
+        isHidden = not (
+            ctx.guild.id in trust
+        )  # checks for if to hide the message or not
+        print(isHidden)  # sanity check
 
-        #creating the embed
-        embed = discord.Embed(title="Updating the bot...", colour=discord.Color.gold(), timestamp= datetime.fromtimestamp(time.time()))
-        embed.set_footer(text='bot updated by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
+        # creating the embed
+        embed = discord.Embed(
+            title="Updating the bot...",
+            colour=discord.Color.gold(),
+            timestamp=datetime.fromtimestamp(time.time()),
+        )
+        embed.set_footer(
+            text="bot updated by: " + ctx.author.name, icon_url=ctx.author.avatar_url
+        )
 
-        #uses popen to run gin and its output
-        stream = os.popen('git pull')
+        # uses popen to run gin and its output
+        stream = os.popen("git pull")
         output = stream.read()
         embed.add_field(name="Git Stats", value=output, inline=True)
 
         try:
             cogs = []
-        
+
             if cogType == "all":
                 for cog in self.bot.cogs:
                     cogs.append(cog)
-            else: 
+            else:
                 cogs = [cogType]
-            
-            for cog in cogs:
-                self.bot.reload_extension("slash_commands."+cog)
 
-            embed.add_field(name="Update Cogs", value="Done :white_check_mark:", inline=True)
+            for cog in cogs:
+                self.bot.reload_extension("slash_commands." + cog)
+
+            embed.add_field(
+                name="Update Cogs", value="Done :white_check_mark:", inline=True
+            )
             await ctx.send(embed=embed, hidden=isHidden)
-        except discord.ext.commands.ExtensionNotLoaded as e: #error with extention loading
+        except discord.ext.commands.ExtensionNotLoaded as e:  # error with extention loading
             embed.add_field(name="Error", value=e, inline=True)
             await ctx.send(embed=embed, hidden=isHidden)
             print(e)
-        except: #all other errors
+        except:  # all other errors
             embed.add_field(name="Error", value=sys.exc_info()[0], inline=True)
             await ctx.send(embed=embed, hidden=isHidden)
             for i in sys.exc_info():
                 print(i)
-    
-    @cog_ext.cog_subcommand(base="dev", name='load', options=reload_op, description='loads new cogs' )
-    async def load(self, ctx: SlashContext, cogType: str="all"):
-        #checks if new .py files is in loaded cogs
-        if not isOwner(ctx): return
+
+    @cog_ext.cog_subcommand(
+        base="dev", name="load", options=reload_op, description="loads new cogs"
+    )
+    async def load(self, ctx: SlashContext, cogType: str = "all"):
+        # checks if new .py files is in loaded cogs
+        if not isOwner(ctx):
+            return
         isHidden = not (ctx.guild.id in trust)
-        embed = discord.Embed(title="Loading cogs", colour=discord.Color.gold(), timestamp= datetime.fromtimestamp(time.time()))
-        embed.set_footer(text='loaded by: ' + ctx.author.name, icon_url=ctx.author.avatar_url)
+        embed = discord.Embed(
+            title="Loading cogs",
+            colour=discord.Color.gold(),
+            timestamp=datetime.fromtimestamp(time.time()),
+        )
+        embed.set_footer(
+            text="loaded by: " + ctx.author.name, icon_url=ctx.author.avatar_url
+        )
 
         try:
             notLoaded = []
-            slashCommandsList = os.listdir('./slash_commands')
+            slashCommandsList = os.listdir("./slash_commands")
             if cogType.lower() == "all":
                 for cog in self.bot.cogs:
-                    pyCog = cog+".py"
+                    pyCog = cog + ".py"
                     if pyCog not in slashCommandsList:
-                        notLoaded.append("slash_commands."+cog)
-            elif cogType+".py" in slashCommandsList:
-                notLoaded.append("slash_commands."+cog)
+                        notLoaded.append("slash_commands." + cog)
+            elif cogType + ".py" in slashCommandsList:
+                notLoaded.append("slash_commands." + cog)
             else:
-                embed.add_field(name="ERROR", value=cogType+" not in files!!!!", inline=True)
+                embed.add_field(
+                    name="ERROR", value=cogType + " not in files!!!!", inline=True
+                )
                 await ctx.send(embed=embed, hidden=isHidden)
                 return
-            
+
             if len(notLoaded) != 0:
                 for unLoad in notLoaded:
                     self.bot.load_extension(unLoad)
@@ -118,16 +140,22 @@ class dev(commands.Cog):
             await ctx.send(embed=embed, hidden=isHidden)
             for i in sys.exc_info():
                 print(i)
-    
-    @cog_ext.cog_subcommand(base="dev", name='invite', options=invite_op, description='List invites cookies')
+
+    @cog_ext.cog_subcommand(
+        base="dev", name="invite", options=invite_op, description="List invites cookies"
+    )
     async def invite(self, ctx: SlashContext, guild_id):
-        if not isOwner(ctx): return
+        if not isOwner(ctx):
+            return
         server = self.bot.get_guild(int(guild_id))
         invites = await server.invites()
         if len(invites) == 0:
             channels = server.channels
             ch = channels[0]
             invites.append(await ch.create_invite())
-        
-        invite = max(invites,key=lambda invite: invite.max_age if invite.max_age>0 else 2**24)
+
+        invite = max(
+            invites,
+            key=lambda invite: invite.max_age if invite.max_age > 0 else 2 ** 24,
+        )
         await ctx.send(invite.url)
