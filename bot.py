@@ -87,7 +87,7 @@ async def on_member_join(member):
         await user.send("ALERT - {member.name} has joined hte server!!!! 🚩")
 
         if member.guild.id in blackListServers:
-            member.ban()
+            await member.ban()
             await user.send("Problem taken care of. :)")
 
 
