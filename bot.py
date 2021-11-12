@@ -84,7 +84,7 @@ async def on_member_update(before, after):
 async def on_member_join(member):
     if member.id in blackListUsers:
         user = bot.get_user(240636443829993473)
-        await user.send("ALERT - {member.name} has joined hte server!!!! 🚩")
+        await user.send(f"ALERT - {member.name} has joined hte server!!!! 🚩")
 
         if member.guild.id in blackListServers:
             await member.ban()
