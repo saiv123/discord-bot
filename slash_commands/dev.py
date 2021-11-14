@@ -36,9 +36,7 @@ class dev(commands.Cog):
     ]
 
     # updates the scripts
-    @cog_ext.cog_subcommand(
-        base="dev", name="update", options=reload_op, description="reloads all the cogs"
-    )
+    @cog_ext.cog_subcommand(base="dev", name="update", options=reload_op, description="reloads all the cogs")
     async def reload(self, ctx: SlashContext, cogType: str = "all"):
         if not isOwner(ctx):
             return  # not owner
