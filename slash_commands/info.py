@@ -215,7 +215,7 @@ class info(commands.Cog):
             msg += cont
 
         embed = discord.Embed(title="Contact", colour=imgutils.randomSaturatedColor())
-        embed.add)field(name="♥ Take Care", value=msg, inline=True)
+        embed.add_field(name="♥ Take Care", value=msg, inline=True)
 
         await ctx.send(embed=embed, hidden=True)
 
