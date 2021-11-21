@@ -196,52 +196,6 @@ class fun(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @cog_ext.cog_slash(name="sad", description="Makes you unsad")
-    async def sad(self, ctx: SlashContext):
-        user = self.bot.get_user(ctx.author.id)
-
-        await user.send(
-            "Hey i see you have used the sad command, you are loved just know that :heart:"
-        )
-        if checkAuthSerers(ctx):
-            try:
-                channel = ctx.author.voice.channel
-                await channel.connect()
-
-                # sends muic
-                embed = add_to_embed(
-                    "Time to unsad yourself",
-                    "Music you can listen too:\n[Sad playlist 1](https://www.youtube.com/playlist?list=PLzSGJo-pe00ka90V3cFrEjCCJKROnHCMj)\n[Sad Playlist 2](https://www.youtube.com/playlist?list=PLzSGJo-pe00nNRlyDb8eJ4zSRXnAtevO6)\nHope you feel better from Sai.",
-                )[0]
-                embed.set_footer(
-                    text="Unsading " + ctx.author.name, icon_url=ctx.author.avatar_url
-                )
-                await ctx.send(embed=embed)
-                await ctx.send(
-                    "https://tenor.com/view/hug-virtual-hug-hug-sent-gif-5026057",
-                    hidden=True,
-                )
-
-                # leaving the voice channel
-                await ctx.voice_client.disconnect()
-            except AttributeError as e:
-                # this is what it will do if user is not in vc
-                print(
-                    "user is not in a voice channel, reverting to text for unsadening user"
-                )
-                quote = apis.quote_to_discord_embed(quotes.getQuoteJSON())
-                quote.set_thumbnail(
-                    url="https://clipart.info/images/ccovers/1531011033heart-emoji.png"
-                )
-                await ctx.send(embed=quote)
-        else:
-            # this is what it will do if user is not in trusted server
-            quote = apis.quote_to_discord_embed(quotes.getQuoteJSON())
-            quote.set_thumbnail(
-                url="https://clipart.info/images/ccovers/1531011033heart-emoji.png"
-            )
-            await ctx.send(embed=quote)
-
     @cog_ext.cog_slash(
         name="shouldi",
         description="Ask my a should I question and i will tell you the answer.",

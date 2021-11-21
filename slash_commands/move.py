@@ -15,7 +15,7 @@ class move(commands.Cog):
         canUse = False
         ListOfRoles = ctx.author.roles
         for x in ListOfRoles:
-            if x.id == 648012394278158341:
+            if x.id == 648012394278158341 or x.id == 670071475914539022:
                 canUse = True
 
         if canUse:
@@ -41,7 +41,6 @@ class move(commands.Cog):
                 )
         else:
             await ctx.send("You are not permitted to use this command!!", hidden=True)
-
 
 def setup(bot):
     bot.add_cog(move(bot))

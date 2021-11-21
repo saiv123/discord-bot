@@ -15,17 +15,13 @@ class memes(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    nsfw_meme_options = [
+        {"name": "query", "description": "v", "type": 3, "required": False}
+    ]
     @cog_ext.cog_slash(
         name="meme",
         description="Get a meme!",
-        options=[
-            create_option(
-                name="query",
-                description="Any special requests?",
-                option_type=3,
-                required=False,
-            )
-        ],
+        options=nsfw_meme_options,
     )
     async def meme(self, ctx: SlashContext, query: str = ""):
         memePath = "ClassWork/"
@@ -39,14 +35,7 @@ class memes(commands.Cog):
     @cog_ext.cog_slash(
         name="nsfw",
         description="Get some nono pics",
-        options=[
-            create_option(
-                name="query",
-                description="Any special requests?",
-                option_type=3,
-                required=False,
-            )
-        ],
+        options=nsfw_meme_options,
     )
     async def nsfw(self, ctx: SlashContext, query: str = ""):
         prawnPath = "MyHomework/"

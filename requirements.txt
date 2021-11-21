@@ -1,9 +1,8 @@
 discord.py
+discord-py-slash-command
 python-Levenshtein
 wolframalpha
 requests
 nltk
-lyricsgenius
-discord-py-slash-command
 holidays
 python-dateutil
