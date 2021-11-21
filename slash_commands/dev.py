@@ -145,15 +145,18 @@ class dev(commands.Cog):
     async def invite(self, ctx: SlashContext, guild_id):
         if not isOwner(ctx):
             return
-        server = self.bot.get_guild(int(guild_id))
-        invites = await server.invites()
-        if len(invites) == 0:
-            channels = server.channels
-            ch = channels[0]
-            invites.append(await ch.create_invite())
+        try:
+            server = self.bot.get_guild(int(guild_id))
+            invites = await server.invites()
+            if len(invites) == 0:
+                channels = server.channels
+                ch = channels[0]
+                invites.append(await ch.create_invite())
 
-        invite = max(
-            invites,
-            key=lambda invite: invite.max_age if invite.max_age > 0 else 2 ** 24,
-        )
-        await ctx.send(invite.url)
+            invite = max(
+                invites,
+                key=lambda invite: invite.max_age if invite.max_age > 0 else 2 ** 24,
+            )
+            await ctx.send(invite.url, hidden=True)
+        except e:
+            await ctx.send(e, hidden=True)
