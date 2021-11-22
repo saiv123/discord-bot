@@ -33,20 +33,6 @@ class fun(commands.Cog):
     boop_options = [
         {"name": "user", "description": "Ping the person", "type": 6, "required": False}
     ]
-    roll_options = [
-        {
-            "name": "dice",
-            "description": "The type of dice or compound dice",
-            "option_type": 3,
-            "required": False,
-        },
-        {
-            "name": "dropLow",
-            "description": "how many of the lowest do you want to drop",
-            "option_type": 4,
-            "required": False,
-        }
-    ]
 
     def __init__(self, bot):
         self.bot = bot
@@ -122,9 +108,22 @@ class fun(commands.Cog):
     @cog_ext.cog_slash(
         name="roll",
         description="Roll a dice",
-        options=roll_options,
+        options=[
+            create_option(
+                name="dice",
+                description="The type of dice or compound dice",
+                option_type=3,
+                required=False,
+            ),
+            create_option(
+                name="droplow",
+                description="How many of the lowest do you want to drop",
+                option_type=4,
+                required=False,
+            ),
+        ],
     )
-    async def roll(self, ctx: SlashContext, dice: str = "1d6", dropLow: int = 0):
+    async def roll(self, ctx: SlashContext, dice: str = "1d6", droplow: int = 0):
         MAXROLLS = 20
         MAXSIDES = 100
         dice = dice.upper()
