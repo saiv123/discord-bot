@@ -39,7 +39,7 @@ class fun(commands.Cog):
             "description": "The type of dice or compound dice",
             "option_type": 3,
             "required": False,
-        }
+        },
         {
             "name": "dropLow",
             "description": "how many of the lowest do you want to drop",
