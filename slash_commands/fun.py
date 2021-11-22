@@ -33,6 +33,20 @@ class fun(commands.Cog):
     boop_options = [
         {"name": "user", "description": "Ping the person", "type": 6, "required": False}
     ]
+    roll_options = [
+        {
+            "name": "dice",
+            "description": "The type of dice or compound dice",
+            "option_type": 3,
+            "required": False,
+        }
+        {
+            "name": "dropLow",
+            "description": "how many of the lowest do you want to drop",
+            "option_type": 4,
+            "required": False,
+        }
+    ]
 
     def __init__(self, bot):
         self.bot = bot
@@ -108,16 +122,9 @@ class fun(commands.Cog):
     @cog_ext.cog_slash(
         name="roll",
         description="Roll a dice",
-        options=[
-            create_option(
-                name="dice",
-                description="The type of dice or compound dice",
-                option_type=3,
-                required=False,
-            )
-        ],
+        options=roll_options
     )
-    async def roll(self, ctx: SlashContext, dice: str = "1d6"):
+    async def roll(self, ctx: SlashContext, dice: str = "1d6", dropLow=0):
         MAXROLLS = 20
         MAXSIDES = 100
         dice = dice.upper()
@@ -137,13 +144,11 @@ class fun(commands.Cog):
             )
             await ctx.send(embed=embed)
 
-        def rollone(rolls, sides):
-            total, txt = 0, ""
-            for i in range(rolls):
-                x = random.randint(1, sides)
-                txt += f"{x}, "
-                total += x
-            return total, txt[:-2] if rolls > 0 else ""
+        def rollone(rolls, sides, drop:int=0):
+            if drop >= rolls: return 0, ''
+            rolls = [random.randint(1, sides) for _ in range(rolls)]
+            for _ in range(drop): rolls.remove(min(rolls))
+            return sum(rolls), ', '.join(map(str, rolls))
 
         if dice.find("D") == -1:
             try:
@@ -164,7 +169,7 @@ class fun(commands.Cog):
             rolls, sides = r_data[:2]
 
             if isOwner(ctx) or (0 < rolls <= MAXROLLS and 1 < sides <= MAXSIDES):
-                total, out = rollone(rolls, sides)
+                total, out = rollone(rolls, sides, dropLow)
                 grand_total += total
 
                 out = f"{rolls}d{sides}: {out}"
