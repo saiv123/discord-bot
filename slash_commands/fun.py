@@ -122,7 +122,7 @@ class fun(commands.Cog):
     @cog_ext.cog_slash(
         name="roll",
         description="Roll a dice",
-        options=roll_options
+        options=roll_options,
     )
     async def roll(self, ctx: SlashContext, dice: str = "1d6", dropLow: int = 0):
         MAXROLLS = 20
