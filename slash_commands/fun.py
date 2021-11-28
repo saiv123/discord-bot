@@ -168,7 +168,7 @@ class fun(commands.Cog):
             rolls, sides = r_data[:2]
 
             if isOwner(ctx) or (0 < rolls <= MAXROLLS and 1 < sides <= MAXSIDES):
-                total, out = rollone(rolls, sides, dropLow)
+                total, out = rollone(rolls, sides, droplow)
                 grand_total += total
 
                 out = f"{rolls}d{sides}: {out}"
