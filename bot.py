@@ -33,7 +33,7 @@ client = wolframalpha.Client(id)
 
 
 #black list lists
-blackListServers = [648012188685959169]
+blackListServers = [648012188685959169, 601247340887670792]
 blackListUsers = [361029057640529921, 705912686742863902]
 #######################################
 ###Initialization of bot DO NOT EDIT###
@@ -102,7 +102,7 @@ async def on_message(message):
 
     if tempDate == 7 and tempMonth == 12:
         age = tempD.year - 2000
-        await user.send("Happy Birthday you are " + age, hidden=True)
+        await user.send("Happy Birthday you are " + str(age), hidden=True)
 
     # Respond to last command
     await bot.process_commands(message)
