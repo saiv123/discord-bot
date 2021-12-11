@@ -102,11 +102,10 @@ async def on_message(message):
 
     if tempDate == 7 and tempMonth == 12:
         age = tempD.year - 2000
-        await user.send("Happy Birthday you are " + str(age))
+        await user.send("Happy Birthday you are "+str(age))
 
     # Respond to last command
     await bot.process_commands(message)
-
 
 bot.run(TOKEN)
 
