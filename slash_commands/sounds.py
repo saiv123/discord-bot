@@ -24,7 +24,7 @@ derptrust = [
 trustServ = [601247340887670792, 531614305733574666, saiServ]
 
 
-async def play(ctx, path):
+async def playSound(ctx, path):
     channel = ctx.author.voice.channel
     voice = await channel.connect()
     source = FFmpegPCMAudio(path)
@@ -95,24 +95,24 @@ class sounds(commands.Cog):
                 await ctx.send("No such sound exists", hidden=True)
                 return
             if ctx.author.id == saiID and ctx.guild.id == saiServ:
-                await play(ctx, path)
+                await playSound(ctx, path)
             elif ctx.guild.id == saiServ:
                 if ctx.author.id in aquatrust:
-                    await play(ctx, path)
+                    await playSound(ctx, path)
                 elif ctx.author.id in derptrust:
-                    await play(ctx, path)
+                    await playSound(ctx, path)
                 else:
                     await ctx.send("i solemnly swear i am up to no good")
                     raise NotTrusted("Don't worry about it")
             elif ctx.guild.id == 601247340887670792:
                 if ctx.author.id in aquatrust:
-                    await play(ctx, path)
+                    await playSound(ctx, path)
                 else:
                     await ctx.send("i solemnly swear i am up to no good")
                     raise NotTrusted("Don't worry about it")
             elif ctx.guild.id == 531614305733574666:
                 if ctx.author.id in derptrust:
-                    await play(ctx, path)
+                    await playSound(ctx, path)
                 else:
                     await ctx.send("i solemnly swear i am up to no good")
                     raise NotTrusted("Don't worry about it")
@@ -121,9 +121,7 @@ class sounds(commands.Cog):
             await ctx.send("your not in vc ;(", hidden=True)
         except NotTrusted as e:
             print(e)
-            await ctx.send(
-                "OOF you dont have permitions to run this command.", hidden=True
-            )
+            await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
 
     # list command
     @cog_ext.cog_subcommand(

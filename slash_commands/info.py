@@ -60,9 +60,7 @@ class info(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @cog_ext.cog_slash(
-        name="hi", description="Am I here? Are you here? Is anyone really here?"
-    )
+    @cog_ext.cog_slash(name="hi", description="Am I here? Are you here? Is anyone really here?")
     async def hi(self, ctx: SlashContext):
         embed = discord.Embed(
             title="Hello",
