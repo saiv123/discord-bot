@@ -248,10 +248,32 @@ class fun(commands.Cog):
         if ctx.author.id == user.id and ctx.author.id == 288861358555136000:
             await ctx.send(msgReturn("kylehug"))
         elif ctx.author.id == user.id:
-            await ctx.send(
-                self.bot.user.mention + msgReturn("hug") + user.mention + "!! :hugging:"
-            )
+            await ctx.send(self.bot.user.mention + msgReturn("hug") + user.mention + "!! :hugging:")
         else:
-            await ctx.send(
-                ctx.author.mention + msgReturn("hug") + user.mention + "!! :hugging:"
-            )
+            await ctx.send(ctx.author.mention + msgReturn("hug") + user.mention + "!! :hugging:")
+    
+    @cog_ext.cog_slash(name="hugvc", description="Hug everyone in the vc")
+    async def hugvc(self, ctx: SlashContext):
+        if ctx.author.voice is None:
+            await ctx.send("Sorry but you are not in a voice channel")
+        else:
+            noBot = []
+            people = ctx.author.voice.channel.members
+            for person in people:
+                if not person.bot:
+                    noBot.append(person)
+
+            if len(people) == 1:
+                await ctx.send("Seems your the only one, here have a hug.\n" +self.bot.user.mention + msgReturn("hug") + ctx.author.mention + "!! :hugging:")
+            elif len(people) > 1:
+                pings = ""
+                for pepes in noBot:
+                    if pepes.id != ctx.author.id:
+                        pings += pepes.mention
+                
+                await ctx.send(ctx.author.mention + msgReturn("hug") + pings + "!! :hugging:")
+                    
+        try:
+            people = ctx.author.voice.channel.members
+        except 
+
