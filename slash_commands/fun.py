@@ -272,8 +272,3 @@ class fun(commands.Cog):
                         pings += pepes.mention
                 
                 await ctx.send(ctx.author.mention + msgReturn("hug") + pings + "!! :hugging:")
-                    
-        try:
-            people = ctx.author.voice.channel.members
-        except 
-
