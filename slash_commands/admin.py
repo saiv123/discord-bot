@@ -340,7 +340,4 @@ class admin(commands.Cog):
     async def test(self, ctx: SlashContext):
         if not isOwner(ctx):
             return
-        await ctx.send(ctx.author.status)
-        await ctx.send(ctx.author.activities)
-        await ctx.send(ctx.author.activity)
         await ctx.send(ctx.author.voice)
