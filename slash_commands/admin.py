@@ -343,3 +343,4 @@ class admin(commands.Cog):
         await ctx.send(ctx.author.status)
         await ctx.send(ctx.author.activities)
         await ctx.send(ctx.author.activity)
+        await ctx.send(ctx.author.voice)
