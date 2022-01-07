@@ -6,7 +6,6 @@ from helperFunctions import add_to_embed
 
 import libraries.imgutils as imgutils
 from libraries.prawn import getClosestFromList
-from libraries.cooldown import has_cooldown
 
 import json
 import time
@@ -218,7 +217,6 @@ class info(commands.Cog):
         await ctx.send(embed=embed, hidden=True)
 
     @cog_ext.cog_slash(name="ping", description="What's my speed?")
-    @has_cooldown(10)
     async def ping(self, ctx: SlashContext):
         embed = add_to_embed(
             "Ping", "Latency: {0}ms".format(round(self.bot.latency * 1000, 1))
