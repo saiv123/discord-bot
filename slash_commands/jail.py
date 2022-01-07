@@ -1,4 +1,4 @@
-import libraries.database
+import libraries.database as database
 
 import discord
 from discord.ext import commands
