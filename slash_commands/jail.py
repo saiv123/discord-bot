@@ -81,7 +81,9 @@ class jail(commands.Cog):
     @cog_ext.cog_slash(name="jail", options=jail_options, description="Put someone in jail")
         async def jail(self, ctx: SlashContext, user: discord.User = None):
             if ctx.author.id == ctx.guild.owner_id or isOwner(ctx):
-                if user.bot:
+                if channels.get(ctx.guild.id, 'vc_id')== 0:
+                    await ctx.send("You must set a vc to jail people to first")
+                elif user.bot:
                     await ctx.send("Sorry you cant jail a bot.", hidden=False)
                 elif user.id == ctx.guild.owner_id or user.id in ownerId:
                     await ctx.send("Sorry but you can not jail this person they have an infinite use get out of jail free card in this server.", hidden=False)
@@ -96,7 +98,9 @@ class jail(commands.Cog):
     @cog_ext.cog_slash(name="unjail", options=jail_options, description="Remove someone from jail")
         async def unjail(self, ctx: SlashContext, user: discord.User = None):
             if ctx.author.id == ctx.guild.owner_id or isOwner(ctx):
-                if check_user(ctx.guild.id, user.id):
+                if channels.get(ctx.guild.id, 'vc_id')== 0:
+                    await ctx.send("You must set a vc to unjail people from first")
+                elif check_user(ctx.guild.id, user.id):
                     remove_user(ctx.guild.id, user.id)
                     await ctx.send("You have unjailed "+user.mention, hidden=False)
                 else:
@@ -106,8 +110,11 @@ class jail(commands.Cog):
     
     @cog_ext.cog_slash(name="jailvc", options=vc_options, description="Set the jail vc")
         async def jailvc(self, ctx: SlashContext, int: vcID = 0):
-            if ctx.guild.get_channel(vcID):
-                channels.set(ctx.guild.id, 'vc_id', vcID)
-                await ctx.send("Channel set to <#"+srt(vcID)+">")
+            if ctx.author.id == ctx.guild.owner_id or isOwner(ctx):
+                if ctx.guild.get_channel(vcID):
+                    channels.set(ctx.guild.id, 'vc_id', vcID)
+                    await ctx.send("Channel set to <#"+srt(vcID)+">")
+                else:
+                    await ctx.send("This id is either not a channel!!")
             else:
-                await ctx.send("This id is either not a channel!!")
+                await ctx.send("You do not have permitions to use this command", hidden=False)
