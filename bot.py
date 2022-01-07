@@ -4,7 +4,7 @@ intents = discord.Intents.default()
 intents.typing = True
 intents.presences = True
 intents.members = True
-Intents.voice_states = True
+intents.voice_states = True
 
 import asyncio
 import time, datetime
