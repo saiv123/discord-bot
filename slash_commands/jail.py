@@ -109,7 +109,7 @@ class jail(commands.Cog):
             await ctx.send("You do not have permitions to use this command", hidden=False)
 
     @cog_ext.cog_slash(name="jailvc", options=vc_options, description="Set the jail vc")
-    async def jailvc(self, ctx: SlashContext, int: vcID = 0):
+    async def jailvc(self, ctx: SlashContext, vcID: int = 0):
         if ctx.author.id == ctx.guild.owner_id or isOwner(ctx):
             if ctx.guild.get_channel(vcID):
                 channels.set(ctx.guild.id, 'vc_id', vcID)
