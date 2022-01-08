@@ -113,6 +113,6 @@ class jail(commands.Cog):
         if ctx.author.id == ctx.guild.owner_id or isOwner(ctx):
             vcID = vc.id
             channels.set(ctx.guild.id, 'vc_id', vcID)
-            await ctx.send("Channel set to <#"+srt(vcID)+">")
+            await ctx.send("Channel set to <#"+str(vcID)+">")
         else:
             await ctx.send("You do not have permitions to use this command", hidden=False)
