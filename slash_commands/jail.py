@@ -72,7 +72,7 @@ class jail(commands.Cog):
     ]
 
     @commands.Cog.listener()
-    async def on_voice_state_update(member, before, after):
+    async def on_voice_state_update(self, member, before, after):
         if after and check_user(member.guild.id, member.id):
             voiceID = channels.get(member.guild.id, 'vc_id')
             voiceChan = member.guild.get_channel(voiceID)
