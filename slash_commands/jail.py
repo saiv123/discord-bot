@@ -68,7 +68,7 @@ class jail(commands.Cog):
     ]
 
     vc_options = [
-        {"name": "VoiceChat", "description": "What vc do you want to make jail", "type": 4, "required": True}
+        {"name": "voicechat", "description": "What vc do you want to make jail", "type": 4, "required": True}
     ]
 
     @commands.Cog.listener()
