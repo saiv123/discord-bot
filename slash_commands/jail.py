@@ -76,7 +76,7 @@ class jail(commands.Cog):
         if after and check_user(member.guild.id, member.id):
             voiceID = channels.get(member.guild.id, 'vc_id')
             voiceChan = member.guild.get_channel(voiceID)
-            await member.mover_to(voiceChan)
+            await member.move_to(voiceChan)
 
     @cog_ext.cog_slash(name="jail", options=jail_options, description="Put someone in jail")
     async def jail(self, ctx: SlashContext, user: discord.User = None):
