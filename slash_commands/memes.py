@@ -40,7 +40,7 @@ class memes(commands.Cog):
     async def nsfw(self, ctx: SlashContext, query: str = ""):
         prawnPath = "MyHomework/"
         # checks of user is trying to get past the nsfw filter
-        if ctx.guild is None and ctx.author != bot.user:
+        if ctx.guild is None and ctx.author != self.bot.user:
             await ctx.send(
                 "You Dumb stupid you are not allowed to use this command in dms"
             )

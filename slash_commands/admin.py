@@ -90,7 +90,7 @@ class admin(commands.Cog):
             return
 
         if (
-            not ctx.guild.get_member(bot.user.id)
+            not ctx.guild.get_member(self.bot.user.id)
             .permissions_in(ctx.channel)
             .kick_members
             or ctx.guild.get_member(self.bot.user.id).roles[-1] <= user.roles[-1]
@@ -149,7 +149,7 @@ class admin(commands.Cog):
             not ctx.guild.get_member(self.bot.user.id)
             .permissions_in(ctx.channel)
             .kick_members
-            or ctx.guild.get_member(bot.user.id).roles[-1] <= user.roles[-1]
+            or ctx.guild.get_member(self.bot.user.id).roles[-1] <= user.roles[-1]
         ):
             await ctx.send("I don't have enough power to do that.")
             return
