@@ -33,9 +33,10 @@ bot.remove_command("help")
 client = wolframalpha.Client(id)
 
 
-#black list lists
-blackListServers = [648012188685959169, 601247340887670792]
-blackListUsers = [361029057640529921, 705912686742863902]
+#black list lists  [sai's server, derp]
+blackListServers = [648012188685959169, 531614305733574666]
+#[finn, emilly, aqua]
+blackListUsers = [361029057640529921, 705912686742863902, 361275648033030144]
 #######################################
 ###Initialization of bot DO NOT EDIT###
 #######################################
@@ -85,7 +86,7 @@ async def on_member_update(before, after):
 async def on_member_join(member):
     if member.id in blackListUsers:
         user = bot.get_user(240636443829993473)
-        await user.send(f"ALERT - {member.name} has joined the server!!!! 🚩")
+        await user.send(f"ALERT - {member.name} has joined the server {member.guild.name}!!!! 🚩")
 
         if member.guild.id in blackListServers:
             await member.ban()
