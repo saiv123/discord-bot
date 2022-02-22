@@ -21,7 +21,7 @@ derptrust = [
     saiID,
 ]
 
-trustServ = [601247340887670792, 531614305733574666, saiServ]
+trustServ = [531614305733574666, saiServ]
 
 
 async def playSound(ctx, path):
@@ -104,12 +104,6 @@ class sounds(commands.Cog):
                 else:
                     await ctx.send("i solemnly swear i am up to no good")
                     raise NotTrusted("Don't worry about it")
-            elif ctx.guild.id == 601247340887670792:
-                if ctx.author.id in aquatrust:
-                    await playSound(ctx, path)
-                else:
-                    await ctx.send("i solemnly swear i am up to no good")
-                    raise NotTrusted("Don't worry about it")
             elif ctx.guild.id == 531614305733574666:
                 if ctx.author.id in derptrust:
                     await playSound(ctx, path)
@@ -143,13 +137,6 @@ class sounds(commands.Cog):
                     "OOF you dont have permitions to run this command.", hidden=True
                 )
                 return
-        elif ctx.guild.id == 601247340887670792:
-            if ctx.author.id not in aquatrust:
-                await ctx.send(
-                    "OOF you dont have permitions to run this command.", hidden=True
-                )
-                return
-            path = path + "aqua"
         elif ctx.guild.id == 531614305733574666:
             if ctx.author.id not in derptrust:
                 await ctx.send(
@@ -162,52 +149,3 @@ class sounds(commands.Cog):
             await ctx.send("ERROR Please put a file path!!", hidden=True)
         else:
             await ctx.send(files.get(path), hidden=True)
-
-    # @cog_ext.cog_subcommand(base="sound", name='aqua', options=play_options, description='Makes baby noises', guild_ids=[601247340887670792, 648012188685959169])
-    # async def aqua(self, ctx: SlashContext, sound: str):
-    #     path = './sounds/aqua/'+sound+'.mp3'
-    #     try:
-    #         if ctx.author.id in aquatrust:
-    #             await play(ctx, path)
-    #         else:
-    #             await ctx.send("i solemnly swear i am up to no good")
-    #             raise NotTrusted('Don\'t worry about it')
-    #     except AttributeError as e:
-    #         print(e)
-    #         await ctx.send("your not in vc ;(", hidden=True)
-    #     except NotTrusted as e:
-    #         print(e)
-    #         await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
-
-    # @cog_ext.cog_subcommand(base="sound", name='alex', options=play_options, description='Makes sounds', guild_ids=[531614305733574666, 648012188685959169])
-    # async def alex(self, ctx: SlashContext, sound: str):
-    #     path = './sounds/alex/'+sound+'.mp3'
-    #     try:
-    #         if ctx.author.id in derptrust:
-    #             await play(ctx, path)
-    #         else:
-    #             await ctx.send("i solemnly swear i am up to no good")
-    #             raise NotTrusted('Don\'t worry about it')
-    #     except AttributeError as e:
-    #         print(e)
-    #         await ctx.send("your not in vc ;(", hidden=True)
-    #     except NotTrusted as e:
-    #         print(e)
-    #         await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
-
-    # all list commands
-    # @cog_ext.cog_subcommand(base="sound", name='aquaSounds', description='List of sounds', guild_ids=[601247340887670792, 648012188685959169])
-    # async def aquasound(self, ctx: SlashContext):
-    #     if ctx.author.id not in aquatrust:
-    #         await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
-    #         return
-    #     path = './sounds/aqua'
-    #     await ctx.send(files.get(path), hidden=True)
-
-    # @cog_ext.cog_subcommand(base="sound", name='alexSounds', description='List of sounds', guild_ids=[531614305733574666, 648012188685959169])
-    # async def alexsound(self, ctx: SlashContext):
-    #     if ctx.author.id not in derptrust:
-    #         await ctx.send("OOF you dont have permitions to run this command.", hidden=True)
-    #         return
-    #     path = './sounds/alex'
-    #     await ctx.send(files.get(path), hidden=True)
