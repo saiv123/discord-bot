@@ -8,5 +8,6 @@ MyPorn/
 ClassWork/
 photos/
 sounds/
+venv/
 *.db
 !msg.db
