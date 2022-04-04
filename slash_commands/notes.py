@@ -38,13 +38,13 @@ class notes(commands.Cog):
     )
     async def makeNotes(self, ctx: SlashContext, memory: str):
         nameNote = "MyPorn/" + str(ctx.author.id) + ".txt"
-
         # opens the file if the users file in there otherwise it will make it
-        with open(nameNote, "a") as file:
-            today = date.today()
-            d1 = today.strftime("%d/%m/%Y")
-            file.write(
-                str(d1) + " -- " + memory + "\n"
+        with open(nameNote, "a") as f:
+            f.write(
+                str(datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+                + ": "
+                + memory
+                + "\n"
             )  # formating and saving to the file
             embed = discord.Embed(title="Your Note is recorded and locked up.")
             embed.set_footer(

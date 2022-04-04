@@ -106,6 +106,25 @@ async def on_message(message):
         age = tempD.year - 2000
         await user.send("Happy Birthday you are "+str(age))
 
+
+    channel = message.channel
+    if "456247671506599936" in message.content and message.author != bot.user:
+        await channel.send("HEY! <@456247671506599936> YOUR MONTY FUCKING SUCKS <3~ ash aka motorcycle gal that loves ya")
+    elif "corn" in message.content.lower() and message.author != bot.user:
+        await channel.send("https://cdn.discordapp.com/attachments/654783232969277453/738997605039603772/Corn_is_the_best_crop__wheat_is_worst.mp4")
+    elif "bird" in message.content.lower() and message.author != bot.user:
+        await channel.send("The birds work for the bourgeoisie.")
+    elif "nut" in message.content.lower() and message.author != bot.user:
+        if(message.guild is None and message.author != bot.user):
+            print("dm nut")
+        else:
+            if(channel.is_nsfw()):  # checks if the channel the command was sent from is nsfw
+                await channel.send("https://cdn.discordapp.com/attachments/606355593887744013/726970883884711956/video0_1-8.mp4")
+            else:
+                print("not in nsfw channel")
+    elif "pog" in message.content.lower() and message.author != bot.user and message.guild.id == 759462211818225684:
+        await channel.send("https://tenor.com/view/oh-omg-fish-shookt-triggered-gif-9720855")
+
     # Respond to last command
     await bot.process_commands(message)
 
