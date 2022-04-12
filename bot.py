@@ -35,8 +35,8 @@ client = wolframalpha.Client(id)
 
 #black list lists  [sai's server, derp]
 blackListServers = [648012188685959169, 531614305733574666]
-#[finn, emilly, aqua]
-blackListUsers = [361029057640529921, 705912686742863902, 361275648033030144]
+#[finn, emilly, aqua, kyle]
+blackListUsers = [361029057640529921, 705912686742863902, 361275648033030144, 288861358555136000]
 #######################################
 ###Initialization of bot DO NOT EDIT###
 #######################################
@@ -89,7 +89,8 @@ async def on_member_join(member):
         await user.send(f"ALERT - {member.name} has joined the server {member.guild.name}!!!! 🚩")
 
         if member.guild.id in blackListServers:
-            await member.ban()
+            await member.send("You have been blacklisted from this server. Please contact the owner of this server, if you feel like this is a mistake.")
+            await member.ban(reason="Blacklisted user")
             await user.send("Problem taken care of. :)")
 
 
@@ -106,7 +107,6 @@ async def on_message(message):
         age = tempD.year - 2000
         await user.send("Happy Birthday you are "+str(age))
 
-
     channel = message.channel
     if "456247671506599936" in message.content and message.author != bot.user:
         await channel.send("HEY! <@456247671506599936> YOUR MONTY FUCKING SUCKS <3~ ash aka motorcycle gal that loves ya")
@@ -122,9 +122,6 @@ async def on_message(message):
                 await channel.send("https://cdn.discordapp.com/attachments/606355593887744013/726970883884711956/video0_1-8.mp4")
             else:
                 print("not in nsfw channel")
-    elif "pog" in message.content.lower() and message.author != bot.user and message.guild.id == 759462211818225684:
-        await channel.send("https://tenor.com/view/oh-omg-fish-shookt-triggered-gif-9720855")
-
     # Respond to last command
     await bot.process_commands(message)
 
@@ -135,7 +132,6 @@ bot.run(TOKEN)
 import traceback
 from libraries.prawn import getClosestFromList
 from Levenshtein import distance
-
 
 @bot.event
 async def on_slash_command_error(ctx, error):
