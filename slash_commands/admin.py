@@ -18,7 +18,6 @@ from datetime import datetime
 def setup(bot):
     bot.add_cog(admin(bot))
 
-
 class admin(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
