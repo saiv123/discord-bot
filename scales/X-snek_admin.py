@@ -156,3 +156,5 @@ class Admin(dis.Scale):
                 msg = str(len(guilds)) + " servers:\n"
                 for guild in guilds:
                     msg += guild.name + "\n"
+def setup(bot):
+    Admin(bot)

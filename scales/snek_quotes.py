@@ -10,7 +10,7 @@ from datetime import date
 from datetime import datetime
 
 class Quotes(dis.Scale):
-    def __init__(self, bot):
+    def __init__(self, bot: dis.Snake):
         self.bot: dis.Snake = bot
     
     @dis.subcommand(base="quote", name="HeartWarming", description="Sends a heartwarming quote")
