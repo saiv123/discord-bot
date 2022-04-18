@@ -24,7 +24,7 @@ blackListUsers = [361029057640529921, 705912686742863902, 361275648033030144, 28
 #######################################
 
 # Load all cogs
-for root, dirs, files in os.walk("./slash_commands"):
+for root, dirs, files in os.walk("./scales"):
     for filename in files:
         if not filename.startswith("X-") and filename.endswith(".py"):
             command = root[2:].replace("/", ".") + "." + filename[:-3]  # gets cog path

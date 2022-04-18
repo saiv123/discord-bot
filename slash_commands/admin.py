@@ -105,7 +105,7 @@ class admin(commands.Cog):
             not user.guild_permissions.administrator or user.bot
         )  # can't kick admins (but can kick bot admins)
         if ctx.author.id == ctx.guild.owner_id:
-            canKick = True  # can't say no to the ownersv
+            canKick = True  # can't say no to the owners
         canKick = (
             canKick and user.id != ctx.author.id
         )  # you can't kick yourself (even as an owner)
