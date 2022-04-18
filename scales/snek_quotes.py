@@ -12,7 +12,7 @@ from datetime import datetime
 class Quotes(dis.Scale):
     def __init__(self, bot):
         self.bot: dis.Snake = bot
-
+    
     @dis.subcommand(base="quote", name="HeartWarming", description="Sends a heartwarming quote")
     async def heartWarming(self, ctx: dis.InteractionContext):
         quote = apis.quote_to_discord_embed(quoteLib.getQuoteJSON())
@@ -20,8 +20,8 @@ class Quotes(dis.Scale):
             url="https://clipart.info/images/ccovers/1531011033heart-emoji.png"
         )
         quote.set_footer(
-            text="Quote Requested by: " + ctx.author.name,
-            icon_url=ctx.author.avatar_url,
+            text="Quote Requested by: " + ctx.author.nick,
+            icon_url=ctx.author.avatar.url,
         )
         await ctx.send(embed=quote)
 
@@ -30,8 +30,8 @@ class Quotes(dis.Scale):
         quote = quoteLib.getQuoteApi()
         embed = apis.quote_to_discord_embed(quote)
         embed.set_footer(
-            text="Quote Requested by: " + ctx.author.name,
-            icon_url=ctx.author.avatar_url,
+            text="Quote Requested by: " + ctx.author.nick,
+            icon_url=ctx.author.avatar.url,
         )
         await ctx.send(embed=embed)
 
@@ -40,8 +40,8 @@ class Quotes(dis.Scale):
         advice = apis.advice()
         embed = apis.quote_to_discord_embed(advice)
         embed.set_footer(
-            text="Advice Requested by: " + ctx.author.name,
-            icon_url=ctx.author.avatar_url,
+            text="Advice Requested by: " + ctx.author.nick,
+            icon_url=ctx.author.avatar.url,
         )
         await ctx.send(embed=embed)
 
