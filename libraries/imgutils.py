@@ -53,7 +53,7 @@ def randomSaturatedColor(minSat=64, steps=1):
         random.randrange(minSat, 255, steps),
         random.randrange(minSat, 255, steps),
     )
-    return int(hex.upper(), 16)
+    return f"#{hex.upper()}"
 
 
 if __name__ == "__main__":

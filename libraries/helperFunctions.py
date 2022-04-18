@@ -3,9 +3,7 @@ import sys, os
 FILEPATH, filename = os.path.split(os.path.abspath(__file__))
 sys.path.insert(1, FILEPATH)
 
-import asyncio, discord
-from discord.ext import commands, tasks
-from discord.ext.commands import Bot
+import dis_snek as dis
 import prawn, imgutils
 import json, random
 
@@ -38,16 +36,16 @@ def isOwner(ctx):
             return True
     return False
 
-
-class OwnersIgnoreCooldown(commands.Command):
-    async def prepare(self, ctx):
-        try:
-            return await super().prepare(ctx)
-        except commands.CommandOnCooldown as e:
-            if isOwner(ctx):
-                return
-            else:
-                raise e
+#not in use
+# class OwnersIgnoreCooldown(commands.Command):
+#     async def prepare(self, ctx):
+#         try:
+#             return await super().prepare(ctx)
+#         except commands.CommandOnCooldown as e:
+#             if isOwner(ctx):
+#                 return
+#             else:
+#                 raise e
 
 
 # gets a message from the dictionary with the type inputed
@@ -92,19 +90,19 @@ def gen_invis(i: int = 1):
 
 # split a string or a list of strings into subfields of an embed
 def add_to_embed(
-    embed: discord.Embed or str or None,
+    embed: dis.Embed or str or None,
     message: str or list,
     chars: int = 1000,
     use_description: bool = True,
 ):
     if embed == None:
-        embed = discord.Embed(title=chr(0xFFA0))
-        embed.color = discord.Colour(imgutils.randomSaturatedColor())
+        embed = dis.Embed(title=chr(0xFFA0))
+        embed.color = dis.Colour(imgutils.randomSaturatedColor())
     elif isinstance(embed, str):
-        embed = discord.Embed(title=embed)
-        embed.color = discord.Colour(imgutils.randomSaturatedColor())
+        embed = dis.Embed(title=embed)
+        embed.color = dis.Colour(imgutils.randomSaturatedColor())
     assert isinstance(
-        embed, discord.Embed
+        embed, dis.Embed
     ), "add_to_embed embed input not parseable to discord.Embed"
 
     if chars > 2000:
@@ -115,8 +113,8 @@ def add_to_embed(
         message = "\n".join(message)
     message = f"{current_fields}\n{message}"
 
-    dummy_embed = discord.Embed(title=chr(0xFFA0))
-    dummy_embed.color = discord.Colour(imgutils.randomSaturatedColor())
+    dummy_embed = dis.Embed(title=chr(0xFFA0))
+    dummy_embed.color = dis.Colour(imgutils.randomSaturatedColor())
     try:
         dummy_embed.author = embed.author
     except:
@@ -162,7 +160,7 @@ def getEmbedsFromLibraryQuery(libraryPath, query):
         for message in splitLongStrings(
             ", ".join(map(prawn.getFileName, prawn.getFileList(libraryPath)))
         ):
-            embeds.append(discord.Embed(description=message, color=color))
+            embeds.append(dis.Embed(description=message, color=color))
         return embeds
     # Otherwise, get image from query
     namedImg = (
@@ -182,7 +180,7 @@ def getEmbedsFromLibraryQuery(libraryPath, query):
     if not imgutils.isUrlValidImage(namedImg[1]):  # Print error
         print("Image not valid at " + namedImg[1] + "\n\t(name " + namedImg[0] + ")")
 
-    embed = discord.Embed(
+    embed = dis.Embed(
         description=namedImg[0], color=imgutils.getAverageColor(namedImg[1])
     )
     embed.set_image(url=namedImg[1])

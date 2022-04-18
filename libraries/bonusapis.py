@@ -2,6 +2,7 @@ import requests
 import json, sys, os, string
 import math
 from imgutils import randomSaturatedColor
+import dis_snek as dis
 
 
 class HiddenPrints:
@@ -181,10 +182,6 @@ def number_to_discord_emote(numb):
     numb.replace("9", ":nine:")
     return numb
 
-
-import discord
-
-
 def quote_to_discord_embed(quote_dict: dict, switch=False):
     kwargs_dict = {"title": "A quote", "colour": randomSaturatedColor()}
     if "quote" in quote_dict:
@@ -205,7 +202,7 @@ def quote_to_discord_embed(quote_dict: dict, switch=False):
         kwargs_dict["title"] = kwargs_dict["description"]
         kwargs_dict["description"] = tempT
 
-    embed = discord.Embed(**kwargs_dict)
+    embed = dis.Embed(**kwargs_dict)
 
     if "date" in quote_dict:
         embed.set_footer(text=quote_dict["date"])
@@ -291,7 +288,7 @@ def colorDictToEmbed(color_dict, titled=True, named=True):
     if "name" in color_dict and titled:
         kwargs_dict["title"] = color_dict["name"]
 
-    embed = discord.Embed(**kwargs_dict)
+    embed = dis.Embed(**kwargs_dict)
     embed.add_field(name="Hex", value="#" + str(color_dict["hex"]), inline=True)
 
     # add alternate values
