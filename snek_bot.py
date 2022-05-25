@@ -9,7 +9,7 @@ import os
 
 from secret import TOKEN, id
 
-bot = dis.client(sync_interactions=True)
+bot = dis.Client(sync_interactions=True)
 
 ts = time.time()
 
