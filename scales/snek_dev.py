@@ -1,4 +1,4 @@
-import dis_snek as dis
+import naff as dis
 
 from libraries.helperFunctions import isOwner
 
@@ -10,8 +10,8 @@ from datetime import datetime
 
 trust = [648012188685959169, 272155212347736065]
 
-class Dev(dis.Scale):
-    def __init__(self, bot: dis.Snake):
+class Dev(dis.Extension):
+    def __init__(self, bot: dis.Client):
         self.bot = bot
     reload_op = dis.SlashCommandOption("update", dis.OptionTypes.STRING, "reloads all the cogs", False)
     
@@ -39,7 +39,7 @@ class Dev(dis.Scale):
             cogs = []
 
             if cogType == "all":
-                for cog in self.bot.scales:
+                for cog in self.bot.Extensions:
                     cogs.append(cog)
             else:
                 cogs = [cogType]
@@ -76,7 +76,7 @@ class Dev(dis.Scale):
             notLoaded = []
             slashCommandsList = os.listdir("./slash_commands")
             if cogType.lower() == "all":
-                for cog in self.bot.scales:
+                for cog in self.bot.Extensions:
                     pyCog = cog + ".py"
                     if pyCog not in slashCommandsList:
                         notLoaded.append("slash_commands." + cog)
@@ -102,3 +102,6 @@ class Dev(dis.Scale):
             await ctx.send(embed=embed, hidden=isHidden)
             for i in sys.exc_info():
                 print(i)
+
+def setup(bot):
+    Dev(bot)

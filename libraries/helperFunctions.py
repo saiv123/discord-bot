@@ -3,7 +3,7 @@ import sys, os
 FILEPATH, filename = os.path.split(os.path.abspath(__file__))
 sys.path.insert(1, FILEPATH)
 
-import dis_snek as dis
+import naff as dis
 import prawn, imgutils
 import json, random
 

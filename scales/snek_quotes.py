@@ -1,4 +1,4 @@
-import dis_snek as dis
+import naff as dis
 
 import libraries.quotesLib as quoteLib
 import libraries.helperFunctions as helperFunctions
@@ -9,9 +9,9 @@ import time, datetime
 from datetime import date
 from datetime import datetime
 
-class Quotes(dis.Scale):
-    def __init__(self, bot: dis.Snake):
-        self.bot: dis.Snake = bot
+class Quotes(dis.Extension):
+    def __init__(self, bot: dis.Client):
+        self.bot: dis.Client = bot
     
     @dis.subcommand(base="quote", name="HeartWarming", description="Sends a heartwarming quote")
     async def heartWarming(self, ctx: dis.InteractionContext):

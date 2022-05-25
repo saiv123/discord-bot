@@ -1,4 +1,4 @@
-import dis_snek as dis
+import naff as dis
 
 import time, datetime
 import wolframalpha
@@ -9,7 +9,7 @@ import os
 
 from secret import TOKEN, id
 
-bot = dis.Snake(sync_interactions=True)
+bot = dis.client(sync_interactions=True)
 
 ts = time.time()
 
@@ -28,7 +28,7 @@ for root, dirs, files in os.walk("./scales"):
     for filename in files:
         if not filename.startswith("X-") and filename.endswith(".py"):
             command = root[2:].replace("/", ".") + "." + filename[:-3]  # gets cog path
-            bot.grow_scale(command)
+            bot.mount_cog(command)
 
 @dis.listen()
 async def on_ready():

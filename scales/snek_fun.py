@@ -1,7 +1,7 @@
-import dis_snek
+import naff
 
 
-import dis_snek as dis
+import naff as dis
 
 
 from libraries.helperFunctions import isOwner, splitLongStrings, add_to_embed
@@ -14,9 +14,9 @@ import random
 import libraries.bonusapis as apis
 import libraries.imgutils as imgutils
 
-class Fun(dis.Scale):
-    def __init__(self, bot: dis.Snake):
-        self.bot: dis.Snake = bot
+class Fun(dis.Extension):
+    def __init__(self, bot: dis.Client):
+        self.bot: dis.Client = bot
     
     SHOULDI_PHRASES = [
         "Yes! Go $",

@@ -2,7 +2,7 @@ import requests
 import json, sys, os, string
 import math
 from imgutils import randomSaturatedColor
-import dis_snek as dis
+import naff as dis
 
 
 class HiddenPrints:

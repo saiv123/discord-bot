@@ -1,4 +1,4 @@
-import dis_snek as dis
+import naff as dis
 
 import libraries.imgutils as imgutils
 from libraries.prawn import getClosestFromList
@@ -18,9 +18,9 @@ import json
 from secret import cont
 from snek_bot import ts
 
-class Info(dis.Scale):
-    def __init__(self, bot: dis.Snake):
-        self.bot: dis.Snake = bot
+class Info(dis.Extension):
+    def __init__(self, bot: dis.Client):
+        self.bot: dis.Client = bot
     
     @dis.slash_command(name="help", description="Get help on a command")
     async def help(self, ctx: dis.InteractionContext):
@@ -161,3 +161,6 @@ def getCPUStats():
     user = data["sysstat"]["hosts"][0]["statistics"][0]["cpu-load"][0]["usr"]
     system = data["sysstat"]["hosts"][0]["statistics"][0]["cpu-load"][0]["sys"]
     return float("{:.2f}".format(user + system))
+
+def setup(bot):
+    Info(bot)
