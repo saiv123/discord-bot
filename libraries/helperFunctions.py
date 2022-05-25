@@ -152,7 +152,7 @@ def add_to_embed(
 
 
 # Gets embed responses from a library of links
-def getEmbedsFromLibraryQuery(libraryPath, query):
+def getEmbedsFromLibraryQuery(libraryPath, query: str):
     # If query is categories, get categories
     if "category" in query.lower() or "categories" in query.lower():
         color = imgutils.randomSaturatedColor()
