@@ -18,6 +18,24 @@ import json
 from secret import cont
 from snek_bot import ts
 
+def memstrToNum(string):
+    string = (
+        string.replace("G", "*1073741824")
+        .replace("M", "*1048576")
+        .replace("K", "*1024")
+    )
+    num = float(eval(string))
+    return num
+
+
+def getCPUStats():
+    raw = subprocess.Popen(["mpstat", "-u", "-o", "JSON"], stdout=subprocess.PIPE)
+    data = json.loads(raw.communicate()[0])
+    user = data["sysstat"]["hosts"][0]["statistics"][0]["cpu-load"][0]["usr"]
+    system = data["sysstat"]["hosts"][0]["statistics"][0]["cpu-load"][0]["sys"]
+    return float("{:.2f}".format(user + system))
+
+
 class Info(dis.Extension):
     def __init__(self, bot: dis.Client):
         self.bot: dis.Client = bot
@@ -143,24 +161,6 @@ class Info(dis.Extension):
             text="Ping Measured by: " + ctx.author.display_name, icon_url=ctx.author.avatar.url
         )
         await ctx.send(embed=embed)
-
-
-def memstrToNum(string):
-    string = (
-        string.replace("G", "*1073741824")
-        .replace("M", "*1048576")
-        .replace("K", "*1024")
-    )
-    num = float(eval(string))
-    return num
-
-
-def getCPUStats():
-    raw = subprocess.Popen(["mpstat", "-u", "-o", "JSON"], stdout=subprocess.PIPE)
-    data = json.loads(raw.communicate()[0])
-    user = data["sysstat"]["hosts"][0]["statistics"][0]["cpu-load"][0]["usr"]
-    system = data["sysstat"]["hosts"][0]["statistics"][0]["cpu-load"][0]["sys"]
-    return float("{:.2f}".format(user + system))
 
 def setup(bot):
     Info(bot)
