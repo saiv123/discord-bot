@@ -5,3 +5,4 @@ requests
 nltk
 holidays
 python-dateutil
+pillow >=9.0.0
