@@ -28,11 +28,11 @@ for root, dirs, files in os.walk("./scales"):
     for filename in files:
         if not filename.startswith("X-") and filename.endswith(".py"):
             command = root[2:].replace("/", ".") + "." + filename[:-3]  # gets cog path
-            bot.mount_cog(command)
+            bot.load_extension(command)
 
 @dis.listen()
 async def on_ready():
-    print("user: " + bot.user.name)
+    print("user: " + bot.user.display_name)
     print("id: " + str(bot.user.id))
     # set the activity for the bot
     await bot.change_presence(status=dis.Status.ONLINE, activity=dis.Activity(type=dis.ActivityType.GAME, name="with his food | /help"))
@@ -75,7 +75,7 @@ async def on_message(event: dis.events.MessageCreate):
         if(message.guild is None and message.author != bot.user):
             print("dm nut")
         else:
-            if(channel.is_nsfw()):  # checks if the channel the command was sent from is nsfw
+            if(channel.nsfw):  # checks if the channel the command was sent from is nsfw
                 await channel.send("https://cdn.discordapp.com/attachments/606355593887744013/726970883884711956/video0_1-8.mp4")
             else:
                 print("not in nsfw channel")
@@ -93,6 +93,6 @@ async def checkBrithday():
 
     if tempDate == 7 and tempMonth == 12:
         age = tempD.year - 2000
-        await user.send("Happy Birthday you are "+str(age))
+        await user.send(f"Happy Birthday you are {str(age)}!!!")
 
 bot.start(TOKEN)
