@@ -125,7 +125,7 @@ class Fun(dis.Extension):
         else:
             await ctx.send(ctx.author.mention + msgReturn("hug") + user.mention + "!! :hugging:")
     
-    @dis.slash_command(name="Hugvc", description="Hug everyone in the vc")
+    @dis.slash_command(name="hugvc", description="Hug everyone in the vc")
     async def hugvc(self, ctx: dis.InteractionContext):
          if ctx.author.voice is None:
             await ctx.send("Sorry but you are not in a voice channel")
