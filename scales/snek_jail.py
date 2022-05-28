@@ -106,6 +106,7 @@ class Jail(dis.Extension):
     @dis.slash_option(
         "channel",
         "The voice channel to be used for the jail",
+        dis.OptionTypes.CHANNEL,
         dis.ChannelTypes.GUILD_VOICE,
         True,)
     async def setjail(self, ctx: dis.InteractionContext, channel: dis.channel.VoiceChannel):
