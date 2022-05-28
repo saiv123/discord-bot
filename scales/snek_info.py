@@ -16,7 +16,7 @@ import subprocess
 import json
 
 from secret import cont
-from snek_bot import ts
+#from snek_bot import ts
 
 def memstrToNum(string):
     string = (
@@ -125,15 +125,15 @@ class Info(dis.Extension):
         cpu_percent = f"{getCPUStats()}%"
 
         # calculating time bot has been on
-        tso = time.time()
-        msg = time.strftime("%H Hours %M Minutes %S Seconds", time.gmtime(tso - ts))
+        # tso = time.time()
+        # msg = time.strftime("%H Hours %M Minutes %S Seconds", time.gmtime(tso - ts))
 
         # Set up and send embed
         embed = dis.Embed(title="Status", colour=imgutils.randomSaturatedColor())
         embed.set_thumbnail(
             url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png"
         )  # set the clock image
-        embed.add_field(name="I have been awake for:", value=msg, inline=False)
+        #embed.add_field(name="I have been awake for:", value=msg, inline=False)
         embed.add_field(name="Memory:", value=memory, inline=True)
         embed.add_field(name="CPU:", value=cpu_percent, inline=True)
         embed.set_footer(
