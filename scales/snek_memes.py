@@ -12,7 +12,7 @@ class Meme(dis.Extension):
         "What category do you want",
         dis.OptionTypes.STRING,
         False,)
-    async def meme(self, ctx: dis.InteractionContext, category: str=""):
+    async def meme(self, ctx: dis.InteractionContext, category: str="", **kwargs):
         memePath = "ClassWork/"
         embed = getEmbedsFromLibraryQuery(memePath, category)[0]
         embed.set_footer(text="Requested by: " + ctx.author.nickname, icon_url=ctx.author.avatar.url)
@@ -24,7 +24,7 @@ class Meme(dis.Extension):
         "What category do you want",
         dis.OptionTypes.STRING,
         False,)
-    async def meme(self, ctx: dis.InteractionContext, category: str=""):
+    async def meme(self, ctx: dis.InteractionContext, category: str="", **kwargs):
         prawnPath = "MyHomework/"
         # checks of user is trying to get past the nsfw filter
         if ctx.guild is None and ctx.author.bot != True:
