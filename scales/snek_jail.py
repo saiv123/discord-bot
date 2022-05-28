@@ -107,7 +107,6 @@ class Jail(dis.Extension):
         "channel",
         "The voice channel to be used for the jail",
         dis.ChannelTypes.GUILD_VOICE,
-        dis.OptionTypes.CHANNEL,
         True,)
     async def setjail(self, ctx: dis.InteractionContext, channel: dis.channel.VoiceChannel):
         if ctx.author.id == ctx.guild._owner_id or isOwner(ctx):
