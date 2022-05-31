@@ -39,7 +39,7 @@ class Dev(dis.Extension):
             cogs = []
 
             if cogType == "all":
-                for cog in self.bot.get_extensions():
+                for cog in self.bot.ext:
                     cogs.append(cog)
             else:
                 cogs = [cogType]
