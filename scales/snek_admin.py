@@ -35,7 +35,7 @@ class Admin(dis.Extension):
         embed.set_author(name=member.nick, icon_url=member.user.avatar.url)
         embed.set_thumbnail(url=member.user.avatar.url)
         embed.set_footer(
-            text="Info Requested by: " + ctx.author.nick, icon_url=ctx.author.avatar.url
+            text="Info Requested by: " + ctx.author.display_name, icon_url=ctx.author.avatar.url
         )
 
         # this checks if the user has no roles it will say they have no roles

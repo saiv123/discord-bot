@@ -28,7 +28,7 @@ class Dev(dis.Extension):
             title="Updating the bot...",
             color="#FFD700",
             timestamp=datetime.fromtimestamp(time.time()),)
-        embed.set_footer(text="bot updated by: " + ctx.author.nick, icon_url=ctx.author.avatar.url)
+        embed.set_footer(text="bot updated by: " + ctx.author.display_name, icon_url=ctx.author.avatar.url)
 
         # uses popen to run gin and its output
         stream = os.popen("git pull")
@@ -69,7 +69,7 @@ class Dev(dis.Extension):
             timestamp=datetime.fromtimestamp(time.time()),
         )
         embed.set_footer(
-            text="loaded by: " + ctx.author.nick, icon_url=ctx.author.avatar.url
+            text="loaded by: " + ctx.author.display_name, icon_url=ctx.author.avatar.url
         )
 
         try:

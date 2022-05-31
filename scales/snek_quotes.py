@@ -20,7 +20,7 @@ class Quotes(dis.Extension):
             url="https://clipart.info/images/ccovers/1531011033heart-emoji.png"
         )
         quote.set_footer(
-            text="Quote Requested by: " + ctx.author.nick,
+            text="Quote Requested by: " + ctx.author.display_name,
             icon_url=ctx.author.avatar.url,
         )
         await ctx.send(embed=quote)
@@ -30,7 +30,7 @@ class Quotes(dis.Extension):
         quote = quoteLib.getQuoteApi()
         embed = apis.quote_to_discord_embed(quote)
         embed.set_footer(
-            text="Quote Requested by: " + ctx.author.nick,
+            text="Quote Requested by: " + ctx.author.display_name,
             icon_url=ctx.author.avatar.url,
         )
         await ctx.send(embed=embed)
@@ -40,7 +40,7 @@ class Quotes(dis.Extension):
         advice = apis.advice()
         embed = apis.quote_to_discord_embed(advice)
         embed.set_footer(
-            text="Advice Requested by: " + ctx.author.nick,
+            text="Advice Requested by: " + ctx.author.display_name,
             icon_url=ctx.author.avatar.url,
         )
         await ctx.send(embed=embed)

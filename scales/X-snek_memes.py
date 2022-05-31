@@ -17,7 +17,7 @@ class Meme(dis.Extension):
             category = ""
         memePath = "ClassWork/"
         embed = getEmbedsFromLibraryQuery(memePath, category)[0]
-        embed.set_footer(text="Requested by: " + ctx.author.nickname, icon_url=ctx.author.avatar.url)
+        embed.set_footer(text="Requested by: " + ctx.author.display_name, icon_url=ctx.author.avatar.url)
         await ctx.send(embed=embed)
     
     @dis.slash_command(name="nsfw", description="Get Porn")
@@ -38,17 +38,17 @@ class Meme(dis.Extension):
             if (ctx.channel.nsfw):
                 embed = getEmbedsFromLibraryQuery(prawnPath, category)[0]
                 embed.set_footer(
-                    text="Requested by: " + ctx.author.nickname,
+                    text="Requested by: " + ctx.author.display_name,
                     icon_url=ctx.author.avatar.url,
                 )
                 await ctx.send(embed=embed)
             else:
                 embed = dis.Embed(
                     title="Sorry",
-                    description=f"I'm sorry {ctx.author.nickname}, /nsfw can only be used in an NSFW channel",
+                    description=f"I'm sorry {ctx.author.display_name}, /nsfw can only be used in an NSFW channel",
                 )
                 embed.set_footer(
-                    text=f"Porn Requested by: {ctx.author.nickname}",
+                    text=f"Porn Requested by: {ctx.author.display_name}",
                     icon_url=ctx.author.avatar.url,
                 )
                 await ctx.send(embed=embed)
