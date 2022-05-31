@@ -19,14 +19,14 @@ class Move(dis.Extension):
                 otherchannel = user.voice.channel
                 # move logic
                 if channel.id == otherchannel.id:
-                    await ctx.send("You both are in the same channel cant move you.", hidden=True)
+                    await ctx.send("You both are in the same channel cant move you.", ephemeral=True)
                 else:
                     await ctx.author.move(otherchannel.id)
-                    await ctx.send("Boop Found him moving you to the vc Sai is in.", hidden=True)
+                    await ctx.send("Boop Found him moving you to the vc Sai is in.", ephemeral=True)
             except e:
                 # this is what it will do if user is not in vc
-                await ctx.send("Sorry but you have to be in a vc to use this command\nOr Sai is not in a VC", hidden=True)
+                await ctx.send("Sorry but you have to be in a vc to use this command\nOr Sai is not in a VC", ephemeral=True)
         else:
-            await ctx.send("You are not permitted to use this command!!", hidden=True)
+            await ctx.send("You are not permitted to use this command!!", ephemeral=True)
 def setup(bot):
     Move(bot)

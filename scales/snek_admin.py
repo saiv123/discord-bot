@@ -23,7 +23,7 @@ class Admin(dis.Extension):
     async def userinfo(self, ctx: dis.InteractionContext, member: dis.Member):
         if not ctx.author.guild_permissions.ADMINISTRATOR and not isOwner(ctx):
             await ctx.send(
-                f"You must be an owner or a server administrator", hidden=True
+                f"You must be an owner or a server administrator", ephemeral=True
             )
             return
         roles = [role for role in member.roles[1:]]

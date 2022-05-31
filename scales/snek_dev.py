@@ -50,10 +50,10 @@ class Dev(dis.Extension):
             embed.add_field(
                 name="Update Cogs", value="Done :white_check_mark:", inline=True
             )
-            await ctx.send(embed=embed, hidden=isHidden)
+            await ctx.send(embed=embed, ephemeral=isHidden)
         except:  # all other errors
             embed.add_field(name="Error", value=sys.exc_info()[0], inline=True)
-            await ctx.send(embed=embed, hidden=isHidden)
+            await ctx.send(embed=embed, ephemeral=isHidden)
             for i in sys.exc_info():
                 print(i)
         
@@ -86,7 +86,7 @@ class Dev(dis.Extension):
                 embed.add_field(
                     name="ERROR", value=cogType + " not in files!!!!", inline=True
                 )
-                await ctx.send(embed=embed, hidden=isHidden)
+                await ctx.send(embed=embed, ephemeral=isHidden)
                 return
 
             if len(notLoaded) != 0:
@@ -96,10 +96,10 @@ class Dev(dis.Extension):
                 notLoaded.append("No Cogs to load All are loaded rn.")
 
             embed.add_field(name="Cogs loaded", value=notLoaded, inline=True)
-            await ctx.send(embed=embed, hidden=isHidden)
+            await ctx.send(embed=embed, ephemeral=isHidden)
         except:
             embed.add_field(name="Error", value=sys.exc_info()[0], inline=True)
-            await ctx.send(embed=embed, hidden=isHidden)
+            await ctx.send(embed=embed, ephemeral=isHidden)
             for i in sys.exc_info():
                 print(i)
 

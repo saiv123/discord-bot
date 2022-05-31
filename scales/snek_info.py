@@ -151,7 +151,7 @@ class Info(dis.Extension):
         embed = dis.Embed(title="Contact", color=imgutils.randomSaturatedColor())
         embed.add_field(name="♥ Take Care", value=msg, inline=True)
 
-        await ctx.send(embed=embed, hidden=True)
+        await ctx.send(embed=embed, ephemeral=True)
     
     @dis.slash_command(name="ping", description="Ping the bot")
     async def ping(self, ctx: dis.InteractionContext):

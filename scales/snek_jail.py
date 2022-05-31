@@ -75,14 +75,14 @@ class Jail(dis.Extension):
             elif user.bot:
                 await ctx.send("Bots can't be jailed")
             elif user.id == ctx.guild._owner_id or user.id in ownerId:
-                await ctx.send("Sorry but you can not jail this person they have an infinite use get out of jail free card in this server.", hidden=False)
+                await ctx.send("Sorry but you can not jail this person they have an infinite use get out of jail free card in this server.", ephemeral=False)
             elif check_user(ctx.guild_id, user.id):
-                await ctx.send("This user is already in jail", hidden=False)
+                await ctx.send("This user is already in jail", ephemeral=False)
             else:
                 add_user(ctx.guild_id, user.id)
-                await ctx.send(F"You have banished {user.user.mention} to <#{str(DBchannels.get(ctx.guild.id, 'vc_id'))}>", hidden=False)
+                await ctx.send(F"You have banished {user.user.mention} to <#{str(DBchannels.get(ctx.guild.id, 'vc_id'))}>", ephemeral=False)
         else:
-            await ctx.send("You don't have the power to do that", hidden=False)
+            await ctx.send("You don't have the power to do that", ephemeral=False)
     
     @dis.slash_command(name="unjail", description="Unjail a user")
     @dis.slash_option(
@@ -96,11 +96,11 @@ class Jail(dis.Extension):
                 await ctx.send("No voice channel set for this server")
             elif check_user(ctx.guild_id, user.id):
                 remove_user(ctx.guild_id, user.id)
-                await ctx.send(F"You have released {user.user.mention} from jail", hidden=False)
+                await ctx.send(F"You have released {user.user.mention} from jail", ephemeral=False)
             else:
-                await ctx.send(f"{user.user.mention}is not in jail at the moment", hidden=False)
+                await ctx.send(f"{user.user.mention}is not in jail at the moment", ephemeral=False)
         else:
-            await ctx.send("You don't have the power to do that", hidden=False)
+            await ctx.send("You don't have the power to do that", ephemeral=False)
     
     @dis.slash_command(name="setjail", description="Set the voice channel for the jail")
     @dis.slash_option(
@@ -112,9 +112,9 @@ class Jail(dis.Extension):
     async def setjail(self, ctx: dis.InteractionContext, channel: dis.channel.VoiceChannel):
         if ctx.author.id == ctx.guild._owner_id or isOwner(ctx):
             DBchannels.set(ctx.guild.id, 'vc_id', channel.id)
-            await ctx.send(f"The jail channel has been set to {channel.mention}", hidden=False)
+            await ctx.send(f"The jail channel has been set to {channel.mention}", ephemeral=False)
         else:
-            await ctx.send("You don't have the power to do that", hidden=False)
+            await ctx.send("You don't have the power to do that", ephemeral=False)
 
 def setup(bot):
     Jail(bot)
