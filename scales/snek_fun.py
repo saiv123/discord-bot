@@ -1,8 +1,4 @@
-import naff
-
-
 import naff as dis
-
 
 from libraries.helperFunctions import isOwner, splitLongStrings, add_to_embed
 from libraries.helperFunctions import checkAuthSerers
