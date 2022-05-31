@@ -45,7 +45,7 @@ class Info(dis.Extension):
         # seting up an embed
         embed = dis.Embed(
             description="Info on the bot and how to use it",
-            colour=dis.Colour.g,
+            color=dis.Color.g,
         )
 
         embed.set_author(name="Help")
@@ -73,7 +73,7 @@ class Info(dis.Extension):
         embed = dis.Embed(
             title="Hello",
             description="Hello {0}!!!".format(ctx.author.mention),
-            colour=imgutils.randomSaturatedColor(),
+            color=imgutils.randomSaturatedColor(),
         )
         embed.set_footer(
             text="Sanity check by: " + ctx.author.display_name, icon_url=ctx.author.avatar.url
@@ -95,7 +95,7 @@ class Info(dis.Extension):
     
     @dis.slash_command(name="invite", description="Get the link to invite the bot to your server")
     async def invite(self, ctx: dis.InteractionContext):
-        embed = dis.Embed(colour=dis.Color.g)
+        embed = dis.Embed(color=dis.Color.g)
         embed.set_author(name="Invite the Bot to another server")
         embed.set_thumbnail(
             url="https://cdn.discordapp.com/avatars/314578387031162882/e4b98a4a9ca3315ca699ffe5cba5b8f1.png?size=1024"
@@ -129,7 +129,7 @@ class Info(dis.Extension):
         # msg = time.strftime("%H Hours %M Minutes %S Seconds", time.gmtime(tso - ts))
 
         # Set up and send embed
-        embed = dis.Embed(title="Status", colour=imgutils.randomSaturatedColor())
+        embed = dis.Embed(title="Status", color=imgutils.randomSaturatedColor())
         embed.set_thumbnail(
             url="https://hotemoji.com/images/dl/h/ten-o-clock-emoji-by-twitter.png"
         )  # set the clock image
@@ -148,14 +148,14 @@ class Info(dis.Extension):
         if (ctx.channel.id == 674120261691506688):  # channel specific to my discord server
             msg += cont
 
-        embed = dis.Embed(title="Contact", colour=imgutils.randomSaturatedColor())
+        embed = dis.Embed(title="Contact", color=imgutils.randomSaturatedColor())
         embed.add_field(name="♥ Take Care", value=msg, inline=True)
 
         await ctx.send(embed=embed, hidden=True)
     
     @dis.slash_command(name="ping", description="Ping the bot")
     async def ping(self, ctx: dis.InteractionContext):
-        embed = dis.Embed(title="Pong!", colour=imgutils.randomSaturatedColor())
+        embed = dis.Embed(title="Pong!", color=imgutils.randomSaturatedColor())
         embed.add_field(name="Latency:", value=f"{ctx.bot.latency * 1000:.2f}ms", inline=True)
         embed.set_footer(
             text="Ping Measured by: " + ctx.author.display_name, icon_url=ctx.author.avatar.url

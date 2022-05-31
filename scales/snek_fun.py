@@ -73,7 +73,7 @@ class Fun(dis.Extension):
             embed = dis.Embed(
                 title="Error in your input",
                 description="The given color is incorrect. Enter it in Hex, RGB, or CMYK form",
-                colour=0xFF0000,
+                color=0xFF0000,
             )
             embed.set_footer(
                 text="Color picked by: " + ctx.author.display_name,
