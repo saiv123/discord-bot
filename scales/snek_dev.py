@@ -39,13 +39,13 @@ class Dev(dis.Extension):
             cogs = []
 
             if cogType == "all":
-                for cog in self.bot.Extensions:
+                for cog in self.bot.get_extensions():
                     cogs.append(cog)
             else:
                 cogs = [cogType]
 
             for cog in cogs:
-                self.bot.reload_extension("slash_commands." + cog)
+                self.bot.reload_extension("scales." + cog)
 
             embed.add_field(
                 name="Update Cogs", value="Done :white_check_mark:", inline=True
@@ -76,7 +76,7 @@ class Dev(dis.Extension):
             notLoaded = []
             slashCommandsList = os.listdir("./slash_commands")
             if cogType.lower() == "all":
-                for cog in self.bot.Extensions:
+                for cog in self.bot.get_extensions():
                     pyCog = cog + ".py"
                     if pyCog not in slashCommandsList:
                         notLoaded.append("slash_commands." + cog)
