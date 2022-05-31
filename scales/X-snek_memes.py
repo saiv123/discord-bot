@@ -20,7 +20,7 @@ class Meme(dis.Extension):
         embed.set_footer(text="Requested by: " + ctx.author.nickname, icon_url=ctx.author.avatar.url)
         await ctx.send(embed=embed)
     
-    @dis.slash_command(name="nsfw", description="Get a Porn")
+    @dis.slash_command(name="nsfw", description="Get Porn")
     @dis.slash_option(
         "category"
         "What category do you want",
