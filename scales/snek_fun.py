@@ -86,7 +86,7 @@ class Fun(dis.Extension):
         "question",
         "What's the question?",
         dis.OptionTypes.STRING,
-        required=True,)
+        True,)
     async def shouldi(self, ctx: dis.InteractionContext, question: str = ""):
         msg = " " + msg + " "
         # msg = ' '.join(msg)
