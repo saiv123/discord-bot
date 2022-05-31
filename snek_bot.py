@@ -17,8 +17,8 @@ client = wolframalpha.Client(id)
 
 #black list lists  [sai's server, derp]
 blackListServers = [648012188685959169, 531614305733574666]
-#[finn, emilly, aqua, kyle]
-blackListUsers = [361029057640529921, 705912686742863902, 361275648033030144, 288861358555136000]
+#[finn, emilly, aqua, kyle, crocs]
+blackListUsers = [361029057640529921, 705912686742863902, 361275648033030144, 288861358555136000, 452465370658373632]
 #######################################
 ###Initialization of bot DO NOT EDIT###
 #######################################
