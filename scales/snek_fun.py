@@ -47,6 +47,7 @@ class Fun(dis.Extension):
                 )
             )
             return
+
         to_send = (" " * max(1, amount)).join(message)
         for message in splitLongStrings(to_send):
             await ctx.send(message)
@@ -88,7 +89,7 @@ class Fun(dis.Extension):
         dis.OptionTypes.STRING,
         True,)
     async def shouldi(self, ctx: dis.InteractionContext, question: str = ""):
-        msg = " " + msg + " "
+        msg = " " + question + " "
         # msg = ' '.join(msg)
         phrases = [
             "Yes! Go /",
