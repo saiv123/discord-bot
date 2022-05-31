@@ -4,7 +4,7 @@ class move(dis.Extension):
     def __init__(self, bot: dis.Client):
         self.bot: dis.Client = bot
     
-    @dis.slash_command(name="move", description="Moves you to Sai", guild_ids=[648012188685959169])
+    @dis.slash_command(name="move", description="Moves you to Sai", scopes=[648012188685959169])
     async def move(self, ctx: dis.InteractionContext):
         canUse = False
         ListOfRoles = ctx.author.roles
