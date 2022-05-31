@@ -13,7 +13,7 @@ class Quotes(dis.Extension):
     def __init__(self, bot: dis.Client):
         self.bot: dis.Client = bot
     
-    @dis.subcommand(base="quote", name="HeartWarming", description="Sends a heartwarming quote")
+    @dis.subcommand(base="quote", name="heartwarming", description="Sends a heartwarming quote")
     async def heartWarming(self, ctx: dis.InteractionContext):
         quote = apis.quote_to_discord_embed(quoteLib.getQuoteJSON())
         quote.set_thumbnail(
