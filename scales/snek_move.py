@@ -1,6 +1,6 @@
 import naff as dis
 
-class move(dis.Extension):
+class Move(dis.Extension):
     def __init__(self, bot: dis.Client):
         self.bot: dis.Client = bot
     
@@ -28,3 +28,5 @@ class move(dis.Extension):
                 await ctx.send("Sorry but you have to be in a vc to use this command\nOr Sai is not in a VC", hidden=True)
         else:
             await ctx.send("You are not permitted to use this command!!", hidden=True)
+def setup(bot):
+    Move(bot)
