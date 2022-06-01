@@ -128,7 +128,7 @@ class Fun(dis.Extension):
             await ctx.send("Sorry but you are not in a voice channel")
          else:
             noBot = []
-            people = ctx.author.voice.channel.members
+            people = ctx.author.voice.channel.voice_members
             for person in people:
                 if not person.bot:
                     noBot.append(person)
