@@ -110,7 +110,7 @@ class Fun(dis.Extension):
     async def boop(self, ctx: dis.InteractionContext, user: dis.User = None):
         await ctx.send(ctx.author.mention + " has Booped " + user.mention)
     
-    @dis.slash_command(name="hugh", description="Hugs")
+    @dis.slash_command(name="hug", description="Hugs")
     @dis.slash_option(
         "user",
         "Who's hugging",
