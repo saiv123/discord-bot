@@ -143,7 +143,7 @@ class Admin(dis.Extension):
         if not isOwner(ctx):
             await ctx.send(msgReturn("notOwner"))
             return
-        guilds = await self.bot.guilds
+        guilds = self.bot.guilds
         msg = str(len(guilds)) + " servers:\n"
         for guild in guilds:
             msg += guild.name + "\n"

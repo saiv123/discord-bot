@@ -47,9 +47,7 @@ class Dev(dis.Extension):
             for cog in cogs:
                 self.bot.reload_extension(f"scales.snek_{cog.lower()}")
 
-            embed.add_field(
-                name="Update Cogs", value="Done :white_check_mark:", inline=True
-            )
+            embed.add_field(name="Update Cogs", value="Done :white_check_mark:", inline=True)
             await ctx.send(embed=embed, ephemeral=isHidden)
         except:  # all other errors
             embed.add_field(name="Error", value=sys.exc_info()[0], inline=True)
