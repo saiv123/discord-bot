@@ -57,7 +57,7 @@ class Jail(dis.Extension):
         self.bot: dis.Client = bot
     
     @dis.listen(dis.events.VoiceStateUpdate)
-    async def moveUser(event: dis.events.VoiceStateUpdate):
+    async def moveUser(event: dis.events.VoiceStateUpdate, **kwargs):
         if event.after != None and check_user(event.after._guild_id, event.after.member.id):
             voiceID = DBchannels.get(event.after._guild_id, 'vc_id')
             await event.after.member.move(voiceID)
