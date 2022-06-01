@@ -11,3 +11,4 @@ sounds/
 venv/
 *.db
 !msg.db
+test.py
