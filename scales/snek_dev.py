@@ -45,7 +45,7 @@ class Dev(dis.Extension):
                 cogs = [cogType]
 
             for cog in cogs:
-                self.bot.reload_extension(cog, "scales")
+                self.bot.reload_extension(f"snek_{cog}", "scales")
 
             embed.add_field(
                 name="Update Cogs", value="Done :white_check_mark:", inline=True
@@ -74,14 +74,14 @@ class Dev(dis.Extension):
 
         try:
             notLoaded = []
-            slashCommandsList = os.listdir("./slash_commands")
+            slashCommandsList = os.listdir("./scales")
             if cogType.lower() == "all":
                 for cog in self.bot.get_extensions():
                     pyCog = cog + ".py"
                     if pyCog not in slashCommandsList:
-                        notLoaded.append("slash_commands." + cog)
+                        notLoaded.append("scales." + cog)
             elif cogType + ".py" in slashCommandsList:
-                notLoaded.append("slash_commands." + cog)
+                notLoaded.append("scales." + cog)
             else:
                 embed.add_field(
                     name="ERROR", value=cogType + " not in files!!!!", inline=True
