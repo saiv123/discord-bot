@@ -146,7 +146,7 @@ class Admin(dis.Extension):
         guilds = self.bot.guilds
         msg = str(len(guilds)) + " servers:\n"
         for guild in guilds:
-            msg += guild.name + "\n"
+            msg += guild.name + guild.id +"\n"
         await ctx.send(msg)
 def setup(bot):
     Admin(bot)
