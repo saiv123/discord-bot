@@ -45,7 +45,7 @@ class Dev(dis.Extension):
                 cogs = [cogType]
 
             for cog in cogs:
-                self.bot.reload_extension("scales." + cog)
+                self.bot.reload_extension(cog)
 
             embed.add_field(
                 name="Update Cogs", value="Done :white_check_mark:", inline=True
