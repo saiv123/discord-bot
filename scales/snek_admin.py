@@ -60,7 +60,7 @@ class Admin(dis.Extension):
         "user",
         "ping user",
         dis.OptionTypes.USER,
-        True
+        True,
     )
     async def kick(self, ctx: dis.InteractionContext, member: dis.Member):
         userPerms = ctx.author.guild_permissions
@@ -94,7 +94,7 @@ class Admin(dis.Extension):
         "user",
         "ping user",
         dis.OptionTypes.USER,
-        True
+        True,
     )
     async def ban(self, ctx: dis.InteractionContext, member: dis.Member):
         userPerms = ctx.author.guild_permissions
