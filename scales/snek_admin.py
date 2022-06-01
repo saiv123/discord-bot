@@ -18,7 +18,7 @@ class Admin(dis.Extension):
         "user",
         "ping user",
         dis.OptionTypes.USER,
-        True
+        True,
     )
     async def userinfo(self, ctx: dis.InteractionContext, member: dis.Member):
         if not ctx.author.guild_permissions.ADMINISTRATOR and not isOwner(ctx):
@@ -146,7 +146,7 @@ class Admin(dis.Extension):
         guilds = self.bot.guilds
         msg = str(len(guilds)) + " servers:\n"
         for guild in guilds:
-            msg += guild.name + str(guild.id) +"\n"
+            msg += f"{guild.name}  {str(guild.id)} \n"
         await ctx.send(msg)
 def setup(bot):
     Admin(bot)
