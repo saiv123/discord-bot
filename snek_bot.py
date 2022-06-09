@@ -15,10 +15,10 @@ ts = time.time()
 
 client = wolframalpha.Client(id)
 
-#black list lists  [sai's server, derp]
-blackListServers = [648012188685959169, 531614305733574666]
-#[finn, emilly, aqua, kyle, crocs]
-blackListUsers = [361029057640529921, 705912686742863902, 361275648033030144, 288861358555136000, 452465370658373632]
+#black list lists  [sai, derp, kate]
+blackListServers = [648012188685959169, 531614305733574666, 859561416917909515]
+#[finn, emilly, aqua, kyle, crocs, night]
+blackListUsers = [361029057640529921, 705912686742863902, 361275648033030144, 288861358555136000, 452465370658373632, 258223386847608832]
 #######################################
 ###Initialization of bot DO NOT EDIT###
 #######################################
@@ -54,7 +54,7 @@ async def blackList(event: dis.events.MemberAdd):
     member = event.member
     if member.id in blackListUsers:
         user = await bot.fetch_user(240636443829993473)
-        await user.send(f"ALERT - {member.nick} has joined the server {member.guild.name}!!!! 🚩")
+        await user.send(f"ALERT - {member.display_name} has joined the server {member.guild.name}!!!! 🚩")
 
         if member._guild_id in blackListServers:
             await member.send("You have been blacklisted from this server. Please contact the owner of this server, if you feel like this is a mistake.")
