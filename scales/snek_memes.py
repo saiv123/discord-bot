@@ -2,7 +2,7 @@ import naff as dis
 
 from libraries.helperFunctions import getEmbedsFromLibraryQuery
 
-class Meme(dis.Extension):
+class Internetpic(dis.Extension):
     def __init__(self, bot: dis.Client):
         self.bot: dis.Client = bot
     
@@ -54,4 +54,4 @@ class Meme(dis.Extension):
                 await ctx.send(embed=embed)
 
 def setup(bot):
-    Meme(bot)
+    Internetpic(bot)
