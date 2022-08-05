@@ -5,7 +5,6 @@ from libraries.prawn import getClosestFromList
 
 import json
 import time
-import holidays
 from datetime import date, datetime
 from dateutil.relativedelta import *
 from dateutil.easter import *
