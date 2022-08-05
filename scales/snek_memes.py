@@ -8,7 +8,7 @@ class Internetpic(dis.Extension):
     
     @dis.slash_command(name="meme", description="Get a meme")
     @dis.slash_option(
-        "category"
+        "category",
         "What category do you want",
         dis.OptionTypes.STRING,
         False,)
@@ -22,7 +22,7 @@ class Internetpic(dis.Extension):
     
     @dis.slash_command(name="nsfw", description="Get Porn")
     @dis.slash_option(
-        "category"
+        "category",
         "What category do you want",
         dis.OptionTypes.STRING,
         False,)
