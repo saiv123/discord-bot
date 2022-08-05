@@ -12,7 +12,7 @@ class Internetpic(dis.Extension):
         "What category do you want",
         dis.OptionTypes.STRING,
         False,)
-    async def meme(self, ctx: dis.InteractionContext, category=None):
+    async def meme(self, ctx: dis.InteractionContext, category):
         await ctx.defer()
         if category is None:
             category = ""
@@ -27,7 +27,7 @@ class Internetpic(dis.Extension):
         "What category do you want",
         dis.OptionTypes.STRING,
         False,)
-    async def nsfw(self, ctx: dis.InteractionContext, category=None):
+    async def nsfw(self, ctx: dis.InteractionContext, category):
         await ctx.defer()
         if category is None:
             category = ""
