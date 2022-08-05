@@ -12,7 +12,7 @@ class Internetpic(dis.Extension):
         "What category do you want",
         dis.OptionTypes.STRING,
         False,)
-    async def meme(self, ctx: dis.InteractionContext, category):
+    async def meme(self, ctx: dis.InteractionContext, category=None):
         if category is None:
             category = ""
         memePath = "ClassWork/"
@@ -26,7 +26,7 @@ class Internetpic(dis.Extension):
         "What category do you want",
         dis.OptionTypes.STRING,
         False,)
-    async def nsfw(self, ctx: dis.InteractionContext, category):
+    async def nsfw(self, ctx: dis.InteractionContext, category=None):
         if category is None:
             category = ""
         prawnPath = "MyHomework/"
