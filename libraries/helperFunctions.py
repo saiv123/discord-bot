@@ -181,7 +181,7 @@ def getEmbedsFromLibraryQuery(libraryPath, query: str):
         print("Image not valid at " + namedImg[1] + "\n\t(name " + namedImg[0] + ")")
 
     embed = dis.Embed(
-        description=namedImg[0], color=imgutils.getAverageColor(namedImg[1])
+        description=namedImg[0], color=imgutils.randomSaturatedColor()
     )
     embed.set_image(url=namedImg[1])
     return [embed]
